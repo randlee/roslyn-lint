@@ -2,9 +2,16 @@
 
   <!-- Analyzers must target netstandard2.0 for Roslyn host compatibility -->
   <PropertyGroup>
-    <TargetFrameworks>netstandard2.0</TargetFrameworks>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFrameworks></TargetFrameworks>
     <IsRoslynComponent>true</IsRoslynComponent>
     <EnforceExtendedAnalyzerRules>true</EnforceExtendedAnalyzerRules>
+    <!-- Suppress lib/ output — analyzer DLL is placed under analyzers/ instead -->
+    <IncludeBuildOutput>false</IncludeBuildOutput>
+    <!-- Suppress dependency group (all CodeAnalysis refs are PrivateAssets=all; no runtime deps) -->
+    <SuppressDependenciesWhenPacking>true</SuppressDependenciesWhenPacking>
+    <!-- Mark as dev-time only — not a transitive runtime dependency -->
+    <DevelopmentDependency>true</DevelopmentDependency>
   </PropertyGroup>
 
   <!-- NuGet Package Metadata (common properties inherited from Directory.Build.props) -->
@@ -12,6 +19,7 @@
     <PackageId>Roslyn.DeMagic</PackageId>
     <Description>Roslyn analyzer that detects magic values (numbers, strings) and suggests named constants</Description>
     <PackageTags>roslyn;analyzer;magic-numbers;code-quality;csharp</PackageTags>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
   </PropertyGroup>
 
   <ItemGroup>
@@ -22,6 +30,12 @@
   <ItemGroup>
     <AdditionalFiles Include="AnalyzerReleases.Shipped.md" />
     <AdditionalFiles Include="AnalyzerReleases.Unshipped.md" />
+  </ItemGroup>
+
+  <!-- Place analyzer DLL in the correct NuGet analyzers folder -->
+  <ItemGroup>
+    <None Include="$(OutputPath)$(AssemblyName).dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
+    <None Include="..\..\README.md" Pack="true" PackagePath="\" />
   </ItemGroup>
 
 </Project>
