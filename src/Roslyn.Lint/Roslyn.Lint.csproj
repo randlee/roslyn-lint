@@ -1,0 +1,38 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <AssemblyName>roslyn-lint</AssemblyName>
+  </PropertyGroup>
+
+  <!-- NuGet Package Metadata (common properties inherited from Directory.Build.props) -->
+  <PropertyGroup>
+    <PackageId>roslyn-lint</PackageId>
+    <Description>Roslyn-based lint CLI for C# code quality analysis</Description>
+    <PackageTags>lint;roslyn;csharp;code-quality;analyzer;cli</PackageTags>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <PackageReleaseNotes>Initial release of roslyn-lint.</PackageReleaseNotes>
+  </PropertyGroup>
+
+  <!-- .NET Tool Configuration -->
+  <PropertyGroup>
+    <PackAsTool>true</PackAsTool>
+    <ToolCommandName>roslyn-lint</ToolCommandName>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Roslyn.DeMagic\Roslyn.DeMagic.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="$(MicrosoftCodeAnalysisCSharpVersion)" />
+    <PackageReference Include="Spectre.Console" Version="$(SpectreConsoleVersion)" />
+    <PackageReference Include="Spectre.Console.Cli" Version="$(SpectreConsoleCliVersion)" />
+  </ItemGroup>
+
+  <!-- Include README in Package -->
+  <ItemGroup>
+    <None Include="..\..\README.md" Pack="true" PackagePath="\" />
+  </ItemGroup>
+
+</Project>
