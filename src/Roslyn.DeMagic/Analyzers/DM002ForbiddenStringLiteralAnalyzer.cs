@@ -65,22 +65,22 @@ public sealed class DM002ForbiddenStringLiteralAnalyzer : DiagnosticAnalyzer
 
         var effectiveSeverity = DeMagicDiagnosticDescriptors.GetEffectiveSeverity(config.Dm002.Severity);
         context.RegisterSyntaxNodeAction(
-            syntaxContext => AnalyzeLiteral(syntaxContext, effectiveSeverity, compiledPatterns),
+            syntaxContext => AnalyzeLiteral(syntaxContext, effectiveSeverity, compiledPatterns, patternCompiler),
             SyntaxKind.StringLiteralExpression);
     }
 
     private static void AnalyzeLiteral(
         SyntaxNodeAnalysisContext context,
         DiagnosticSeverity effectiveSeverity,
-        ImmutableArray<CompiledForbiddenPattern> compiledPatterns)
+        ImmutableArray<CompiledForbiddenPattern> compiledPatterns,
+        IForbiddenPatternCompiler patternCompiler)
     {
         var literal = (LiteralExpressionSyntax)context.Node;
         if (literal.Ancestors().OfType<InterpolationSyntax>().Any())
             return;
 
         var value = literal.Token.ValueText;
-        var matcher = new ForbiddenPatternMatcher();
-        if (!matcher.TryMatch(value, compiledPatterns, out var matchedPattern))
+        if (!patternCompiler.TryMatch(value, compiledPatterns, out var matchedPattern))
             return;
 
         context.ReportDiagnostic(Diagnostic.Create(
