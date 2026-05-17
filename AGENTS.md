@@ -1,5 +1,12 @@
 # AGENTS Instructions for roslyn-lint
 
+## MUST READ
+
+Before participating in ATM team work, read:
+- `docs/team-protocol.md`
+
+The messaging protocol in that document is mandatory for all ATM communications.
+
 ## Quick Rule
 
 Always follow this sequence for every ATM message:
