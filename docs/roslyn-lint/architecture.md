@@ -2,10 +2,14 @@
 
 ## 1. Purpose
 
-This document defines the `roslyn-lint` CLI project architecture.
+This document defines the current `roslyn-lint` CLI project boundary at a high
+level only.
 
 It complements the suite-level architecture in
 [`../architecture.md`](../architecture.md) and owns CLI-local structure.
+
+Detailed CLI architecture is intentionally deferred until dedicated CLI
+requirements are available.
 
 ## 2. Architectural Rules
 
@@ -55,12 +59,12 @@ executes the analyzer instances locally. That may be a useful bootstrap path,
 but it is not automatically the correct product architecture.
 
 Phase A architectural direction:
-- keep the CLI only if it can faithfully represent the documented analyzer
-  contract
-- if project-aware or config-aware execution requires a different orchestration
-  path, refactor the CLI to that shape
-- if a feature cannot be made faithful in Phase A, narrow or remove that path
-  rather than shipping a misleading tool
+- keep the CLI project boundary explicit
+- do not let the CLI define analyzer semantics
+- postpone final CLI execution-model decisions until dedicated CLI
+  requirements arrive
+- if current CLI behavior actively blocks analyzer correctness, it may be
+  narrowed or deleted during later work
 
 ## 5. Packaging Boundary
 

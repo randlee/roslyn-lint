@@ -12,7 +12,9 @@ Product requirement IDs:
   requirements may be refactored or deleted during Phase A.
 
 The Phase A goal is to convert the current draft implementation into a
-production-ready first release line for `Roslyn.DeMagic` and its companion CLI.
+production-ready first release line for `Roslyn.DeMagic`. The CLI remains part
+of the suite, but its detailed product contract is deferred until a later
+requirements pass.
 
 ## 1.1 Documentation Structure
 
@@ -40,14 +42,15 @@ Product requirement IDs:
   requirements, the code must be corrected, replaced, or removed. Existing
   implementation is not grandfathered.
 - `REQ-P-SCOPE-003` Phase A must keep the analyzer package and companion CLI
-  as separate project responsibilities even when they share repository-level
-  planning and validation.
+  as separate project responsibilities even while detailed CLI behavior is
+  deferred.
 
 ### 2.1 In Scope
 
 - `Roslyn.DeMagic` diagnostic behavior and packaging
 - repository-wide analyzer configuration model
-- companion CLI behavior needed to run and report lint analysis
+- only the minimum CLI ownership definition needed to keep analyzer and CLI
+  responsibilities separate until dedicated CLI requirements are written
 - CI, packaging, and release gates for both deliverables
 - test coverage that proves rule semantics and packaging behavior
 
@@ -57,6 +60,8 @@ Product requirement IDs:
 - non-C# language support
 - additional analyzers beyond `Roslyn.DeMagic`
 - advanced IDE UX beyond standard Roslyn diagnostic behavior
+- the detailed `roslyn-lint` CLI feature contract beyond project-boundary
+  documentation
 
 ## 3. Configuration Contract
 
@@ -101,16 +106,10 @@ Detailed analyzer obligations are owned by:
 ## 5. CLI Product Requirements
 
 Product requirement IDs:
-- `REQ-P-CLI-001` The `roslyn-lint` CLI must provide a `lint` command that can
-  analyze repository code targets and report diagnostics in supported output
-  formats.
-- `REQ-P-CLI-002` The CLI must remain a thin companion tool. It may orchestrate
-  analyzer execution and reporting, but it must not become the source of truth
-  for analyzer rule semantics.
-- `REQ-P-CLI-003` CLI output must support at least text and JSON forms suitable
-  for developer and automation use.
-- `REQ-P-CLI-004` CLI exit behavior must distinguish successful analysis from
-  blocking diagnostic outcomes according to the documented severity contract.
+- `REQ-P-CLI-001` The `roslyn-lint` CLI remains a distinct project in the
+  suite and must not become the source of truth for analyzer rule semantics.
+- `REQ-P-CLI-002` Detailed CLI feature, UX, output, and exit-code requirements
+  are deferred until a dedicated CLI requirements pass is completed.
 
 Detailed CLI obligations are owned by:
 - [`docs/roslyn-lint/requirements.md`](./roslyn-lint/requirements.md)

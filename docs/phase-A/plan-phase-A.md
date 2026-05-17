@@ -13,6 +13,7 @@ target: develop
 
 Establish the `atm-core`-style documentation framework for this repository and
 deliver the first production-ready `Roslyn.DeMagic` implementation line.
+Detailed CLI product work is deferred.
 
 ## Current Baseline
 
@@ -49,13 +50,13 @@ The repository does not yet have:
 - [`sprint-A1.md`](./sprint-A1.md) — docs framework and baseline disposition
 - [`sprint-A2.md`](./sprint-A2.md) — config model and `DM001`
 - [`sprint-A3.md`](./sprint-A3.md) — `DM002` and analyzer contract alignment
-- [`sprint-A4.md`](./sprint-A4.md) — CLI alignment, packaging, and release gate
+- [`sprint-A4.md`](./sprint-A4.md) — analyzer packaging, release gate, and CLI deferral boundary
 
 ## Acceptance Criteria
 
 - all required docs exist and agree on project ownership
 - current code disposition is explicit: keep, refactor, replace, or delete
 - `Roslyn.DeMagic` matches the documented rule and config contract
-- `roslyn-lint` either faithfully represents the analyzer contract or is
-  narrowed until it does
+- `roslyn-lint` remains documented as a separate project without hijacking the
+  analyzer contract before later CLI requirements are written
 - CI, tests, and packaging support the documented delivery line

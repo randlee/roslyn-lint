@@ -4,7 +4,8 @@
 
 Phase A establishes the formal documentation and implementation baseline for
 the `roslyn-lint` suite and delivers the first production-ready
-`Roslyn.DeMagic` line.
+`Roslyn.DeMagic` line. Detailed `roslyn-lint` CLI product work is deferred to
+the next requirements pass.
 
 The current repository implementation is treated as a spike baseline only.
 Anything that does not satisfy the PRD or the formal docs may be deleted or
@@ -34,8 +35,8 @@ Phase A must deliver:
   `roslyn-lint`
 - a documented phase-A plan with sprint-level execution breakdown
 - a `Roslyn.DeMagic` implementation aligned to the PRD
-- a CLI line that is either aligned to the analyzer contract or trimmed until
-  it is
+- a minimal but explicit CLI ownership boundary that prevents analyzer/CLI
+  drift before the dedicated CLI requirements arrive
 - test, CI, packaging, and release gates that prove the documented behavior
 
 ## 3. Projects
@@ -65,7 +66,7 @@ Current repository state:
 Current baseline risks:
 - current analyzer behavior does not yet match the formal PRD
 - current CLI execution path is more of a local analysis spike than a proven
-  product architecture
+  product architecture, but Phase A will not finalize that behavior
 - current docs were placeholders before Phase A planning
 
 Disposition rule:
@@ -91,7 +92,8 @@ Acceptance gates:
 - per-project requirements and architecture docs exist
 - phase-A sprint docs exist and define concrete ownership
 - `Roslyn.DeMagic` behavior matches documented rule and config contracts
-- CLI behavior is aligned with the documented architecture
+- CLI ownership remains explicit and non-conflicting while detailed behavior is
+  deferred
 - CI, tests, and packaging validate the final line
 
 ### Future Phases

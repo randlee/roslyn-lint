@@ -2,7 +2,8 @@
 
 ## 1. Purpose
 
-This document defines the `roslyn-lint` CLI project requirements.
+This document defines the current `roslyn-lint` CLI project boundary at a high
+level only.
 
 Suite-level product behavior remains defined in
 [`../requirements.md`](../requirements.md).
@@ -26,45 +27,39 @@ Suite-level product behavior remains defined in
 
 The `roslyn-lint` CLI project uses the `REQ-CLI-*` namespace.
 
-## 4. Command Requirements
+Detailed CLI feature requirements are intentionally deferred until a dedicated
+CLI requirements pass is available. This document exists so the repository has
+an explicit ownership boundary now instead of leaving the CLI as undocumented
+drift.
 
-- `REQ-CLI-CMD-001` The CLI must expose a `lint` command.
-- `REQ-CLI-CMD-002` The `lint` command must accept a path target that can point
-  to a file or directory.
-- `REQ-CLI-CMD-003` The CLI must support `text` and `json` output formats.
-- `REQ-CLI-CMD-004` The CLI must support include and exclude filtering for
-  target file selection.
-- `REQ-CLI-CMD-005` The CLI must support disabling colored output.
+## 4. Boundary Requirements
 
-## 5. Analysis Requirements
+- `REQ-CLI-BOUNDARY-001` The CLI remains a separate project with its own
+  command surface and packaging line.
+- `REQ-CLI-BOUNDARY-002` The CLI must not become the source of truth for
+  `Roslyn.DeMagic` rule semantics or analyzer config behavior.
+- `REQ-CLI-BOUNDARY-003` Any current CLI behavior that conflicts with future
+  dedicated CLI requirements may be refactored or removed.
 
-- `REQ-CLI-ANALYSIS-001` The CLI must orchestrate analyzer execution without
-  redefining `Roslyn.DeMagic` rule semantics.
-- `REQ-CLI-ANALYSIS-002` The CLI must either analyze code through a
-  project-aware path that honors the documented config model or clearly narrow
-  its supported execution mode in the implementation and docs.
-- `REQ-CLI-ANALYSIS-003` If the current direct-file compilation model cannot
-  faithfully represent the documented analyzer behavior, it must be refactored
-  or removed rather than preserved as a misleading product path.
+## 5. Deferred Detail
 
-## 6. Output And Exit Requirements
+The following are intentionally deferred:
+- final command surface
+- final analysis orchestration model
+- final output contracts
+- final exit-code policy
+- final packaging and UX expectations beyond basic project separation
 
-- `REQ-CLI-OUTPUT-001` Text output must include file location, severity,
-  diagnostic ID, and message.
-- `REQ-CLI-OUTPUT-002` JSON output must provide machine-readable issue records.
-- `REQ-CLI-EXIT-001` CLI exit behavior must distinguish success from blocking
-  diagnostics according to the documented severity policy.
-
-## 7. Packaging Requirements
+## 6. Packaging Requirements
 
 - `REQ-CLI-PACKAGE-001` The CLI must remain packable as a .NET tool with
   command name `roslyn-lint`.
 - `REQ-CLI-PACKAGE-002` CLI packaging must remain separate from analyzer
   packaging even when both ship from the same repository release.
 
-## 8. Validation Requirements
+## 7. Validation Requirements
 
-- `REQ-CLI-TEST-001` Automated tests must verify settings validation and
-  supported output modes.
-- `REQ-CLI-TEST-002` Phase A must add or update tests for any changed CLI
-  behavior introduced to align the tool with the documented analyzer contract.
+- `REQ-CLI-TEST-001` Existing CLI tests may remain as provisional spike tests,
+  but they are not the final product contract.
+- `REQ-CLI-TEST-002` Future CLI requirements must replace or expand the current
+  tests with contract-driven coverage.

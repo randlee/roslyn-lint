@@ -7,6 +7,9 @@ The `roslyn-lint` suite consists of:
 - `roslyn-lint`, a companion CLI distributed as a .NET tool
 - test projects that verify analyzer and CLI behavior
 
+Phase A is analyzer-first. The CLI remains in the repository boundary model,
+but its detailed target behavior is intentionally deferred.
+
 The architecture must treat the current implementation as provisional. If the
 existing code conflicts with this architecture or the product requirements, the
 current code is expected to change or be removed.
@@ -86,6 +89,8 @@ Architectural rules:
   rule semantics for `DM001` or `DM002`
 - output formatting, target resolution, and user interaction belong in the CLI
 - analyzer packaging and Roslyn host behavior do not belong in the CLI layer
+- detailed CLI feature decisions are deferred until dedicated CLI requirements
+  are written
 
 ### 3.4 Test Layer
 
@@ -129,8 +134,8 @@ Phase A converges the repository on this shape:
 - one requirements/architecture pair per production project
 - one phase-A plan with sprint-level execution docs
 - one config-driven analyzer implementation line for `Roslyn.DeMagic`
-- one thin companion CLI line that either accurately orchestrates analyzer
-  execution or is reduced until it does
+- one explicit CLI ownership boundary so later CLI requirements can land
+  without confusing analyzer ownership
 
 Project-local detail is further specified in:
 - [`docs/roslyn-demagic/architecture.md`](./roslyn-demagic/architecture.md)

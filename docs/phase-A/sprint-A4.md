@@ -1,18 +1,18 @@
 ---
 id: A4
-title: CLI alignment, packaging, and release gate
+title: Analyzer packaging, release gate, and CLI deferral boundary
 status: planned
 branch: integration/phase-A
 worktree: /Users/randlee/Documents/github/roslyn-lint-worktrees/integration/phase-A
 target: develop
 ---
 
-# Sprint A4 — CLI Alignment, Packaging, And Release Gate
+# Sprint A4 — Analyzer Packaging, Release Gate, And CLI Deferral Boundary
 
 ## Goal
 
-Make the CLI and package/release path faithful to the documented analyzer
-contract, deleting or narrowing any misleading CLI behavior if required.
+Close the analyzer packaging and release path, and explicitly defer detailed
+CLI behavior until dedicated CLI requirements are available.
 
 ## Hard Dependencies
 
@@ -21,24 +21,24 @@ contract, deleting or narrowing any misleading CLI behavior if required.
 
 ## Exact Targets
 
-- `src/Roslyn.Lint/`
 - `tests/Roslyn.Lint.Tests/`
 - `.github/workflows/ci.yml`
 - `.github/workflows/publish.yml`
 
 ## Required Work
 
-- decide whether current direct-file CLI analysis is faithful enough to keep
-- refactor or replace the CLI analysis path if it is not
-- align CLI output and exit behavior with the documented contract
-- verify tool packaging and end-to-end release behavior for both packages
+- verify analyzer and tool packaging on the shared release line
+- align release automation with the documented analyzer-first delivery path
+- keep the CLI project boundary documented without finalizing detailed CLI
+  behavior prematurely
 
 ## Acceptance Criteria
 
-- the CLI no longer contradicts the documented analyzer/config model
+- analyzer packaging is validated end to end
 - tool packaging remains valid
 - CI and publish workflows validate the final Phase A delivery line
-- no misleading spike-only CLI path remains in the shipped product surface
+- the repo no longer implies that current CLI spike behavior is the final
+  contract
 
 ## Required Validation
 
