@@ -1,0 +1,13 @@
+agents:
+  quality-mgr:
+    version: 0.1.0
+    path: .claude/agents/quality-mgr.md
+  req-qa:
+    version: 0.2.0
+    path: .claude/agents/req-qa.md
+  arch-qa:
+    version: 0.1.0
+    path: .claude/agents/arch-qa.md
+  rlint-qa:
+    version: 0.1.0
+    path: .claude/agents/rlint-qa.md
