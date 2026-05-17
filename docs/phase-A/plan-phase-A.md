@@ -85,10 +85,12 @@ introduced during the development sprints:
 - analyzer configuration and boundary types:
   `IAdditionalFileConfigSelector`, `ITomlConfigParser`,
   `DeMagicConfig`, `Dm001Options`, `Dm002Options`,
-  `AdditionalFileConfigSelection`, `ConfiguredSeverity`
+  `AdditionalFileConfigSelection`, `ConfiguredSeverity`,
+  `DeMagicConfigLoader`
 - analyzer pattern types:
   `IForbiddenPatternCompiler`, `ForbiddenPattern`,
-  `CompiledForbiddenPattern`, `ForbiddenPatternKind`
+  `CompiledForbiddenPattern`, `ForbiddenPatternKind`,
+  `ForbiddenPatternMatcher`
 - CLI contract and boundary types:
   `ICommandOperation<TRequest, TResponse>`, `ILintWorkspaceAdapter`,
   `IJsonEnvelopeWriter`, `IHumanOutputFormatter<TResponse>`,

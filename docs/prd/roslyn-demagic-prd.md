@@ -31,7 +31,8 @@ Both failures are invisible to standard Roslyn analyzers. `Roslyn.DeMagic` makes
 
 - Provide two configurable diagnostic rules surfaced as standard Roslyn diagnostics
 - Zero-friction integration: works with any .NET project that includes the NuGet package
-- Config-driven: all rule behavior defined in `.roslyn-lint/demagic.toml`
+- Config-driven: all rule behavior defined in `.roslyn-lint/config-src.toml`
+  or `.roslyn-lint/config-test.toml`
 - Severity is configurable per rule
 - No runtime dependency — analyzer only
 
@@ -112,7 +113,10 @@ case_sensitive = false         # default false
 
 #### Description
 
-Public and internal `const` fields and `const` local declarations at the type level must be declared in the designated constants file/class as configured in `demagic.toml`. Constants found in any other file trigger this diagnostic.
+Public and internal `const` field declarations must be declared in the
+designated constants file/class as configured in `.roslyn-lint/config-src.toml`
+or `.roslyn-lint/config-test.toml`. Constants found in any other file trigger
+this diagnostic.
 
 #### Scope
 

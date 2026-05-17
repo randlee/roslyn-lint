@@ -137,3 +137,22 @@ Planned replacement-oriented CLI implementation units when CLI work resumes:
 - if a current file name or class name encodes the rejected spike semantics,
   replacement with new files and types is preferred over keeping the old names
   and editing their internals
+
+## 6. Phase A Acceptance
+
+Phase A planning is complete only when:
+
+- the repo documentation framework exists and is internally consistent
+- `Roslyn.DeMagic` behavior is planned against the PRD rather than against the
+  current spike
+- analyzer packaging and validation expectations are explicit in the sprint
+  plans
+- the CLI baseline no longer treats the current implementation as an approved
+  design
+- the execution rules explicitly prefer deleting and replacing noncompliant
+  spike code over preserving it through compatibility-driven edits
+- sprint plans contain enough exact targets, named types, and validation
+  commands to drive implementation directly
+
+This acceptance block is the project-plan mirror of
+`docs/phase-A/plan-phase-A.md` Section 8.
