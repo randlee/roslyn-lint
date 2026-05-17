@@ -1,0 +1,94 @@
+---
+id: A4
+title: Packaging and CLI baseline correction
+status: planned
+branch: integration/phase-A
+target: Roslyn.DeMagic-and-roslyn-lint
+---
+
+# Sprint A4 - Packaging And CLI Baseline Correction
+
+## Goal
+
+- Close the analyzer packaging path and reset the CLI design baseline so it
+  matches the repository's AI-first CLI contract instead of the current spike.
+- Leave the CLI with an explicit replacement-oriented architecture rather than
+  an implied obligation to preserve the current command implementation.
+
+## Hard Dependencies
+
+- `docs/roslyn-demagic/requirements.md`
+- `docs/roslyn-demagic/architecture.md`
+- `docs/roslyn-lint/requirements.md`
+- `docs/roslyn-lint/architecture.md`
+- `docs/roslyn-lint/boundaries.md`
+- `docs/phase-A/sprint-A3.md`
+- `.claude/skills/creating-ai-clis/`
+
+## Exact Targets
+
+- `src/Roslyn.DeMagic/Roslyn.DeMagic.csproj`
+- `src/Roslyn.DeMagic/AnalyzerReleases.Shipped.md`
+- `src/Roslyn.DeMagic/AnalyzerReleases.Unshipped.md`
+- `src/Roslyn.Lint/Program.cs`
+- `src/Roslyn.Lint/Commands/LintCommand.cs`
+- `src/Roslyn.Lint/Contracts/CliEnvelope.cs`
+- `src/Roslyn.Lint/Contracts/CliError.cs`
+- `src/Roslyn.Lint/Contracts/CliWarning.cs`
+- `src/Roslyn.Lint/Contracts/CliErrorKind.cs`
+- `src/Roslyn.Lint/Contracts/LintRequest.cs`
+- `src/Roslyn.Lint/Contracts/LintResult.cs`
+- `src/Roslyn.Lint/Contracts/LintIssue.cs`
+- `src/Roslyn.Lint/Operations/ICommandOperation.cs`
+- `src/Roslyn.Lint/Operations/ILintWorkspaceAdapter.cs`
+- `src/Roslyn.Lint/Serialization/IJsonEnvelopeWriter.cs`
+- `src/Roslyn.Lint/Formatting/IHumanOutputFormatter.cs`
+- `src/Roslyn.Lint/Roslyn.Lint.csproj`
+- `tests/Roslyn.Lint.Tests/Commands/LintCommandSettingsTests.cs`
+- `tests/Roslyn.Lint.Tests/Contracts/CliEnvelopeSerializationTests.cs`
+- `tests/Roslyn.Lint.Tests/Operations/LintOperationContractTests.cs`
+- `.github/workflows/ci.yml`
+- `.github/workflows/publish.yml`
+- `README.md`
+
+## Important Interfaces, Records/Structs, and Enums
+
+- interfaces:
+  `ICommandOperation<TRequest, TResponse>`, `ILintWorkspaceAdapter`,
+  `IJsonEnvelopeWriter`, `IHumanOutputFormatter<TResponse>`
+- immutable CLI payload types:
+  `CliEnvelope<TResult>`, `CliError`, `CliWarning`,
+  `LintRequest`, `LintResult`, `LintIssue`
+- enums:
+  `CliErrorKind`
+
+## Required Work
+
+- validate analyzer package shape, metadata, and release gating
+- ensure repo docs do not treat the current CLI implementation as approved
+- align package metadata and release automation with the approved analyzer rule
+  set rather than the spike descriptions
+- define the CLI requirements and architecture around a stable JSON envelope,
+  typed errors, MCP-ready DTOs, and auditable command pairs
+- make explicit that `Program.cs` and `LintCommand.cs` are disposable if they
+  obstruct the approved CLI layering
+- document the exact contract types that future CLI implementation must create
+  before adding more commands or features
+
+## Acceptance Criteria
+
+- analyzer packaging is documented and testable
+- analyzer package metadata no longer describes rejected spike behavior
+- the CLI baseline is aligned to the approved AI-first contract rules
+- the CLI baseline names the contract interfaces and immutable payload types
+  required before feature expansion
+- the repo no longer implies the current CLI spike is the accepted design
+- noncompliant CLI spike structure is planned for replacement, not preservation
+
+## Required Validation
+
+- `dotnet restore roslyn-lint.sln`
+- `dotnet build roslyn-lint.sln --configuration Release`
+- `dotnet test roslyn-lint.sln --configuration Release --verbosity normal`
+- `dotnet pack src/Roslyn.DeMagic/Roslyn.DeMagic.csproj --configuration Release --no-build`
+- `git diff --check`
