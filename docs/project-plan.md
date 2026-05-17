@@ -60,24 +60,24 @@ Merge target:
 | --- | --- | --- |
 | A0 | Documentation reset | Replace placeholders and unapproved assumptions with formal suite and project docs |
 | A1 | Analyzer foundation | Add reusable configuration and forbidden-pattern infrastructure for `Roslyn.DeMagic` |
-| A2 | `DM001` design and config path | Align constant-consolidation behavior with the PRD and configuration model |
-| A3 | `DM002` and analyzer hardening | Align forbidden-string analysis, config parsing, and analyzer validation with the PRD |
+| A2 | `DM002` forbidden-pattern analyzer | Align forbidden-string analysis, config parsing, and analyzer validation with the PRD |
+| A3 | `DM002` hardening and release alignment | Remove remaining spike leftovers, align release metadata, and route analyzer seams through interfaces |
 | A4 | Packaging and CLI baseline correction | Finalize analyzer packaging gates and lock the CLI design baseline to AI-first contract rules |
 
 Phase A must not treat the current CLI spike as an approved product contract.
 
 ### Phase A Implementation Inventory
 
-Phase A implementation work is expected to touch or replace these current code
-paths:
+Phase A implementation work is expected to touch, add, delete, or replace
+these code paths:
 
-- `src/Roslyn.DeMagic/Analyzers/MagicNumberAnalyzer.cs`
-- `src/Roslyn.DeMagic/Analyzers/MagicStringAnalyzer.cs`
+- `src/Roslyn.DeMagic/Analyzers/MagicNumberAnalyzer.cs` deleted in A3
+- `src/Roslyn.DeMagic/Analyzers/DM001ConstantConsolidationAnalyzer.cs`
+- `src/Roslyn.DeMagic/Analyzers/DM002ForbiddenStringLiteralAnalyzer.cs`
 - `src/Roslyn.DeMagic/AnalyzerReleases.Shipped.md`
 - `src/Roslyn.DeMagic/AnalyzerReleases.Unshipped.md`
 - `src/Roslyn.DeMagic/Roslyn.DeMagic.csproj`
-- `tests/Roslyn.DeMagic.Tests/Analyzers/MagicNumberAnalyzerTests.cs`
-- `tests/Roslyn.DeMagic.Tests/Analyzers/MagicStringAnalyzerTests.cs`
+- `tests/Roslyn.DeMagic.Tests/Analyzers/DM002ForbiddenStringLiteralAnalyzerTests.cs`
 - `src/Roslyn.Lint/Program.cs`
 - `src/Roslyn.Lint/Commands/LintCommand.cs`
 - `src/Roslyn.Lint/Roslyn.Lint.csproj`
