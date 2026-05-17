@@ -8,8 +8,9 @@ configuration file and emits Roslyn diagnostics for two rule families:
 - `DM001` constant consolidation
 - `DM002` forbidden string literals
 
-The current `MagicNumberAnalyzer` and `MagicStringAnalyzer` spike does not
-match this target architecture and may be deleted.
+The current `MagicNumberAnalyzer` spike does not match this target
+architecture and may be deleted. The old `MagicStringAnalyzer` spike has been
+replaced by `DM002ForbiddenStringLiteralAnalyzer`.
 
 Relevant ADRs:
 
@@ -61,9 +62,8 @@ The preferred replacement-oriented implementation shape is:
 - `Analyzers/DM001ConstantConsolidationAnalyzer.cs`
 - `Analyzers/DM002ForbiddenStringLiteralAnalyzer.cs`
 
-The current `MagicNumberAnalyzer` and `MagicStringAnalyzer` files should be
-deleted if keeping them would preserve rejected semantics or misleading type
-names.
+The current `MagicNumberAnalyzer` file should be deleted if keeping it would
+preserve rejected semantics or misleading type names.
 
 ## 3.2 Planned Interfaces, Records/Structs, and Enums
 

@@ -35,7 +35,7 @@ design line rather than assuming the current spike is valid.
 ## 5. Exact Implementation Targets
 
 - `src/Roslyn.DeMagic/Analyzers/MagicNumberAnalyzer.cs`
-- `src/Roslyn.DeMagic/Analyzers/MagicStringAnalyzer.cs`
+- `src/Roslyn.DeMagic/Analyzers/DM002ForbiddenStringLiteralAnalyzer.cs`
 - `src/Roslyn.DeMagic/Configuration/`
 - `src/Roslyn.DeMagic/Diagnostics/`
 - `src/Roslyn.DeMagic/Patterns/`
@@ -62,18 +62,18 @@ design line rather than assuming the current spike is valid.
 | --- | --- | --- |
 | A0 | Documentation reset | Replace placeholders and unapproved assumptions with approved suite and project docs |
 | A1 | Analyzer foundation | Add reusable configuration and forbidden-pattern infrastructure for `Roslyn.DeMagic` |
-| A2 | `DM001` requirements convergence | Replace the numeric-literal spike with config-driven constant-consolidation analysis |
-| A3 | `DM002` and analyzer hardening | Replace the generic string-literal spike with forbidden-pattern analysis and aligned release metadata |
+| A2 | `DM002` forbidden-pattern analyzer | Replace the generic string-literal spike with forbidden-pattern analysis and aligned release metadata |
+| A3 | `DM001` requirements convergence | Replace the numeric-literal spike with config-driven constant-consolidation analysis |
 | A4 | Packaging and CLI baseline correction | Finalize analyzer package and release gates and define the replacement-oriented CLI baseline |
 
 ## 7. Implementation Strategy
 
 - A0 documents the approved target and replacement policy
 - A1 introduces shared configuration and forbidden-pattern infrastructure
-- A2 deletes the `DM001` spike behavior and introduces the real config and
-  declaration-analysis path
-- A3 deletes the `DM002` spike behavior and introduces compiled forbidden-
-  pattern matching and analyzer metadata alignment
+- A2 deletes the `DM002` spike behavior and introduces compiled forbidden-
+  pattern matching, config-driven severity, and analyzer metadata alignment
+- A3 deletes the `DM001` spike behavior and introduces the real declaration-
+  analysis path
 - A4 validates analyzer package outputs and leaves the CLI with a strict design
   baseline that future implementation must follow
 - no sprint in Phase A should preserve current spike semantics merely because

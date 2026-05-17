@@ -1,19 +1,20 @@
 ---
 id: A3
-title: DM002 and analyzer hardening
+title: DM001 requirements convergence
 status: planned
-branch: integration/phase-A
-target: Roslyn.DeMagic
+branch: sprint/A3
+worktree: /Users/randlee/Documents/github/roslyn-lint-worktrees/sprint/A3
+target: integration/phase-A
 ---
 
-# Sprint A3 - DM002 And Analyzer Hardening
+# Sprint A3 - DM001 Requirements Convergence
 
 ## Goal
 
-- Implement the forbidden-string rule from the PRD and harden the analyzer
-  configuration and validation path.
-- Replace the current generic string-literal spike with compiled forbidden-
-  pattern analysis.
+- Replace the current numeric-literal spike with the approved `DM001`
+  constant-consolidation rule.
+- Reuse the A1/A2 configuration and descriptor foundation instead of
+  preserving generic numeric-literal behavior.
 
 ## Hard Dependencies
 
@@ -25,56 +26,55 @@ target: Roslyn.DeMagic
 
 ## Exact Targets
 
-- `src/Roslyn.DeMagic/Analyzers/MagicStringAnalyzer.cs`
-- `src/Roslyn.DeMagic/Analyzers/DM002ForbiddenStringLiteralAnalyzer.cs`
-- `src/Roslyn.DeMagic/Patterns/IForbiddenPatternCompiler.cs`
-- `src/Roslyn.DeMagic/Patterns/ForbiddenPattern.cs`
-- `src/Roslyn.DeMagic/Patterns/ForbiddenPatternKind.cs`
-- `src/Roslyn.DeMagic/Patterns/CompiledForbiddenPattern.cs`
-- `src/Roslyn.DeMagic/Patterns/ForbiddenPatternMatcher.cs`
+- `src/Roslyn.DeMagic/Analyzers/MagicNumberAnalyzer.cs`
+- `src/Roslyn.DeMagic/Analyzers/DM001ConstantConsolidationAnalyzer.cs`
+- `src/Roslyn.DeMagic/Configuration/IAdditionalFileConfigSelector.cs`
+- `src/Roslyn.DeMagic/Configuration/ITomlConfigParser.cs`
 - `src/Roslyn.DeMagic/Configuration/DeMagicConfig.cs`
+- `src/Roslyn.DeMagic/Configuration/Dm001Options.cs`
+- `src/Roslyn.DeMagic/Configuration/Dm002Options.cs`
+- `src/Roslyn.DeMagic/Configuration/ConfiguredSeverity.cs`
+- `src/Roslyn.DeMagic/Configuration/AdditionalFileConfigSelection.cs`
+- `src/Roslyn.DeMagic/Configuration/DeMagicConfigLoader.cs`
 - `src/Roslyn.DeMagic/Diagnostics/DeMagicDiagnosticDescriptors.cs`
-- `src/Roslyn.DeMagic/AnalyzerReleases.Shipped.md`
-- `src/Roslyn.DeMagic/AnalyzerReleases.Unshipped.md`
-- `tests/Roslyn.DeMagic.Tests/Analyzers/MagicStringAnalyzerTests.cs`
-- `tests/Roslyn.DeMagic.Tests/Analyzers/DM002ForbiddenStringLiteralAnalyzerTests.cs`
-- `tests/Roslyn.DeMagic.Tests/Patterns/ForbiddenPatternMatcherTests.cs`
-- `tests/Roslyn.DeMagic.Tests/Patterns/ForbiddenPatternCompilerTests.cs`
+- `tests/Roslyn.DeMagic.Tests/Analyzers/MagicNumberAnalyzerTests.cs`
+- `tests/Roslyn.DeMagic.Tests/Analyzers/DM001ConstantConsolidationAnalyzerTests.cs`
+- `tests/Roslyn.DeMagic.Tests/Configuration/DeMagicConfigLoaderTests.cs`
+- `tests/Roslyn.DeMagic.Tests/Configuration/ConfiguredSeverityTests.cs`
 
 ## Important Interfaces, Records/Structs, and Enums
 
 - interfaces:
-  `IForbiddenPatternCompiler`
-- immutable pattern payload types:
-  `ForbiddenPattern`, `CompiledForbiddenPattern`
+  `IAdditionalFileConfigSelector`, `ITomlConfigParser`
+- immutable config payload types:
+  `DeMagicConfig`, `Dm001Options`, `Dm002Options`,
+  `AdditionalFileConfigSelection`
 - enums:
-  `ForbiddenPatternKind`, `ConfiguredSeverity`
+  `ConfiguredSeverity`
 
 ## Required Work
 
-- delete or retire the current `MagicStringAnalyzer` spike if it obstructs the
-  approved `DM002` design
-- extend the immutable config model for `dm002`
-- implement exact, prefix, suffix, and substring forbidden-pattern matching
-- support case sensitivity options
-- validate graceful disablement, invalid-config, and severity behavior
-- align analyzer release metadata with the actual rule set and diagnostic
-  categories
-- ensure the pattern compiler and matcher boundaries are testable without
-  analyzer callback registration
+- delete or retire the current `MagicNumberAnalyzer` spike if it obstructs the
+  approved `DM001` design
+- implement designated-file and optional designated-class checks against
+  public/internal const field declarations
+- keep local constants and private/protected constants out of scope
+- load config from `AdditionalFiles` once per compilation start and reuse the
+  existing immutable config payloads
+- align `DM001` descriptor wording and category with constant consolidation,
+  not generic magic-value detection
 
 ## Acceptance Criteria
 
-- `DM002` behavior matches the PRD
-- pattern matching is covered by positive and negative tests
-- exact, prefix, suffix, and substring matching semantics are represented by a
-  closed enum and explicit payload types
-- release metadata and descriptor categories match the approved diagnostics
-- spike-era generic magic-string semantics are no longer part of the product
+- `DM001` diagnoses only the rule scope defined in the PRD
+- `DM001` no longer reports generic numeric literal usage
+- designated-file and designated-class behavior are covered by tests
+- current numeric-literal spike semantics are no longer treated as correct
+  behavior
 
 ## Required Validation
 
 - `dotnet restore roslyn-lint.sln`
-- `dotnet build src/Roslyn.DeMagic/Roslyn.DeMagic.csproj --configuration Release`
+- `dotnet build roslyn-lint.sln --configuration Release`
 - `dotnet test tests/Roslyn.DeMagic.Tests/Roslyn.DeMagic.Tests.csproj --configuration Release --verbosity normal`
 - `git diff --check`
