@@ -19,6 +19,43 @@ target: integration/phase-A
   `view tools`, and parseable command-family skeletons for the remaining
   families.
 
+## Carried Forward From A4
+
+A4 closed with explicit CLI replacement deferrals. A5 owns first delivery of
+the undelivered replacement units and must treat the following as mandatory
+carry-forward scope from [`sprint-A4.md`](./sprint-A4.md):
+
+- `src/Roslyn.Lint.Abstractions/Roslyn.Lint.Abstractions.csproj`
+- `src/Roslyn.Lint.Abstractions/ToolId.cs`
+- `src/Roslyn.Lint.Abstractions/ToolDescriptor.cs`
+- `src/Roslyn.Lint.Abstractions/ILintToolModule.cs`
+- `src/Roslyn.Lint.Abstractions/ILintToolCommandHandler.cs`
+- `src/Roslyn.Lint/Commands/RegisterLintCommands.cs`
+- `src/Roslyn.Lint/Commands/RegisterViewCommands.cs`
+- `src/Roslyn.Lint/Commands/RegisterCheckCommands.cs`
+- `src/Roslyn.Lint/Commands/RegisterClippyCommands.cs`
+- `src/Roslyn.Lint/Commands/RegisterCiCommand.cs`
+- `src/Roslyn.Lint/Commands/RegisterVersionCommand.cs`
+- `src/Roslyn.Lint/CommandModel/CommandFamily.cs`
+- `src/Roslyn.Lint/CommandModel/LintProfile.cs`
+- `src/Roslyn.Lint/CommandModel/OutputMode.cs`
+- `src/Roslyn.Lint/CommandModel/BackendExecutionMode.cs`
+- `src/Roslyn.Lint/Contracts/CliEnvelope.cs`
+- `src/Roslyn.Lint/Contracts/CliError.cs`
+- `src/Roslyn.Lint/Contracts/CliDiagnostic.cs`
+- `src/Roslyn.Lint/Contracts/CliErrorKind.cs`
+- `src/Roslyn.Lint/Contracts/VersionResult.cs`
+- `src/Roslyn.Lint/Contracts/ViewRequest.cs`
+- `src/Roslyn.Lint/Contracts/ViewResult.cs`
+- `src/Roslyn.Lint/Serialization/IJsonEnvelopeWriter.cs`
+- `src/Roslyn.Lint/Serialization/RoslynLintJsonContext.cs`
+- `src/Roslyn.Lint/Formatting/IHumanOutputFormatter.cs`
+- `tests/Roslyn.Lint.Tests/Commands/RootCommandTests.cs`
+- `tests/Roslyn.Lint.Tests/Commands/VersionCommandTests.cs`
+- `tests/Roslyn.Lint.Tests/Commands/ViewToolsCommandTests.cs`
+- `tests/Roslyn.Lint.Tests/Contracts/CliEnvelopeSerializationTests.cs`
+- `tests/Roslyn.Lint.Tests/Abstractions/ToolDescriptorTests.cs`
+
 ## Hard Dependencies
 
 - `docs/roslyn-lint/requirements.md`

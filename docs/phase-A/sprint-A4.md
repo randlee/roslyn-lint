@@ -1,7 +1,7 @@
 ---
 id: A4
 title: Packaging and CLI baseline correction
-status: complete
+status: closed-with-deferrals
 branch: sprint/A4
 worktree: /Users/randlee/Documents/github/roslyn-lint-worktrees/sprint/A4
 target: integration/phase-A
@@ -33,50 +33,43 @@ target: integration/phase-A
 - `src/Roslyn.DeMagic/AnalyzerReleases.Unshipped.md`
 - `src/Roslyn.Lint/Program.cs`
 - `src/Roslyn.Lint/Commands/LintCommand.cs`
-- `src/Roslyn.Lint.Abstractions/Roslyn.Lint.Abstractions.csproj`
-- `src/Roslyn.Lint.Abstractions/ToolId.cs`
-- `src/Roslyn.Lint.Abstractions/ToolDescriptor.cs`
-- `src/Roslyn.Lint.Abstractions/ILintToolModule.cs`
-- `src/Roslyn.Lint.Abstractions/ILintToolCommandHandler.cs`
-- `src/Roslyn.Lint/Commands/RegisterLintCommands.cs`
-- `src/Roslyn.Lint/Commands/RegisterViewCommands.cs`
-- `src/Roslyn.Lint/Commands/RegisterCheckCommands.cs`
-- `src/Roslyn.Lint/Commands/RegisterClippyCommands.cs`
-- `src/Roslyn.Lint/Commands/RegisterCiCommand.cs`
-- `src/Roslyn.Lint/Commands/RegisterVersionCommand.cs`
-- `src/Roslyn.Lint/Contracts/CliEnvelope.cs`
-- `src/Roslyn.Lint/Contracts/CliError.cs`
-- `src/Roslyn.Lint/Contracts/CliDiagnostic.cs`
-- `src/Roslyn.Lint/Contracts/CliErrorKind.cs`
-- `src/Roslyn.Lint/Contracts/LintToolRequest.cs`
-- `src/Roslyn.Lint/Contracts/LintToolResult.cs`
-- `src/Roslyn.Lint/Contracts/LintFinding.cs`
-- `src/Roslyn.Lint/Contracts/ViewRequest.cs`
-- `src/Roslyn.Lint/Contracts/ViewResult.cs`
-- `src/Roslyn.Lint/Contracts/CheckRequest.cs`
-- `src/Roslyn.Lint/Contracts/CheckResult.cs`
-- `src/Roslyn.Lint/Contracts/ClippyRequest.cs`
-- `src/Roslyn.Lint/Contracts/ClippyResult.cs`
-- `src/Roslyn.Lint/Contracts/CiRequest.cs`
-- `src/Roslyn.Lint/Contracts/CiResult.cs`
-- `src/Roslyn.Lint/Contracts/VersionResult.cs`
-- `src/Roslyn.Lint/Dispatch/IBackendToolDispatcher.cs`
-- `src/Roslyn.Lint/Dispatch/IBackendProcessRunner.cs`
-- `src/Roslyn.Lint/Dispatch/BackendJsonNormalizer.cs`
-- `src/Roslyn.Lint/Operations/ILintToolOperation.cs`
-- `src/Roslyn.Lint/Operations/IViewOperation.cs`
-- `src/Roslyn.Lint/Operations/ICheckOperation.cs`
-- `src/Roslyn.Lint/Operations/IClippyOperation.cs`
-- `src/Roslyn.Lint/Operations/ICiOperation.cs`
-- `src/Roslyn.Lint/Serialization/IJsonEnvelopeWriter.cs`
-- `src/Roslyn.Lint/Formatting/IHumanOutputFormatter.cs`
 - `src/Roslyn.Lint/Roslyn.Lint.csproj`
 - `tests/Roslyn.Lint.Tests/Commands/LintCommandSettingsTests.cs`
-- `tests/Roslyn.Lint.Tests/Contracts/CliEnvelopeSerializationTests.cs`
-- `tests/Roslyn.Lint.Tests/Operations/LintOperationContractTests.cs`
 - `.github/workflows/ci.yml`
 - `.github/workflows/publish.yml`
 - `README.md`
+
+## Deferrals
+
+The CLI replacement units below were planned during A4 but were not delivered
+on `sprint/A4`. They are explicitly carried forward into
+[`sprint-A5.md`](./sprint-A5.md) and must not be treated as completed A4
+deliverables.
+
+- shared abstractions package:
+  `src/Roslyn.Lint.Abstractions/Roslyn.Lint.Abstractions.csproj`,
+  `ToolId.cs`, `ToolDescriptor.cs`, `ILintToolModule.cs`,
+  `ILintToolCommandHandler.cs`
+- command registration split:
+  `src/Roslyn.Lint/Commands/RegisterLintCommands.cs`,
+  `RegisterViewCommands.cs`, `RegisterCheckCommands.cs`,
+  `RegisterClippyCommands.cs`, `RegisterCiCommand.cs`,
+  `RegisterVersionCommand.cs`
+- CLI contract files:
+  `src/Roslyn.Lint/Contracts/CliEnvelope.cs`,
+  `CliError.cs`, `CliDiagnostic.cs`, `CliErrorKind.cs`,
+  `VersionResult.cs`, `ViewRequest.cs`, `ViewResult.cs`
+- CLI host support seams:
+  `src/Roslyn.Lint/CommandModel/CommandFamily.cs`,
+  `LintProfile.cs`, `OutputMode.cs`, `BackendExecutionMode.cs`,
+  `src/Roslyn.Lint/Serialization/IJsonEnvelopeWriter.cs`,
+  `src/Roslyn.Lint/Serialization/RoslynLintJsonContext.cs`,
+  `src/Roslyn.Lint/Formatting/IHumanOutputFormatter.cs`
+- A5 validation-oriented tests:
+  `tests/Roslyn.Lint.Tests/Commands/RootCommandTests.cs`,
+  `VersionCommandTests.cs`, `ViewToolsCommandTests.cs`,
+  `tests/Roslyn.Lint.Tests/Contracts/CliEnvelopeSerializationTests.cs`,
+  `tests/Roslyn.Lint.Tests/Abstractions/ToolDescriptorTests.cs`
 
 ## Important Interfaces, Records/Structs, and Enums
 
@@ -120,6 +113,8 @@ target: integration/phase-A
 - the repo no longer implies the current CLI spike is the accepted design
 - noncompliant CLI spike structure is planned for replacement, not preservation
 - analyzer package validation runs in CI independent of CLI release readiness
+- the A4 closeout state clearly marks undelivered CLI replacement units as
+  deferred to A5 rather than misreporting them as completed on A4
 
 ## Required Validation
 
