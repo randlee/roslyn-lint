@@ -18,7 +18,7 @@ public sealed class ForbiddenPatternCompilerTests
     {
         var matcher = new ForbiddenPatternMatcher();
 
-        var compiled = matcher.Compile(rawPattern, caseSensitive: false);
+        var compiled = matcher.Compile(new ForbiddenPattern(rawPattern), caseSensitive: false);
 
         compiled.Kind.Should().Be(expectedKind);
         compiled.MatchValue.Should().Be(expectedMatchValue);

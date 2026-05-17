@@ -33,6 +33,7 @@ Notes:
 - syntax callbacks must not parse raw TOML strings directly
 - the preferred implementation is a shared immutable config object created once
   per compilation
+- the preferred loader seam is `IDeMagicConfigLoader`
 - the preferred parsing seam is `ITomlConfigParser`
 - the preferred payload types are `DeMagicConfig`, `Dm001Options`, and
   `Dm002Options`

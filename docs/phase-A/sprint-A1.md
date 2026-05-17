@@ -29,6 +29,7 @@ target: integration/phase-A
 - `src/Roslyn.DeMagic/Configuration/IAdditionalFileConfigSelector.cs`
 - `src/Roslyn.DeMagic/Configuration/AdditionalFileConfigSelector.cs`
 - `src/Roslyn.DeMagic/Configuration/ITomlConfigParser.cs`
+- `src/Roslyn.DeMagic/Configuration/IDeMagicConfigLoader.cs`
 - `src/Roslyn.DeMagic/Configuration/SimpleTomlConfigParser.cs`
 - `src/Roslyn.DeMagic/Configuration/DeMagicConfig.cs`
 - `src/Roslyn.DeMagic/Configuration/Dm001Options.cs`
@@ -50,7 +51,7 @@ target: integration/phase-A
 
 - interfaces:
   `IAdditionalFileConfigSelector`, `ITomlConfigParser`,
-  `IForbiddenPatternCompiler`
+  `IDeMagicConfigLoader`, `IForbiddenPatternCompiler`
 - immutable configuration payload types:
   `DeMagicConfig`, `Dm001Options`, `Dm002Options`,
   `AdditionalFileConfigSelection`
@@ -67,6 +68,7 @@ target: integration/phase-A
 - add immutable configuration models for the analyzer package
 - add forbidden-pattern compilation and matching infrastructure
 - add sample-code and configuration tests for the new foundation layer
+- keep config loading fail-closed and fully seamable for later analyzer wiring
 - keep the current solution building while introducing the foundation types
 
 ## Acceptance Criteria

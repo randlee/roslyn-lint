@@ -3,7 +3,7 @@ namespace Roslyn.DeMagic.Configuration;
 using System.Collections.Immutable;
 using Microsoft.CodeAnalysis;
 
-public sealed class DeMagicConfigLoader
+public sealed class DeMagicConfigLoader : IDeMagicConfigLoader
 {
     private readonly IAdditionalFileConfigSelector selector;
     private readonly ITomlConfigParser parser;
@@ -32,6 +32,11 @@ public sealed class DeMagicConfigLoader
             return false;
         }
 
-        return parser.TryParse(selection.Value.Content, out config, out errors);
+        var success = parser.TryParse(selection.Value.Content, out config, out errors);
+        if (success)
+            return true;
+
+        config = DeMagicConfig.Disabled;
+        return false;
     }
 }

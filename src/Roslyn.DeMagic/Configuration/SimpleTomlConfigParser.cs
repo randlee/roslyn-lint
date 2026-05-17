@@ -1,6 +1,7 @@
 namespace Roslyn.DeMagic.Configuration;
 
 using System.Collections.Immutable;
+using Roslyn.DeMagic.Patterns;
 
 public sealed class SimpleTomlConfigParser : ITomlConfigParser
 {
@@ -181,7 +182,7 @@ public sealed class SimpleTomlConfigParser : ITomlConfigParser
             new Dm002Options(
                 Enabled: GetBool(dm002Values, "enabled", defaultValue: false, errors),
                 Severity: GetSeverity(dm002Values, "severity", ConfiguredSeverity.Warning, errors),
-                ForbiddenPatterns: GetStringArray(dm002Values, "forbidden", errors),
+                ForbiddenPatterns: GetForbiddenPatternArray(dm002Values, "forbidden", errors),
                 CaseSensitive: GetBool(dm002Values, "case_sensitive", defaultValue: false, errors)));
     }
 
@@ -222,19 +223,19 @@ public sealed class SimpleTomlConfigParser : ITomlConfigParser
         return null;
     }
 
-    private static ImmutableArray<string> GetStringArray(
+    private static ImmutableArray<ForbiddenPattern> GetForbiddenPatternArray(
         Dictionary<string, object?> section,
         string key,
         List<string> errors)
     {
         if (!section.TryGetValue(key, out var value))
-            return ImmutableArray<string>.Empty;
+            return ImmutableArray<ForbiddenPattern>.Empty;
 
         if (value is ImmutableArray<string> arrayValue)
-            return arrayValue;
+            return arrayValue.Select(item => new ForbiddenPattern(item)).ToImmutableArray();
 
         errors.Add($"Key '{key}' must be an array of strings.");
-        return ImmutableArray<string>.Empty;
+        return ImmutableArray<ForbiddenPattern>.Empty;
     }
 
     private static ConfiguredSeverity GetSeverity(
