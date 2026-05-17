@@ -4,7 +4,7 @@ default_team = "roslyn-lint"
 
 [[atm.post_send_hooks]]
 recipient = "crl"
-command = ["~/.atm/scripts/atm-nudge-xml-1.py", "crl"]
+command = ["/Users/randlee/.atm/scripts/atm-nudge-xml-1.py", "crl"]
 
 [rmux]
 session = "roslyn-lint"
