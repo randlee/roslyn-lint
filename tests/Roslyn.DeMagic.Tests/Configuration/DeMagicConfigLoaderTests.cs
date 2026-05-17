@@ -106,11 +106,60 @@ public sealed class DeMagicConfigLoaderTests
         config.Should().Be(DeMagicConfig.Disabled);
     }
 
+    [Fact]
+    public void TryLoad_SelectorThrows_ReturnsDisabledConfigAndError()
+    {
+        var loader = new DeMagicConfigLoader(
+            new ThrowingSelector("selector failed"),
+            new SimpleTomlConfigParser());
+
+        var success = loader.TryLoad(ImmutableArray<AdditionalText>.Empty, out var config, out var errors);
+
+        success.Should().BeFalse();
+        config.Should().Be(DeMagicConfig.Disabled);
+        errors.Should().ContainSingle().Which.Should().Contain("selector failed");
+    }
+
+    [Fact]
+    public void TryLoad_ParserThrows_ReturnsDisabledConfigAndError()
+    {
+        var loader = new DeMagicConfigLoader(
+            new StubSelector("""
+            [dm001]
+            enabled = true
+            """),
+            new ThrowingParser("parser failed"));
+
+        var success = loader.TryLoad(ImmutableArray<AdditionalText>.Empty, out var config, out var errors);
+
+        success.Should().BeFalse();
+        config.Should().Be(DeMagicConfig.Disabled);
+        errors.Should().ContainSingle().Which.Should().Contain("parser failed");
+    }
+
     private sealed class TestAdditionalText(string path, string content) : AdditionalText
     {
         public override string Path { get; } = path;
 
         public override SourceText? GetText(CancellationToken cancellationToken = default)
             => SourceText.From(content);
+    }
+
+    private sealed class ThrowingSelector(string message) : IAdditionalFileConfigSelector
+    {
+        public AdditionalFileConfigSelection? Select(ImmutableArray<AdditionalText> additionalFiles)
+            => throw new InvalidOperationException(message);
+    }
+
+    private sealed class StubSelector(string content) : IAdditionalFileConfigSelector
+    {
+        public AdditionalFileConfigSelection? Select(ImmutableArray<AdditionalText> additionalFiles)
+            => new("/repo/.roslyn-lint/config-test.toml", content);
+    }
+
+    private sealed class ThrowingParser(string message) : ITomlConfigParser
+    {
+        public bool TryParse(string content, out DeMagicConfig config, out ImmutableArray<string> errors)
+            => throw new InvalidOperationException(message);
     }
 }
