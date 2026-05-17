@@ -17,6 +17,11 @@ Product requirement IDs:
   first, with human-readable output as a secondary presentation layer.
 - `REQ-CLI-PRODUCT-003` No current code or document in this repository is
   grandfathered if it conflicts with this baseline.
+- `REQ-CLI-PRODUCT-004` The current `Program.cs` and `Commands/LintCommand.cs`
+  spike is disposable and must not constrain the approved implementation line.
+- `REQ-CLI-PRODUCT-005` Until the approved contract DTOs and seams exist in
+  code, the CLI package must not be treated as the repository's approved
+  external release artifact.
 
 ## 2. Core Contract
 
@@ -102,6 +107,8 @@ Implementation requirement IDs:
   business contract to depend on human-oriented formatting.
 - `REQ-CLI-DOTNET-005` If the current Spectre-based command structure blocks
   compliance with this baseline, it must be replaced instead of preserved.
+- `REQ-CLI-DOTNET-006` The current Spectre-based spike may remain only as a
+  temporary local tool surface; it is not the approved architectural endpoint.
 
 ## 8. Validation Requirements
 

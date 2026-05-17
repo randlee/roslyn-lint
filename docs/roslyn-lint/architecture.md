@@ -10,6 +10,9 @@ presentation layer over the same business payloads.
 The current Spectre-based CLI spike is not the approved architecture baseline
 and may be deleted.
 
+The current `Program.cs` and `Commands/LintCommand.cs` files are treated as
+temporary spike entrypoints only. They are not protected implementation assets.
+
 Relevant ADRs:
 
 - `ADR-001`
@@ -67,6 +70,10 @@ The preferred CLI implementation shape is:
 
 If the current `LintCommand` design prevents this split, it should be removed
 and replaced rather than stretched into compliance.
+
+Until the contract and operation layers listed here exist in code, external
+release automation must not treat the CLI package as the suite's approved
+machine interface.
 
 ## 2.2 Planned Interfaces, Records/Structs, and Enums
 

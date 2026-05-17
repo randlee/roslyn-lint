@@ -1,9 +1,10 @@
 ---
 id: A4
 title: Packaging and CLI baseline correction
-status: planned
-branch: integration/phase-A
-target: Roslyn.DeMagic-and-roslyn-lint
+status: complete
+branch: sprint/A4
+worktree: /Users/randlee/Documents/github/roslyn-lint-worktrees/sprint/A4
+target: integration/phase-A
 ---
 
 # Sprint A4 - Packaging And CLI Baseline Correction
@@ -74,6 +75,8 @@ target: Roslyn.DeMagic-and-roslyn-lint
   obstruct the approved CLI layering
 - document the exact contract types that future CLI implementation must create
   before adding more commands or features
+- keep the current CLI spike out of external release automation until the
+  approved contract types and boundaries exist in code
 
 ## Acceptance Criteria
 
@@ -84,6 +87,7 @@ target: Roslyn.DeMagic-and-roslyn-lint
   required before feature expansion
 - the repo no longer implies the current CLI spike is the accepted design
 - noncompliant CLI spike structure is planned for replacement, not preservation
+- analyzer package validation runs in CI independent of CLI release readiness
 
 ## Required Validation
 

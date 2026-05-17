@@ -15,6 +15,8 @@ Notes:
 
 - every command must support `--json`
 - command naming may evolve later, but machine-contract rules may not
+- the current `Program.cs` and `Commands/LintCommand.cs` spike is only a
+  temporary holder for this surface and may be replaced wholesale
 
 ## RequestDtoConstruction
 

@@ -8,10 +8,10 @@
   <!-- NuGet Package Metadata (common properties inherited from Directory.Build.props) -->
   <PropertyGroup>
     <PackageId>roslyn-lint</PackageId>
-    <Description>Roslyn-based lint CLI for C# code quality analysis</Description>
-    <PackageTags>lint;roslyn;csharp;code-quality;analyzer;cli</PackageTags>
+    <Description>Preview CLI baseline for the roslyn-lint suite; approved machine contract implementation remains pending</Description>
+    <PackageTags>lint;roslyn;csharp;cli;preview;ai-first</PackageTags>
     <PackageReadmeFile>README.md</PackageReadmeFile>
-    <PackageReleaseNotes>Initial release of roslyn-lint.</PackageReleaseNotes>
+    <PackageReleaseNotes>Phase A preview only. The current CLI spike is disposable until the approved JSON contract and DTO layers are implemented.</PackageReleaseNotes>
   </PropertyGroup>
 
   <!-- .NET Tool Configuration -->
