@@ -1,45 +1,5 @@
 ---
 id: A2
-<<<<<<< HEAD
-title: Config model and DM001 implementation line
-status: planned
-branch: integration/phase-A
-worktree: /Users/randlee/Documents/github/roslyn-lint-worktrees/integration/phase-A
-target: develop
----
-
-# Sprint A2 — Config Model And `DM001`
-
-## Goal
-
-Implement the repository-wide config selection model and align `DM001` with
-the formal constant-consolidation contract.
-
-## Hard Dependencies
-
-- `A1` complete
-- documentation framework accepted as source of truth
-
-## Exact Targets
-
-- `Directory.Build.props`
-- `src/Roslyn.DeMagic/`
-- `tests/Roslyn.DeMagic.Tests/`
-
-## Required Work
-
-- add `.roslyn-lint/` config file strategy
-- wire `AdditionalFiles` selection for src vs test projects
-- replace or refactor current `DM001` implementation to match the config-driven contract
-- add tests for `DM001` and config loading behavior
-
-## Acceptance Criteria
-
-- `DM001` behavior matches documented scope and exclusions
-- missing or malformed config fails safely
-- source/test config selection is explicit and singular
-- tests prove the documented `DM001` behavior
-=======
 title: DM001 requirements convergence
 status: planned
 branch: integration/phase-A
@@ -67,12 +27,30 @@ target: Roslyn.DeMagic
 
 - `src/Roslyn.DeMagic/Analyzers/MagicNumberAnalyzer.cs`
 - `src/Roslyn.DeMagic/Analyzers/DM001ConstantConsolidationAnalyzer.cs`
+- `src/Roslyn.DeMagic/Configuration/IAdditionalFileConfigSelector.cs`
+- `src/Roslyn.DeMagic/Configuration/ITomlConfigParser.cs`
 - `src/Roslyn.DeMagic/Configuration/DeMagicConfig.cs`
+- `src/Roslyn.DeMagic/Configuration/Dm001Options.cs`
+- `src/Roslyn.DeMagic/Configuration/Dm002Options.cs`
+- `src/Roslyn.DeMagic/Configuration/ConfiguredSeverity.cs`
+- `src/Roslyn.DeMagic/Configuration/AdditionalFileConfigSelection.cs`
 - `src/Roslyn.DeMagic/Configuration/DeMagicConfigLoader.cs`
 - `src/Roslyn.DeMagic/Diagnostics/DeMagicDiagnosticDescriptors.cs`
 - `src/Roslyn.DeMagic/Roslyn.DeMagic.csproj`
 - `tests/Roslyn.DeMagic.Tests/Analyzers/MagicNumberAnalyzerTests.cs`
 - `tests/Roslyn.DeMagic.Tests/Analyzers/DM001ConstantConsolidationAnalyzerTests.cs`
+- `tests/Roslyn.DeMagic.Tests/Configuration/DeMagicConfigLoaderTests.cs`
+- `tests/Roslyn.DeMagic.Tests/Configuration/ConfiguredSeverityTests.cs`
+
+## Important Interfaces, Records/Structs, and Enums
+
+- interfaces:
+  `IAdditionalFileConfigSelector`, `ITomlConfigParser`
+- immutable config payload types:
+  `DeMagicConfig`, `Dm001Options`, `Dm002Options`,
+  `AdditionalFileConfigSelection`
+- enums:
+  `ConfiguredSeverity`
 
 ## Required Work
 
@@ -84,26 +62,23 @@ target: Roslyn.DeMagic
   analyzer classes
 - implement designated-file and optional designated-class checks against const
   field declarations
+- define stable config payload types before analyzer callback wiring
 - add tests for positive, negative, missing-config, and invalid-config cases
 
 ## Acceptance Criteria
 
 - `DM001` diagnoses only the rule scope defined in the PRD
 - `DM001` no longer reports generic numeric literal usage
+- configuration selection is owned by explicit interfaces and immutable payload
+  types
 - config-driven severity and enablement are covered by tests
 - current spike semantics are no longer treated as correct behavior
 - if the spike implementation shape obstructs compliance, it is deleted rather
   than adapted
->>>>>>> f9fe54d (Finalize phase A planning framework)
 
 ## Required Validation
 
 - `dotnet restore roslyn-lint.sln`
-<<<<<<< HEAD
-- `dotnet build roslyn-lint.sln --configuration Release`
-- `dotnet test tests/Roslyn.DeMagic.Tests/Roslyn.DeMagic.Tests.csproj --configuration Release`
-=======
 - `dotnet build src/Roslyn.DeMagic/Roslyn.DeMagic.csproj --configuration Release`
 - `dotnet test tests/Roslyn.DeMagic.Tests/Roslyn.DeMagic.Tests.csproj --configuration Release --verbosity normal`
 - `git diff --check`
->>>>>>> f9fe54d (Finalize phase A planning framework)

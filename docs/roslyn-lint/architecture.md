@@ -1,77 +1,3 @@
-<<<<<<< HEAD
-# roslyn-lint CLI Architecture
-
-## 1. Purpose
-
-This document defines the current `roslyn-lint` CLI project boundary at a high
-level only.
-
-It complements the suite-level architecture in
-[`../architecture.md`](../architecture.md) and owns CLI-local structure.
-
-Detailed CLI architecture is intentionally deferred until dedicated CLI
-requirements are available.
-
-## 2. Architectural Rules
-
-- the CLI is a thin companion surface
-- rule semantics belong to `Roslyn.DeMagic`, not to the CLI
-- output formatting and command interaction belong to the CLI
-- unsupported or misleading execution paths must be removed rather than left in
-  place as accidental product behavior
-
-## 3. Target Component Model
-
-### 3.1 Entry Layer
-
-Owns:
-- `Program.cs`
-- command application startup
-- version and application metadata
-
-### 3.2 Command Layer
-
-Owns:
-- command registration
-- settings validation
-- argument parsing
-- command lifecycle
-
-### 3.3 Analysis Orchestration Layer
-
-Owns:
-- target file or project discovery
-- invocation of analyzer execution
-- collection of diagnostics for presentation
-
-This layer must not redefine analyzer rule behavior.
-
-### 3.4 Presentation Layer
-
-Owns:
-- text rendering
-- JSON rendering
-- exit code shaping
-
-## 4. Phase A Architectural Direction
-
-The current CLI spike directly parses source files into ad hoc compilations and
-executes the analyzer instances locally. That may be a useful bootstrap path,
-but it is not automatically the correct product architecture.
-
-Phase A architectural direction:
-- keep the CLI project boundary explicit
-- do not let the CLI define analyzer semantics
-- postpone final CLI execution-model decisions until dedicated CLI
-  requirements arrive
-- if current CLI behavior actively blocks analyzer correctness, it may be
-  narrowed or deleted during later work
-
-## 5. Packaging Boundary
-
-The CLI owns .NET tool packaging and command-name identity. It must not absorb
-analyzer package responsibilities or cross-project diagnostic metadata.
-=======
 # roslyn-lint Architecture
 
 ## 1. Overview
@@ -121,14 +47,49 @@ The preferred CLI implementation shape is:
 
 - `Program.cs` as a thin composition root only
 - `Commands/` for parser-binding and command registration
-- `Contracts/Requests/` and `Contracts/Responses/` for transport-neutral DTOs
+- `Contracts/` for transport-neutral DTOs and the stable machine contract
+- `Contracts/CliEnvelope.cs` for the stable top-level result envelope
+- `Contracts/CliError.cs` for structured machine-readable failures
+- `Contracts/CliWarning.cs` for structured warnings
+- `Contracts/CliErrorKind.cs` for the closed error-category enum
+- `Contracts/LintRequest.cs` for lint operation input
+- `Contracts/LintResult.cs` for lint operation output
+- `Contracts/LintIssue.cs` for individual reported issues
 - `Operations/` for business execution
+- `Operations/ICommandOperation.cs` for reusable operation execution contracts
+- `Operations/ILintWorkspaceAdapter.cs` for workspace or source-traversal
+  ownership behind the command layer
 - `Serialization/` for shared `System.Text.Json` policy and serializer context
+- `Serialization/IJsonEnvelopeWriter.cs` for machine-output rendering
 - `Formatting/` for human-readable rendering
+- `Formatting/IHumanOutputFormatter.cs` for presentation-only output shaping
 - `Adapters/` for any external integration seams
 
 If the current `LintCommand` design prevents this split, it should be removed
 and replaced rather than stretched into compliance.
+
+## 2.2 Planned Interfaces, Records/Structs, and Enums
+
+The CLI baseline expects these named types to exist when implementation begins:
+
+- `ICommandOperation<TRequest, TResponse>`
+- `ILintWorkspaceAdapter`
+- `IJsonEnvelopeWriter`
+- `IHumanOutputFormatter<TResponse>`
+- `CliEnvelope<TResult>`
+- `CliError`
+- `CliWarning`
+- `LintRequest`
+- `LintResult`
+- `LintIssue`
+- `CliErrorKind`
+
+Type guidance:
+
+- use interfaces for transport, operation, and formatting seams
+- use immutable records or readonly structs for request, response, and issue
+  payloads
+- use enums only for closed machine vocabularies such as error kinds
 
 ## 3. Contract Model
 
@@ -227,4 +188,3 @@ library makes the command surface drift away from this contract model, the
 library choice loses.
 
 Boundary ownership detail is defined in `docs/roslyn-lint/boundaries.md`.
->>>>>>> f9fe54d (Finalize phase A planning framework)

@@ -18,6 +18,8 @@ Notes:
   project
 - it must consume only the `AdditionalFiles` inputs provided by the Roslyn host
 - it does not own TOML parsing policy beyond locating the source input
+- the preferred implementation seam is `IAdditionalFileConfigSelector`
+- the preferred selected payload type is `AdditionalFileConfigSelection`
 
 ## ConfigurationModelParsing
 
@@ -31,6 +33,9 @@ Notes:
 - syntax callbacks must not parse raw TOML strings directly
 - the preferred implementation is a shared immutable config object created once
   per compilation
+- the preferred parsing seam is `ITomlConfigParser`
+- the preferred payload types are `DeMagicConfig`, `Dm001Options`, and
+  `Dm002Options`
 
 ## DiagnosticSeverityMapping
 
@@ -44,6 +49,7 @@ Notes:
 - analyzer rule callbacks should not duplicate severity parsing
 - rule callbacks should consume precomputed descriptor or severity state rather
   than rebuild it per syntax node
+- the preferred closed vocabulary type is the `ConfiguredSeverity` enum
 
 ## DM001ConstantConsolidationRule
 
@@ -72,6 +78,8 @@ Notes:
 - it does not own comment or documentation scanning in v1
 - replacement with a new analyzer type name is preferred over keeping the
   `MagicStringAnalyzer` type
+- the preferred payload types are `ForbiddenPattern`,
+  `CompiledForbiddenPattern`, and the `ForbiddenPatternKind` enum
 
 ## ForbiddenPatternCompilation
 
@@ -83,6 +91,7 @@ Notes:
 
 - this boundary should remain testable without Roslyn callback wiring
 - matching semantics must stay aligned to the PRD
+- the preferred compilation seam is `IForbiddenPatternCompiler`
 
 ## DiagnosticDescriptorPolicy
 

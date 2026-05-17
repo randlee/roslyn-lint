@@ -1,108 +1,3 @@
-<<<<<<< HEAD
-# roslyn-lint Project Plan
-
-## 1. Goal
-
-Phase A establishes the formal documentation and implementation baseline for
-the `roslyn-lint` suite and delivers the first production-ready
-`Roslyn.DeMagic` line. Detailed `roslyn-lint` CLI product work is deferred to
-the next requirements pass.
-
-The current repository implementation is treated as a spike baseline only.
-Anything that does not satisfy the PRD or the formal docs may be deleted or
-replaced.
-
-## 1.1 Documentation Structure
-
-Top-level product docs:
-- [`requirements.md`](./requirements.md)
-- [`architecture.md`](./architecture.md)
-- [`project-plan.md`](./project-plan.md)
-
-Project-level docs:
-- [`docs/roslyn-demagic/requirements.md`](./roslyn-demagic/requirements.md)
-- [`docs/roslyn-demagic/architecture.md`](./roslyn-demagic/architecture.md)
-- [`docs/roslyn-lint/requirements.md`](./roslyn-lint/requirements.md)
-- [`docs/roslyn-lint/architecture.md`](./roslyn-lint/architecture.md)
-
-Active phase planning:
-- [`docs/phase-A/plan-phase-A.md`](./phase-A/plan-phase-A.md)
-
-## 2. Deliverables
-
-Phase A must deliver:
-- formal repo-level requirements, architecture, and project-plan docs
-- per-project requirements and architecture docs for `Roslyn.DeMagic` and
-  `roslyn-lint`
-- a documented phase-A plan with sprint-level execution breakdown
-- a `Roslyn.DeMagic` implementation aligned to the PRD
-- a minimal but explicit CLI ownership boundary that prevents analyzer/CLI
-  drift before the dedicated CLI requirements arrive
-- test, CI, packaging, and release gates that prove the documented behavior
-
-## 3. Projects
-
-The active production projects are:
-- `src/Roslyn.DeMagic`
-- `src/Roslyn.Lint`
-
-The active test projects are:
-- `tests/Roslyn.DeMagic.Tests`
-- `tests/Roslyn.Lint.Tests`
-
-Ownership detail is defined in:
-- [`docs/roslyn-demagic/requirements.md`](./roslyn-demagic/requirements.md)
-- [`docs/roslyn-demagic/architecture.md`](./roslyn-demagic/architecture.md)
-- [`docs/roslyn-lint/requirements.md`](./roslyn-lint/requirements.md)
-- [`docs/roslyn-lint/architecture.md`](./roslyn-lint/architecture.md)
-
-## 4. Current Baseline Assessment
-
-Current repository state:
-- package and solution scaffolding exist
-- CI and publish workflows exist
-- analyzer and CLI spike implementations exist
-- tests exist for the current spike behavior
-
-Current baseline risks:
-- current analyzer behavior does not yet match the formal PRD
-- current CLI execution path is more of a local analysis spike than a proven
-  product architecture, but Phase A will not finalize that behavior
-- current docs were placeholders before Phase A planning
-
-Disposition rule:
-- no current code path is preserved merely because it exists
-- code is retained only if it satisfies the documented requirements and
-  architecture
-
-## 5. Work Sequence
-
-### Phase A: Formalize And Deliver `Roslyn.DeMagic` v1 [ACTIVE]
-
-Status summary:
-- worktree: `integration/phase-A`
-- target branch: `develop`
-- active scope: document framework, product contract, project-local ownership,
-  and first production implementation line
-
-Phase-A deliverables are planned in:
-- [`docs/phase-A/plan-phase-A.md`](./phase-A/plan-phase-A.md)
-
-Acceptance gates:
-- repo-level requirements, architecture, and plan are complete
-- per-project requirements and architecture docs exist
-- phase-A sprint docs exist and define concrete ownership
-- `Roslyn.DeMagic` behavior matches documented rule and config contracts
-- CLI ownership remains explicit and non-conflicting while detailed behavior is
-  deferred
-- CI, tests, and packaging validate the final line
-
-### Future Phases
-
-Future phases are out of scope until Phase A lands. Once Phase A is complete,
-the project plan should be extended with the next analyzer or tooling phase
-rather than overloading this document with speculative future work.
-=======
 # Roslyn Lint Suite Project Plan
 
 ## 1. Goal
@@ -121,6 +16,8 @@ Phase A deliverables:
 - suite-level requirements, architecture, and project plan
 - project-level requirements and architecture for `Roslyn.DeMagic`
 - project-level requirements and architecture for `roslyn-lint`
+- project-level boundary inventories for both projects
+- accepted repository ADRs for enforceable Phase A decisions
 - a sprinted Phase A plan
 - a PRD-aligned `Roslyn.DeMagic` v1 implementation
 - a CLI design baseline aligned with the repository's AI-first CLI rules
@@ -190,18 +87,35 @@ paths:
 Planned replacement-oriented analyzer implementation units:
 
 - `src/Roslyn.DeMagic/Configuration/DeMagicConfig.cs`
+- `src/Roslyn.DeMagic/Configuration/Dm001Options.cs`
+- `src/Roslyn.DeMagic/Configuration/Dm002Options.cs`
+- `src/Roslyn.DeMagic/Configuration/ConfiguredSeverity.cs`
+- `src/Roslyn.DeMagic/Configuration/AdditionalFileConfigSelection.cs`
+- `src/Roslyn.DeMagic/Configuration/IAdditionalFileConfigSelector.cs`
+- `src/Roslyn.DeMagic/Configuration/ITomlConfigParser.cs`
 - `src/Roslyn.DeMagic/Configuration/DeMagicConfigLoader.cs`
 - `src/Roslyn.DeMagic/Diagnostics/DeMagicDiagnosticDescriptors.cs`
+- `src/Roslyn.DeMagic/Patterns/ForbiddenPattern.cs`
+- `src/Roslyn.DeMagic/Patterns/ForbiddenPatternKind.cs`
+- `src/Roslyn.DeMagic/Patterns/CompiledForbiddenPattern.cs`
+- `src/Roslyn.DeMagic/Patterns/IForbiddenPatternCompiler.cs`
 - `src/Roslyn.DeMagic/Patterns/ForbiddenPatternMatcher.cs`
 - `src/Roslyn.DeMagic/Analyzers/DM001ConstantConsolidationAnalyzer.cs`
 - `src/Roslyn.DeMagic/Analyzers/DM002ForbiddenStringLiteralAnalyzer.cs`
 
 Planned replacement-oriented CLI implementation units when CLI work resumes:
 
-- `src/Roslyn.Lint/Contracts/`
-- `src/Roslyn.Lint/Operations/`
-- `src/Roslyn.Lint/Serialization/`
-- `src/Roslyn.Lint/Formatting/`
+- `src/Roslyn.Lint/Contracts/CliEnvelope.cs`
+- `src/Roslyn.Lint/Contracts/CliError.cs`
+- `src/Roslyn.Lint/Contracts/CliWarning.cs`
+- `src/Roslyn.Lint/Contracts/CliErrorKind.cs`
+- `src/Roslyn.Lint/Contracts/LintRequest.cs`
+- `src/Roslyn.Lint/Contracts/LintResult.cs`
+- `src/Roslyn.Lint/Contracts/LintIssue.cs`
+- `src/Roslyn.Lint/Operations/ICommandOperation.cs`
+- `src/Roslyn.Lint/Operations/ILintWorkspaceAdapter.cs`
+- `src/Roslyn.Lint/Serialization/IJsonEnvelopeWriter.cs`
+- `src/Roslyn.Lint/Formatting/IHumanOutputFormatter.cs`
 - `src/Roslyn.Lint/Adapters/`
 - `tests/Roslyn.Lint.Tests/Contracts/`
 - `tests/Roslyn.Lint.Tests/Operations/`
@@ -223,4 +137,3 @@ Planned replacement-oriented CLI implementation units when CLI work resumes:
 - if a current file name or class name encodes the rejected spike semantics,
   replacement with new files and types is preferred over keeping the old names
   and editing their internals
->>>>>>> f9fe54d (Finalize phase A planning framework)

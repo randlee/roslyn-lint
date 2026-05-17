@@ -1,53 +1,5 @@
 ---
 id: A4
-<<<<<<< HEAD
-title: Analyzer packaging, release gate, and CLI deferral boundary
-status: planned
-branch: integration/phase-A
-worktree: /Users/randlee/Documents/github/roslyn-lint-worktrees/integration/phase-A
-target: develop
----
-
-# Sprint A4 — Analyzer Packaging, Release Gate, And CLI Deferral Boundary
-
-## Goal
-
-Close the analyzer packaging and release path, and explicitly defer detailed
-CLI behavior until dedicated CLI requirements are available.
-
-## Hard Dependencies
-
-- `A2` complete
-- `A3` complete
-
-## Exact Targets
-
-- `tests/Roslyn.Lint.Tests/`
-- `.github/workflows/ci.yml`
-- `.github/workflows/publish.yml`
-
-## Required Work
-
-- verify analyzer and tool packaging on the shared release line
-- align release automation with the documented analyzer-first delivery path
-- keep the CLI project boundary documented without finalizing detailed CLI
-  behavior prematurely
-
-## Acceptance Criteria
-
-- analyzer packaging is validated end to end
-- tool packaging remains valid
-- CI and publish workflows validate the final Phase A delivery line
-- the repo no longer implies that current CLI spike behavior is the final
-  contract
-
-## Required Validation
-
-- `dotnet build roslyn-lint.sln --configuration Release`
-- `dotnet test roslyn-lint.sln --configuration Release`
-- `dotnet pack src/Roslyn.DeMagic/Roslyn.DeMagic.csproj -c Release --no-build`
-- `dotnet pack src/Roslyn.Lint/Roslyn.Lint.csproj -c Release --no-build`
-=======
 title: Packaging and CLI baseline correction
 status: planned
 branch: integration/phase-A
@@ -80,11 +32,35 @@ target: Roslyn.DeMagic-and-roslyn-lint
 - `src/Roslyn.DeMagic/AnalyzerReleases.Unshipped.md`
 - `src/Roslyn.Lint/Program.cs`
 - `src/Roslyn.Lint/Commands/LintCommand.cs`
+- `src/Roslyn.Lint/Contracts/CliEnvelope.cs`
+- `src/Roslyn.Lint/Contracts/CliError.cs`
+- `src/Roslyn.Lint/Contracts/CliWarning.cs`
+- `src/Roslyn.Lint/Contracts/CliErrorKind.cs`
+- `src/Roslyn.Lint/Contracts/LintRequest.cs`
+- `src/Roslyn.Lint/Contracts/LintResult.cs`
+- `src/Roslyn.Lint/Contracts/LintIssue.cs`
+- `src/Roslyn.Lint/Operations/ICommandOperation.cs`
+- `src/Roslyn.Lint/Operations/ILintWorkspaceAdapter.cs`
+- `src/Roslyn.Lint/Serialization/IJsonEnvelopeWriter.cs`
+- `src/Roslyn.Lint/Formatting/IHumanOutputFormatter.cs`
 - `src/Roslyn.Lint/Roslyn.Lint.csproj`
 - `tests/Roslyn.Lint.Tests/Commands/LintCommandSettingsTests.cs`
+- `tests/Roslyn.Lint.Tests/Contracts/CliEnvelopeSerializationTests.cs`
+- `tests/Roslyn.Lint.Tests/Operations/LintOperationContractTests.cs`
 - `.github/workflows/ci.yml`
 - `.github/workflows/publish.yml`
 - `README.md`
+
+## Important Interfaces, Records/Structs, and Enums
+
+- interfaces:
+  `ICommandOperation<TRequest, TResponse>`, `ILintWorkspaceAdapter`,
+  `IJsonEnvelopeWriter`, `IHumanOutputFormatter<TResponse>`
+- immutable CLI payload types:
+  `CliEnvelope<TResult>`, `CliError`, `CliWarning`,
+  `LintRequest`, `LintResult`, `LintIssue`
+- enums:
+  `CliErrorKind`
 
 ## Required Work
 
@@ -96,12 +72,16 @@ target: Roslyn.DeMagic-and-roslyn-lint
   typed errors, MCP-ready DTOs, and auditable command pairs
 - make explicit that `Program.cs` and `LintCommand.cs` are disposable if they
   obstruct the approved CLI layering
+- document the exact contract types that future CLI implementation must create
+  before adding more commands or features
 
 ## Acceptance Criteria
 
 - analyzer packaging is documented and testable
 - analyzer package metadata no longer describes rejected spike behavior
 - the CLI baseline is aligned to the approved AI-first contract rules
+- the CLI baseline names the contract interfaces and immutable payload types
+  required before feature expansion
 - the repo no longer implies the current CLI spike is the accepted design
 - noncompliant CLI spike structure is planned for replacement, not preservation
 
@@ -112,4 +92,3 @@ target: Roslyn.DeMagic-and-roslyn-lint
 - `dotnet test roslyn-lint.sln --configuration Release --verbosity normal`
 - `dotnet pack src/Roslyn.DeMagic/Roslyn.DeMagic.csproj --configuration Release --no-build`
 - `git diff --check`
->>>>>>> f9fe54d (Finalize phase A planning framework)

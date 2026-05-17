@@ -1,51 +1,5 @@
 ---
 id: A3
-<<<<<<< HEAD
-title: DM002 and analyzer contract alignment
-status: planned
-branch: integration/phase-A
-worktree: /Users/randlee/Documents/github/roslyn-lint-worktrees/integration/phase-A
-target: develop
----
-
-# Sprint A3 — `DM002` And Analyzer Contract Alignment
-
-## Goal
-
-Implement the formal forbidden-string-literal contract for `DM002` and align
-the analyzer package metadata with the documented delivery line.
-
-## Hard Dependencies
-
-- `A2` complete
-
-## Exact Targets
-
-- `src/Roslyn.DeMagic/`
-- `tests/Roslyn.DeMagic.Tests/`
-- `src/Roslyn.DeMagic/AnalyzerReleases.Shipped.md`
-- `src/Roslyn.DeMagic/AnalyzerReleases.Unshipped.md`
-
-## Required Work
-
-- replace or refactor current `DM002` implementation to support exact/prefix/suffix/substring matching
-- align diagnostic category and default severity with the formal requirement
-- ensure analyzer release tracking files reflect the real rule surface
-- add tests for pattern matching, exclusions, and case-sensitivity behavior
-
-## Acceptance Criteria
-
-- `DM002` matches the documented pattern model
-- diagnostic metadata matches the formal contract
-- analyzer release tracking is updated consistently
-- tests prove documented `DM002` behavior
-
-## Required Validation
-
-- `dotnet build roslyn-lint.sln --configuration Release`
-- `dotnet test tests/Roslyn.DeMagic.Tests/Roslyn.DeMagic.Tests.csproj --configuration Release`
-- `dotnet pack src/Roslyn.DeMagic/Roslyn.DeMagic.csproj -c Release --no-build`
-=======
 title: DM002 and analyzer hardening
 status: planned
 branch: integration/phase-A
@@ -73,6 +27,10 @@ target: Roslyn.DeMagic
 
 - `src/Roslyn.DeMagic/Analyzers/MagicStringAnalyzer.cs`
 - `src/Roslyn.DeMagic/Analyzers/DM002ForbiddenStringLiteralAnalyzer.cs`
+- `src/Roslyn.DeMagic/Patterns/IForbiddenPatternCompiler.cs`
+- `src/Roslyn.DeMagic/Patterns/ForbiddenPattern.cs`
+- `src/Roslyn.DeMagic/Patterns/ForbiddenPatternKind.cs`
+- `src/Roslyn.DeMagic/Patterns/CompiledForbiddenPattern.cs`
 - `src/Roslyn.DeMagic/Patterns/ForbiddenPatternMatcher.cs`
 - `src/Roslyn.DeMagic/Configuration/DeMagicConfig.cs`
 - `src/Roslyn.DeMagic/Diagnostics/DeMagicDiagnosticDescriptors.cs`
@@ -80,6 +38,17 @@ target: Roslyn.DeMagic
 - `src/Roslyn.DeMagic/AnalyzerReleases.Unshipped.md`
 - `tests/Roslyn.DeMagic.Tests/Analyzers/MagicStringAnalyzerTests.cs`
 - `tests/Roslyn.DeMagic.Tests/Analyzers/DM002ForbiddenStringLiteralAnalyzerTests.cs`
+- `tests/Roslyn.DeMagic.Tests/Patterns/ForbiddenPatternMatcherTests.cs`
+- `tests/Roslyn.DeMagic.Tests/Patterns/ForbiddenPatternCompilerTests.cs`
+
+## Important Interfaces, Records/Structs, and Enums
+
+- interfaces:
+  `IForbiddenPatternCompiler`
+- immutable pattern payload types:
+  `ForbiddenPattern`, `CompiledForbiddenPattern`
+- enums:
+  `ForbiddenPatternKind`, `ConfiguredSeverity`
 
 ## Required Work
 
@@ -91,11 +60,15 @@ target: Roslyn.DeMagic
 - validate graceful disablement, invalid-config, and severity behavior
 - align analyzer release metadata with the actual rule set and diagnostic
   categories
+- ensure the pattern compiler and matcher boundaries are testable without
+  analyzer callback registration
 
 ## Acceptance Criteria
 
 - `DM002` behavior matches the PRD
 - pattern matching is covered by positive and negative tests
+- exact, prefix, suffix, and substring matching semantics are represented by a
+  closed enum and explicit payload types
 - release metadata and descriptor categories match the approved diagnostics
 - spike-era generic magic-string semantics are no longer part of the product
 
@@ -105,4 +78,3 @@ target: Roslyn.DeMagic
 - `dotnet build src/Roslyn.DeMagic/Roslyn.DeMagic.csproj --configuration Release`
 - `dotnet test tests/Roslyn.DeMagic.Tests/Roslyn.DeMagic.Tests.csproj --configuration Release --verbosity normal`
 - `git diff --check`
->>>>>>> f9fe54d (Finalize phase A planning framework)

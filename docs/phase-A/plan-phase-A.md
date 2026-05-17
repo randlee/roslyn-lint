@@ -1,67 +1,3 @@
-<<<<<<< HEAD
----
-id: phase-A
-title: Formal docs framework and Roslyn.DeMagic v1
-status: planned
-branch: integration/phase-A
-worktree: /Users/randlee/Documents/github/roslyn-lint-worktrees/integration/phase-A
-target: develop
----
-
-# Phase A — Formal Docs Framework And `Roslyn.DeMagic` v1
-
-## Goal
-
-Establish the `atm-core`-style documentation framework for this repository and
-deliver the first production-ready `Roslyn.DeMagic` implementation line.
-Detailed CLI product work is deferred.
-
-## Current Baseline
-
-The repository already contains:
-- solution and package scaffolding
-- analyzer and CLI spike implementations
-- basic tests
-- CI and publish workflows
-
-The repository does not yet have:
-- formal repo-level requirements, architecture, and project planning
-- per-project requirements and architecture docs
-- a documented decision on which current code is authoritative versus disposable
-- a production-confirmed implementation of the PRD-defined `DM001` and `DM002`
-  contracts
-
-## Phase Deliverables
-
-- repo-level docs:
-  - `docs/requirements.md`
-  - `docs/architecture.md`
-  - `docs/project-plan.md`
-- project-level docs:
-  - `docs/roslyn-demagic/requirements.md`
-  - `docs/roslyn-demagic/architecture.md`
-  - `docs/roslyn-lint/requirements.md`
-  - `docs/roslyn-lint/architecture.md`
-- sprint docs for concrete implementation sequencing
-- code aligned to the documented target, with deletion or replacement of
-  conflicting spike code where necessary
-
-## Sprint Sequence
-
-- [`sprint-A1.md`](./sprint-A1.md) — docs framework and baseline disposition
-- [`sprint-A2.md`](./sprint-A2.md) — config model and `DM001`
-- [`sprint-A3.md`](./sprint-A3.md) — `DM002` and analyzer contract alignment
-- [`sprint-A4.md`](./sprint-A4.md) — analyzer packaging, release gate, and CLI deferral boundary
-
-## Acceptance Criteria
-
-- all required docs exist and agree on project ownership
-- current code disposition is explicit: keep, refactor, replace, or delete
-- `Roslyn.DeMagic` matches the documented rule and config contract
-- `roslyn-lint` remains documented as a separate project without hijacking the
-  analyzer contract before later CLI requirements are written
-- CI, tests, and packaging support the documented delivery line
-=======
 # Phase A Plan
 
 ## 1. Goal
@@ -100,14 +36,23 @@ design line rather than assuming the current spike is valid.
 
 - `src/Roslyn.DeMagic/Analyzers/MagicNumberAnalyzer.cs`
 - `src/Roslyn.DeMagic/Analyzers/MagicStringAnalyzer.cs`
+- `src/Roslyn.DeMagic/Configuration/`
+- `src/Roslyn.DeMagic/Diagnostics/`
+- `src/Roslyn.DeMagic/Patterns/`
 - `src/Roslyn.DeMagic/AnalyzerReleases.Shipped.md`
 - `src/Roslyn.DeMagic/AnalyzerReleases.Unshipped.md`
 - `src/Roslyn.DeMagic/Roslyn.DeMagic.csproj`
 - `tests/Roslyn.DeMagic.Tests/Analyzers/`
 - `src/Roslyn.Lint/Program.cs`
 - `src/Roslyn.Lint/Commands/LintCommand.cs`
+- `src/Roslyn.Lint/Contracts/`
+- `src/Roslyn.Lint/Operations/`
+- `src/Roslyn.Lint/Serialization/`
+- `src/Roslyn.Lint/Formatting/`
 - `src/Roslyn.Lint/Roslyn.Lint.csproj`
 - `tests/Roslyn.Lint.Tests/Commands/`
+- `tests/Roslyn.Lint.Tests/Contracts/`
+- `tests/Roslyn.Lint.Tests/Operations/`
 - `.github/workflows/ci.yml`
 - `.github/workflows/publish.yml`
 
@@ -132,6 +77,24 @@ design line rather than assuming the current spike is valid.
 - no sprint in Phase A should preserve current spike semantics merely because
   code already exists
 
+### 7.1 Named Type Inventory
+
+Phase A planning now assumes these implementation types will exist or be
+introduced during the development sprints:
+
+- analyzer configuration and boundary types:
+  `IAdditionalFileConfigSelector`, `ITomlConfigParser`,
+  `DeMagicConfig`, `Dm001Options`, `Dm002Options`,
+  `AdditionalFileConfigSelection`, `ConfiguredSeverity`
+- analyzer pattern types:
+  `IForbiddenPatternCompiler`, `ForbiddenPattern`,
+  `CompiledForbiddenPattern`, `ForbiddenPatternKind`
+- CLI contract and boundary types:
+  `ICommandOperation<TRequest, TResponse>`, `ILintWorkspaceAdapter`,
+  `IJsonEnvelopeWriter`, `IHumanOutputFormatter<TResponse>`,
+  `CliEnvelope<TResult>`, `CliError`, `CliWarning`,
+  `LintRequest`, `LintResult`, `LintIssue`, `CliErrorKind`
+
 ## 8. Acceptance
 
 Phase A is complete only when:
@@ -145,4 +108,3 @@ Phase A is complete only when:
   noncompliant spike code over preserving it through compatibility-driven edits
 - sprint plans contain enough exact targets and validation commands to drive
   implementation directly
->>>>>>> f9fe54d (Finalize phase A planning framework)

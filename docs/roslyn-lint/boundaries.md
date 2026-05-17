@@ -27,6 +27,7 @@ Notes:
 - this boundary keeps parser concerns out of the operation layer
 - request DTOs must remain reusable by a future MCP wrapper
 - parser-specific option objects must not leak past this boundary
+- the preferred request payload type for the current CLI line is `LintRequest`
 
 ## OperationLayer
 
@@ -41,6 +42,8 @@ Notes:
 - if current CLI code does not separate this layer, replacement is preferred
 - analyzer invocation, workspace traversal, and future repository operations all
   belong here rather than in command handlers
+- the preferred boundary seams are `ICommandOperation<TRequest, TResponse>` and
+  `ILintWorkspaceAdapter`
 
 ## ResponseDtoConstruction
 
@@ -54,6 +57,8 @@ Notes:
 - response DTOs must be transport-neutral business payloads
 - the top-level envelope must expose `success`, `operation`, and exactly one of
   `result` or `error`
+- the preferred payload types are `CliEnvelope<TResult>`, `LintResult`,
+  `LintIssue`, `CliError`, and `CliWarning`
 
 ## JsonSerializationPolicy
 
@@ -67,6 +72,7 @@ Notes:
 - CLI and future MCP surfaces must not drift on naming, omission, or enum
   policy
 - JSON envelope stability tests should target this boundary directly
+- the preferred writing seam is `IJsonEnvelopeWriter`
 
 ## HumanReadableFormatting
 
@@ -78,6 +84,7 @@ Notes:
 
 - this boundary is secondary to the machine contract
 - no business payload may exist only in this layer
+- the preferred presentation seam is `IHumanOutputFormatter<TResponse>`
 
 ## ErrorContractPolicy
 
@@ -91,6 +98,7 @@ Notes:
 - `--json` failures must use this same contract family
 - prose-only stderr errors are not acceptable as the primary interface
 - stable code registries and error kinds should be centralized here
+- the preferred closed vocabulary type is the `CliErrorKind` enum
 
 ## AdapterBoundary
 
