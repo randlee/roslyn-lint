@@ -57,7 +57,9 @@ Before starting a sprint:
 8. If QA fails, `team-lead` triages the findings across worktrees and
    determines the promoted fix branch.
 9. After triage completes, `team-lead` routes concrete fixes back to `crl`
-   using `fix-assignment.xml.j2`.
+   using `fix-assignment.xml.j2`. Every fix assignment must include
+   `sprint_doc`, and that sprint document remains authoritative if the task
+   summary omits or compresses details.
 
 ## Phase-End Review
 
