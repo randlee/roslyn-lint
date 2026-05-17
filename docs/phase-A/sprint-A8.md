@@ -26,8 +26,6 @@ target: integration/phase-A
 
 ## Exact Targets
 
-- `src/Roslyn.Lint.Abstractions/Attributes/BoundaryDeclarationAttribute.cs`
-- `src/Roslyn.Lint.Abstractions/Attributes/LintToolAttribute.cs`
 - `src/Roslyn.Lint/Contracts/ViewRequest.cs`
 - `src/Roslyn.Lint/Contracts/ViewResult.cs`
 - `src/Roslyn.Lint/Operations/IViewOperation.cs`
@@ -38,8 +36,6 @@ target: integration/phase-A
 - `src/Roslyn.Lint/Backends/RoslynDeMagicToolModule.cs`
 - `tests/Roslyn.Lint.Tests/Commands/ViewCommandTests.cs`
 - `tests/Roslyn.Lint.Tests/Operations/RunViewOperationTests.cs`
-- `tests/Roslyn.Lint.Tests/Abstractions/BoundaryDeclarationAttributeTests.cs`
-- `tests/Roslyn.Lint.Tests/Abstractions/LintToolAttributeTests.cs`
 - `README.md`
 
 ## Important Interfaces, Records/Structs, And Enums
@@ -48,20 +44,15 @@ target: integration/phase-A
   `ILintToolModule`, `IViewOperation`
 - immutable payload types:
   `ToolDescriptor`, `ViewRequest`, `ViewResult`
-- attributes:
-  `BoundaryDeclarationAttribute`, `LintToolAttribute`
-
 ## Required Work
 
 - implement stable `view` targets needed to use the suite immediately:
   `view tools` and `view rules`
-- surface `roslyn-demagic` rule metadata through `view rules`
-- use `LintToolAttribute` to mark tool modules with stable IDs and display
-  metadata
-- use `BoundaryDeclarationAttribute` for suite-specific boundary declarations
-  only if the implementation actually needs a source-level marker
+- surface `demagic` rule metadata through `view rules`
 - keep standard `.NET` and Roslyn suppression/configuration mechanisms primary
   for suppressing analyzer findings
+- do not invent custom attribute types in this sprint unless a concrete need is
+  documented first
 - harden module discovery, descriptor construction, and top-level rendering so
   a second tool can be added without reworking the architecture
 
@@ -69,9 +60,7 @@ target: integration/phase-A
 
 - `roslyn-lint view tools` and `roslyn-lint view rules` are implemented
 - `view` results use the stable top-level envelope
-- `LintToolAttribute` and any boundary attribute use remains suite-specific and
-  does not replace normal warning suppression
-- `roslyn-demagic` rule metadata is inspectable through the CLI
+- `demagic` rule metadata is inspectable through the CLI
 - the top-level tool-module model is ready for additional tool packages
 
 ## Required Validation

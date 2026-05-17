@@ -39,8 +39,8 @@ This package is the planned home for:
 - shared enums used by tool modules
 - shared module and handler interfaces used by package-owned tools
 - tool descriptors and stable tool identifiers
-- suite-specific consumer or source attributes when standard `.NET` mechanisms
-  are insufficient
+- suite-specific consumer or source attributes only when standard `.NET`
+  mechanisms are insufficient and a specific need is documented first
 
 This means:
 
@@ -51,9 +51,8 @@ This means:
 - prefer standard suppression/configuration mechanisms first:
   `#pragma warning`, `SuppressMessage`, `.editorconfig`, and normal analyzer
   configuration
-- define custom attributes only for suite-specific semantics such as boundary
-  declarations, tool metadata, or ownership markers that standard `.NET`
-  mechanisms do not model cleanly
+- define custom attributes only after a concrete suite-specific need is
+  documented and standard `.NET` mechanisms are shown to be insufficient
 
 ## Consequences
 
@@ -70,7 +69,7 @@ This means:
 
 - some future shared implementation helpers may need a later extraction if real
   duplication appears
-- attribute names for suite-specific semantics remain a later design task
+- any suite-specific attribute set remains a later design task
 
 ## Follow-Up Work
 

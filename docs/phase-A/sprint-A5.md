@@ -38,8 +38,7 @@ target: integration/phase-A
 - `src/Roslyn.Lint.Abstractions/ToolDescriptor.cs`
 - `src/Roslyn.Lint.Abstractions/ILintToolModule.cs`
 - `src/Roslyn.Lint.Abstractions/ILintToolCommandHandler.cs`
-- `src/Roslyn.Lint.Abstractions/Attributes/BoundaryDeclarationAttribute.cs`
-- `src/Roslyn.Lint.Abstractions/Attributes/LintToolAttribute.cs`
+- `src/Roslyn.Lint.Abstractions/Attributes/` reserved only if later justified
 - `src/Roslyn.Lint/Program.cs`
 - `src/Roslyn.Lint/Roslyn.Lint.csproj`
 - `src/Roslyn.Lint/Commands/RegisterLintCommands.cs`
@@ -84,8 +83,8 @@ target: integration/phase-A
 
 - delete the current Spectre command host and replace it with
   `System.CommandLine`
-- create `Roslyn.Lint.Abstractions` with the shared types and attributes
-  approved in `ADR-005`
+- create `Roslyn.Lint.Abstractions` with the shared types approved in
+  `ADR-005`
 - keep `Roslyn.Lint.Abstractions` free of parser, dispatch, and CLI-host
   dependencies
 - implement the stable top-level command families:

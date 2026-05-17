@@ -64,8 +64,8 @@ path selected by the caller.
 
 Initial convention:
 
-- `roslyn-lint lint roslyn-demagic`
-  - `lint.roslyn-demagic`
+- `roslyn-lint lint demagic`
+  - `lint.demagic`
 - `roslyn-lint lint fast`
   - `lint.fast`
 - `roslyn-lint lint full`
@@ -95,10 +95,10 @@ Illustrative shape:
 ```json
 {
   "ok": true,
-  "command": "lint.roslyn-demagic",
+  "command": "lint.demagic",
   "data": {
     "status": "pass",
-    "tool": "roslyn-demagic",
+    "tool": "demagic",
     "findings": []
   },
   "diagnostics": []
@@ -122,13 +122,13 @@ Illustrative shape:
 ```json
 {
   "ok": false,
-  "command": "lint.roslyn-demagic",
+  "command": "lint.demagic",
   "error": {
     "kind": "backend_protocol",
     "code": "CLI.BACKEND_PROTOCOL_ERROR",
-    "message": "roslyn-demagic returned unexpected JSON",
+    "message": "demagic returned unexpected JSON",
     "details": {
-      "tool": "roslyn-demagic"
+      "tool": "demagic"
     },
     "suggested_action": "Re-run with the matching roslyn-lint workspace revision"
   },

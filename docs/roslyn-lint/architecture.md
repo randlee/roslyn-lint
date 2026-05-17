@@ -86,7 +86,7 @@ Architectural rules:
 - the family names above are the stable user-facing umbrella surface
 - package-owned tools are selected beneath those families rather than by adding
   new top-level executables
-- `roslyn-demagic` is the first approved lint target
+- `demagic` is the first approved lint target
 - future lint targets must map to package ownership boundaries explicitly
 - `view` remains narrower than `lint` until additional targets are documented
 - top-level `ci` remains distinct from `lint ci`
@@ -124,8 +124,8 @@ Its role is intentionally narrow:
 - shared tool-module interfaces
 - stable tool identifiers and descriptors
 - shared enums used by package-owned tools
-- suite-specific consumer or source attributes when standard `.NET` mechanisms
-  do not model the needed semantics
+- suite-specific consumer or source attributes only if a concrete later need is
+  documented and standard `.NET` mechanisms do not model it adequately
 
 Architectural rules:
 
@@ -133,8 +133,8 @@ Architectural rules:
 - this package must not own dispatch, normalization, or parser concerns
 - standard `.NET` and Roslyn suppression/configuration mechanisms remain the
   default path for analyzer suppression
-- custom attributes are reserved for suite-specific semantics such as boundary
-  declarations, tool metadata, or ownership markers
+- custom attributes are reserved only for future needs that are explicitly
+  justified by later requirements or ADRs
 - `Roslyn.Lint.Core` is deferred until real shared implementation pressure
   exists
 
@@ -149,9 +149,7 @@ The approved CLI implementation shape is:
 - `src/Roslyn.Lint.Abstractions/ToolDescriptor.cs`
 - `src/Roslyn.Lint.Abstractions/ILintToolModule.cs`
 - `src/Roslyn.Lint.Abstractions/ILintToolCommandHandler.cs`
-- `src/Roslyn.Lint.Abstractions/Attributes/`
-- `src/Roslyn.Lint.Abstractions/Attributes/BoundaryDeclarationAttribute.cs`
-- `src/Roslyn.Lint.Abstractions/Attributes/LintToolAttribute.cs`
+- `src/Roslyn.Lint.Abstractions/Attributes/` reserved only if later justified
 - `src/Roslyn.Lint/Commands/RegisterLintCommands.cs`
 - `src/Roslyn.Lint/Commands/RegisterViewCommands.cs`
 - `src/Roslyn.Lint/Commands/RegisterCheckCommands.cs`
@@ -220,8 +218,8 @@ Type guidance:
 - use immutable records or readonly structs for transport-neutral payloads
 - use interfaces for parser-independent dispatch, execution, and rendering
   seams
-- keep custom attribute definitions narrow and suite-specific instead of
-  treating them as generic suppression replacements
+- do not define custom attribute types until a concrete suite-specific need is
+  documented
 
 ## 7. Contract Model
 
@@ -241,7 +239,7 @@ Baseline JSON envelope:
 ```json
 {
   "ok": true,
-  "command": "lint.roslyn-demagic",
+  "command": "lint.demagic",
   "data": {},
   "diagnostics": []
 }
@@ -250,7 +248,7 @@ Baseline JSON envelope:
 ```json
 {
   "ok": false,
-  "command": "lint.roslyn-demagic",
+  "command": "lint.demagic",
   "error": {
     "kind": "config",
     "code": "CLI.CONFIG_ERROR",

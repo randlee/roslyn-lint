@@ -45,7 +45,7 @@ This means:
 - `roslyn-lint lint <tool>` is the primary analyzer entry path
 - package-owned tools are invoked through `roslyn-lint`, either in-process or
   through delegated process execution
-- the first approved lint target is `roslyn-demagic`
+- the first approved lint target is `demagic`
 - named profiles are part of the public command model:
   `roslyn-lint lint fast`, `roslyn-lint lint full`, `roslyn-lint lint ci`
 - top-level `roslyn-lint ci` remains distinct from `roslyn-lint lint ci`

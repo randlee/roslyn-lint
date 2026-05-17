@@ -73,7 +73,7 @@ design line rather than assuming the current spike is valid.
 | A3 | `DM002` hardening and release alignment | Remove remaining spike leftovers, align release metadata, and route analyzer seams through injected interfaces |
 | A4 | CLI orchestration planning reset | Replace the ad hoc CLI baseline with a `creating-ai-clis` and `sc-lint`-aligned orchestration plan |
 | A5 | CLI foundation and abstractions package | Replace Spectre with `System.CommandLine`, add `Roslyn.Lint.Abstractions`, and ship working `version` and `view tools` commands |
-| A6 | DeMagic backend integration and first usable lint flow | Implement `lint roslyn-demagic` through the shared dispatch and contract seams |
+| A6 | DeMagic backend integration and first usable lint flow | Implement `lint demagic` through the shared dispatch and contract seams |
 | A7 | Profiles plus check, clippy, and ci workflows | Implement real local workflow commands using `.NET`-native tooling |
 | A8 | View surfaces, boundary metadata, and tool-module hardening | Implement stable `view` targets and harden the multi-tool module model |
 
@@ -90,7 +90,7 @@ design line rather than assuming the current spike is valid.
   future implementation must follow before any new CLI code lands
 - A5 establishes the real CLI host, abstractions package, and first always-on
   utility commands
-- A6 makes `roslyn-demagic` usable through the top-level CLI
+- A6 makes `demagic` usable through the top-level CLI
 - A7 turns command families into real local developer workflows
 - A8 completes the first usable multi-tool surface and boundary metadata model
 - no sprint in Phase A should preserve current spike semantics merely because
@@ -134,7 +134,7 @@ Phase A is complete only when:
   command identifiers, top-level envelope, parser choice, and backend-dispatch
   seams
 - the CLI implementation exists and supports the first usable commands:
-  `version`, `view tools`, `lint roslyn-demagic`, `lint fast`, `lint full`,
+  `version`, `view tools`, `lint demagic`, `lint fast`, `lint full`,
   `lint ci`, `check`, `clippy`, and top-level `ci`
 - the Phase A execution rules explicitly prefer deleting and replacing
   noncompliant spike code over preserving it through compatibility-driven edits

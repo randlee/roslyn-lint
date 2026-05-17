@@ -30,7 +30,7 @@ Purpose:
 
 Notes:
 
-- `roslyn-lint lint roslyn-demagic` maps to `lint.roslyn-demagic`
+- `roslyn-lint lint demagic` maps to `lint.demagic`
 - `roslyn-lint lint fast` maps to `lint.fast`
 - top-level `ci` remains `ci`, not `lint.ci`
 - machine callers and structured logging must use the same command identity

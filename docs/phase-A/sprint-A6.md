@@ -11,7 +11,7 @@ target: integration/phase-A
 
 ## Goal
 
-- Make `roslyn-lint lint roslyn-demagic` the first real usable command path.
+- Make `roslyn-lint lint demagic` the first real usable command path.
 - Add the dispatch and normalization seams for in-process tool execution.
 - Expose rule and finding payloads through the approved CLI contract.
 
@@ -62,9 +62,9 @@ target: integration/phase-A
 
 ## Required Work
 
-- register `roslyn-demagic` as the first real tool module
+- register `demagic` as the first real tool module
 - implement one shared dispatch seam for in-process tool execution
-- implement `roslyn-lint lint roslyn-demagic`
+- implement `roslyn-lint lint demagic`
 - define the first stable lint payload shape under `data`
 - normalize backend success and failure through the top-level envelope
 - expose JSON and human output for findings without inventing a second payload
@@ -75,8 +75,8 @@ target: integration/phase-A
 
 ## Acceptance Criteria
 
-- `roslyn-lint lint roslyn-demagic` works in human and JSON modes
-- `roslyn-lint lint roslyn-demagic --json` emits `lint.roslyn-demagic`
+- `roslyn-lint lint demagic` works in human and JSON modes
+- `roslyn-lint lint demagic --json` emits `lint.demagic`
 - findings are emitted under `data` rather than as family-specific top-level
   fields
 - backend failures are normalized into `CliError`
@@ -88,5 +88,5 @@ target: integration/phase-A
 - `dotnet restore roslyn-lint.sln`
 - `dotnet build roslyn-lint.sln --configuration Release`
 - `dotnet test tests/Roslyn.Lint.Tests/Roslyn.Lint.Tests.csproj --configuration Release --verbosity normal`
-- `dotnet run --project src/Roslyn.Lint/Roslyn.Lint.csproj -- lint roslyn-demagic --json`
+- `dotnet run --project src/Roslyn.Lint/Roslyn.Lint.csproj -- lint demagic --json`
 - `git diff --check`

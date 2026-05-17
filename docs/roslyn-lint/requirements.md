@@ -30,7 +30,7 @@ Product requirement IDs:
 - `REQ-CLI-PRODUCT-008` Package-owned tools must be surfaced through
   `roslyn-lint`; package-local executables or libraries are implementation
   details, not separate public products.
-- `REQ-CLI-PRODUCT-009` The first approved lint target is `roslyn-demagic`.
+- `REQ-CLI-PRODUCT-009` The first approved lint target is `demagic`.
 - `REQ-CLI-PRODUCT-010` Future lint-target identifiers must map one-to-one to
   backend package ownership boundaries and be documented before exposure.
 - `REQ-CLI-PRODUCT-011` The CLI must scale to a multi-tool suite of roughly
@@ -44,14 +44,14 @@ Extensibility requirement IDs:
   `Roslyn.Lint.Abstractions` for tool-module integration contracts.
 - `REQ-CLI-EXT-002` `Roslyn.Lint.Abstractions` is the planned home for shared
   enums, shared interfaces, tool descriptors, stable tool identifiers, and any
-  suite-specific consumer attributes required by future lint packages.
+  future suite-specific attribute contracts that are explicitly justified.
 - `REQ-CLI-EXT-003` The suite must prefer standard `.NET` and Roslyn
   suppression/configuration mechanisms such as `#pragma warning`,
   `SuppressMessage`, and `.editorconfig` before introducing custom attributes
   for suppression.
-- `REQ-CLI-EXT-004` Custom attributes are allowed only for suite-specific
-  semantics not modeled cleanly by standard `.NET` mechanisms, such as boundary
-  declarations, tool metadata, or ownership markers.
+- `REQ-CLI-EXT-004` Custom attributes are allowed only after a concrete
+  suite-specific need is documented and standard `.NET` mechanisms are shown to
+  be insufficient.
 - `REQ-CLI-EXT-005` `Roslyn.Lint.Core` is not part of the baseline plan and
   must not be introduced until multiple tools prove a real shared-logic need.
 
@@ -77,7 +77,7 @@ Command-surface requirement IDs:
   top-level grouping, but its target inventory may remain narrower than
   `lint`.
 - `REQ-CLI-SURFACE-005` The primary analyzer entry path must be
-  `roslyn-lint lint <tool>`, with `roslyn-demagic` as the first documented
+  `roslyn-lint lint <tool>`, with `demagic` as the first documented
   tool identifier.
 - `REQ-CLI-SURFACE-006` Future backend implementation changes must not require
   changing the public top-level command families or dotted command identifiers.

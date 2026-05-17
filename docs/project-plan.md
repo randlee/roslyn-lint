@@ -67,7 +67,7 @@ Merge target:
 | A3 | `DM002` hardening and release alignment | Remove remaining spike leftovers, align release metadata, and route analyzer seams through interfaces |
 | A4 | CLI orchestration planning reset | Replace the ad hoc CLI baseline with a `creating-ai-clis` and `sc-lint`-aligned orchestration plan |
 | A5 | CLI foundation and abstractions package | Replace Spectre with `System.CommandLine`, add `Roslyn.Lint.Abstractions`, and ship working `version` and `view tools` commands |
-| A6 | DeMagic backend integration and first usable lint flow | Implement `lint roslyn-demagic` through the shared dispatch and contract seams |
+| A6 | DeMagic backend integration and first usable lint flow | Implement `lint demagic` through the shared dispatch and contract seams |
 | A7 | Profiles plus check, clippy, and ci workflows | Implement real local workflow commands using `.NET`-native tooling |
 | A8 | View surfaces, boundary metadata, and tool-module hardening | Implement stable `view` targets and harden the multi-tool module model |
 
@@ -120,8 +120,7 @@ Planned replacement-oriented CLI implementation units when CLI work resumes:
 - `src/Roslyn.Lint.Abstractions/ToolDescriptor.cs`
 - `src/Roslyn.Lint.Abstractions/ILintToolModule.cs`
 - `src/Roslyn.Lint.Abstractions/ILintToolCommandHandler.cs`
-- `src/Roslyn.Lint.Abstractions/Attributes/BoundaryDeclarationAttribute.cs`
-- `src/Roslyn.Lint.Abstractions/Attributes/LintToolAttribute.cs`
+- `src/Roslyn.Lint.Abstractions/Attributes/` reserved only if later justified
 - `src/Roslyn.Lint/Contracts/CliEnvelope.cs`
 - `src/Roslyn.Lint/Contracts/CliError.cs`
 - `src/Roslyn.Lint/Contracts/CliDiagnostic.cs`

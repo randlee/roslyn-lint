@@ -58,8 +58,7 @@ that later CLI development work must follow:
 - `src/Roslyn.Lint.Abstractions/ToolDescriptor.cs`
 - `src/Roslyn.Lint.Abstractions/ILintToolModule.cs`
 - `src/Roslyn.Lint.Abstractions/ILintToolCommandHandler.cs`
-- `src/Roslyn.Lint.Abstractions/Attributes/BoundaryDeclarationAttribute.cs`
-- `src/Roslyn.Lint.Abstractions/Attributes/LintToolAttribute.cs`
+- `src/Roslyn.Lint.Abstractions/Attributes/` reserved only if later justified
 - `src/Roslyn.Lint/Program.cs`
 - `src/Roslyn.Lint/Commands/RegisterLintCommands.cs`
 - `src/Roslyn.Lint/Commands/RegisterViewCommands.cs`
@@ -125,7 +124,7 @@ that later CLI development work must follow:
 
 - define the stable top-level command families as:
   `lint`, `view`, `check`, `clippy`, `ci`, and `version`
-- define the first approved lint target as `roslyn-demagic`
+- define the first approved lint target as `demagic`
 - define the named lint profiles:
   `fast`, `full`, and `ci`
 - define the top-level machine envelope as:
@@ -139,8 +138,7 @@ that later CLI development work must follow:
 - reserve `Roslyn.Lint.Abstractions` as the low-level tool integration package
 - prefer standard `.NET` suppression/configuration mechanisms before inventing
   custom suppression attributes
-- reserve custom attributes for suite-specific semantics such as boundary
-  declarations or tool metadata
+- do not define custom attribute types until a concrete need is documented
 - make explicit that the current Spectre-based spike is not the approved
   implementation line
 - itemize the exact future files and named types that later CLI implementation
