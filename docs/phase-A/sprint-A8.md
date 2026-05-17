@@ -22,6 +22,7 @@ target: integration/phase-A
 - `docs/roslyn-lint/architecture.md`
 - `docs/roslyn-lint/cli-contract.md`
 - `docs/phase-A/sprint-A7.md`
+- `docs/adr/ADR-003-ai-cli-json-contract.md`
 - `docs/adr/ADR-005-roslyn-lint-abstractions-package.md`
 
 ## Exact Targets
@@ -31,17 +32,22 @@ target: integration/phase-A
 - `src/Roslyn.Lint/Operations/IViewOperation.cs`
 - `src/Roslyn.Lint/Operations/RunViewOperation.cs`
 - `src/Roslyn.Lint/Commands/RegisterViewCommands.cs`
+- `src/Roslyn.Lint/Dispatch/IBackendProcessRunner.cs`
+- `src/Roslyn.Lint/Dispatch/ProcessBackendRunner.cs`
+- `src/Roslyn.Lint/Dispatch/BackendJsonNormalizer.cs`
 - `src/Roslyn.Lint/Backends/ViewToolsHandler.cs`
 - `src/Roslyn.Lint/Backends/ViewRulesHandler.cs`
 - `src/Roslyn.Lint/Backends/RoslynDeMagicToolModule.cs`
 - `tests/Roslyn.Lint.Tests/Commands/ViewCommandTests.cs`
+- `tests/Roslyn.Lint.Tests/Dispatch/ProcessBackendRunnerTests.cs`
+- `tests/Roslyn.Lint.Tests/Dispatch/BackendJsonNormalizerTests.cs`
 - `tests/Roslyn.Lint.Tests/Operations/RunViewOperationTests.cs`
 - `README.md`
 
 ## Important Interfaces, Records/Structs, And Enums
 
 - interfaces:
-  `ILintToolModule`, `IViewOperation`
+  `ILintToolModule`, `IViewOperation`, `IBackendProcessRunner`
 - immutable payload types:
   `ToolDescriptor`, `ViewRequest`, `ViewResult`
 ## Required Work
@@ -53,6 +59,8 @@ target: integration/phase-A
   for suppressing analyzer findings
 - do not invent custom attribute types in this sprint unless a concrete need is
   documented first
+- implement and test `IBackendProcessRunner` plus the shared JSON-normalization
+  path for future delegated process backends
 - harden module discovery, descriptor construction, and top-level rendering so
   a second tool can be added without reworking the architecture
 
@@ -61,6 +69,8 @@ target: integration/phase-A
 - `roslyn-lint view tools` and `roslyn-lint view rules` are implemented
 - `view` results use the stable top-level envelope
 - `demagic` rule metadata is inspectable through the CLI
+- delegated process backend execution and JSON normalization are covered by
+  `ProcessBackendRunnerTests` and `BackendJsonNormalizerTests`
 - the top-level tool-module model is ready for additional tool packages
 
 ## Required Validation

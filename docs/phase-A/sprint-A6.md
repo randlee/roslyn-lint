@@ -65,6 +65,8 @@ target: integration/phase-A
 - register `demagic` as the first real tool module
 - implement one shared dispatch seam for in-process tool execution
 - implement `roslyn-lint lint demagic`
+- implement the first `roslyn-lint lint fast` smoke-test path as a documented
+  alias to the `demagic` lint flow only
 - define the first stable lint payload shape under `data`
 - normalize backend success and failure through the top-level envelope
 - expose JSON and human output for findings without inventing a second payload
@@ -77,6 +79,8 @@ target: integration/phase-A
 
 - `roslyn-lint lint demagic` works in human and JSON modes
 - `roslyn-lint lint demagic --json` emits `lint.demagic`
+- `roslyn-lint lint fast --json` works as the documented A6 smoke-test path
+  and emits `lint.fast`
 - findings are emitted under `data` rather than as family-specific top-level
   fields
 - backend failures are normalized into `CliError`
@@ -89,4 +93,5 @@ target: integration/phase-A
 - `dotnet build roslyn-lint.sln --configuration Release`
 - `dotnet test tests/Roslyn.Lint.Tests/Roslyn.Lint.Tests.csproj --configuration Release --verbosity normal`
 - `dotnet run --project src/Roslyn.Lint/Roslyn.Lint.csproj -- lint demagic --json`
+- `dotnet run --project src/Roslyn.Lint/Roslyn.Lint.csproj -- lint fast --json`
 - `git diff --check`

@@ -21,6 +21,7 @@ target: integration/phase-A
 - `docs/roslyn-lint/architecture.md`
 - `docs/roslyn-lint/cli-contract.md`
 - `docs/phase-A/sprint-A6.md`
+- `docs/adr/ADR-003-ai-cli-json-contract.md`
 - `docs/adr/ADR-004-roslyn-lint-command-surface-and-parser.md`
 
 ## Exact Targets
@@ -64,7 +65,8 @@ target: integration/phase-A
 ## Required Work
 
 - implement `lint fast`, `lint full`, and `lint ci`
-- define the profile membership explicitly in code and docs
+- define the profile membership explicitly in code and docs using one
+  authoritative membership table
 - implement `check` as the `.NET` build-and-compile gate
 - implement `clippy` as the stricter analyzer/build gate using `.NET`-native
   tools rather than Rust-specific behavior
@@ -78,12 +80,23 @@ target: integration/phase-A
 ## Acceptance Criteria
 
 - `roslyn-lint lint fast`, `full`, and `ci` are implemented and documented
+- the profile membership table is present in both
+  `docs/roslyn-lint/cli-contract.md` and this sprint doc, and the two match
 - `roslyn-lint check` is implemented and emits the stable envelope in JSON mode
 - `roslyn-lint clippy` is implemented and emits the stable envelope in JSON
   mode
 - `roslyn-lint ci` runs lint plus tests and remains distinct from `lint ci`
 - profile membership is explicit and test-covered
 - raw `dotnet` tool output does not become the public machine contract
+
+## Profile Membership Table
+
+| Profile or command | Required membership in A7 |
+| --- | --- |
+| `lint fast` | `demagic` plus the explicitly documented low-latency lint set |
+| `lint full` | stronger pre-push lint set defined in code and docs |
+| `lint ci` | lint-only CI-parity set defined in code and docs |
+| top-level `ci` | `lint ci` plus test execution |
 
 ## Required Validation
 

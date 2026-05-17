@@ -227,12 +227,24 @@ Profile semantics:
 
 - `fast`
   - low-latency local developer gate
+  - in A6, the first smoke-test implementation may run only `demagic`
+  - in A7, this becomes the first explicit reusable profile with documented
+    membership
 - `full`
   - stronger local pre-push gate
 - `ci`
   - lint-only CI-parity profile
 - top-level `ci`
   - lint plus tests
+
+Planned profile membership table:
+
+| Profile or command | Required membership in A6 | Required membership in A7 |
+| --- | --- | --- |
+| `lint fast` | `demagic` only smoke-test path | `demagic` plus the explicitly documented low-latency lint set |
+| `lint full` | not implemented | stronger pre-push lint set defined in code and docs |
+| `lint ci` | not implemented | lint-only CI-parity set defined in code and docs |
+| top-level `ci` | not implemented | `lint ci` plus test execution |
 
 The distinction between `roslyn-lint lint ci` and top-level `roslyn-lint ci`
 is mandatory.

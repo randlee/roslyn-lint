@@ -75,7 +75,7 @@ This means:
 
 - keep `docs/roslyn-lint/requirements.md`,
   `docs/roslyn-lint/architecture.md`, and
-  `docs/phase-A/sprint-A4.md` aligned with this decision
+  `docs/phase-A/sprint-A5.md` aligned with this decision
 - introduce `Roslyn.Lint.Core` only if two or more tools prove a real shared
   implementation layer
 - document any future custom attribute set explicitly before implementation

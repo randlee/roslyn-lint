@@ -101,10 +101,15 @@ target: integration/phase-A
 
 - the current Spectre-based host is removed from `Roslyn.Lint`
 - `Roslyn.Lint.Abstractions` builds and is referenced from `Roslyn.Lint`
-- `roslyn-lint version --json` returns the stable top-level envelope
-- `roslyn-lint view tools --json` returns the stable top-level envelope
+- `roslyn-lint version --json` returns the stable top-level envelope with
+  `command: "version"` and is covered by
+  `tests/Roslyn.Lint.Tests/Commands/VersionCommandTests.cs`
+- `roslyn-lint view tools --json` returns the stable top-level envelope with
+  `command: "view.tools"` and is covered by
+  `tests/Roslyn.Lint.Tests/Commands/ViewToolsCommandTests.cs`
 - parse errors and missing command paths return JSON `CliError` payloads when
-  `--json` is requested
+  `--json` is requested and are covered by
+  `tests/Roslyn.Lint.Tests/Commands/RootCommandTests.cs`
 - the command families are registered through `System.CommandLine`
 - no low-level shared package depends on the CLI parser or entrypoint
 
