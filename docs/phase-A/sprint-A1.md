@@ -5,6 +5,7 @@ status: complete
 branch: sprint/A1
 worktree: /Users/randlee/Documents/github/roslyn-lint-worktrees/sprint/A1
 target: integration/phase-A
+qa_fix_commit: f0668e0
 ---
 
 # Sprint A1 - Roslyn.DeMagic Analyzer Foundation
