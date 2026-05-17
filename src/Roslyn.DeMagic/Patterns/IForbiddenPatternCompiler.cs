@@ -5,6 +5,13 @@ using System.Collections.Immutable;
 public interface IForbiddenPatternCompiler
 {
     ImmutableArray<CompiledForbiddenPattern> Compile(
-        ImmutableArray<string> patterns,
+        ImmutableArray<ForbiddenPattern> patterns,
         bool caseSensitive);
+
+    CompiledForbiddenPattern Compile(ForbiddenPattern pattern, bool caseSensitive);
+
+    bool TryMatch(
+        string candidate,
+        ImmutableArray<CompiledForbiddenPattern> patterns,
+        out CompiledForbiddenPattern matchedPattern);
 }
