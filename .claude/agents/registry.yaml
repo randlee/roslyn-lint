@@ -11,3 +11,22 @@ agents:
   rlint-qa:
     version: 0.1.0
     path: .claude/agents/rlint-qa.md
+skills:
+  codex-orchestration:
+    version: 0.1.0
+    depends_on:
+      quality-management-gh: 1.x
+      quality-mgr: 0.x
+      req-qa: 0.x
+      arch-qa: 0.x
+      rlint-qa: 0.x
+  quality-management-gh:
+    version: 1.0.0
+  plan-hardening:
+    version: 1.1.0
+    depends_on:
+      codex-orchestration: 0.x
+  restore-team-communications:
+    version: 0.2.0
+  sprint-report:
+    version: 3.1.0
