@@ -9,7 +9,6 @@ public sealed class AdditionalFileConfigSelector : IAdditionalFileConfigSelector
     [
         "config-test.toml",
         "config-src.toml",
-        "demagic.toml",
     ];
 
     public AdditionalFileConfigSelection? Select(ImmutableArray<AdditionalText> additionalFiles)

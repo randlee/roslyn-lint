@@ -5,7 +5,7 @@ using System.Collections.Immutable;
 public sealed class ForbiddenPatternMatcher : IForbiddenPatternCompiler
 {
     public ImmutableArray<CompiledForbiddenPattern> Compile(
-        ImmutableArray<string> patterns,
+        ImmutableArray<ForbiddenPattern> patterns,
         bool caseSensitive)
     {
         var builder = ImmutableArray.CreateBuilder<CompiledForbiddenPattern>(patterns.Length);
@@ -17,8 +17,9 @@ public sealed class ForbiddenPatternMatcher : IForbiddenPatternCompiler
         return builder.MoveToImmutable();
     }
 
-    public CompiledForbiddenPattern Compile(string rawPattern, bool caseSensitive)
+    public CompiledForbiddenPattern Compile(ForbiddenPattern pattern, bool caseSensitive)
     {
+        var rawPattern = pattern.RawValue;
         var kind = GetKind(rawPattern);
         var matchValue = kind switch
         {
