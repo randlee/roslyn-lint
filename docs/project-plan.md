@@ -58,7 +58,8 @@ Merge target:
 
 | Sprint | Scope | Required outcome |
 | --- | --- | --- |
-| A1 | Documentation reset | Replace placeholders and unapproved assumptions with formal suite and project docs |
+| A0 | Documentation reset | Replace placeholders and unapproved assumptions with formal suite and project docs |
+| A1 | Analyzer foundation | Add reusable configuration and forbidden-pattern infrastructure for `Roslyn.DeMagic` |
 | A2 | `DM001` design and config path | Align constant-consolidation behavior with the PRD and configuration model |
 | A3 | `DM002` and analyzer hardening | Align forbidden-string analysis, config parsing, and analyzer validation with the PRD |
 | A4 | Packaging and CLI baseline correction | Finalize analyzer packaging gates and lock the CLI design baseline to AI-first contract rules |
