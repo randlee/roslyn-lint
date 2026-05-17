@@ -35,6 +35,8 @@
 
   <!-- Place analyzer DLL in the correct NuGet analyzers folder -->
   <ItemGroup>
+    <None Include="AnalyzerReleases.Shipped.md" Pack="true" PackagePath="" />
+    <None Include="AnalyzerReleases.Unshipped.md" Pack="true" PackagePath="" />
     <None Include="$(OutputPath)$(AssemblyName).dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
     <None Include="..\..\README.md" Pack="true" PackagePath="\" />
   </ItemGroup>
