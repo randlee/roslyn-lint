@@ -39,6 +39,10 @@ target: repo-docs
 - `docs/phase-A/sprint-A2.md`
 - `docs/phase-A/sprint-A3.md`
 - `docs/phase-A/sprint-A4.md`
+- `docs/phase-A/sprint-A5.md`
+- `docs/phase-A/sprint-A6.md`
+- `docs/phase-A/sprint-A7.md`
+- `docs/phase-A/sprint-A8.md`
 
 ## Required Work
 

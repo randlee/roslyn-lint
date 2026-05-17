@@ -104,6 +104,10 @@ docs/
     sprint-A2.md
     sprint-A3.md
     sprint-A4.md
+    sprint-A5.md
+    sprint-A6.md
+    sprint-A7.md
+    sprint-A8.md
   roslyn-demagic/
     requirements.md
     architecture.md

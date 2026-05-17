@@ -16,6 +16,7 @@ Relevant ADRs:
 - `ADR-001`
 - `ADR-003`
 - `ADR-004`
+- `ADR-005`
 
 ## 2. Role
 
@@ -112,12 +113,45 @@ Dispatch principles:
 - backend-specific flags and payload quirks stay behind the CLI contract
   boundary
 
+## 5.1 Low-Level Shared Package
+
+The planned low-level extensibility package is:
+
+- `src/Roslyn.Lint.Abstractions/`
+
+Its role is intentionally narrow:
+
+- shared tool-module interfaces
+- stable tool identifiers and descriptors
+- shared enums used by package-owned tools
+- suite-specific consumer or source attributes when standard `.NET` mechanisms
+  do not model the needed semantics
+
+Architectural rules:
+
+- this package must not depend on `System.CommandLine`
+- this package must not own dispatch, normalization, or parser concerns
+- standard `.NET` and Roslyn suppression/configuration mechanisms remain the
+  default path for analyzer suppression
+- custom attributes are reserved for suite-specific semantics such as boundary
+  declarations, tool metadata, or ownership markers
+- `Roslyn.Lint.Core` is deferred until real shared implementation pressure
+  exists
+
 ## 6. Planned Implementation Units
 
 The approved CLI implementation shape is:
 
 - `src/Roslyn.Lint/Program.cs`
   - thin composition root only
+- `src/Roslyn.Lint.Abstractions/`
+- `src/Roslyn.Lint.Abstractions/ToolId.cs`
+- `src/Roslyn.Lint.Abstractions/ToolDescriptor.cs`
+- `src/Roslyn.Lint.Abstractions/ILintToolModule.cs`
+- `src/Roslyn.Lint.Abstractions/ILintToolCommandHandler.cs`
+- `src/Roslyn.Lint.Abstractions/Attributes/`
+- `src/Roslyn.Lint.Abstractions/Attributes/BoundaryDeclarationAttribute.cs`
+- `src/Roslyn.Lint.Abstractions/Attributes/LintToolAttribute.cs`
 - `src/Roslyn.Lint/Commands/RegisterLintCommands.cs`
 - `src/Roslyn.Lint/Commands/RegisterViewCommands.cs`
 - `src/Roslyn.Lint/Commands/RegisterCheckCommands.cs`
@@ -166,12 +200,13 @@ and replaced rather than stretched into compliance.
 The CLI baseline expects these named types to exist when implementation begins:
 
 - interfaces:
+  `ILintToolModule`, `ILintToolCommandHandler<TRequest, TResponse>`,
   `IBackendToolDispatcher`, `IBackendProcessRunner`,
   `ILintToolOperation`, `IViewOperation`, `ICheckOperation`,
   `IClippyOperation`, `ICiOperation`, `IJsonEnvelopeWriter`,
   `IHumanOutputFormatter<TResponse>`
 - records or immutable payload types:
-  `CliEnvelope<TResult>`, `CliError`, `CliDiagnostic`,
+  `ToolId`, `ToolDescriptor`, `CliEnvelope<TResult>`, `CliError`, `CliDiagnostic`,
   `BackendToolDescriptor`, `LintToolRequest`, `LintToolResult`,
   `LintFinding`, `ViewRequest`, `ViewResult`, `CheckRequest`, `CheckResult`,
   `ClippyRequest`, `ClippyResult`, `CiRequest`, `CiResult`, `VersionResult`
@@ -185,6 +220,8 @@ Type guidance:
 - use immutable records or readonly structs for transport-neutral payloads
 - use interfaces for parser-independent dispatch, execution, and rendering
   seams
+- keep custom attribute definitions narrow and suite-specific instead of
+  treating them as generic suppression replacements
 
 ## 7. Contract Model
 

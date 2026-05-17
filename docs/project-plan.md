@@ -22,6 +22,7 @@ Phase A deliverables:
 - a sprinted Phase A plan
 - a PRD-aligned `Roslyn.DeMagic` v1 implementation
 - a CLI design baseline aligned with the repository's AI-first CLI rules
+- a usable top-level `roslyn-lint` CLI for the first suite workflows
 
 ## 3. Project Inventory
 
@@ -65,6 +66,10 @@ Merge target:
 | A2 | `DM002` forbidden-pattern analyzer | Align forbidden-string analysis, config parsing, and analyzer validation with the PRD |
 | A3 | `DM002` hardening and release alignment | Remove remaining spike leftovers, align release metadata, and route analyzer seams through interfaces |
 | A4 | CLI orchestration planning reset | Replace the ad hoc CLI baseline with a `creating-ai-clis` and `sc-lint`-aligned orchestration plan |
+| A5 | CLI foundation and abstractions package | Replace Spectre with `System.CommandLine`, add `Roslyn.Lint.Abstractions`, and ship working `version` and `view tools` commands |
+| A6 | DeMagic backend integration and first usable lint flow | Implement `lint roslyn-demagic` through the shared dispatch and contract seams |
+| A7 | Profiles plus check, clippy, and ci workflows | Implement real local workflow commands using `.NET`-native tooling |
+| A8 | View surfaces, boundary metadata, and tool-module hardening | Implement stable `view` targets and harden the multi-tool module model |
 
 Phase A must not treat the current CLI spike as an approved product contract.
 
@@ -81,9 +86,11 @@ these code paths:
 - `src/Roslyn.DeMagic/Roslyn.DeMagic.csproj`
 - `tests/Roslyn.DeMagic.Tests/Analyzers/DM002ForbiddenStringLiteralAnalyzerTests.cs`
 - `src/Roslyn.Lint/Program.cs`
-- `src/Roslyn.Lint/Commands/LintCommand.cs`
+- `src/Roslyn.Lint.Abstractions/`
+- `src/Roslyn.Lint/Commands/`
 - `src/Roslyn.Lint/Roslyn.Lint.csproj`
-- `tests/Roslyn.Lint.Tests/Commands/LintCommandSettingsTests.cs`
+- `tests/Roslyn.Lint.Tests/Abstractions/`
+- `tests/Roslyn.Lint.Tests/Commands/`
 - `.github/workflows/ci.yml`
 - `.github/workflows/publish.yml`
 
@@ -108,6 +115,13 @@ Planned replacement-oriented analyzer implementation units:
 
 Planned replacement-oriented CLI implementation units when CLI work resumes:
 
+- `src/Roslyn.Lint.Abstractions/Roslyn.Lint.Abstractions.csproj`
+- `src/Roslyn.Lint.Abstractions/ToolId.cs`
+- `src/Roslyn.Lint.Abstractions/ToolDescriptor.cs`
+- `src/Roslyn.Lint.Abstractions/ILintToolModule.cs`
+- `src/Roslyn.Lint.Abstractions/ILintToolCommandHandler.cs`
+- `src/Roslyn.Lint.Abstractions/Attributes/BoundaryDeclarationAttribute.cs`
+- `src/Roslyn.Lint.Abstractions/Attributes/LintToolAttribute.cs`
 - `src/Roslyn.Lint/Contracts/CliEnvelope.cs`
 - `src/Roslyn.Lint/Contracts/CliError.cs`
 - `src/Roslyn.Lint/Contracts/CliDiagnostic.cs`
@@ -151,6 +165,7 @@ Planned replacement-oriented CLI implementation units when CLI work resumes:
 - `tests/Roslyn.Lint.Tests/Dispatch/`
 - `tests/Roslyn.Lint.Tests/Operations/`
 - `tests/Roslyn.Lint.Tests/Commands/`
+- `README.md`
 
 ## 5. Execution Rules
 
@@ -187,6 +202,8 @@ Phase A planning is complete only when:
   design
 - the CLI baseline defines the top-level command families, envelope, command
   identifiers, backend-dispatch seams, and planned file inventory explicitly
+- the CLI is implemented enough to support immediate repo use through the first
+  stable command set
 - the execution rules explicitly prefer deleting and replacing noncompliant
   spike code over preserving it through compatibility-driven edits
 - sprint plans contain enough exact targets, named types, and validation

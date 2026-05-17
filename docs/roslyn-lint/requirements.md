@@ -36,6 +36,25 @@ Product requirement IDs:
 - `REQ-CLI-PRODUCT-011` The CLI must scale to a multi-tool suite of roughly
   ten planned lint packages without changing the top-level contract family.
 
+## 1.1 Extensibility Baseline
+
+Extensibility requirement IDs:
+
+- `REQ-CLI-EXT-001` The suite reserves one low-level shared package named
+  `Roslyn.Lint.Abstractions` for tool-module integration contracts.
+- `REQ-CLI-EXT-002` `Roslyn.Lint.Abstractions` is the planned home for shared
+  enums, shared interfaces, tool descriptors, stable tool identifiers, and any
+  suite-specific consumer attributes required by future lint packages.
+- `REQ-CLI-EXT-003` The suite must prefer standard `.NET` and Roslyn
+  suppression/configuration mechanisms such as `#pragma warning`,
+  `SuppressMessage`, and `.editorconfig` before introducing custom attributes
+  for suppression.
+- `REQ-CLI-EXT-004` Custom attributes are allowed only for suite-specific
+  semantics not modeled cleanly by standard `.NET` mechanisms, such as boundary
+  declarations, tool metadata, or ownership markers.
+- `REQ-CLI-EXT-005` `Roslyn.Lint.Core` is not part of the baseline plan and
+  must not be introduced until multiple tools prove a real shared-logic need.
+
 ## 2. Command Surface Requirements
 
 Command-surface requirement IDs:
@@ -180,6 +199,9 @@ Implementation requirement IDs:
 - `REQ-CLI-DOTNET-008` Command handlers must not construct anonymous
   `Dictionary<string, object>` machine payloads when explicit DTOs are
   practical.
+- `REQ-CLI-DOTNET-009` Low-level extensibility contracts must remain free of
+  parser-library and command-host dependencies so package-owned tools can reuse
+  them without taking a dependency on the CLI entrypoint implementation.
 
 ## 10. Validation Requirements
 

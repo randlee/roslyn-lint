@@ -30,6 +30,7 @@ target: integration/phase-A
 - `docs/phase-A/sprint-A3.md`
 - `docs/adr/ADR-003-ai-cli-json-contract.md`
 - `docs/adr/ADR-004-roslyn-lint-command-surface-and-parser.md`
+- `docs/adr/ADR-005-roslyn-lint-abstractions-package.md`
 - `.claude/skills/creating-ai-clis/`
 
 ## Exact Targets
@@ -40,6 +41,7 @@ target: integration/phase-A
 - `docs/roslyn-lint/boundaries.md`
 - `docs/adr/ADR-003-ai-cli-json-contract.md`
 - `docs/adr/ADR-004-roslyn-lint-command-surface-and-parser.md`
+- `docs/adr/ADR-005-roslyn-lint-abstractions-package.md`
 - `docs/adr/INDEX.md`
 - `docs/project-plan.md`
 - `docs/phase-A/plan-phase-A.md`
@@ -51,6 +53,13 @@ target: integration/phase-A
 This sprint does not implement the CLI. It defines the exact file inventory
 that later CLI development work must follow:
 
+- `src/Roslyn.Lint.Abstractions/`
+- `src/Roslyn.Lint.Abstractions/ToolId.cs`
+- `src/Roslyn.Lint.Abstractions/ToolDescriptor.cs`
+- `src/Roslyn.Lint.Abstractions/ILintToolModule.cs`
+- `src/Roslyn.Lint.Abstractions/ILintToolCommandHandler.cs`
+- `src/Roslyn.Lint.Abstractions/Attributes/BoundaryDeclarationAttribute.cs`
+- `src/Roslyn.Lint.Abstractions/Attributes/LintToolAttribute.cs`
 - `src/Roslyn.Lint/Program.cs`
 - `src/Roslyn.Lint/Commands/RegisterLintCommands.cs`
 - `src/Roslyn.Lint/Commands/RegisterViewCommands.cs`
@@ -98,12 +107,13 @@ that later CLI development work must follow:
 ## Important Interfaces, Records/Structs, And Enums
 
 - interfaces:
+  `ILintToolModule`, `ILintToolCommandHandler<TRequest, TResponse>`,
   `IBackendToolDispatcher`, `IBackendProcessRunner`,
   `ILintToolOperation`, `IViewOperation`, `ICheckOperation`,
   `IClippyOperation`, `ICiOperation`, `IJsonEnvelopeWriter`,
   `IHumanOutputFormatter<TResponse>`
 - immutable CLI payload types:
-  `CliEnvelope<TResult>`, `CliError`, `CliDiagnostic`,
+  `ToolId`, `ToolDescriptor`, `CliEnvelope<TResult>`, `CliError`, `CliDiagnostic`,
   `BackendToolDescriptor`, `LintToolRequest`, `LintToolResult`,
   `LintFinding`, `ViewRequest`, `ViewResult`, `CheckRequest`, `CheckResult`,
   `ClippyRequest`, `ClippyResult`, `CiRequest`, `CiResult`, `VersionResult`
@@ -126,6 +136,11 @@ that later CLI development work must follow:
   `System.CommandLine` plus shared `System.Text.Json`
 - define how package-owned tools are invoked through `roslyn-lint`, including
   in-process and delegated process execution
+- reserve `Roslyn.Lint.Abstractions` as the low-level tool integration package
+- prefer standard `.NET` suppression/configuration mechanisms before inventing
+  custom suppression attributes
+- reserve custom attributes for suite-specific semantics such as boundary
+  declarations or tool metadata
 - make explicit that the current Spectre-based spike is not the approved
   implementation line
 - itemize the exact future files and named types that later CLI implementation
@@ -143,6 +158,10 @@ that later CLI development work must follow:
 - the docs define `ok` / `command` / `data` / `error` / `diagnostics` as the
   stable top-level envelope family
 - the docs name `System.CommandLine` as the approved parser baseline
+- the docs reserve `Roslyn.Lint.Abstractions` as the one low-level shared
+  package in the baseline plan
+- the docs keep standard `.NET` suppression mechanisms primary and treat custom
+  attributes as suite-specific extensions only
 - the docs distinguish `roslyn-lint lint ci` from top-level `roslyn-lint ci`
 - the docs itemize the future implementation file inventory and named types
 - the repo no longer implies that the current Spectre-based spike is an
