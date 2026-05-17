@@ -106,15 +106,41 @@ Planned replacement-oriented analyzer implementation units:
 
 Planned replacement-oriented CLI implementation units when CLI work resumes:
 
+- `src/Roslyn.Lint.Abstractions/Roslyn.Lint.Abstractions.csproj`
+- `src/Roslyn.Lint.Abstractions/ToolId.cs`
+- `src/Roslyn.Lint.Abstractions/ToolDescriptor.cs`
+- `src/Roslyn.Lint.Abstractions/ILintToolModule.cs`
+- `src/Roslyn.Lint.Abstractions/ILintToolCommandHandler.cs`
+- `src/Roslyn.Lint/Commands/RegisterLintCommands.cs`
+- `src/Roslyn.Lint/Commands/RegisterViewCommands.cs`
+- `src/Roslyn.Lint/Commands/RegisterCheckCommands.cs`
+- `src/Roslyn.Lint/Commands/RegisterClippyCommands.cs`
+- `src/Roslyn.Lint/Commands/RegisterCiCommand.cs`
+- `src/Roslyn.Lint/Commands/RegisterVersionCommand.cs`
 - `src/Roslyn.Lint/Contracts/CliEnvelope.cs`
 - `src/Roslyn.Lint/Contracts/CliError.cs`
-- `src/Roslyn.Lint/Contracts/CliWarning.cs`
+- `src/Roslyn.Lint/Contracts/CliDiagnostic.cs`
 - `src/Roslyn.Lint/Contracts/CliErrorKind.cs`
-- `src/Roslyn.Lint/Contracts/LintRequest.cs`
-- `src/Roslyn.Lint/Contracts/LintResult.cs`
-- `src/Roslyn.Lint/Contracts/LintIssue.cs`
-- `src/Roslyn.Lint/Operations/ICommandOperation.cs`
-- `src/Roslyn.Lint/Operations/ILintWorkspaceAdapter.cs`
+- `src/Roslyn.Lint/Contracts/LintToolRequest.cs`
+- `src/Roslyn.Lint/Contracts/LintToolResult.cs`
+- `src/Roslyn.Lint/Contracts/LintFinding.cs`
+- `src/Roslyn.Lint/Contracts/ViewRequest.cs`
+- `src/Roslyn.Lint/Contracts/ViewResult.cs`
+- `src/Roslyn.Lint/Contracts/CheckRequest.cs`
+- `src/Roslyn.Lint/Contracts/CheckResult.cs`
+- `src/Roslyn.Lint/Contracts/ClippyRequest.cs`
+- `src/Roslyn.Lint/Contracts/ClippyResult.cs`
+- `src/Roslyn.Lint/Contracts/CiRequest.cs`
+- `src/Roslyn.Lint/Contracts/CiResult.cs`
+- `src/Roslyn.Lint/Contracts/VersionResult.cs`
+- `src/Roslyn.Lint/Dispatch/IBackendToolDispatcher.cs`
+- `src/Roslyn.Lint/Dispatch/IBackendProcessRunner.cs`
+- `src/Roslyn.Lint/Dispatch/BackendJsonNormalizer.cs`
+- `src/Roslyn.Lint/Operations/ILintToolOperation.cs`
+- `src/Roslyn.Lint/Operations/IViewOperation.cs`
+- `src/Roslyn.Lint/Operations/ICheckOperation.cs`
+- `src/Roslyn.Lint/Operations/IClippyOperation.cs`
+- `src/Roslyn.Lint/Operations/ICiOperation.cs`
 - `src/Roslyn.Lint/Serialization/IJsonEnvelopeWriter.cs`
 - `src/Roslyn.Lint/Formatting/IHumanOutputFormatter.cs`
 - `src/Roslyn.Lint/Adapters/`
