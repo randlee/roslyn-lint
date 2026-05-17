@@ -17,7 +17,7 @@ app.Configure(config =>
     config.AddCommand<LintCommand>("lint")
         .WithDescription("Analyze C# files or directories for code quality issues")
         .WithExample("lint", "src/MyFile.cs")
-        .WithExample("lint", "--json", "src/")
+        .WithExample("lint", "--format", "json", "src/")
         .WithExample("lint", "--include", "*.cs", "--exclude", "**/obj/**", "src/");
 });
 

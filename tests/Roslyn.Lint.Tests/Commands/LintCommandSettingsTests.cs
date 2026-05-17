@@ -18,10 +18,14 @@ public sealed class LintCommandSettingsTests
         result.Message.Should().Contain("Path is required");
     }
 
-    [Fact]
-    public void Validate_JsonFlag_Succeeds()
+    [Theory]
+    [InlineData("text")]
+    [InlineData("json")]
+    [InlineData("TEXT")]
+    [InlineData("JSON")]
+    public void Validate_ValidFormat_Succeeds(string format)
     {
-        var settings = new LintCommand.Settings { Path = "src/", Json = true };
+        var settings = new LintCommand.Settings { Path = "src/", Format = format };
 
         var result = settings.Validate();
 
@@ -29,7 +33,18 @@ public sealed class LintCommandSettingsTests
     }
 
     [Fact]
-    public void Validate_ValidPath_DefaultSettings_Succeeds()
+    public void Validate_InvalidFormat_ReturnsError()
+    {
+        var settings = new LintCommand.Settings { Path = "src/", Format = "xml" };
+
+        var result = settings.Validate();
+
+        result.Successful.Should().BeFalse();
+        result.Message.Should().Contain("Invalid format");
+    }
+
+    [Fact]
+    public void Validate_ValidPath_DefaultFormat_Succeeds()
     {
         var settings = new LintCommand.Settings { Path = "src/" };
 
