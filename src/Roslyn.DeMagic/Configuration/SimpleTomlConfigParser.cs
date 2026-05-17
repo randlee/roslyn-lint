@@ -13,7 +13,7 @@ public sealed class SimpleTomlConfigParser : ITomlConfigParser
         string? pendingArrayKey = null;
         List<string>? pendingArrayItems = null;
 
-        var lines = content.Replace("\r\n", "\n", StringComparison.Ordinal).Split('\n');
+        var lines = content.Replace("\r\n", "\n").Split('\n');
 
         for (var index = 0; index < lines.Length; index++)
         {
@@ -45,7 +45,7 @@ public sealed class SimpleTomlConfigParser : ITomlConfigParser
 
             if (line.StartsWith("[", StringComparison.Ordinal) && line.EndsWith("]", StringComparison.Ordinal))
             {
-                currentSection = line[1..^1].Trim();
+                currentSection = line.Substring(1, line.Length - 2).Trim();
                 EnsureSection(values, currentSection);
                 continue;
             }
@@ -63,8 +63,8 @@ public sealed class SimpleTomlConfigParser : ITomlConfigParser
                 continue;
             }
 
-            var key = line[..separatorIndex].Trim();
-            var valueText = line[(separatorIndex + 1)..].Trim();
+            var key = line.Substring(0, separatorIndex).Trim();
+            var valueText = line.Substring(separatorIndex + 1).Trim();
 
             if (valueText == "[")
             {
@@ -117,7 +117,7 @@ public sealed class SimpleTomlConfigParser : ITomlConfigParser
             }
 
             if (!inQuotes && current == '#')
-                return line[..index];
+                return line.Substring(0, index);
         }
 
         return line;
@@ -154,10 +154,10 @@ public sealed class SimpleTomlConfigParser : ITomlConfigParser
     {
         value = string.Empty;
 
-        if (text.Length < 2 || text[0] != '"' || text[^1] != '"')
+        if (text.Length < 2 || text[0] != '"' || text[text.Length - 1] != '"')
             return false;
 
-        value = text[1..^1];
+        value = text.Substring(1, text.Length - 2);
         return true;
     }
 
