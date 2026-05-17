@@ -16,8 +16,7 @@ public sealed class LintCommand : AsyncCommand<LintCommand.Settings>
 {
     private static readonly ImmutableArray<DiagnosticAnalyzer> Analyzers =
     [
-        new MagicNumberAnalyzer(),
-        new MagicStringAnalyzer(),
+        new DM002ForbiddenStringLiteralAnalyzer(),
     ];
 
     /// <summary>
