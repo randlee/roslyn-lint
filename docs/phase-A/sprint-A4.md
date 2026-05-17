@@ -1,7 +1,7 @@
 ---
 id: A4
 title: Packaging and CLI baseline correction
-status: complete
+status: closed-with-deferrals
 branch: sprint/A4
 worktree: /Users/randlee/Documents/github/roslyn-lint-worktrees/sprint/A4
 target: integration/phase-A
@@ -33,33 +33,57 @@ target: integration/phase-A
 - `src/Roslyn.DeMagic/AnalyzerReleases.Unshipped.md`
 - `src/Roslyn.Lint/Program.cs`
 - `src/Roslyn.Lint/Commands/LintCommand.cs`
-- `src/Roslyn.Lint/Contracts/CliEnvelope.cs`
-- `src/Roslyn.Lint/Contracts/CliError.cs`
-- `src/Roslyn.Lint/Contracts/CliWarning.cs`
-- `src/Roslyn.Lint/Contracts/CliErrorKind.cs`
-- `src/Roslyn.Lint/Contracts/LintRequest.cs`
-- `src/Roslyn.Lint/Contracts/LintResult.cs`
-- `src/Roslyn.Lint/Contracts/LintIssue.cs`
-- `src/Roslyn.Lint/Operations/ICommandOperation.cs`
-- `src/Roslyn.Lint/Operations/ILintWorkspaceAdapter.cs`
-- `src/Roslyn.Lint/Serialization/IJsonEnvelopeWriter.cs`
-- `src/Roslyn.Lint/Formatting/IHumanOutputFormatter.cs`
 - `src/Roslyn.Lint/Roslyn.Lint.csproj`
 - `tests/Roslyn.Lint.Tests/Commands/LintCommandSettingsTests.cs`
-- `tests/Roslyn.Lint.Tests/Contracts/CliEnvelopeSerializationTests.cs`
-- `tests/Roslyn.Lint.Tests/Operations/LintOperationContractTests.cs`
 - `.github/workflows/ci.yml`
 - `.github/workflows/publish.yml`
 - `README.md`
 
+## Deferrals
+
+The CLI replacement units below were planned during A4 but were not delivered
+on `sprint/A4`. They are explicitly carried forward into
+[`sprint-A5.md`](./sprint-A5.md) and must not be treated as completed A4
+deliverables.
+
+- shared abstractions package:
+  `src/Roslyn.Lint.Abstractions/Roslyn.Lint.Abstractions.csproj`,
+  `ToolId.cs`, `ToolDescriptor.cs`, `ILintToolModule.cs`,
+  `ILintToolCommandHandler.cs`
+- command registration split:
+  `src/Roslyn.Lint/Commands/RegisterLintCommands.cs`,
+  `RegisterViewCommands.cs`, `RegisterCheckCommands.cs`,
+  `RegisterClippyCommands.cs`, `RegisterCiCommand.cs`,
+  `RegisterVersionCommand.cs`
+- CLI contract files:
+  `src/Roslyn.Lint/Contracts/CliEnvelope.cs`,
+  `CliError.cs`, `CliDiagnostic.cs`, `CliErrorKind.cs`,
+  `VersionResult.cs`, `ViewRequest.cs`, `ViewResult.cs`
+- CLI host support seams:
+  `src/Roslyn.Lint/CommandModel/CommandFamily.cs`,
+  `LintProfile.cs`, `OutputMode.cs`, `BackendExecutionMode.cs`,
+  `src/Roslyn.Lint/Serialization/IJsonEnvelopeWriter.cs`,
+  `src/Roslyn.Lint/Serialization/RoslynLintJsonContext.cs`,
+  `src/Roslyn.Lint/Formatting/IHumanOutputFormatter.cs`
+- A5 validation-oriented tests:
+  `tests/Roslyn.Lint.Tests/Commands/RootCommandTests.cs`,
+  `VersionCommandTests.cs`, `ViewToolsCommandTests.cs`,
+  `tests/Roslyn.Lint.Tests/Contracts/CliEnvelopeSerializationTests.cs`,
+  `tests/Roslyn.Lint.Tests/Abstractions/ToolDescriptorTests.cs`
+
 ## Important Interfaces, Records/Structs, and Enums
 
 - interfaces:
-  `ICommandOperation<TRequest, TResponse>`, `ILintWorkspaceAdapter`,
-  `IJsonEnvelopeWriter`, `IHumanOutputFormatter<TResponse>`
+  `ILintToolModule`, `ILintToolCommandHandler<TRequest, TResponse>`,
+  `IBackendToolDispatcher`, `IBackendProcessRunner`,
+  `ILintToolOperation`, `IViewOperation`, `ICheckOperation`,
+  `IClippyOperation`, `ICiOperation`, `IJsonEnvelopeWriter`,
+  `IHumanOutputFormatter<TResponse>`
 - immutable CLI payload types:
-  `CliEnvelope<TResult>`, `CliError`, `CliWarning`,
-  `LintRequest`, `LintResult`, `LintIssue`
+  `ToolId`, `ToolDescriptor`, `CliEnvelope<TResult>`, `CliError`,
+  `CliDiagnostic`, `LintToolRequest`, `LintToolResult`, `LintFinding`,
+  `ViewRequest`, `ViewResult`, `CheckRequest`, `CheckResult`,
+  `ClippyRequest`, `ClippyResult`, `CiRequest`, `CiResult`, `VersionResult`
 - enums:
   `CliErrorKind`
 
@@ -73,8 +97,9 @@ target: integration/phase-A
   typed errors, MCP-ready DTOs, and auditable command pairs
 - make explicit that `Program.cs` and `LintCommand.cs` are disposable if they
   obstruct the approved CLI layering
-- document the exact contract types that future CLI implementation must create
-  before adding more commands or features
+- document the exact contract, dispatch, and command-registration types that
+  future CLI implementation must create before adding more commands or
+  features
 - keep the current CLI spike out of external release automation until the
   approved contract types and boundaries exist in code
 
@@ -88,6 +113,8 @@ target: integration/phase-A
 - the repo no longer implies the current CLI spike is the accepted design
 - noncompliant CLI spike structure is planned for replacement, not preservation
 - analyzer package validation runs in CI independent of CLI release readiness
+- the A4 closeout state clearly marks undelivered CLI replacement units as
+  deferred to A5 rather than misreporting them as completed on A4
 
 ## Required Validation
 

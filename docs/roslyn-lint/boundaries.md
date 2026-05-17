@@ -1,6 +1,7 @@
 # roslyn-lint Boundary Inventory
 
-This document captures the CLI-owned boundaries for Phase A.
+This document captures the CLI-owned boundaries for the approved planning
+baseline.
 
 The current Spectre-based spike does not define these boundaries adequately and
 may be removed rather than incrementally repaired.
@@ -9,12 +10,30 @@ may be removed rather than incrementally repaired.
 
 Purpose:
 
-- owns the command and option surface presented by the CLI
+- owns the top-level command families presented by `roslyn-lint`
 
 Notes:
 
-- every command must support `--json`
-- command naming may evolve later, but machine-contract rules may not
+- the family names are fixed:
+  `lint`, `view`, `check`, `clippy`, `ci`, `version`
+- every non-interactive command must support `--json`
+- profile aliases `fast`, `full`, and `ci` belong here
+- the current `Program.cs` and `Commands/LintCommand.cs` spike is only a
+  temporary holder for this surface and may be replaced wholesale
+
+## CommandIdentityPolicy
+
+Purpose:
+
+- owns the stable dotted `command` identifiers derived from the selected CLI
+  path
+
+Notes:
+
+- `roslyn-lint lint demagic` maps to `lint.demagic`
+- `roslyn-lint lint fast` maps to `lint.fast`
+- top-level `ci` remains `ci`, not `lint.ci`
+- machine callers and structured logging must use the same command identity
 
 ## RequestDtoConstruction
 
@@ -24,41 +43,43 @@ Purpose:
 
 Notes:
 
-- this boundary keeps parser concerns out of the operation layer
+- this boundary keeps parser concerns out of dispatch and backend code
 - request DTOs must remain reusable by a future MCP wrapper
 - parser-specific option objects must not leak past this boundary
-- the preferred request payload type for the current CLI line is `LintRequest`
+- the preferred request payload families are `LintToolRequest`,
+  `ViewRequest`, `CheckRequest`, `ClippyRequest`, and `CiRequest`
 
-## OperationLayer
+## BackendDispatch
 
 Purpose:
 
-- owns execution of CLI business operations independent of parser and output
-  library choices
+- owns backend selection and execution across in-process and delegated package
+  implementations
 
 Notes:
 
-- this is the seam future MCP entrypoints must share
-- if current CLI code does not separate this layer, replacement is preferred
-- analyzer invocation, workspace traversal, and future repository operations all
-  belong here rather than in command handlers
-- the preferred boundary seams are `ICommandOperation<TRequest, TResponse>` and
-  `ILintWorkspaceAdapter`
+- the top-level CLI is the orchestrator for package-owned tools
+- backend-specific flags and process details stay here
+- the preferred seams are `IBackendToolDispatcher`,
+  `IBackendProcessRunner`, and `BackendToolDescriptor`
+- backend packages should not call each other directly to satisfy top-level
+  command flows
 
-## ResponseDtoConstruction
+## ResponseNormalization
 
 Purpose:
 
-- owns explicit success and failure payload models returned from operations
+- owns transformation from backend-native success or failure results into the
+  canonical top-level CLI contract
 
 Notes:
 
 - success and failure results must stay in one stable contract family
-- response DTOs must be transport-neutral business payloads
-- the top-level envelope must expose `success`, `operation`, and exactly one of
-  `result` or `error`
-- the preferred payload types are `CliEnvelope<TResult>`, `LintResult`,
-  `LintIssue`, `CliError`, and `CliWarning`
+- backend-native top-level keys must not leak into the public `roslyn-lint`
+  envelope
+- the preferred payload types are `CliEnvelope<TResult>`, `CliError`,
+  `CliDiagnostic`, `LintToolResult`, `LintFinding`, `ViewResult`, and
+  `CiResult`
 
 ## JsonSerializationPolicy
 
@@ -72,7 +93,8 @@ Notes:
 - CLI and future MCP surfaces must not drift on naming, omission, or enum
   policy
 - JSON envelope stability tests should target this boundary directly
-- the preferred writing seam is `IJsonEnvelopeWriter`
+- the preferred seams are `IJsonEnvelopeWriter` and
+  `RoslynLintJsonContext`
 
 ## HumanReadableFormatting
 
@@ -100,15 +122,15 @@ Notes:
 - stable code registries and error kinds should be centralized here
 - the preferred closed vocabulary type is the `CliErrorKind` enum
 
-## AdapterBoundary
+## ExternalAdapterBoundary
 
 Purpose:
 
-- owns any future integration seam to external repositories, analyzers,
-  workspaces, or services
+- owns any future integration seam to repositories, services, or external
+  tools that sit below the command layer
 
 Notes:
 
 - live and simulator implementations must sit behind the same contract
-- if no external integration exists yet, this remains a planned boundary rather
-  than a pretext to couple future code directly into the command layer
+- if no external integration exists yet, this remains a planned boundary
+  rather than permission to couple future code directly into command handlers

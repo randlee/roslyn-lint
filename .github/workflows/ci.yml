@@ -16,10 +16,10 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v6
+        uses: actions/checkout@v4
 
       - name: Setup .NET
-        uses: actions/setup-dotnet@v5
+        uses: actions/setup-dotnet@v4
         with:
           dotnet-version: '10.0.x'
           dotnet-quality: 'preview'
@@ -33,16 +33,26 @@ jobs:
       - name: Test
         run: dotnet test --no-build --configuration Release --verbosity normal --logger "trx;LogFileName=test-results.trx" --collect:"XPlat Code Coverage"
 
+      - name: Pack Roslyn.DeMagic analyzer
+        run: dotnet pack src/Roslyn.DeMagic/Roslyn.DeMagic.csproj --configuration Release --no-build -o ./packages
+
       - name: Upload test results
-        uses: actions/upload-artifact@v6
+        uses: actions/upload-artifact@v4
         if: always()
         with:
           name: test-results-${{ matrix.os }}
           path: "**/TestResults/**/*.trx"
 
       - name: Upload coverage reports
-        uses: actions/upload-artifact@v6
+        uses: actions/upload-artifact@v4
         if: always()
         with:
           name: coverage-reports-${{ matrix.os }}
           path: "**/TestResults/**/coverage.cobertura.xml"
+
+      - name: Upload analyzer packages
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: analyzer-packages-${{ matrix.os }}
+          path: "./packages/*.nupkg"

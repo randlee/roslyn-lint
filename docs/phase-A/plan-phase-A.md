@@ -95,10 +95,15 @@ introduced during the development sprints:
   `CompiledForbiddenPattern`, `ForbiddenPatternKind`,
   `ForbiddenPatternMatcher`
 - CLI contract and boundary types:
-  `ICommandOperation<TRequest, TResponse>`, `ILintWorkspaceAdapter`,
-  `IJsonEnvelopeWriter`, `IHumanOutputFormatter<TResponse>`,
-  `CliEnvelope<TResult>`, `CliError`, `CliWarning`,
-  `LintRequest`, `LintResult`, `LintIssue`, `CliErrorKind`
+  `ILintToolModule`, `ILintToolCommandHandler<TRequest, TResponse>`,
+  `IBackendToolDispatcher`, `IBackendProcessRunner`,
+  `ILintToolOperation`, `IViewOperation`, `ICheckOperation`,
+  `IClippyOperation`, `ICiOperation`, `IJsonEnvelopeWriter`,
+  `IHumanOutputFormatter<TResponse>`, `ToolId`, `ToolDescriptor`,
+  `CliEnvelope<TResult>`, `CliError`, `CliDiagnostic`, `CliErrorKind`,
+  `LintToolRequest`, `LintToolResult`, `LintFinding`, `ViewRequest`,
+  `ViewResult`, `CheckRequest`, `CheckResult`, `ClippyRequest`,
+  `ClippyResult`, `CiRequest`, `CiResult`, `VersionResult`
 
 ## 8. Acceptance
 
