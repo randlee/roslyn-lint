@@ -77,8 +77,7 @@ Notes:
 
 - this boundary owns literal matching against compiled pattern definitions
 - it does not own comment or documentation scanning in v1
-- replacement with a new analyzer type name is preferred over keeping the
-  `MagicStringAnalyzer` type
+- the approved analyzer type is `DM002ForbiddenStringLiteralAnalyzer`
 - the preferred payload types are `ForbiddenPattern`,
   `CompiledForbiddenPattern`, and the `ForbiddenPatternKind` enum
 
