@@ -46,6 +46,7 @@ Files in `docs/roslyn-demagic/` and `docs/roslyn-lint/` define:
 - how each project satisfies referenced suite requirements
 - project-local boundaries
 - project-local architectural decisions
+- stable machine-contract detail when a project exposes a transport surface
 
 Project docs must not redefine the suite contract.
 
@@ -94,6 +95,7 @@ docs/
     ADR-001-analyzer-first-replacement-policy.md
     ADR-002-demagic-additionalfiles-config.md
     ADR-003-ai-cli-json-contract.md
+    ADR-004-roslyn-lint-command-surface-and-parser.md
   prd/
     roslyn-demagic-prd.md
   phase-A/
@@ -109,6 +111,7 @@ docs/
   roslyn-lint/
     requirements.md
     architecture.md
+    cli-contract.md
     boundaries.md
 ```
 
@@ -208,6 +211,7 @@ Owns CLI-specific documentation:
 
 - CLI requirements
 - CLI architecture
+- CLI contract and command-family invariants
 - CLI boundary inventory
 - machine-contract and operation-layer ownership detail
 

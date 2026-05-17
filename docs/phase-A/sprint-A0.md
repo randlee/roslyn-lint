@@ -31,6 +31,7 @@ target: repo-docs
 - `docs/roslyn-demagic/boundaries.md`
 - `docs/roslyn-lint/requirements.md`
 - `docs/roslyn-lint/architecture.md`
+- `docs/roslyn-lint/cli-contract.md`
 - `docs/roslyn-lint/boundaries.md`
 - `docs/phase-A/plan-phase-A.md`
 - `docs/phase-A/sprint-A0.md`
@@ -42,8 +43,8 @@ target: repo-docs
 ## Required Work
 
 - write top-level suite requirements, architecture, and project plan
-- add project-level requirements, architecture, and boundary docs for
-  `Roslyn.DeMagic` and `roslyn-lint`
+- add project-level requirements, architecture, contract, and boundary docs
+  for `Roslyn.DeMagic` and `roslyn-lint`
 - add a formal Phase A plan and sprint set using the standard sprint shape
 - make current code explicitly subordinate to approved documents
 - make replacement of noncompliant spike code an explicit rule

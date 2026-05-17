@@ -38,6 +38,7 @@ Project-level ownership docs live under:
 - `docs/roslyn-demagic/boundaries.md`
 - `docs/roslyn-lint/requirements.md`
 - `docs/roslyn-lint/architecture.md`
+- `docs/roslyn-lint/cli-contract.md`
 - `docs/roslyn-lint/boundaries.md`
 
 Documentation structure and ownership rules are defined in:
@@ -108,6 +109,17 @@ Suite requirement IDs:
   future MCP wrapper with no business-payload reshaping.
 - `REQ-SUITE-CLI-005` Mutating CLI commands must have corresponding readback
   commands so state changes are auditable.
+- `REQ-SUITE-CLI-006` The stable top-level executable remains `roslyn-lint`,
+  which owns the public command surface for the suite's lint tools.
+- `REQ-SUITE-CLI-007` The top-level command families must match the `sc-lint`
+  product pattern:
+  `lint`, `view`, `check`, `clippy`, `ci`, and `version`.
+- `REQ-SUITE-CLI-008` Backend tool packages must be invoked through
+  `roslyn-lint`; package-local executables or libraries are implementation
+  details, not separate public products.
+- `REQ-SUITE-CLI-009` The CLI contract must scale to a multi-tool suite without
+  top-level envelope drift as new lint packages are added.
 
 Project-level detail for those CLI obligations is defined in
-`docs/roslyn-lint/requirements.md`.
+`docs/roslyn-lint/requirements.md`, `docs/roslyn-lint/architecture.md`, and
+`docs/roslyn-lint/cli-contract.md`.

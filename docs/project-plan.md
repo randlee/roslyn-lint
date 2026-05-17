@@ -16,6 +16,7 @@ Phase A deliverables:
 - suite-level requirements, architecture, and project plan
 - project-level requirements and architecture for `Roslyn.DeMagic`
 - project-level requirements and architecture for `roslyn-lint`
+- a dedicated CLI contract document for `roslyn-lint`
 - project-level boundary inventories for both projects
 - accepted repository ADRs for enforceable Phase A decisions
 - a sprinted Phase A plan
@@ -38,6 +39,7 @@ Owned project documents:
 - `docs/roslyn-demagic/boundaries.md`
 - `docs/roslyn-lint/requirements.md`
 - `docs/roslyn-lint/architecture.md`
+- `docs/roslyn-lint/cli-contract.md`
 - `docs/roslyn-lint/boundaries.md`
 - `docs/documentation-guidelines.md`
 - `docs/adr/INDEX.md`
@@ -62,7 +64,7 @@ Merge target:
 | A1 | Analyzer foundation | Add reusable configuration and forbidden-pattern infrastructure for `Roslyn.DeMagic` |
 | A2 | `DM002` forbidden-pattern analyzer | Align forbidden-string analysis, config parsing, and analyzer validation with the PRD |
 | A3 | `DM002` hardening and release alignment | Remove remaining spike leftovers, align release metadata, and route analyzer seams through interfaces |
-| A4 | Packaging and CLI baseline correction | Finalize analyzer packaging gates and lock the CLI design baseline to AI-first contract rules |
+| A4 | CLI orchestration planning reset | Replace the ad hoc CLI baseline with a `creating-ai-clis` and `sc-lint`-aligned orchestration plan |
 
 Phase A must not treat the current CLI spike as an approved product contract.
 
@@ -108,18 +110,47 @@ Planned replacement-oriented CLI implementation units when CLI work resumes:
 
 - `src/Roslyn.Lint/Contracts/CliEnvelope.cs`
 - `src/Roslyn.Lint/Contracts/CliError.cs`
-- `src/Roslyn.Lint/Contracts/CliWarning.cs`
+- `src/Roslyn.Lint/Contracts/CliDiagnostic.cs`
 - `src/Roslyn.Lint/Contracts/CliErrorKind.cs`
-- `src/Roslyn.Lint/Contracts/LintRequest.cs`
-- `src/Roslyn.Lint/Contracts/LintResult.cs`
-- `src/Roslyn.Lint/Contracts/LintIssue.cs`
-- `src/Roslyn.Lint/Operations/ICommandOperation.cs`
-- `src/Roslyn.Lint/Operations/ILintWorkspaceAdapter.cs`
+- `src/Roslyn.Lint/CommandModel/CommandFamily.cs`
+- `src/Roslyn.Lint/CommandModel/LintProfile.cs`
+- `src/Roslyn.Lint/CommandModel/OutputMode.cs`
+- `src/Roslyn.Lint/CommandModel/BackendExecutionMode.cs`
+- `src/Roslyn.Lint/Contracts/LintToolRequest.cs`
+- `src/Roslyn.Lint/Contracts/LintToolResult.cs`
+- `src/Roslyn.Lint/Contracts/LintFinding.cs`
+- `src/Roslyn.Lint/Contracts/ViewRequest.cs`
+- `src/Roslyn.Lint/Contracts/ViewResult.cs`
+- `src/Roslyn.Lint/Contracts/CheckRequest.cs`
+- `src/Roslyn.Lint/Contracts/CheckResult.cs`
+- `src/Roslyn.Lint/Contracts/ClippyRequest.cs`
+- `src/Roslyn.Lint/Contracts/ClippyResult.cs`
+- `src/Roslyn.Lint/Contracts/CiRequest.cs`
+- `src/Roslyn.Lint/Contracts/CiResult.cs`
+- `src/Roslyn.Lint/Contracts/VersionResult.cs`
+- `src/Roslyn.Lint/Dispatch/BackendToolDescriptor.cs`
+- `src/Roslyn.Lint/Dispatch/IBackendToolDispatcher.cs`
+- `src/Roslyn.Lint/Dispatch/IBackendProcessRunner.cs`
+- `src/Roslyn.Lint/Dispatch/BackendJsonNormalizer.cs`
+- `src/Roslyn.Lint/Operations/ILintToolOperation.cs`
+- `src/Roslyn.Lint/Operations/IViewOperation.cs`
+- `src/Roslyn.Lint/Operations/ICheckOperation.cs`
+- `src/Roslyn.Lint/Operations/IClippyOperation.cs`
+- `src/Roslyn.Lint/Operations/ICiOperation.cs`
 - `src/Roslyn.Lint/Serialization/IJsonEnvelopeWriter.cs`
+- `src/Roslyn.Lint/Serialization/RoslynLintJsonContext.cs`
 - `src/Roslyn.Lint/Formatting/IHumanOutputFormatter.cs`
-- `src/Roslyn.Lint/Adapters/`
+- `src/Roslyn.Lint/Commands/RegisterLintCommands.cs`
+- `src/Roslyn.Lint/Commands/RegisterViewCommands.cs`
+- `src/Roslyn.Lint/Commands/RegisterCheckCommands.cs`
+- `src/Roslyn.Lint/Commands/RegisterClippyCommands.cs`
+- `src/Roslyn.Lint/Commands/RegisterCiCommand.cs`
+- `src/Roslyn.Lint/Commands/RegisterVersionCommand.cs`
+- `src/Roslyn.Lint/Backends/`
 - `tests/Roslyn.Lint.Tests/Contracts/`
+- `tests/Roslyn.Lint.Tests/Dispatch/`
 - `tests/Roslyn.Lint.Tests/Operations/`
+- `tests/Roslyn.Lint.Tests/Commands/`
 
 ## 5. Execution Rules
 
@@ -128,7 +159,11 @@ Planned replacement-oriented CLI implementation units when CLI work resumes:
 - analyzer-first work takes precedence over speculative CLI feature work until
   the analyzer baseline is approved
 - future CLI implementation must inherit the contract rules defined in
-  `docs/roslyn-lint/requirements.md` and `docs/roslyn-lint/architecture.md`
+  `docs/roslyn-lint/requirements.md`, `docs/roslyn-lint/architecture.md`, and
+  `docs/roslyn-lint/cli-contract.md`
+- future CLI implementation must use the local `creating-ai-clis` skill as the
+  design authority and mirror the `sc-lint` top-level command-family pattern
+  unless a later ADR changes that rule explicitly
 - if spike code does not comply with approved requirements or architecture, the
   preferred action is full removal and replacement rather than incremental
   editing to preserve unapproved structure
@@ -150,6 +185,8 @@ Phase A planning is complete only when:
   plans
 - the CLI baseline no longer treats the current implementation as an approved
   design
+- the CLI baseline defines the top-level command families, envelope, command
+  identifiers, backend-dispatch seams, and planned file inventory explicitly
 - the execution rules explicitly prefer deleting and replacing noncompliant
   spike code over preserving it through compatibility-driven edits
 - sprint plans contain enough exact targets, named types, and validation

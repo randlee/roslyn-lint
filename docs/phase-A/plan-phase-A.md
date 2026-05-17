@@ -12,6 +12,7 @@ design line rather than assuming the current spike is valid.
 
 - suite-level documentation framework
 - project-level requirements and architecture for both products
+- a dedicated CLI contract document for `roslyn-lint`
 - project-level boundary inventories for both products
 - PRD-aligned `Roslyn.DeMagic` design and implementation plan
 - AI-first `roslyn-lint` CLI baseline
@@ -64,7 +65,7 @@ design line rather than assuming the current spike is valid.
 | A1 | Analyzer foundation | Add reusable configuration and forbidden-pattern infrastructure for `Roslyn.DeMagic` |
 | A2 | `DM002` forbidden-pattern analyzer | Replace the generic string-literal spike with forbidden-pattern analysis and aligned release metadata |
 | A3 | `DM002` hardening and release alignment | Remove remaining spike leftovers, align release metadata, and route analyzer seams through injected interfaces |
-| A4 | Packaging and CLI baseline correction | Finalize analyzer package and release gates and define the replacement-oriented CLI baseline |
+| A4 | CLI orchestration planning reset | Replace the ad hoc CLI baseline with a `creating-ai-clis` and `sc-lint`-aligned orchestration plan |
 
 ## 7. Implementation Strategy
 
@@ -75,8 +76,8 @@ design line rather than assuming the current spike is valid.
 - A3 removes remaining `DM001` spike leftovers, keeps `DM001` metadata on the
   approved category, and hardens `DM002` through injected configuration and
   matcher seams
-- A4 validates analyzer package outputs and leaves the CLI with a strict design
-  baseline that future implementation must follow
+- A4 leaves the CLI with a strict orchestration and contract baseline that
+  future implementation must follow before any new CLI code lands
 - no sprint in Phase A should preserve current spike semantics merely because
   code already exists
 
@@ -95,10 +96,13 @@ introduced during the development sprints:
   `CompiledForbiddenPattern`, `ForbiddenPatternKind`,
   `ForbiddenPatternMatcher`
 - CLI contract and boundary types:
-  `ICommandOperation<TRequest, TResponse>`, `ILintWorkspaceAdapter`,
-  `IJsonEnvelopeWriter`, `IHumanOutputFormatter<TResponse>`,
-  `CliEnvelope<TResult>`, `CliError`, `CliWarning`,
-  `LintRequest`, `LintResult`, `LintIssue`, `CliErrorKind`
+  `CommandFamily`, `LintProfile`, `OutputMode`, `BackendExecutionMode`,
+  `IBackendToolDispatcher`, `IBackendProcessRunner`, `IJsonEnvelopeWriter`,
+  `IHumanOutputFormatter<TResponse>`, `CliEnvelope<TResult>`, `CliError`,
+  `CliDiagnostic`, `LintToolRequest`, `LintToolResult`, `LintFinding`,
+  `ViewRequest`, `ViewResult`, `CheckRequest`, `CheckResult`,
+  `ClippyRequest`, `ClippyResult`, `CiRequest`, `CiResult`, `VersionResult`,
+  `CliErrorKind`
 
 ## 8. Acceptance
 
@@ -109,6 +113,9 @@ Phase A is complete only when:
 - analyzer packaging and tests reflect the approved diagnostic set
 - the CLI baseline no longer treats the current implementation as an approved
   design
+- the CLI baseline explicitly defines the `roslyn-lint` command families,
+  command identifiers, top-level envelope, parser choice, and backend-dispatch
+  seams
 - the Phase A execution rules explicitly prefer deleting and replacing
   noncompliant spike code over preserving it through compatibility-driven edits
 - sprint plans contain enough exact targets and validation commands to drive

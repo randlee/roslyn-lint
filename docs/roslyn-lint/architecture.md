@@ -2,7 +2,8 @@
 
 ## 1. Overview
 
-`roslyn-lint` is an AI-first CLI, not a human-first shell utility.
+`roslyn-lint` is an AI-first orchestration CLI for a planned family of Roslyn
+and repository lint tools.
 
 Its machine contract is the product. Human-readable output is a secondary
 presentation layer over the same business payloads.
@@ -10,143 +11,232 @@ presentation layer over the same business payloads.
 The current Spectre-based CLI spike is not the approved architecture baseline
 and may be deleted.
 
-The current `Program.cs` and `Commands/LintCommand.cs` files are treated as
-temporary spike entrypoints only. They are not protected implementation assets.
-
 Relevant ADRs:
 
 - `ADR-001`
 - `ADR-003`
+- `ADR-004`
 
-## 2. Required Layers
+## 2. Role
 
-The CLI must separate these concerns:
+The `roslyn-lint` CLI owns:
 
-- command parsing and option binding
-- request DTO creation
-- operation execution
-- response DTO creation
+- top-level command-family parsing
+- repo configuration discovery and loading
+- lint-profile resolution
+- backend dispatch and orchestration
+- top-level success and failure normalization
+- canonical machine-readable JSON serialization
+- human-readable rendering over normalized payloads
+
+It does not own:
+
+- analyzer business rules
+- analyzer configuration semantics that belong to package-specific code
+- backend package cross-calls as an orchestration substitute
+
+## 3. Required Layers
+
+The approved implementation must separate these concerns:
+
+- `System.CommandLine` command registration and option binding
+- command-family and target resolution
+- request DTO construction
+- backend dispatch or in-process execution
+- response DTO construction
 - JSON serialization
 - human-readable formatting
 
 Recommended execution shape:
 
 ```text
-CLI parser -> request DTO -> operation layer -> response DTO -> serializer
-                                                   -> human formatter
+System.CommandLine
+  -> command family / target resolution
+  -> request DTO
+  -> dispatch / operation layer
+  -> normalized response DTO
+  -> serializer
+     -> human formatter
 ```
 
 Architectural rules:
 
 - request and response DTOs must live outside the entrypoint
+- backend dispatch must not be implemented as ad hoc command-family-specific
+  shelling-out code
 - JSON serialization must not be assembled from formatted text
 - human-readable formatting must not be the only tested interface
 - if the current CLI spike structure prevents these layers from being cleanly
   separated, deletion and replacement is preferred over incremental patching
 
-## 2.1 Planned Implementation Units
+## 4. Command-Family Model
 
-The preferred CLI implementation shape is:
+The top-level command families are fixed by design:
 
-- `Program.cs` as a thin composition root only
-- `Commands/` for parser-binding and command registration
-- `Contracts/` for transport-neutral DTOs and the stable machine contract
-- `Contracts/CliEnvelope.cs` for the stable top-level result envelope
-- `Contracts/CliError.cs` for structured machine-readable failures
-- `Contracts/CliWarning.cs` for structured warnings
-- `Contracts/CliErrorKind.cs` for the closed error-category enum
-- `Contracts/LintRequest.cs` for lint operation input
-- `Contracts/LintResult.cs` for lint operation output
-- `Contracts/LintIssue.cs` for individual reported issues
-- `Operations/` for business execution
-- `Operations/ICommandOperation.cs` for reusable operation execution contracts
-- `Operations/ILintWorkspaceAdapter.cs` for workspace or source-traversal
-  ownership behind the command layer
-- `Serialization/` for shared `System.Text.Json` policy and serializer context
-- `Serialization/IJsonEnvelopeWriter.cs` for machine-output rendering
-- `Formatting/` for human-readable rendering
-- `Formatting/IHumanOutputFormatter.cs` for presentation-only output shaping
-- `Adapters/` for any external integration seams
+- `lint`
+- `view`
+- `check`
+- `clippy`
+- `ci`
+- `version`
+
+Architectural rules:
+
+- the family names above are the stable user-facing umbrella surface
+- package-owned tools are selected beneath those families rather than by adding
+  new top-level executables
+- `roslyn-demagic` is the first approved lint target
+- future lint targets must map to package ownership boundaries explicitly
+- `view` remains narrower than `lint` until additional targets are documented
+- top-level `ci` remains distinct from `lint ci`
+
+## 5. Backend Dispatch Model
+
+The intended model is:
+
+```text
+roslyn-lint
+  -> in-process .NET backend, when practical
+  -> delegated package-owned executable, when needed
+```
+
+The stable contract is the top-level envelope and command surface, not the
+dispatch mechanism used behind it.
+
+Dispatch principles:
+
+- backend packages remain self-contained
+- `roslyn-lint` decides which backend implementation is used
+- backend packages do not call each other directly
+- backend replacement must not require changing the top-level CLI contract
+- backend-specific flags and payload quirks stay behind the CLI contract
+  boundary
+
+## 6. Planned Implementation Units
+
+The approved CLI implementation shape is:
+
+- `src/Roslyn.Lint/Program.cs`
+  - thin composition root only
+- `src/Roslyn.Lint/Commands/RegisterLintCommands.cs`
+- `src/Roslyn.Lint/Commands/RegisterViewCommands.cs`
+- `src/Roslyn.Lint/Commands/RegisterCheckCommands.cs`
+- `src/Roslyn.Lint/Commands/RegisterClippyCommands.cs`
+- `src/Roslyn.Lint/Commands/RegisterCiCommand.cs`
+- `src/Roslyn.Lint/Commands/RegisterVersionCommand.cs`
+- `src/Roslyn.Lint/CommandModel/CommandFamily.cs`
+- `src/Roslyn.Lint/CommandModel/LintProfile.cs`
+- `src/Roslyn.Lint/CommandModel/OutputMode.cs`
+- `src/Roslyn.Lint/CommandModel/BackendExecutionMode.cs`
+- `src/Roslyn.Lint/Contracts/CliEnvelope.cs`
+- `src/Roslyn.Lint/Contracts/CliError.cs`
+- `src/Roslyn.Lint/Contracts/CliDiagnostic.cs`
+- `src/Roslyn.Lint/Contracts/CliErrorKind.cs`
+- `src/Roslyn.Lint/Contracts/LintToolRequest.cs`
+- `src/Roslyn.Lint/Contracts/LintToolResult.cs`
+- `src/Roslyn.Lint/Contracts/LintFinding.cs`
+- `src/Roslyn.Lint/Contracts/ViewRequest.cs`
+- `src/Roslyn.Lint/Contracts/ViewResult.cs`
+- `src/Roslyn.Lint/Contracts/CheckRequest.cs`
+- `src/Roslyn.Lint/Contracts/CheckResult.cs`
+- `src/Roslyn.Lint/Contracts/ClippyRequest.cs`
+- `src/Roslyn.Lint/Contracts/ClippyResult.cs`
+- `src/Roslyn.Lint/Contracts/CiRequest.cs`
+- `src/Roslyn.Lint/Contracts/CiResult.cs`
+- `src/Roslyn.Lint/Contracts/VersionResult.cs`
+- `src/Roslyn.Lint/Dispatch/BackendToolDescriptor.cs`
+- `src/Roslyn.Lint/Dispatch/IBackendToolDispatcher.cs`
+- `src/Roslyn.Lint/Dispatch/IBackendProcessRunner.cs`
+- `src/Roslyn.Lint/Dispatch/BackendJsonNormalizer.cs`
+- `src/Roslyn.Lint/Operations/ILintToolOperation.cs`
+- `src/Roslyn.Lint/Operations/IViewOperation.cs`
+- `src/Roslyn.Lint/Operations/ICheckOperation.cs`
+- `src/Roslyn.Lint/Operations/IClippyOperation.cs`
+- `src/Roslyn.Lint/Operations/ICiOperation.cs`
+- `src/Roslyn.Lint/Serialization/IJsonEnvelopeWriter.cs`
+- `src/Roslyn.Lint/Serialization/RoslynLintJsonContext.cs`
+- `src/Roslyn.Lint/Formatting/IHumanOutputFormatter.cs`
+- `src/Roslyn.Lint/Backends/`
 
 If the current `LintCommand` design prevents this split, it should be removed
 and replaced rather than stretched into compliance.
 
-Until the contract and operation layers listed here exist in code, external
-release automation must not treat the CLI package as the suite's approved
-machine interface.
-
-## 2.2 Planned Interfaces, Records/Structs, and Enums
+## 6.1 Planned Interfaces, Records/Structs, And Enums
 
 The CLI baseline expects these named types to exist when implementation begins:
 
-- `ICommandOperation<TRequest, TResponse>`
-- `ILintWorkspaceAdapter`
-- `IJsonEnvelopeWriter`
-- `IHumanOutputFormatter<TResponse>`
-- `CliEnvelope<TResult>`
-- `CliError`
-- `CliWarning`
-- `LintRequest`
-- `LintResult`
-- `LintIssue`
-- `CliErrorKind`
+- interfaces:
+  `IBackendToolDispatcher`, `IBackendProcessRunner`,
+  `ILintToolOperation`, `IViewOperation`, `ICheckOperation`,
+  `IClippyOperation`, `ICiOperation`, `IJsonEnvelopeWriter`,
+  `IHumanOutputFormatter<TResponse>`
+- records or immutable payload types:
+  `CliEnvelope<TResult>`, `CliError`, `CliDiagnostic`,
+  `BackendToolDescriptor`, `LintToolRequest`, `LintToolResult`,
+  `LintFinding`, `ViewRequest`, `ViewResult`, `CheckRequest`, `CheckResult`,
+  `ClippyRequest`, `ClippyResult`, `CiRequest`, `CiResult`, `VersionResult`
+- enums:
+  `CommandFamily`, `LintProfile`, `OutputMode`, `BackendExecutionMode`,
+  `CliErrorKind`
 
 Type guidance:
 
-- use interfaces for transport, operation, and formatting seams
-- use immutable records or readonly structs for request, response, and issue
-  payloads
-- use enums only for closed machine vocabularies such as error kinds
+- use enums only for closed machine vocabularies
+- use immutable records or readonly structs for transport-neutral payloads
+- use interfaces for parser-independent dispatch, execution, and rendering
+  seams
 
-## 3. Contract Model
+## 7. Contract Model
 
 The architecture must maintain one stable success and failure contract family.
 
 Minimum contract properties:
 
 - explicit success versus failure discrimination
-- stable command or operation identity
+- stable command identity
 - stable field names
 - typed errors with machine codes
 - structured details for automation
+- additive diagnostics that do not replace the business payload
 
 Baseline JSON envelope:
 
 ```json
 {
-  "success": true,
-  "operation": "lint.run",
-  "result": {},
-  "warnings": []
+  "ok": true,
+  "command": "lint.roslyn-demagic",
+  "data": {},
+  "diagnostics": []
 }
 ```
 
 ```json
 {
-  "success": false,
-  "operation": "lint.run",
+  "ok": false,
+  "command": "lint.roslyn-demagic",
   "error": {
-    "kind": "validation",
-    "code": "CLI.INVALID_PATH",
-    "message": "Path does not exist",
+    "kind": "config",
+    "code": "CLI.CONFIG_ERROR",
+    "message": "Repository config is missing",
     "details": {
-      "path": "src/missing"
+      "path": ".roslyn-lint/config-src.toml"
     },
-    "suggested_action": "Provide an existing file or directory path"
+    "suggested_action": "Create the expected config file or pass an explicit config path"
   },
-  "warnings": []
+  "diagnostics": []
 }
 ```
 
-The exact command inventory can evolve later, but the contract model must not.
+The exact contract matrix and command-identifier rules are owned by
+`docs/roslyn-lint/cli-contract.md`.
 
-## 4. MCP-Ready Boundary
+## 8. MCP-Ready Boundary
 
 The future MCP wrapper must be able to reuse:
 
 - the same request DTOs
 - the same response DTOs
-- the same operation layer
+- the same dispatch or operation layer
 - the same serializer policy
 
 Architectural rules:
@@ -156,7 +246,7 @@ Architectural rules:
   payloads
 - the CLI must not require stdout parsing for contract reuse
 
-## 5. Mutation and Readback
+## 9. Mutation And Readback
 
 Whenever the CLI later gains mutating commands, the architecture must pair them
 with readback operations.
@@ -167,31 +257,33 @@ Architectural rules:
 - readback handlers expose resulting state through the same contract family
 - tests verify behavior through JSON read-after-write flows
 
-## 6. Adapter and Simulator Boundary
+## 10. Adapter And Simulator Boundary
 
 If the CLI integrates with external systems, it must do so through a swappable
 interface-based boundary.
 
 Architectural rules:
 
-- the live adapter and simulator implement the same operation-facing contract
+- live and simulator implementations satisfy the same operation-facing
+  contracts
 - simulator mode must exercise the same business logic as live mode
 - stateful simulator support is part of the architecture, not an optional test
   convenience
 
-## 7. .NET Guidance
+## 11. .NET Guidance
 
 Target implementation guidance:
 
+- `System.CommandLine` for parser and option binding
 - explicit DTOs
-- shared `System.Text.Json` options and serializer context where practical
-- thin command layer
-- reusable operation layer
+- shared `System.Text.Json` options and serializer context
+- thin command-registration layer
+- reusable dispatch and operation layer
 - one shared JSON envelope model for success and failure
 - tests that assert DTO and serialized-field stability directly
 
-Parser-library choice remains a secondary implementation detail. If a chosen
-library makes the command surface drift away from this contract model, the
-library choice loses.
+Parser-library choice is not open-ended in this baseline. The approved
+replacement line uses `System.CommandLine` per the local
+`creating-ai-clis` skill and `ADR-004`.
 
 Boundary ownership detail is defined in `docs/roslyn-lint/boundaries.md`.
