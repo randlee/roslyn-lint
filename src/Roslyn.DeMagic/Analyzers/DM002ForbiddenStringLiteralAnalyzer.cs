@@ -23,7 +23,7 @@ public sealed class DM002ForbiddenStringLiteralAnalyzer : DiagnosticAnalyzer
         isEnabledByDefault: true,
         description: DeMagicDiagnosticDescriptors.Dm002Description);
 
-    private readonly DeMagicConfigLoader configLoader;
+    private readonly IDeMagicConfigLoader configLoader;
     private readonly IForbiddenPatternCompiler patternCompiler;
 
     public DM002ForbiddenStringLiteralAnalyzer()
@@ -32,7 +32,7 @@ public sealed class DM002ForbiddenStringLiteralAnalyzer : DiagnosticAnalyzer
     }
 
     internal DM002ForbiddenStringLiteralAnalyzer(
-        DeMagicConfigLoader configLoader,
+        IDeMagicConfigLoader configLoader,
         IForbiddenPatternCompiler patternCompiler)
     {
         this.configLoader = configLoader;

@@ -1,20 +1,20 @@
 ---
 id: A3
-title: DM001 requirements convergence
-status: planned
+title: DM002 hardening and release alignment
+status: complete
 branch: sprint/A3
 worktree: /Users/randlee/Documents/github/roslyn-lint-worktrees/sprint/A3
 target: integration/phase-A
 ---
 
-# Sprint A3 - DM001 Requirements Convergence
+# Sprint A3 - DM002 Hardening And Release Alignment
 
 ## Goal
 
-- Replace the current numeric-literal spike with the approved `DM001`
-  constant-consolidation rule.
-- Reuse the A1/A2 configuration and descriptor foundation instead of
-  preserving generic numeric-literal behavior.
+- harden the `DM002` implementation line after A2 so the branch no longer
+  carries spike leftovers or broken seams
+- align branch documentation and release metadata with the approved `DM002`
+  analyzer and the replacement-oriented `DM001` transition state
 
 ## Hard Dependencies
 
@@ -26,51 +26,45 @@ target: integration/phase-A
 
 ## Exact Targets
 
-- `src/Roslyn.DeMagic/Analyzers/MagicNumberAnalyzer.cs`
+- `src/Roslyn.DeMagic/Analyzers/DM002ForbiddenStringLiteralAnalyzer.cs`
 - `src/Roslyn.DeMagic/Analyzers/DM001ConstantConsolidationAnalyzer.cs`
-- `src/Roslyn.DeMagic/Configuration/IAdditionalFileConfigSelector.cs`
-- `src/Roslyn.DeMagic/Configuration/ITomlConfigParser.cs`
-- `src/Roslyn.DeMagic/Configuration/DeMagicConfig.cs`
-- `src/Roslyn.DeMagic/Configuration/Dm001Options.cs`
-- `src/Roslyn.DeMagic/Configuration/Dm002Options.cs`
-- `src/Roslyn.DeMagic/Configuration/ConfiguredSeverity.cs`
-- `src/Roslyn.DeMagic/Configuration/AdditionalFileConfigSelection.cs`
+- `src/Roslyn.DeMagic/Analyzers/MagicNumberAnalyzer.cs` deleted
+- `src/Roslyn.DeMagic/Configuration/IDeMagicConfigLoader.cs`
 - `src/Roslyn.DeMagic/Configuration/DeMagicConfigLoader.cs`
-- `src/Roslyn.DeMagic/Diagnostics/DeMagicDiagnosticDescriptors.cs`
-- `tests/Roslyn.DeMagic.Tests/Analyzers/MagicNumberAnalyzerTests.cs`
-- `tests/Roslyn.DeMagic.Tests/Analyzers/DM001ConstantConsolidationAnalyzerTests.cs`
-- `tests/Roslyn.DeMagic.Tests/Configuration/DeMagicConfigLoaderTests.cs`
-- `tests/Roslyn.DeMagic.Tests/Configuration/ConfiguredSeverityTests.cs`
+- `src/Roslyn.DeMagic/AnalyzerReleases.Unshipped.md`
+- `src/Roslyn.Lint/Commands/LintCommand.cs`
+- `tests/Roslyn.DeMagic.Tests/Analyzers/MagicNumberAnalyzerTests.cs` deleted
 
 ## Important Interfaces, Records/Structs, and Enums
 
 - interfaces:
-  `IAdditionalFileConfigSelector`, `ITomlConfigParser`
+  `IDeMagicConfigLoader`, `IForbiddenPatternCompiler`
 - immutable config payload types:
-  `DeMagicConfig`, `Dm001Options`, `Dm002Options`,
-  `AdditionalFileConfigSelection`
+  `DeMagicConfig`, `Dm002Options`
 - enums:
   `ConfiguredSeverity`
 
 ## Required Work
 
-- delete or retire the current `MagicNumberAnalyzer` spike if it obstructs the
-  approved `DM001` design
-- implement designated-file and optional designated-class checks against
-  public/internal const field declarations
-- keep local constants and private/protected constants out of scope
-- load config from `AdditionalFiles` once per compilation start and reuse the
-  existing immutable config payloads
-- align `DM001` descriptor wording and category with constant consolidation,
-  not generic magic-value detection
+- delete the remaining `MagicNumberAnalyzer` spike and its dedicated test file
+- remove `MagicNumberAnalyzer` from `LintCommand` so the CLI no longer loads
+  the rejected numeric-literal rule
+- keep `DM001` release metadata aligned to the approved category while using a
+  replacement placeholder analyzer instead of the old spike behavior
+- use the injected `IForbiddenPatternCompiler` seam in `DM002` instead of
+  allocating a new matcher for each literal
+- wire `DM002ForbiddenStringLiteralAnalyzer` to `IDeMagicConfigLoader` rather
+  than the concrete `DeMagicConfigLoader` type
+- record the completed `DM002` hardening scope in this sprint document
 
 ## Acceptance Criteria
 
-- `DM001` diagnoses only the rule scope defined in the PRD
-- `DM001` no longer reports generic numeric literal usage
-- designated-file and designated-class behavior are covered by tests
-- current numeric-literal spike semantics are no longer treated as correct
-  behavior
+- the `MagicNumberAnalyzer` spike is removed from production code on `sprint/A3`
+- `DM002` uses both injected seams: `IDeMagicConfigLoader` and
+  `IForbiddenPatternCompiler`
+- `DM001` release metadata no longer uses the spike category or wording
+- the sprint document records `status: complete`, `branch: sprint/A3`, and the
+  active `worktree:`
 
 ## Required Validation
 
