@@ -23,9 +23,9 @@ public sealed class ForbiddenPatternMatcher : IForbiddenPatternCompiler
         var matchValue = kind switch
         {
             ForbiddenPatternKind.Exact => rawPattern,
-            ForbiddenPatternKind.Prefix => rawPattern[..^1],
-            ForbiddenPatternKind.Suffix => rawPattern[1..],
-            ForbiddenPatternKind.Substring => rawPattern[1..^1],
+            ForbiddenPatternKind.Prefix => rawPattern.Substring(0, rawPattern.Length - 1),
+            ForbiddenPatternKind.Suffix => rawPattern.Substring(1),
+            ForbiddenPatternKind.Substring => rawPattern.Substring(1, rawPattern.Length - 2),
             _ => rawPattern,
         };
 
@@ -68,8 +68,8 @@ public sealed class ForbiddenPatternMatcher : IForbiddenPatternCompiler
 
     private static ForbiddenPatternKind GetKind(string rawPattern)
     {
-        var startsWithWildcard = rawPattern.StartsWith('*');
-        var endsWithWildcard = rawPattern.EndsWith('*');
+        var startsWithWildcard = rawPattern.StartsWith("*", StringComparison.Ordinal);
+        var endsWithWildcard = rawPattern.EndsWith("*", StringComparison.Ordinal);
 
         if (startsWithWildcard && endsWithWildcard && rawPattern.Length > 2)
             return ForbiddenPatternKind.Substring;
