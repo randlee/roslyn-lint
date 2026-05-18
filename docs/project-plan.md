@@ -196,6 +196,11 @@ Planned package-validation support units:
 
 ## 5. Execution Rules
 
+- predecessor sprint QA closure blocks sprint closeout, not sprint start
+- later sprint branches may begin implementation before earlier sprint QA is
+  complete
+- before declaring a later sprint complete, merge forward the latest accepted
+  earlier-sprint state and rerun required validation on the resulting head
 - requirements and architecture documents are authoritative over the current
   spike implementation
 - analyzer-first work takes precedence over speculative CLI feature work until

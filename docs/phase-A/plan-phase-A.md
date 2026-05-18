@@ -95,6 +95,10 @@ design line rather than assuming the current spike is valid.
 
 ## 7. Implementation Strategy
 
+- predecessor sprint closure is a closeout gate, not a start gate
+- later sprint development may begin before the previous sprint passes QA
+- before a later sprint closes, it must merge forward the latest accepted
+  earlier-sprint state and revalidate against it
 - A0 documents the approved target and replacement policy
 - A1 introduces shared configuration and forbidden-pattern infrastructure
 - A2 deletes the `DM002` spike behavior and introduces compiled forbidden-
