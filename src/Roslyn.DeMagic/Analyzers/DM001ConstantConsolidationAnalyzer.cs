@@ -45,10 +45,10 @@ public sealed class DM001ConstantConsolidationAnalyzer : DiagnosticAnalyzer
 
     private void InitializeCompilation(CompilationStartAnalysisContext context)
     {
-        if (!configLoader.TryLoad(context.Options.AdditionalFiles, out var config, out var errors))
+        if (!configLoader.TryLoad(context.Options.AdditionalFiles, out var config, out _))
             return;
 
-        if (errors.Length > 0 || !config.Dm001.Enabled || string.IsNullOrWhiteSpace(config.Dm001.DesignatedFile))
+        if (!config.Dm001.Enabled || string.IsNullOrWhiteSpace(config.Dm001.DesignatedFile))
             return;
 
         var designatedFile = config.Dm001.DesignatedFile!;
@@ -83,9 +83,6 @@ public sealed class DM001ConstantConsolidationAnalyzer : DiagnosticAnalyzer
             return;
 
         var location = declarator.Identifier.GetLocation();
-        if (location is null)
-            return;
-
         var sourcePath = location.SourceTree?.FilePath;
         if (string.IsNullOrWhiteSpace(sourcePath))
             return;
@@ -106,7 +103,7 @@ public sealed class DM001ConstantConsolidationAnalyzer : DiagnosticAnalyzer
         if (field.ContainingType is null)
             return;
 
-        if (!string.Equals(field.ContainingType.Name, designatedClass, StringComparison.Ordinal))
+        if (!string.Equals(field.ContainingType.Name, designatedClass, StringComparison.OrdinalIgnoreCase))
             Report(context, location, field, designatedFile, effectiveSeverity);
     }
 

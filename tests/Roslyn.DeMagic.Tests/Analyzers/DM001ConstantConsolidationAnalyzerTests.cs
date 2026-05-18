@@ -132,6 +132,18 @@ public sealed class DM001ConstantConsolidationAnalyzerTests
     [Fact]
     public async Task PragmaSuppression_Works()
     {
+        var unsuppressedCode = AnalyzerTestHarness.LoadFixture("DM001/SuppressedConst.cs")
+            .Replace("#pragma warning disable DM001", string.Empty, StringComparison.Ordinal)
+            .Replace("#pragma warning restore DM001", string.Empty, StringComparison.Ordinal)
+            .Trim();
+
+        var unsuppressedDiagnostics = await AnalyzerTestHarness.GetDiagnosticsAsync(
+            new DM001ConstantConsolidationAnalyzer(),
+            unsuppressedCode,
+            "/repo/DM001/SuppressedConst.cs",
+            new TestAdditionalText("/repo/.roslyn-lint/config-src.toml", EnabledWarningConfig));
+        unsuppressedDiagnostics.Should().ContainSingle();
+
         var diagnostics = await GetDiagnosticsAsync(
             "DM001/SuppressedConst.cs",
             EnabledWarningConfig);

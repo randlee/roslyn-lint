@@ -40,6 +40,7 @@ target: integration/phase-A
 - `tests/Roslyn.DeMagic.Tests/TestData/DM001/DesignatedClassMismatch.cs`
 - `tests/Roslyn.DeMagic.Tests/TestData/DM001/PrivateProtectedIgnored.cs`
 - `tests/Roslyn.DeMagic.Tests/TestData/DM001/LocalConstIgnored.cs`
+- `tests/Roslyn.DeMagic.Tests/TestData/DM001/SuppressedConst.cs`
 
 ## Important Interfaces, Records/Structs, And Enums
 
@@ -54,8 +55,13 @@ target: integration/phase-A
 
 - register real Roslyn analysis actions for `DM001`
 - diagnose only `public` and `internal` type-member `const` fields
+- continue excluding `private`, `protected`, `private protected`, and
+  `protected internal` constants in A9 because the approved sprint scope is
+  still limited to explicitly `public` and `internal` declarations
 - use `designated_file` as the primary location rule
 - require `designated_class` when configured
+- compare configured `designated_file` and `designated_class` values using one
+  consistent case-insensitive policy so the rule does not drift by config key
 - exclude private, protected, and local constants
 - keep missing or invalid config fail-closed
 - honor configured severity instead of hard-coding effective rule behavior
