@@ -32,6 +32,9 @@ free-form input.
   "deliverables": [
     "optional task-level deliverables"
   ],
+  "gate_artifacts": [
+    "optional explicit gate-artifact paths"
+  ],
   "review_targets": [
     "optional files or directories"
   ],
@@ -56,6 +59,7 @@ Rules:
 - `authoritative_sprint_doc` is the primary task-level architecture source when
   provided
 - `deliverables` are mandatory structural review inputs when present
+- `gate_artifacts` are mandatory direct-inspection targets when present
 - if required inputs are missing or malformed, return `FAIL`
 
 ## Structural Rules
@@ -85,7 +89,12 @@ Rules:
 - `RULE-008` Structural gate artifacts must be inspected directly
   - when deliverables or the authoritative sprint doc point to boundary,
     packaging, release-tracking, checklist, matrix, or validation artifacts,
-    inspect those artifacts directly and fail if they remain open
+    inspect those artifacts directly
+  - if a gate artifact defines its own completion or release gate internally,
+    that internal rule governs `closed`
+  - sprint-doc wording does not override the artifact's own gate
+  - if no internal gate exists, fail when required rows, checks, entries, or
+    evidence remain incomplete
 
 ## Review Method
 
@@ -94,8 +103,9 @@ Rules:
 3. Inspect the named review targets first, then widen only when a structural
    pattern requires it.
 4. Check the repository directly against `RULE-001` through `RULE-008`.
-5. When a task names structural gate artifacts, determine whether those
-   artifacts are actually closed.
+5. Inspect every named `gate_artifact` plus any structural gate artifact named
+   by deliverables or the authoritative sprint doc, and determine whether it is
+   actually closed under its own internal gate.
 6. For repeatable violations, sweep the full workspace and include all matching
    locations.
 7. Treat pre-existing violations as findings; age is informational only.

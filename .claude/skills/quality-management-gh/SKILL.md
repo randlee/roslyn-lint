@@ -82,7 +82,9 @@ Template:
 Recommended flow:
 1. Gather findings from QA agents.
 2. Render markdown from the template with required variables.
-3. Append the report to the PR as a blocking review or status comment.
+3. When rechecking prior findings, include a resolved-findings section for
+   items closed since the previous pass.
+4. Append the report to the PR as a blocking review or status comment.
 
 Suggested commands:
 - blocking review:

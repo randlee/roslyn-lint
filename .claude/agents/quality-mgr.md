@@ -97,8 +97,10 @@ Additional rules:
    `carry_forward_findings_json` when rechecking prior findings.
 8. Pass task-listed `deliverables`, `acceptance_criteria`, and
    `expected_artifacts` to `req-qa`.
-9. Pass task-listed `deliverables` and `authoritative_sprint_doc` to
-   `arch-qa`.
+9. Identify named matrix, checklist, release-tracking, manifest, and
+   validation artifacts from the task plus the authoritative sprint doc, and
+   pass them to `arch-qa` as `gate_artifacts` along with task-listed
+   `deliverables` and `authoritative_sprint_doc`.
 10. Launch all required reviewers as background Task agents.
 11. Collect results and classify findings as blocking, non-blocking, or
     skipped.

@@ -1,6 +1,6 @@
 ---
 name: arch-qa-assignment
-version: 1.0.0
+version: 1.1.0
 description: Render a fenced-JSON assignment for arch-qa.
 format: json
 required_variables:
@@ -15,6 +15,7 @@ optional_variables:
   - sprint
   - sprint_doc
   - deliverables
+  - gate_artifacts
   - round_limit
   - changed_files
   - carry_forward_findings_json
@@ -26,6 +27,7 @@ defaults:
   sprint: ""
   sprint_doc: ""
   deliverables: []
+  gate_artifacts: []
   round_limit: false
   changed_files: []
   carry_forward_findings_json: "[]"
@@ -42,6 +44,7 @@ defaults:
     "sprint": {% if sprint %}"{{ sprint }}"{% else %}null{% endif %}
   },
   "authoritative_sprint_doc": {% if sprint_doc %}"{{ sprint_doc }}"{% else %}null{% endif %},
+  "gate_artifacts": [{% for item in gate_artifacts %}"{{ item }}"{% if not loop.last %}, {% endif %}{% endfor %}],
   "review_targets": [{% for target in review_targets %}"{{ target }}"{% if not loop.last %}, {% endif %}{% endfor %}],
   "reference_docs": [{% for doc in reference_docs %}"{{ doc }}"{% if not loop.last %}, {% endif %}{% endfor %}],
   "deliverables": [{% for item in deliverables %}"{{ item }}"{% if not loop.last %}, {% endif %}{% endfor %}],

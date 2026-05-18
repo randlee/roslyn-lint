@@ -117,6 +117,16 @@ For each checklist item:
   other gate artifact, also classify closure as `closed`, `open`, or
   `not-applicable`
 
+For gate artifacts:
+- read the artifact directly
+- if the artifact defines its own completion or release gate internally, that
+  internal rule governs `closed`
+- sprint-doc language may require the artifact, but it does not override the
+  artifact's own closure rule
+- if no internal closure rule exists, treat the artifact as `closed` only when
+  its required rows, checks, entries, or evidence are complete from repository
+  evidence
+
 Emit a finding for every item that is:
 - `partially-present`
 - `absent`
