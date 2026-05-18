@@ -37,6 +37,7 @@ target: integration/phase-A
 - `examples/Roslyn.DeMagic.PackageSmoke/Samples/DM001/InternalConstOutsideDesignatedFile.cs`
 - `examples/Roslyn.DeMagic.PackageSmoke/Samples/DM001/DesignatedFileCompliantConst.cs`
 - `examples/Roslyn.DeMagic.PackageSmoke/Samples/DM001/SuppressedConst.cs`
+- `examples/Roslyn.DeMagic.PackageSmoke/Samples/DM001/UnsuppressedConstControl.cs`
 - `examples/Roslyn.DeMagic.PackageSmoke/Samples/DM002/ExactMatchConstField.cs`
 - `examples/Roslyn.DeMagic.PackageSmoke/Samples/DM002/PrefixMethodArgument.cs`
 - `examples/Roslyn.DeMagic.PackageSmoke/Samples/DM002/SuffixComparison.cs`
@@ -67,6 +68,8 @@ target: integration/phase-A
 - pack `Roslyn.DeMagic` from the repo build into a local package output
 - configure a local NuGet feed for the example consumer project
 - reference `Roslyn.DeMagic` by package reference, not by project reference
+- keep `examples/` isolated from repo-root packaging metadata with a bare
+  stop-file so the package-smoke subtree carries only its local overrides
 - keep the package-smoke project on `.roslyn-lint/config-src.toml`; document
   that `.roslyn-lint/config-test.toml` routing remains validated by
   `DeMagicConfigLoaderTests` from A10 rather than by the A11 sample project

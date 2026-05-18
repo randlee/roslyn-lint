@@ -32,9 +32,13 @@ public sealed class PackageValidationContractsTests
         manifest.Should().NotBeNull();
         manifest!.PackageId.Should().Be("Roslyn.DeMagic");
         manifest.PackageVersion.Should().Be("0.1.0");
-        manifest.ExpectedDiagnostics.Should().HaveCount(7);
+        manifest.ExpectedDiagnostics.Should().HaveCount(8);
         manifest.ExpectedDiagnostics.Select(diagnostic => diagnostic.SampleKind)
             .Should().OnlyContain(kind => kind == PackageValidationSampleKind.Positive);
+        manifest.ExpectedDiagnostics.Should().ContainSingle(diagnostic =>
+            diagnostic.File == "Samples/DM001/UnsuppressedConstControl.cs" &&
+            diagnostic.Id == "DM001" &&
+            diagnostic.Severity == "warning");
         manifest.ExpectedCleanFiles.Should().HaveCount(4);
     }
 

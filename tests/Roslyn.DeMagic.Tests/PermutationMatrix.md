@@ -83,7 +83,7 @@ Examples:
 | `DM001-019` | severity `warning` | warning diagnostic | `DM001/PublicConstOutsideDesignatedFile.cs` | `Samples/DM001/PublicConstOutsideDesignatedFile.cs` | `covered` |
 | `DM001-020` | severity `error` | error diagnostic | `DM001/SeverityFromConfig.cs` | `Samples/DM001/SeverityFromConfig.cs` | `planned` |
 | `DM001-021` | `#pragma` suppression | no diagnostic | `DM001/SuppressedConst.cs` | `Samples/DM001/SuppressedConst.cs` | `covered` |
-| `DM001-022` | unsuppressed control for suppression sample | diagnostic | `DM001/SuppressedConst.cs` | `Samples/DM001/SuppressedConst.cs` | `covered` |
+| `DM001-022` | unsuppressed control for suppression sample | diagnostic | `DM001/SuppressedConst.cs` | `Samples/DM001/UnsuppressedConstControl.cs` | `covered` |
 
 ## DM002 Supported Dimensions
 
@@ -167,8 +167,8 @@ literal differs only by casing.
 | `DM002-008` | severity `info` | info diagnostic | `DM002/SeverityFromConfig.cs` | `Samples/DM002/SeverityInfo.cs` | `planned` |
 | `DM002-009` | severity `warning` | warning diagnostic | `DM002/PrefixMethodArgument.cs` | `Samples/DM002/SeverityWarning.cs` | `planned` |
 | `DM002-010` | severity `error` | error diagnostic | `DM002/ExactMatchConstField.cs` | `Samples/DM002/SeverityError.cs` | `planned` |
-| `DM002-011` | `#pragma` suppression | no diagnostic | `DM002/SuppressedLiteral.cs` | `Samples/DM002/SuppressedLiteral.cs` | `planned` |
-| `DM002-012` | unsuppressed control for suppression sample | diagnostic | `DM002/SuppressedLiteral.cs` | `Samples/DM002/SuppressedLiteral.cs` | `planned` |
+| `DM002-011` | `#pragma` suppression | no diagnostic | `DM002/SuppressedLiteral.cs` | `Samples/DM002/SuppressedLiteral.cs` | `covered` |
+| `DM002-012` | unsuppressed control for suppression sample | diagnostic | `DM002/SuppressedLiteral.cs` | `Samples/DM002/SuppressedLiteral.cs` | `covered` |
 
 ## Unsupported By Design In v1
 

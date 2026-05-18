@@ -1,6 +1,11 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+if [[ -z "${BASH_SOURCE[0]:-}" ]]; then
+  echo "BASH_SOURCE is unavailable; run this script with bash." >&2
+  exit 1
+fi
+
 repo_root="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 manifest_path="$repo_root/eng/roslyn-demagic-package-expected-diagnostics.json"
 sample_project="$repo_root/examples/Roslyn.DeMagic.PackageSmoke/Roslyn.DeMagic.PackageSmoke.csproj"

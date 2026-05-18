@@ -1,6 +1,4 @@
 <Project>
-  <Import Project="../Directory.Build.props" />
-
   <PropertyGroup>
     <RoslynDeMagicVersion>0.1.0</RoslynDeMagicVersion>
     <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
