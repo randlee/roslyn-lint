@@ -1,4 +1,4 @@
-namespace Roslyn.Lint.Backends;
+namespace Roslyn.DeMagic.Lint;
 
 using System.Collections.Immutable;
 using System.Reflection;
@@ -8,18 +8,18 @@ using Microsoft.CodeAnalysis.Diagnostics;
 using Microsoft.CodeAnalysis.Text;
 using Roslyn.DeMagic.Analyzers;
 using Roslyn.Lint.Abstractions;
-using Roslyn.Lint.Contracts;
+using Roslyn.Lint.Abstractions.Contracts;
 
-public sealed class RoslynDeMagicLintHandler : ILintToolCommandHandler<LintToolRequest, LintToolResult>
+public sealed class DeMagicWorkspaceAdapter : ILintWorkspaceAdapter
 {
     private static readonly ImmutableArray<MetadataReference> MetadataReferences = CreateMetadataReferences();
 
-    public async Task<LintToolResult> ExecuteAsync(LintToolRequest request, CancellationToken cancellationToken)
+    public async Task<LintToolResult> ExecuteLintAsync(LintToolRequest request, CancellationToken cancellationToken)
     {
         var targetPath = Path.GetFullPath(request.TargetPath);
         var sourceFiles = ResolveSourceFiles(targetPath);
         var syntaxTrees = await LoadSyntaxTreesAsync(sourceFiles, cancellationToken);
-        var additionalFiles = LoadAdditionalFiles(targetPath);
+        var additionalFiles = await LoadAdditionalFilesAsync(targetPath, cancellationToken);
 
         var compilation = CSharpCompilation.Create(
             assemblyName: "roslyn-lint-demagic",
@@ -74,7 +74,9 @@ public sealed class RoslynDeMagicLintHandler : ILintToolCommandHandler<LintToolR
         }
 
         if (!Directory.Exists(targetPath))
+        {
             return [];
+        }
 
         return Directory.EnumerateFiles(targetPath, "*.cs", SearchOption.AllDirectories)
             .Where(path => !IsInIgnoredDirectory(path))
@@ -89,20 +91,34 @@ public sealed class RoslynDeMagicLintHandler : ILintToolCommandHandler<LintToolR
                 || segment.Equals("obj", StringComparison.OrdinalIgnoreCase));
     }
 
-    private static IReadOnlyList<FileAdditionalText> LoadAdditionalFiles(string targetPath)
+    private static async Task<IReadOnlyList<FileAdditionalText>> LoadAdditionalFilesAsync(
+        string targetPath,
+        CancellationToken cancellationToken)
     {
         var root = ResolveConfigRoot(targetPath);
         if (root is null)
+        {
             return [];
+        }
 
         var configDirectory = Path.Combine(root, ".roslyn-lint");
         if (!Directory.Exists(configDirectory))
+        {
             return [];
+        }
 
-        return Directory.EnumerateFiles(configDirectory, "config-*.toml", SearchOption.TopDirectoryOnly)
+        var files = Directory.EnumerateFiles(configDirectory, "config-*.toml", SearchOption.TopDirectoryOnly)
             .OrderBy(path => path, StringComparer.OrdinalIgnoreCase)
-            .Select(path => new FileAdditionalText(path, File.ReadAllText(path)))
             .ToArray();
+
+        var results = new List<FileAdditionalText>(files.Length);
+        foreach (var path in files)
+        {
+            var content = await File.ReadAllTextAsync(path, cancellationToken);
+            results.Add(new FileAdditionalText(path, content));
+        }
+
+        return results;
     }
 
     private static string? ResolveConfigRoot(string targetPath)
@@ -114,7 +130,9 @@ public sealed class RoslynDeMagicLintHandler : ILintToolCommandHandler<LintToolR
         while (current is not null)
         {
             if (Directory.Exists(Path.Combine(current.FullName, ".roslyn-lint")))
+            {
                 return current.FullName;
+            }
 
             current = current.Parent;
         }
@@ -149,7 +167,9 @@ public sealed class RoslynDeMagicLintHandler : ILintToolCommandHandler<LintToolR
     {
         var trustedPlatformAssemblies = (string?)AppContext.GetData("TRUSTED_PLATFORM_ASSEMBLIES");
         if (string.IsNullOrWhiteSpace(trustedPlatformAssemblies))
+        {
             throw new InvalidOperationException("TRUSTED_PLATFORM_ASSEMBLIES was not available.");
+        }
 
         var requiredAssemblies = new HashSet<string>(StringComparer.OrdinalIgnoreCase)
         {
@@ -172,7 +192,17 @@ public sealed class RoslynDeMagicLintHandler : ILintToolCommandHandler<LintToolR
 
         references.Add(MetadataReference.CreateFromFile(typeof(object).GetTypeInfo().Assembly.Location));
 
-        return references.DistinctBy(reference => reference.Display, StringComparer.OrdinalIgnoreCase).ToImmutableArray();
+        var distinct = new List<MetadataReference>();
+        var seen = new HashSet<string?>(StringComparer.OrdinalIgnoreCase);
+        foreach (var reference in references)
+        {
+            if (seen.Add(reference.Display))
+            {
+                distinct.Add(reference);
+            }
+        }
+
+        return distinct.ToImmutableArray();
     }
 
     private sealed class FileAdditionalText(string path, string content) : AdditionalText

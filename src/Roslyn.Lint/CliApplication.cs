@@ -1,9 +1,9 @@
 namespace Roslyn.Lint;
 
 using System.CommandLine;
+using Roslyn.DeMagic.Lint;
 using Roslyn.Lint.Abstractions;
 using Roslyn.Lint.Abstractions.Contracts;
-using Roslyn.Lint.Backends;
 using Roslyn.Lint.Commands;
 using Roslyn.Lint.Dispatch;
 using Roslyn.Lint.Operations;

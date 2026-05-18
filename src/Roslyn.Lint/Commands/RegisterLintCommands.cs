@@ -3,7 +3,6 @@ namespace Roslyn.Lint.Commands;
 using System.CommandLine;
 using Roslyn.Lint.Abstractions;
 using Roslyn.Lint.Abstractions.Contracts;
-using Roslyn.Lint.Contracts;
 using Roslyn.Lint.Formatting;
 
 internal static class RegisterLintCommands

@@ -126,9 +126,10 @@ Planned replacement-oriented CLI implementation units when CLI work resumes:
 - `src/Roslyn.Lint.Abstractions/Contracts/CliError.cs`
 - `src/Roslyn.Lint.Abstractions/Contracts/CliDiagnostic.cs`
 - `src/Roslyn.Lint.Abstractions/Contracts/CliErrorKind.cs`
-- `src/Roslyn.Lint/Contracts/LintToolRequest.cs`
-- `src/Roslyn.Lint/Contracts/LintToolResult.cs`
-- `src/Roslyn.Lint/Contracts/LintFinding.cs`
+- `src/Roslyn.Lint.Abstractions/ILintWorkspaceAdapter.cs`
+- `src/Roslyn.Lint.Abstractions/Contracts/LintToolRequest.cs`
+- `src/Roslyn.Lint.Abstractions/Contracts/LintToolResult.cs`
+- `src/Roslyn.Lint.Abstractions/Contracts/LintFinding.cs`
 - `src/Roslyn.Lint/Contracts/ViewRequest.cs`
 - `src/Roslyn.Lint/Contracts/ViewResult.cs`
 - `src/Roslyn.Lint/Contracts/CheckRequest.cs`

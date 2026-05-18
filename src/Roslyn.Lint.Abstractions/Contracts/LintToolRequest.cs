@@ -1,4 +1,4 @@
-namespace Roslyn.Lint.Contracts;
+namespace Roslyn.Lint.Abstractions.Contracts;
 
 using Roslyn.Lint.Abstractions;
 

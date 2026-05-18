@@ -2,7 +2,7 @@ namespace Roslyn.Lint.Tests.Dispatch;
 
 using FluentAssertions;
 using Roslyn.Lint.Abstractions;
-using Roslyn.Lint.Contracts;
+using Roslyn.Lint.Abstractions.Contracts;
 using Roslyn.Lint.Dispatch;
 using Xunit;
 

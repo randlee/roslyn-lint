@@ -16,14 +16,14 @@ public sealed class LintToolSerializationTests
 
         await writer.WriteAsync(
             output,
-            CliEnvelope<Roslyn.Lint.Contracts.LintToolResult>.Success(
+            CliEnvelope<LintToolResult>.Success(
                 "lint.demagic",
-                new Roslyn.Lint.Contracts.LintToolResult(
+                new LintToolResult(
                     "demagic",
                     "/repo",
                     "findings",
                     1,
-                    [new Roslyn.Lint.Contracts.LintFinding("DM002", "warning", "cat", "msg", "file.cs", 1, 1)])),
+                    [new LintFinding("DM002", "warning", "cat", "msg", "file.cs", 1, 1)])),
             CancellationToken.None);
 
         var envelope = JsonNode.Parse(output.ToString())!.AsObject();

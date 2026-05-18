@@ -7,6 +7,6 @@ public sealed class VersionHumanOutputFormatter : IHumanOutputFormatter<VersionR
     public Task WriteAsync(TextWriter writer, VersionResult response, CancellationToken cancellationToken)
     {
         cancellationToken.ThrowIfCancellationRequested();
-        return writer.WriteLineAsync(response.Version);
+        return writer.WriteLineAsync(response.Version.AsMemory(), cancellationToken);
     }
 }

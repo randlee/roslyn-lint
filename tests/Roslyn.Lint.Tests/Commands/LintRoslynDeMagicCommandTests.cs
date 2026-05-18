@@ -2,8 +2,8 @@ namespace Roslyn.Lint.Tests.Commands;
 
 using FluentAssertions;
 using Roslyn.Lint.Abstractions;
-using Roslyn.Lint.Backends;
-using Roslyn.Lint.Contracts;
+using Roslyn.Lint.Abstractions.Contracts;
+using Roslyn.DeMagic.Lint;
 using Xunit;
 
 public sealed class LintRoslynDeMagicCommandTests

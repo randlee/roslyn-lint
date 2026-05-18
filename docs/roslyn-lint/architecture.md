@@ -164,9 +164,10 @@ The approved CLI implementation shape is:
 - `src/Roslyn.Lint.Abstractions/Contracts/CliError.cs`
 - `src/Roslyn.Lint.Abstractions/Contracts/CliDiagnostic.cs`
 - `src/Roslyn.Lint.Abstractions/Contracts/CliErrorKind.cs`
-- `src/Roslyn.Lint/Contracts/LintToolRequest.cs`
-- `src/Roslyn.Lint/Contracts/LintToolResult.cs`
-- `src/Roslyn.Lint/Contracts/LintFinding.cs`
+- `src/Roslyn.Lint.Abstractions/ILintWorkspaceAdapter.cs`
+- `src/Roslyn.Lint.Abstractions/Contracts/LintToolRequest.cs`
+- `src/Roslyn.Lint.Abstractions/Contracts/LintToolResult.cs`
+- `src/Roslyn.Lint.Abstractions/Contracts/LintFinding.cs`
 - `src/Roslyn.Lint/Contracts/ViewRequest.cs`
 - `src/Roslyn.Lint/Contracts/ViewResult.cs`
 - `src/Roslyn.Lint/Contracts/CheckRequest.cs`
@@ -188,7 +189,7 @@ The approved CLI implementation shape is:
 - `src/Roslyn.Lint/Serialization/IJsonEnvelopeWriter.cs`
 - `src/Roslyn.Lint/Serialization/RoslynLintJsonContext.cs`
 - `src/Roslyn.Lint/Formatting/IHumanOutputFormatter.cs`
-- `src/Roslyn.Lint/Backends/`
+- `src/Roslyn.DeMagic.Lint/`
 
 If the current `LintCommand` design prevents this split, it should be removed
 and replaced rather than stretched into compliance.
@@ -199,7 +200,7 @@ The CLI baseline expects these named types to exist when implementation begins:
 
 - interfaces:
   `ILintToolModule`, `ILintToolCommandHandler<TRequest, TResponse>`,
-  `IBackendToolDispatcher`, `IBackendProcessRunner`,
+  `ILintWorkspaceAdapter`, `IBackendToolDispatcher`, `IBackendProcessRunner`,
   `ILintToolOperation`, `IViewOperation`, `ICheckOperation`,
   `IClippyOperation`, `ICiOperation`, `IJsonEnvelopeWriter`,
   `IHumanOutputFormatter<TResponse>`

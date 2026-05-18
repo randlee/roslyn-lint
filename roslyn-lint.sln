@@ -17,6 +17,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Roslyn.Lint.Tests", "tests\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Roslyn.Lint.Abstractions", "src\Roslyn.Lint.Abstractions\Roslyn.Lint.Abstractions.csproj", "{1EB86373-1ED3-4B78-AE4E-7925FB994516}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Roslyn.DeMagic.Lint", "src\Roslyn.DeMagic.Lint\Roslyn.DeMagic.Lint.csproj", "{4A6B04DF-68FD-4060-AA42-1E924710F496}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -87,6 +89,18 @@ Global
 		{1EB86373-1ED3-4B78-AE4E-7925FB994516}.Release|x64.Build.0 = Release|Any CPU
 		{1EB86373-1ED3-4B78-AE4E-7925FB994516}.Release|x86.ActiveCfg = Release|Any CPU
 		{1EB86373-1ED3-4B78-AE4E-7925FB994516}.Release|x86.Build.0 = Release|Any CPU
+		{4A6B04DF-68FD-4060-AA42-1E924710F496}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4A6B04DF-68FD-4060-AA42-1E924710F496}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4A6B04DF-68FD-4060-AA42-1E924710F496}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{4A6B04DF-68FD-4060-AA42-1E924710F496}.Debug|x64.Build.0 = Debug|Any CPU
+		{4A6B04DF-68FD-4060-AA42-1E924710F496}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{4A6B04DF-68FD-4060-AA42-1E924710F496}.Debug|x86.Build.0 = Debug|Any CPU
+		{4A6B04DF-68FD-4060-AA42-1E924710F496}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4A6B04DF-68FD-4060-AA42-1E924710F496}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4A6B04DF-68FD-4060-AA42-1E924710F496}.Release|x64.ActiveCfg = Release|Any CPU
+		{4A6B04DF-68FD-4060-AA42-1E924710F496}.Release|x64.Build.0 = Release|Any CPU
+		{4A6B04DF-68FD-4060-AA42-1E924710F496}.Release|x86.ActiveCfg = Release|Any CPU
+		{4A6B04DF-68FD-4060-AA42-1E924710F496}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -97,5 +111,6 @@ Global
 		{C3D4E5F6-A7B8-9012-C3D4-E5F6A7B89013} = {2B3C4D5E-6F7A-8901-2B3C-4D5E6F7A8901}
 		{D4E5F6A7-B8C9-0123-D4E5-F6A7B8C90124} = {2B3C4D5E-6F7A-8901-2B3C-4D5E6F7A8901}
 		{1EB86373-1ED3-4B78-AE4E-7925FB994516} = {1A2B3C4D-5E6F-7890-1A2B-3C4D5E6F7890}
+		{4A6B04DF-68FD-4060-AA42-1E924710F496} = {1A2B3C4D-5E6F-7890-1A2B-3C4D5E6F7890}
 	EndGlobalSection
 EndGlobal

@@ -1,7 +1,7 @@
-namespace Roslyn.Lint.Backends;
+namespace Roslyn.DeMagic.Lint;
 
 using Roslyn.Lint.Abstractions;
-using Roslyn.Lint.Contracts;
+using Roslyn.Lint.Abstractions.Contracts;
 
 public sealed class RoslynDeMagicToolModule : ILintToolModule
 {

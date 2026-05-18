@@ -31,9 +31,10 @@ target: integration/phase-A
 
 - `src/Roslyn.Lint.Abstractions/ILintToolModule.cs`
 - `src/Roslyn.Lint.Abstractions/ILintToolCommandHandler.cs`
-- `src/Roslyn.Lint/Contracts/LintToolRequest.cs`
-- `src/Roslyn.Lint/Contracts/LintToolResult.cs`
-- `src/Roslyn.Lint/Contracts/LintFinding.cs`
+- `src/Roslyn.Lint.Abstractions/ILintWorkspaceAdapter.cs`
+- `src/Roslyn.Lint.Abstractions/Contracts/LintToolRequest.cs`
+- `src/Roslyn.Lint.Abstractions/Contracts/LintToolResult.cs`
+- `src/Roslyn.Lint.Abstractions/Contracts/LintFinding.cs`
 - `src/Roslyn.Lint/Dispatch/BackendToolDescriptor.cs`
 - `src/Roslyn.Lint/Dispatch/IBackendToolDispatcher.cs`
 - `src/Roslyn.Lint/Dispatch/BackendToolDispatcher.cs`
@@ -41,8 +42,10 @@ target: integration/phase-A
 - `src/Roslyn.Lint/Operations/ILintToolOperation.cs`
 - `src/Roslyn.Lint/Operations/RunLintToolOperation.cs`
 - `src/Roslyn.Lint/Commands/RegisterLintCommands.cs`
-- `src/Roslyn.Lint/Backends/RoslynDeMagicToolModule.cs`
-- `src/Roslyn.Lint/Backends/RoslynDeMagicLintHandler.cs`
+- `src/Roslyn.DeMagic.Lint/Roslyn.DeMagic.Lint.csproj`
+- `src/Roslyn.DeMagic.Lint/DeMagicWorkspaceAdapter.cs`
+- `src/Roslyn.DeMagic.Lint/RoslynDeMagicToolModule.cs`
+- `src/Roslyn.DeMagic.Lint/RoslynDeMagicLintHandler.cs`
 - `src/Roslyn.Lint/Formatting/LintToolHumanOutputFormatter.cs`
 - `src/Roslyn.Lint/Roslyn.Lint.csproj`
 - `tests/Roslyn.Lint.Tests/Dispatch/BackendToolDispatcherTests.cs`
@@ -55,7 +58,7 @@ target: integration/phase-A
 
 - interfaces:
   `ILintToolModule`, `ILintToolCommandHandler<TRequest, TResponse>`,
-  `IBackendToolDispatcher`, `ILintToolOperation`
+  `ILintWorkspaceAdapter`, `IBackendToolDispatcher`, `ILintToolOperation`
 - immutable payload types:
   `BackendToolDescriptor`, `LintToolRequest`, `LintToolResult`, `LintFinding`
 - enums:
@@ -77,6 +80,7 @@ target: integration/phase-A
 - add fixture-backed CLI tests for success, findings-present, usage-failure,
   and internal-failure paths
 - keep the dispatch seam reusable for later delegated process backends
+- keep analyzer execution and workspace loading outside the CLI host project
 
 ## Acceptance Criteria
 
@@ -89,6 +93,8 @@ target: integration/phase-A
 - backend failures are normalized into `CliError`
 - the dispatch path does not depend on parser-specific types
 - the tool module registration path is reusable for future tools
+- `RoslynDeMagicToolModule`, `RoslynDeMagicLintHandler`, and the concrete
+  `ILintWorkspaceAdapter` implementation live outside `Roslyn.Lint`
 
 ## Required Validation
 

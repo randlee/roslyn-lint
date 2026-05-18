@@ -1,8 +1,11 @@
 namespace Roslyn.Lint.Abstractions;
 
+using Roslyn.Lint.Abstractions.Contracts;
+
 /// <summary>
-/// Reserved workspace-loading seam for future lint command implementations.
+/// Backend seam for lint-tool workspace loading and analyzer execution.
 /// </summary>
 public interface ILintWorkspaceAdapter
 {
+    Task<LintToolResult> ExecuteLintAsync(LintToolRequest request, CancellationToken cancellationToken);
 }

@@ -1,7 +1,7 @@
 namespace Roslyn.Lint.Dispatch;
 
 using Roslyn.Lint.Abstractions;
-using Roslyn.Lint.Contracts;
+using Roslyn.Lint.Abstractions.Contracts;
 
 public interface IBackendToolDispatcher
 {

@@ -1,4 +1,4 @@
-namespace Roslyn.Lint.Contracts;
+namespace Roslyn.Lint.Abstractions.Contracts;
 
 public sealed record LintFinding(
     string DiagnosticId,

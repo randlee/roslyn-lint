@@ -1,6 +1,6 @@
 namespace Roslyn.Lint.Operations;
 
-using Roslyn.Lint.Contracts;
+using Roslyn.Lint.Abstractions.Contracts;
 using Roslyn.Lint.Dispatch;
 
 public sealed class RunLintToolOperation(IBackendToolDispatcher dispatcher) : ILintToolOperation
