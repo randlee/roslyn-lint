@@ -22,7 +22,6 @@ target: integration/phase-A
 - `docs/roslyn-demagic/requirements.md`
 - `docs/roslyn-demagic/architecture.md`
 - `docs/phase-A/sprint-A11.md`
-- `tests/Roslyn.DeMagic.Tests/PermutationMatrix.md`
 - `src/Roslyn.DeMagic/AnalyzerReleases.Shipped.md`
 - `src/Roslyn.DeMagic/AnalyzerReleases.Unshipped.md`
 - `eng/roslyn-demagic-package-expected-diagnostics.json`
