@@ -30,7 +30,8 @@ public sealed class RunViewOperationTests
         var result = await operation.ExecuteAsync(new ViewRequest("rules"), CancellationToken.None);
 
         result.Target.Should().Be("rules");
-        result.Rules.Should().ContainSingle(rule => rule.Id == "DM002");
+        result.Rules.Should().NotBeNull();
+        result.Rules!.Select(rule => rule.Id).Should().Contain(["DM001", "DM002"]);
         result.Tools.Should().BeNull();
     }
 
@@ -58,6 +59,15 @@ public sealed class RunViewOperationTests
 
         public IReadOnlyList<ToolRuleDescriptor> Rules { get; } =
         [
+            new(
+                new ToolId("demagic"),
+                "DM001",
+                "Constant consolidation",
+                "roslyn-lint.Organization",
+                "warning",
+                true,
+                "Constant consolidation required",
+                "DM001 enforces designated-file consolidation for shared constants."),
             new(
                 new ToolId("demagic"),
                 "DM002",

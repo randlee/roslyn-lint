@@ -1,14 +1,17 @@
 namespace Roslyn.Lint.Operations;
 
+using Roslyn.Lint.Abstractions;
 using Roslyn.Lint.Backends;
 using Roslyn.Lint.Contracts;
 
 public sealed class RunViewOperation : IViewOperation
 {
-    private readonly ViewToolsHandler viewToolsHandler;
-    private readonly ViewRulesHandler viewRulesHandler;
+    private readonly ILintToolCommandHandler<ViewRequest, ViewResult> viewToolsHandler;
+    private readonly ILintToolCommandHandler<ViewRequest, ViewResult> viewRulesHandler;
 
-    public RunViewOperation(ViewToolsHandler viewToolsHandler, ViewRulesHandler viewRulesHandler)
+    public RunViewOperation(
+        ILintToolCommandHandler<ViewRequest, ViewResult> viewToolsHandler,
+        ILintToolCommandHandler<ViewRequest, ViewResult> viewRulesHandler)
     {
         this.viewToolsHandler = viewToolsHandler;
         this.viewRulesHandler = viewRulesHandler;

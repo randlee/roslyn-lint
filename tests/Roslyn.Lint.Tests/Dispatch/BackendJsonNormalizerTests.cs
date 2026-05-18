@@ -1,6 +1,7 @@
 namespace Roslyn.Lint.Tests.Dispatch;
 
 using FluentAssertions;
+using Roslyn.Lint.Backends;
 using Roslyn.Lint.Dispatch;
 using Roslyn.Lint.Serialization;
 using Xunit;
@@ -96,5 +97,35 @@ public sealed class BackendJsonNormalizerTests
         normalized.Error.Should().NotBeNull();
         normalized.Error!.Code.Should().Be("CLI.BACKEND_PROTOCOL_ERROR");
         normalized.Error.Kind.Should().Be(Roslyn.Lint.Abstractions.Contracts.CliErrorKind.BackendProtocol);
+    }
+
+    [Fact]
+    public void NormalizeWorkflowFailure_WithDotnetToolUnavailableException_ReturnsCapabilityError()
+    {
+        var normalizer = new BackendJsonNormalizer();
+
+        var error = normalizer.NormalizeWorkflowFailure(
+            "view.rules",
+            new DotnetToolUnavailableException(new FileNotFoundException("dotnet")));
+
+        error.Kind.Should().Be(Roslyn.Lint.Abstractions.Contracts.CliErrorKind.Capability);
+        error.Code.Should().Be("CLI.CAPABILITY_ERROR");
+        error.Details.Should().ContainKey("tool").WhoseValue.Should().Be("dotnet");
+    }
+
+    [Fact]
+    public void NormalizeWorkflowFailure_WithDotnetCommandFailedException_ReturnsBackendFailure()
+    {
+        var normalizer = new BackendJsonNormalizer();
+        var result = new DotnetCommandResult("/repo", ["build"], 1, string.Empty, "boom");
+
+        var error = normalizer.NormalizeWorkflowFailure(
+            "check",
+            new DotnetCommandFailedException("build", result));
+
+        error.Kind.Should().Be(Roslyn.Lint.Abstractions.Contracts.CliErrorKind.BackendFailure);
+        error.Code.Should().Be("CLI.BACKEND_EXEC_FAILURE");
+        error.Details.Should().ContainKey("step").WhoseValue.Should().Be("build");
+        error.Details.Should().ContainKey("exit_code").WhoseValue.Should().Be("1");
     }
 }
