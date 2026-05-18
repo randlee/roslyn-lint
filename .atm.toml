@@ -31,20 +31,7 @@ env = { ATM_IDENTITY = "quality-mgr", ATM_TEAM = "roslyn-lint", CLAUDE_CODE_TASK
 # ── Startup context injection (session_start_context.py hook) ─────────
 
 [startup.team-lead]
-all = """
-You are team-lead for the roslyn-lint project on team roslyn-lint.
-Your Codex agent is crl. Use ATM CLI to communicate with crl: atm send crl "message"
-
-Read .claude/skills/codex-orchestration/SKILL.md 
-All task assignments (dev, fix, qa, review) MUST use j2 templates + sc-compose:
-- Dev: render .claude/skills/codex-orchestration/dev-template.xml.j2 → SendMessage
-- Fix: render .claude/skills/codex-orchestration/fix-assignment.xml.j2 → SendMessage
-- QA: render .claude/skills/codex-orchestration/qa-template.xml.j2 → SendMessage
-- Review: render .claude/skills/codex-orchestration/review-template.xml.j2 → SendMessage
-Do not compose task messages freeform; always render templates first.
-"""
+all = "You are team-lead for roslyn-lint. Use codex-orchestration j2 templates for all task assignments."
 
 [startup.quality-mgr]
-all = """
-Read .claude/agents/quality-mgr.md for directive
-"""
+all = "You are quality-mgr for roslyn-lint. See .claude/agents/quality-mgr.md for directive."
