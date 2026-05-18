@@ -2,12 +2,10 @@
 
   <!-- Analyzers must target netstandard2.0 for Roslyn host compatibility -->
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
-    <TargetFrameworks></TargetFrameworks>
+    <TargetFrameworks>netstandard2.0</TargetFrameworks>
     <IsRoslynComponent>true</IsRoslynComponent>
     <EnforceExtendedAnalyzerRules>true</EnforceExtendedAnalyzerRules>
-    <!-- Suppress lib/ output — analyzer DLL is placed under analyzers/ instead -->
-    <IncludeBuildOutput>false</IncludeBuildOutput>
+    <BuildOutputTargetFolder>analyzers/dotnet/cs</BuildOutputTargetFolder>
     <!-- Suppress dependency group (all CodeAnalysis refs are PrivateAssets=all; no runtime deps) -->
     <SuppressDependenciesWhenPacking>true</SuppressDependenciesWhenPacking>
     <!-- Mark as dev-time only — not a transitive runtime dependency -->
@@ -33,10 +31,8 @@
     <AdditionalFiles Include="AnalyzerReleases.Unshipped.md" />
   </ItemGroup>
 
-  <!-- Place analyzer DLL in the correct NuGet analyzers folder -->
   <ItemGroup>
-    <None Include="$(OutputPath)$(AssemblyName).dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
-    <None Include="..\..\README.md" Pack="true" PackagePath="\" />
+    <None Include="../../README.md" Pack="true" PackagePath="/" />
   </ItemGroup>
 
 </Project>

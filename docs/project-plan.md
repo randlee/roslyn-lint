@@ -118,7 +118,7 @@ these code paths:
 - `tests/Roslyn.DeMagic.Tests/TestData/DM001/`
 - `tests/Roslyn.DeMagic.Tests/TestData/DM002/`
 - `tests/Roslyn.DeMagic.Tests/TestData/README.md`
-- `tests/Roslyn.DeMagic.Tests/TestMatrix.md`
+- `tests/Roslyn.DeMagic.Tests/PermutationMatrix.md`
 - `src/Roslyn.Lint/Program.cs`
 - `src/Roslyn.Lint/Roslyn.Lint.csproj`
 - `.github/workflows/ci.yml`

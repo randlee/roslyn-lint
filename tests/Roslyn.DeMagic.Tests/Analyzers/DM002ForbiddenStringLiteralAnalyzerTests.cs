@@ -29,6 +29,15 @@ public sealed class DM002ForbiddenStringLiteralAnalyzerTests
                     "ATM")
             },
             {
+                "DM002/ExactMatchConstField.cs",
+                BuildConfig("warning", true, "atm"),
+                new ExpectedDiagnostic(
+                    DM002ForbiddenStringLiteralAnalyzer.DiagnosticId,
+                    DiagnosticSeverity.Warning,
+                    "atm",
+                    "forbidden pattern")
+            },
+            {
                 "DM002/PrefixMethodArgument.cs",
                 BuildConfig("warning", false, "atm*"),
                 new ExpectedDiagnostic(
@@ -156,16 +165,20 @@ public sealed class DM002ForbiddenStringLiteralAnalyzerTests
         diagnostics.Should().BeEmpty();
     }
 
-    [Fact]
-    public async Task SeverityFromConfig_UsesConfiguredSeverity()
+    [Theory]
+    [InlineData("hidden", DiagnosticSeverity.Hidden)]
+    [InlineData("info", DiagnosticSeverity.Info)]
+    [InlineData("warning", DiagnosticSeverity.Warning)]
+    [InlineData("error", DiagnosticSeverity.Error)]
+    public async Task SeverityFromConfig_UsesConfiguredSeverity(string configuredSeverity, DiagnosticSeverity expectedSeverity)
     {
         var diagnostics = await GetDiagnosticsAsync(
             "DM002/SeverityFromConfig.cs",
-            BuildConfig("info", false, "atm"));
+            BuildConfig(configuredSeverity, false, "atm"));
 
         diagnostics.Should().ContainSingle();
         diagnostics[0].Id.Should().Be(DM002ForbiddenStringLiteralAnalyzer.DiagnosticId);
-        diagnostics[0].Severity.Should().Be(DiagnosticSeverity.Info);
+        diagnostics[0].Severity.Should().Be(expectedSeverity);
         diagnostics[0].Descriptor.Category.Should().Be("roslyn-lint.DomainBoundary");
     }
 
