@@ -1,12 +1,12 @@
 namespace Roslyn.Lint.Formatting;
 
-using Roslyn.Lint.Contracts;
+using Roslyn.Lint.Abstractions.Contracts;
 
 public sealed class ViewToolsHumanOutputFormatter : IHumanOutputFormatter<ViewResult>
 {
     public async Task WriteAsync(TextWriter writer, ViewResult response, CancellationToken cancellationToken)
     {
-        foreach (var tool in response.Tools)
+        foreach (var tool in response.Tools ?? [])
         {
             await writer.WriteLineAsync($"{tool.Id} - {tool.DisplayName}".AsMemory(), cancellationToken);
             await writer.WriteLineAsync($"  package: {tool.PackageName}".AsMemory(), cancellationToken);

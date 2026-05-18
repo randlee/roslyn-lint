@@ -178,7 +178,9 @@ The approved CLI implementation shape is:
 - `src/Roslyn.Lint.Abstractions/Contracts/VersionResult.cs`
 - `src/Roslyn.Lint/Dispatch/BackendToolDescriptor.cs`
 - `src/Roslyn.Lint/Dispatch/IBackendToolDispatcher.cs`
+- `src/Roslyn.Lint/Dispatch/IBackendJsonNormalizer.cs`
 - `src/Roslyn.Lint/Dispatch/IBackendProcessRunner.cs`
+- `src/Roslyn.Lint/Dispatch/DelegatedBackendNormalizationResult.cs`
 - `src/Roslyn.Lint/Dispatch/BackendJsonNormalizer.cs`
 - `src/Roslyn.Lint/Operations/ILintToolOperation.cs`
 - `src/Roslyn.Lint/Operations/IViewOperation.cs`
@@ -199,14 +201,17 @@ The CLI baseline expects these named types to exist when implementation begins:
 
 - interfaces:
   `ILintToolModule`, `ILintToolCommandHandler<TRequest, TResponse>`,
-  `IBackendToolDispatcher`, `IBackendProcessRunner`,
+  `IBackendToolDispatcher`, `IBackendJsonNormalizer`,
+  `IBackendProcessRunner`,
   `ILintToolOperation`, `IViewOperation`, `ICheckOperation`,
   `IClippyOperation`, `ICiOperation`, `IJsonEnvelopeWriter`,
   `IHumanOutputFormatter<TResponse>`
 - records or immutable payload types:
   `ToolId`, `ToolDescriptor`, `CliEnvelope<TResult>`, `CliError`, `CliDiagnostic`,
-  `BackendToolDescriptor`, `LintToolRequest`, `LintToolResult`,
-  `LintFinding`, `ViewRequest`, `ViewResult`, `CheckRequest`, `CheckResult`,
+  `BackendToolDescriptor`, `BackendProcessRequest`, `BackendProcessResult`,
+  `DelegatedBackendNormalizationResult<T>`, `LintToolRequest`,
+  `LintToolResult`, `LintFinding`, `ViewRequest`, `ViewResult`,
+  `ViewToolResult`, `ViewRuleResult`, `CheckRequest`, `CheckResult`,
   `ClippyRequest`, `ClippyResult`, `CiRequest`, `CiResult`, `VersionResult`
 - enums:
   `CommandFamily`, `LintProfile`, `OutputMode`, `BackendExecutionMode`,

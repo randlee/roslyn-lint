@@ -32,6 +32,7 @@ using Roslyn.Lint.Contracts;
 [JsonSerializable(typeof(ViewRequest))]
 [JsonSerializable(typeof(ViewResult))]
 [JsonSerializable(typeof(ViewToolResult))]
+[JsonSerializable(typeof(ViewRuleResult))]
 [JsonSerializable(typeof(WorkflowStepResult))]
 public partial class RoslynLintJsonContext : JsonSerializerContext
 {

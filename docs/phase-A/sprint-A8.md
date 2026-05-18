@@ -1,7 +1,7 @@
 ---
 id: A8
 title: View surfaces, boundary metadata, and tool-module hardening
-status: planned
+status: complete
 branch: sprint/A8
 worktree: /Users/randlee/Documents/github/roslyn-lint-worktrees/sprint/A8
 target: integration/phase-A
@@ -27,16 +27,20 @@ target: integration/phase-A
 
 ## Exact Targets
 
-- `src/Roslyn.Lint/Contracts/ViewRequest.cs`
-- `src/Roslyn.Lint/Contracts/ViewResult.cs`
+- `src/Roslyn.Lint.Abstractions/Contracts/ViewRequest.cs`
+- `src/Roslyn.Lint.Abstractions/Contracts/ViewResult.cs`
+- `src/Roslyn.Lint.Abstractions/ToolRuleDescriptor.cs`
 - `src/Roslyn.Lint/Operations/IViewOperation.cs`
 - `src/Roslyn.Lint/Operations/RunViewOperation.cs`
 - `src/Roslyn.Lint/Commands/RegisterViewCommands.cs`
+- `src/Roslyn.Lint/Dispatch/IBackendJsonNormalizer.cs`
 - `src/Roslyn.Lint/Dispatch/IBackendProcessRunner.cs`
+- `src/Roslyn.Lint/Dispatch/DelegatedBackendNormalizationResult.cs`
 - `src/Roslyn.Lint/Dispatch/ProcessBackendRunner.cs`
 - `src/Roslyn.Lint/Dispatch/BackendJsonNormalizer.cs`
 - `src/Roslyn.Lint/Backends/ViewToolsHandler.cs`
 - `src/Roslyn.Lint/Backends/ViewRulesHandler.cs`
+- `src/Roslyn.Lint/Formatting/ViewRulesHumanOutputFormatter.cs`
 - `src/Roslyn.DeMagic.Lint/RoslynDeMagicToolModule.cs`
 - `tests/Roslyn.Lint.Tests/Commands/ViewCommandTests.cs`
 - `tests/Roslyn.Lint.Tests/Dispatch/ProcessBackendRunnerTests.cs`
@@ -47,9 +51,12 @@ target: integration/phase-A
 ## Important Interfaces, Records/Structs, And Enums
 
 - interfaces:
-  `ILintToolModule`, `IViewOperation`, `IBackendProcessRunner`
+  `ILintToolModule`, `IViewOperation`, `IBackendJsonNormalizer`,
+  `IBackendProcessRunner`
 - immutable payload types:
-  `ToolDescriptor`, `ViewRequest`, `ViewResult`
+  `ToolDescriptor`, `ToolRuleDescriptor`, `ViewRequest`, `ViewResult`,
+  `ViewToolResult`, `ViewRuleResult`, `BackendProcessRequest`,
+  `BackendProcessResult`, `DelegatedBackendNormalizationResult<T>`
 ## Required Work
 
 - implement stable `view` targets needed to use the suite immediately:
@@ -78,6 +85,6 @@ target: integration/phase-A
 - `dotnet restore roslyn-lint.sln`
 - `dotnet build roslyn-lint.sln --configuration Release`
 - `dotnet test tests/Roslyn.Lint.Tests/Roslyn.Lint.Tests.csproj --configuration Release --verbosity normal`
-- `dotnet run --project src/Roslyn.Lint/Roslyn.Lint.csproj -- view tools --json`
-- `dotnet run --project src/Roslyn.Lint/Roslyn.Lint.csproj -- view rules --json`
+- `dotnet run --framework net10.0 --project src/Roslyn.Lint/Roslyn.Lint.csproj -- view tools --json`
+- `dotnet run --framework net10.0 --project src/Roslyn.Lint/Roslyn.Lint.csproj -- view rules --json`
 - `git diff --check`

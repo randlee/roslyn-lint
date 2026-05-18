@@ -140,14 +140,18 @@ introduced during the development sprints:
   `ExpectedDiagnostic`, `RequirementTraceabilityRow`, `AnalyzerSampleKind`
 - CLI contract and boundary types:
   `ILintToolModule`, `ILintToolCommandHandler<TRequest, TResponse>`,
-  `IBackendToolDispatcher`, `IBackendProcessRunner`,
+  `IBackendToolDispatcher`, `IBackendJsonNormalizer`,
+  `IBackendProcessRunner`,
   `ILintToolOperation`, `IViewOperation`, `ICheckOperation`,
   `IClippyOperation`, `ICiOperation`, `IJsonEnvelopeWriter`,
   `IHumanOutputFormatter<TResponse>`, `ToolId`, `ToolDescriptor`,
   `CliEnvelope<TResult>`, `CliError`, `CliDiagnostic`, `CliErrorKind`,
-  `LintToolRequest`, `LintToolResult`, `LintFinding`, `ViewRequest`,
-  `ViewResult`, `CheckRequest`, `CheckResult`, `ClippyRequest`,
-  `ClippyResult`, `CiRequest`, `CiResult`, `VersionResult`
+  `BackendProcessRequest`, `BackendProcessResult`,
+  `DelegatedBackendNormalizationResult<T>`, `LintToolRequest`,
+  `LintToolResult`, `LintFinding`, `ViewRequest`, `ViewResult`,
+  `ViewToolResult`, `ViewRuleResult`, `CheckRequest`, `CheckResult`,
+  `ClippyRequest`, `ClippyResult`, `CiRequest`, `CiResult`,
+  `VersionResult`
 - package-validation types:
   `ExpectedPackageDiagnostic`, `PackageValidationManifest`,
   `PackageValidationSampleKind`, `PackageValidationResult`

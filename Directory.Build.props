@@ -24,8 +24,6 @@
   <PropertyGroup Label="PackageVersions">
     <MicrosoftCodeAnalysisCSharpVersion>5.3.0</MicrosoftCodeAnalysisCSharpVersion>
     <MicrosoftCodeAnalysisAnalyzersVersion>5.3.0</MicrosoftCodeAnalysisAnalyzersVersion>
-    <SpectreConsoleVersion>0.55.2</SpectreConsoleVersion>
-    <SpectreConsoleCliVersion>0.55.0</SpectreConsoleCliVersion>
     <!-- Test packages -->
     <MicrosoftNetTestSdkVersion>18.5.1</MicrosoftNetTestSdkVersion>
     <XunitVersion>2.9.3</XunitVersion>

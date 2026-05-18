@@ -14,16 +14,18 @@ public sealed class CliApplication
 {
     private readonly IReadOnlyList<ILintToolModule> toolModules;
     private readonly ILintToolOperation lintToolOperation;
+    private readonly IViewOperation viewOperation;
     private readonly ICheckOperation checkOperation;
     private readonly IClippyOperation clippyOperation;
     private readonly ICiOperation ciOperation;
-    private readonly BackendJsonNormalizer backendJsonNormalizer;
+    private readonly IBackendJsonNormalizer backendJsonNormalizer;
     private readonly IJsonEnvelopeWriter jsonEnvelopeWriter;
 
     public CliApplication(
         IReadOnlyList<ILintToolModule>? toolModules = null,
         IJsonEnvelopeWriter? jsonEnvelopeWriter = null,
         ILintToolOperation? lintToolOperation = null,
+        IViewOperation? viewOperation = null,
         ICheckOperation? checkOperation = null,
         IClippyOperation? clippyOperation = null,
         ICiOperation? ciOperation = null)
@@ -31,7 +33,10 @@ public sealed class CliApplication
         this.toolModules = toolModules ?? [new RoslynDeMagicToolModule()];
         var dispatcher = new BackendToolDispatcher(this.toolModules);
         var dotnetCommandRunner = new DotnetCommandRunner();
+        var viewToolsHandler = new ViewToolsHandler(this.toolModules);
+        var viewRulesHandler = new ViewRulesHandler(this.toolModules);
         this.lintToolOperation = lintToolOperation ?? new RunLintToolOperation(dispatcher);
+        this.viewOperation = viewOperation ?? new RunViewOperation(viewToolsHandler, viewRulesHandler);
         this.checkOperation = checkOperation ?? new RunCheckOperation(dotnetCommandRunner);
         this.clippyOperation = clippyOperation ?? new RunClippyOperation(dotnetCommandRunner);
         this.ciOperation = ciOperation ?? new RunCiOperation(this.lintToolOperation, dotnetCommandRunner);
@@ -63,6 +68,7 @@ public sealed class CliApplication
             jsonOption,
             toolModules,
             lintToolOperation,
+            viewOperation,
             checkOperation,
             clippyOperation,
             ciOperation,

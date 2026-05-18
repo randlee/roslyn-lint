@@ -1,10 +1,32 @@
 namespace Roslyn.DeMagic.Lint;
 
+using Roslyn.DeMagic.Diagnostics;
 using Roslyn.Lint.Abstractions;
 using Roslyn.Lint.Abstractions.Contracts;
 
 public sealed class RoslynDeMagicToolModule : ILintToolModule
 {
+    private static readonly ToolId ToolId = new("demagic");
+    private static readonly IReadOnlyList<ToolRuleDescriptor> RulesMetadata =
+    [
+        CreateRuleDescriptor(
+            DeMagicDiagnosticDescriptors.Dm001Id,
+            DeMagicDiagnosticDescriptors.Dm001Title,
+            DeMagicDiagnosticDescriptors.Dm001Category,
+            "warning",
+            true,
+            DeMagicDiagnosticDescriptors.Dm001MessageFormat,
+            DeMagicDiagnosticDescriptors.Dm001Description),
+        CreateRuleDescriptor(
+            DeMagicDiagnosticDescriptors.Dm002Id,
+            DeMagicDiagnosticDescriptors.Dm002Title,
+            DeMagicDiagnosticDescriptors.Dm002Category,
+            "error",
+            true,
+            DeMagicDiagnosticDescriptors.Dm002MessageFormat,
+            DeMagicDiagnosticDescriptors.Dm002Description),
+    ];
+
     private readonly ILintToolCommandHandler<LintToolRequest, LintToolResult> lintHandler;
 
     public RoslynDeMagicToolModule()
@@ -18,12 +40,14 @@ public sealed class RoslynDeMagicToolModule : ILintToolModule
     }
 
     public ToolDescriptor Descriptor { get; } = new(
-        new ToolId("demagic"),
+        ToolId,
         "Roslyn.DeMagic",
         "Detects and reports forbidden magic string usage.",
         "Roslyn.DeMagic",
         ["lint", "view"],
-        ["lint.demagic", "view.tools"]);
+        ["lint.demagic", "view.tools", "view.rules"]);
+
+    public IReadOnlyList<ToolRuleDescriptor> Rules { get; } = RulesMetadata;
 
     public bool TryResolveCommandHandler<TRequest, TResponse>(out ILintToolCommandHandler<TRequest, TResponse>? handler)
     {
@@ -36,4 +60,22 @@ public sealed class RoslynDeMagicToolModule : ILintToolModule
         handler = null;
         return false;
     }
+
+    private static ToolRuleDescriptor CreateRuleDescriptor(
+        string id,
+        string title,
+        string category,
+        string defaultSeverity,
+        bool isEnabledByDefault,
+        string messageFormat,
+        string description)
+        => new(
+            ToolId,
+            id,
+            title,
+            category,
+            defaultSeverity,
+            isEnabledByDefault,
+            messageFormat,
+            description);
 }
