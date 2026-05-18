@@ -45,6 +45,16 @@ public sealed class RunCiOperationTests
         exception.Which.StepName.Should().Be("test");
     }
 
+    [Fact]
+    public async Task ExecuteAsync_WhenDotnetIsUnavailable_PropagatesDotnetToolUnavailableException()
+    {
+        var operation = new RunCiOperation(new StubLintOperation(), new ThrowingRunner(new DotnetToolUnavailableException(new InvalidOperationException("missing dotnet"))));
+
+        var act = () => operation.ExecuteAsync(new CiRequest(GetRepoRoot(), "Release"), CancellationToken.None);
+
+        await act.Should().ThrowAsync<DotnetToolUnavailableException>();
+    }
+
     private static string GetRepoRoot()
         => Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, "..", "..", "..", "..", ".."));
 
@@ -70,5 +80,11 @@ public sealed class RunCiOperationTests
             Invocations.Add(arguments.ToArray());
             return Task.FromResult(results.Dequeue() with { WorkingDirectory = workingDirectory, Arguments = arguments.ToArray() });
         }
+    }
+
+    private sealed class ThrowingRunner(Exception exception) : IDotnetCommandRunner
+    {
+        public Task<DotnetCommandResult> RunAsync(string workingDirectory, IReadOnlyList<string> arguments, CancellationToken cancellationToken)
+            => Task.FromException<DotnetCommandResult>(exception);
     }
 }

@@ -61,6 +61,23 @@ public sealed class CiCommandTests
         envelope["error"]!["code"]!.GetValue<string>().Should().Be("CLI.CAPABILITY_ERROR");
     }
 
+    [Fact]
+    public async Task Ci_WithJson_LintGateFailure_ReturnsCiLintFailureEnvelope()
+    {
+        var application = new CliApplication(
+            ciOperation: new ThrowingCiOperation(
+                new CiLintGateFailedException(
+                    new LintProfileResult("ci", "/repo", "fail", 2, ["demagic"], []))));
+
+        var result = await CliTestHost.InvokeAsync(application, "ci", "--json");
+
+        result.ExitCode.Should().Be(1);
+        var envelope = CliTestHost.ParseJsonObject(result.StdOut);
+        envelope["ok"]!.GetValue<bool>().Should().BeFalse();
+        envelope["error"]!["kind"]!.GetValue<string>().Should().Be("backend_failure");
+        envelope["error"]!["code"]!.GetValue<string>().Should().Be("CLI.CI_LINT_FAILURE");
+    }
+
     private sealed class StubCiOperation(CiResult result) : ICiOperation
     {
         public Task<CiResult> ExecuteAsync(CiRequest request, CancellationToken cancellationToken)
