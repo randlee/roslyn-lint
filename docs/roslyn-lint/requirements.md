@@ -98,9 +98,10 @@ Contract requirement IDs:
 - `REQ-CLI-CONTRACT-005` The CLI must expose explicit request and response
   models for structured operations rather than building JSON from formatted
   strings.
-- `REQ-CLI-CONTRACT-006` The baseline JSON envelope must include:
-  `ok`, `command`, and exactly one of `data` or `error`. Optional
-  `diagnostics` may be included on either path.
+- `REQ-CLI-CONTRACT-006` The baseline JSON envelope must use the top-level
+  shape `{ ok, command, data, diagnostics }` on success and
+  `{ ok, command, error, diagnostics }` on failure, with `diagnostics`
+  remaining optional on either path.
 - `REQ-CLI-CONTRACT-007` Exit behavior must be deterministic: success exits
   zero, contract or operational failure exits non-zero, and `--json` mode must
   still emit the contract envelope on failure.
