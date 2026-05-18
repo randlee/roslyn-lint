@@ -2,9 +2,9 @@ name: CI
 
 on:
   push:
-    branches: [main, develop]
+    branches: [main, develop, integration/phase-A]
   pull_request:
-    branches: [main, develop]
+    branches: [main, develop, integration/phase-A]
 
 jobs:
   build-and-test:
@@ -33,18 +33,6 @@ jobs:
       - name: Test
         run: dotnet test --no-build --configuration Release --verbosity normal --logger "trx;LogFileName=test-results.trx" --collect:"XPlat Code Coverage"
 
-      - name: Pack Roslyn.DeMagic analyzer
-        run: dotnet pack src/Roslyn.DeMagic/Roslyn.DeMagic.csproj --configuration Release --no-build -o ./artifacts/packages
-
-      - name: Validate packaged analyzer on Unix
-        if: runner.os != 'Windows'
-        run: bash eng/validate-roslyn-demagic-package.sh
-
-      - name: Validate packaged analyzer on Windows
-        if: runner.os == 'Windows'
-        shell: pwsh
-        run: ./eng/validate-roslyn-demagic-package.ps1
-
       - name: Upload test results
         uses: actions/upload-artifact@v4
         if: always()
@@ -59,9 +47,48 @@ jobs:
           name: coverage-reports-${{ matrix.os }}
           path: "**/TestResults/**/coverage.cobertura.xml"
 
-      - name: Upload analyzer packages
+  package-validation:
+    needs: build-and-test
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.0.x'
+          dotnet-quality: 'preview'
+
+      - name: Restore dependencies
+        run: dotnet restore
+
+      - name: Build release artifacts
+        run: dotnet build --no-restore --configuration Release
+
+      - name: Pack Roslyn.DeMagic analyzer
+        run: dotnet pack src/Roslyn.DeMagic/Roslyn.DeMagic.csproj --configuration Release --no-build -o ./artifacts/packages
+
+      - name: Pack roslyn-lint tool
+        run: dotnet pack src/Roslyn.Lint/Roslyn.Lint.csproj --configuration Release --no-build -o ./artifacts/packages
+
+      - name: Validate packaged analyzer on Unix
+        if: runner.os != 'Windows'
+        run: bash eng/validate-roslyn-demagic-package.sh
+
+      - name: Validate packaged analyzer on Windows
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: ./eng/validate-roslyn-demagic-package.ps1
+
+      - name: Upload packaged artifacts
         uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: analyzer-packages-${{ matrix.os }}
+          name: packaged-artifacts-${{ matrix.os }}
           path: "./artifacts/packages/*.nupkg"

@@ -1,7 +1,7 @@
 ---
 id: A13
 title: ci publish and manual release handoff
-status: planned
+status: complete
 branch: sprint/A13
 worktree: /Users/randlee/Documents/github/roslyn-lint-worktrees/sprint/A13
 target: integration/phase-A
@@ -80,4 +80,5 @@ target: integration/phase-A
 - `dotnet pack src/Roslyn.DeMagic/Roslyn.DeMagic.csproj --configuration Release -o artifacts/packages`
 - `dotnet pack src/Roslyn.Lint/Roslyn.Lint.csproj --configuration Release -o artifacts/packages`
 - `bash eng/validate-roslyn-demagic-package.sh`
+- `pwsh -File eng/validate-roslyn-demagic-package.ps1`
 - `git diff --check`

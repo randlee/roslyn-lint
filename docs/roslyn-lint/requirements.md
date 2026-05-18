@@ -45,6 +45,12 @@ Packaging requirement IDs:
 - `REQ-CLI-PACK-002` The packaged tool command name remains `roslyn-lint`.
 - `REQ-CLI-PACK-003` CI may publish the tool package to GitHub Packages, while
   the first NuGet.org release remains manual and documented.
+- `REQ-CLI-PACK-004` The publish workflow must pack and publish the same
+  `roslyn-lint` .NET tool package shape described by repo docs and local pack
+  commands.
+- `REQ-CLI-PACK-005` The first manual NuGet.org release must document
+  prerequisite account setup, signing policy, exact push commands, and
+  post-release verification steps before later automation is allowed.
 
 ## 1.1 Extensibility Baseline
 
