@@ -4,12 +4,21 @@ using System.Collections.Immutable;
 using System.Linq;
 using FluentAssertions;
 using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.Text;
 using Roslyn.DeMagic.Configuration;
+using Roslyn.DeMagic.Tests.Testing;
 using Xunit;
 
 public sealed class DeMagicConfigLoaderTests
 {
+    private static readonly RequirementTraceabilityRow[] TraceabilityRows =
+    [
+        new("REQ-DM-CONFIG-002", "config", ".roslyn-lint/config-src.toml", nameof(TryLoad_ConfigSrcToml_ParsesExpectedSettings), "config-routing", AnalyzerSampleKind.CornerCase),
+        new("REQ-DM-CONFIG-003", "config", ".roslyn-lint/config-test.toml", nameof(TryLoad_ConfigTestToml_WinsAndDoesNotMergeSourceConfig), "config-routing", AnalyzerSampleKind.CornerCase),
+        new("REQ-DM-CONFIG-003", "config", ".roslyn-lint/config-test.toml", nameof(TryLoad_CaseSensitiveTrue_ParsesExpectedSettings), "config-parsing", AnalyzerSampleKind.CornerCase),
+        new("REQ-DM-CONFIG-005", "config", ".roslyn-lint/config-src.toml", nameof(TryLoad_NoConfigFiles_ReturnsDisabledConfig), "disabled-without-config", AnalyzerSampleKind.ConfigFailure),
+        new("REQ-DM-CONFIG-008", "config", ".roslyn-lint/config-test.toml", nameof(TryLoad_InvalidSeverity_ReturnsErrors), "disabled-with-error", AnalyzerSampleKind.ConfigFailure),
+    ];
+
     [Fact]
     public void TryLoad_ConfigSrcToml_ParsesExpectedSettings()
     {
@@ -44,6 +53,53 @@ public sealed class DeMagicConfigLoaderTests
         config.Dm002.ForbiddenPatterns.Select(pattern => pattern.RawValue)
             .Should().ContainInOrder("atm", "atm*", "*atm*");
         config.Dm002.CaseSensitive.Should().BeFalse();
+    }
+
+    [Fact]
+    public void TryLoad_ConfigTestToml_WinsAndDoesNotMergeSourceConfig()
+    {
+        var loader = new DeMagicConfigLoader();
+        var additionalFiles = ImmutableArray.Create<AdditionalText>(
+            new TestAdditionalText(
+                "/repo/.roslyn-lint/config-src.toml",
+                """
+                [dm001]
+                enabled = true
+                severity = "warning"
+                designated_file = "SourceConstants.cs"
+                designated_class = "SourceConstants"
+
+                [dm002]
+                enabled = true
+                severity = "error"
+                forbidden = [
+                  "atm"
+                ]
+                case_sensitive = false
+                """),
+            new TestAdditionalText(
+                "/repo/.roslyn-lint/config-test.toml",
+                """
+                [dm002]
+                enabled = true
+                severity = "info"
+                forbidden = [
+                  "ATM"
+                ]
+                case_sensitive = true
+                """));
+
+        var success = loader.TryLoad(additionalFiles, out var config, out var errors);
+
+        success.Should().BeTrue();
+        errors.Should().BeEmpty();
+        config.Dm001.Enabled.Should().BeFalse();
+        config.Dm001.DesignatedFile.Should().BeNull();
+        config.Dm001.DesignatedClass.Should().BeNull();
+        config.Dm002.Enabled.Should().BeTrue();
+        config.Dm002.Severity.Should().Be(ConfiguredSeverity.Info);
+        config.Dm002.ForbiddenPatterns.Should().ContainSingle().Which.RawValue.Should().Be("ATM");
+        config.Dm002.CaseSensitive.Should().BeTrue();
     }
 
     [Fact]
@@ -137,12 +193,23 @@ public sealed class DeMagicConfigLoaderTests
         errors.Should().ContainSingle().Which.Should().Contain("parser failed");
     }
 
-    private sealed class TestAdditionalText(string path, string content) : AdditionalText
+    [Fact]
+    public void CoverageMatrix_CoversApprovedRequirements()
     {
-        public override string Path { get; } = path;
+        var expectedRequirementIds = new[]
+        {
+            "REQ-DM-CONFIG-002",
+            "REQ-DM-CONFIG-003",
+            "REQ-DM-CONFIG-005",
+            "REQ-DM-CONFIG-008",
+        };
 
-        public override SourceText? GetText(CancellationToken cancellationToken = default)
-            => SourceText.From(content);
+        TraceabilityRows.Select(row => (row.RequirementId, row.RuleId, row.SampleFile, row.OwningTestMethod, row.ValidationMode))
+            .Distinct()
+            .Should().HaveCount(TraceabilityRows.Length);
+
+        TraceabilityRows.Select(row => row.RequirementId)
+            .Should().Contain(expectedRequirementIds);
     }
 
     private sealed class ThrowingSelector(string message) : IAdditionalFileConfigSelector

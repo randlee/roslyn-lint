@@ -114,7 +114,7 @@ public sealed class DM002ForbiddenStringLiteralAnalyzerTests
         new("REQ-DM002-005", "DM002", "DM002/InterpolatedHole.cs", nameof(NegativeAndConfigSamples_DoNotReport), "no-diagnostic", AnalyzerSampleKind.CornerCase),
         new("REQ-DM002-005", "DM002", "DM002/CommentsAndDocumentationIgnored.cs", nameof(NegativeAndConfigSamples_DoNotReport), "no-diagnostic", AnalyzerSampleKind.CornerCase),
         new("REQ-DM002-006", "DM002", "DM002/SuppressedLiteral.cs", nameof(PragmaSuppression_Works), "suppressed", AnalyzerSampleKind.Suppression),
-        new("REQ-DM-CONFIG-008", "DM002", "DM002/MissingConfigNoDiagnostics.cs", nameof(NegativeAndConfigSamples_DoNotReport), "no-diagnostic", AnalyzerSampleKind.ConfigFailure),
+        new("REQ-DM-CONFIG-005", "DM002", "DM002/MissingConfigNoDiagnostics.cs", nameof(NegativeAndConfigSamples_DoNotReport), "no-diagnostic", AnalyzerSampleKind.ConfigFailure),
         new("REQ-DM-CONFIG-008", "DM002", "DM002/InvalidConfigNoDiagnostics.cs", nameof(NegativeAndConfigSamples_DoNotReport), "no-diagnostic", AnalyzerSampleKind.ConfigFailure),
         new("REQ-DM-DIAG-001", "DM002", "DM002/ExactMatchConstField.cs", nameof(PositiveSamples_ReportExpectedDiagnostics), "diagnostic", AnalyzerSampleKind.Positive),
         new("REQ-DM-DIAG-002", "DM002", "DM002/ExactMatchConstField.cs", nameof(PositiveSamples_ReportExpectedDiagnostics), "diagnostic", AnalyzerSampleKind.Positive),
@@ -204,6 +204,7 @@ public sealed class DM002ForbiddenStringLiteralAnalyzerTests
             "REQ-DM002-004",
             "REQ-DM002-005",
             "REQ-DM002-006",
+            "REQ-DM-CONFIG-005",
             "REQ-DM-CONFIG-008",
             "REQ-DM-DIAG-001",
             "REQ-DM-DIAG-002",
@@ -215,6 +216,10 @@ public sealed class DM002ForbiddenStringLiteralAnalyzerTests
             "REQ-DM-TEST-006",
             "REQ-DM-TEST-008",
         };
+
+        TraceabilityRows.Select(row => (row.RequirementId, row.RuleId, row.SampleFile, row.OwningTestMethod, row.ValidationMode))
+            .Distinct()
+            .Should().HaveCount(TraceabilityRows.Length);
 
         TraceabilityRows.Select(row => row.RequirementId)
             .Should().Contain(expectedRequirementIds);
