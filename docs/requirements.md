@@ -56,6 +56,11 @@ Phase planning docs live under:
 - `docs/phase-A/sprint-A6.md`
 - `docs/phase-A/sprint-A7.md`
 - `docs/phase-A/sprint-A8.md`
+- `docs/phase-A/sprint-A9.md`
+- `docs/phase-A/sprint-A10.md`
+- `docs/phase-A/sprint-A11.md`
+- `docs/phase-A/sprint-A12.md`
+- `docs/phase-A/sprint-A13.md`
 
 Documentation requirement IDs:
 

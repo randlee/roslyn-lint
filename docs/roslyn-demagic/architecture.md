@@ -16,6 +16,7 @@ Relevant ADRs:
 
 - `ADR-001`
 - `ADR-002`
+- `ADR-006`
 
 ## 2. Inputs and Outputs
 
@@ -71,6 +72,7 @@ The Phase A analyzer design expects these named types to exist in the
 implementation plan:
 
 - `IAdditionalFileConfigSelector`
+- `IDeMagicConfigLoader`
 - `ITomlConfigParser`
 - `IForbiddenPatternCompiler`
 - `DeMagicConfig`
@@ -81,6 +83,7 @@ implementation plan:
 - `CompiledForbiddenPattern`
 - `ConfiguredSeverity`
 - `ForbiddenPatternKind`
+- `ForbiddenPatternMatcher`
 
 Type guidance:
 

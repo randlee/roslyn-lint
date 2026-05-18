@@ -114,3 +114,32 @@ Purpose:
 Notes:
 
 - release metadata must track the approved rules, not the spike behavior
+
+## PackagedConsumerValidation
+
+Purpose:
+
+- owns validation of the built analyzer package through a normal consuming
+  project and expected-diagnostic manifest
+
+Notes:
+
+- this boundary verifies package behavior, not just in-repo analyzer execution
+- local-feed restore, consumer build, and expected-diagnostic comparison belong
+  here
+- the preferred payload types are `ExpectedPackageDiagnostic`,
+  `PackageValidationManifest`, and `PackageValidationResult`
+
+## ReleasePublicationHandoff
+
+Purpose:
+
+- owns the staged publication policy across GitHub Packages automation and the
+  manual first NuGet.org release
+
+Notes:
+
+- CI publication and manual NuGet.org handoff must stay aligned to the same
+  packaged-consumer validation path
+- this boundary is documented through release procedures and workflow gates,
+  not by analyzer callbacks or CLI presentation code

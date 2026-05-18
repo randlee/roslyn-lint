@@ -61,7 +61,7 @@ design line rather than assuming the current spike is valid.
 - `eng/roslyn-demagic-package-expected-diagnostics.json`
 - `src/Roslyn.Lint/Program.cs`
 - `src/Roslyn.Lint/Commands/LintCommand.cs`
-- `src/Roslyn.Lint/Contracts/`
+- `src/Roslyn.Lint.Abstractions/Contracts/`
 - `src/Roslyn.Lint/Operations/`
 - `src/Roslyn.Lint/Serialization/`
 - `src/Roslyn.Lint/Formatting/`
