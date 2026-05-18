@@ -36,6 +36,16 @@ Product requirement IDs:
 - `REQ-CLI-PRODUCT-011` The CLI must scale to a multi-tool suite of roughly
   ten planned lint packages without changing the top-level contract family.
 
+## 1.2 Packaging Baseline
+
+Packaging requirement IDs:
+
+- `REQ-CLI-PACK-001` `Roslyn.Lint` is planned to ship as a .NET tool package,
+  not as a library-only package.
+- `REQ-CLI-PACK-002` The packaged tool command name remains `roslyn-lint`.
+- `REQ-CLI-PACK-003` CI may publish the tool package to GitHub Packages, while
+  the first NuGet.org release remains manual and documented.
+
 ## 1.1 Extensibility Baseline
 
 Extensibility requirement IDs:
