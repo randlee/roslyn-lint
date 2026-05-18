@@ -54,7 +54,7 @@ design line rather than assuming the current spike is valid.
 - `tests/Roslyn.DeMagic.Tests/TestData/DM001/`
 - `tests/Roslyn.DeMagic.Tests/TestData/DM002/`
 - `tests/Roslyn.DeMagic.Tests/TestData/README.md`
-- `tests/Roslyn.DeMagic.Tests/TestMatrix.md`
+- `tests/Roslyn.DeMagic.Tests/PermutationMatrix.md`
 - `examples/Roslyn.DeMagic.PackageSmoke/`
 - `eng/validate-roslyn-demagic-package.sh`
 - `eng/validate-roslyn-demagic-package.ps1`

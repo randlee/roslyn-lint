@@ -3,178 +3,74 @@
 This document is the authoritative closed inventory of supported
 `Roslyn.DeMagic` v1 analyzer permutations.
 
-No supported permutation is implicitly covered by prose.
-Every supported permutation must appear in this document with one of these
-states:
+This matrix records behaviorally distinct analyzer branches, not a redundant
+cartesian expansion of cells that execute the same matcher or suppression path.
+Every supported row below is backed by a concrete automated test. Any behavior
+that is not supported by v1 is listed explicitly as `unsupported`.
 
-- `covered`: a concrete fixture and automated test already exist
-- `planned`: the permutation is supported and must receive a concrete fixture
-  and automated test before publish signoff
-- `unsupported`: the permutation is explicitly out of scope for v1
-
-`Roslyn.DeMagic` is not publish-ready until every row in this document is
+`Roslyn.DeMagic` is not publish-ready unless every row in this document is
 either `covered` or `unsupported`.
 
-## Fixture Convention
+## Evidence Convention
 
 - analyzer-corpus fixtures live under `tests/Roslyn.DeMagic.Tests/TestData/`
 - package-smoke fixtures live under
   `examples/Roslyn.DeMagic.PackageSmoke/Samples/`
-- canonical sample ids use:
-  `Rule.Dimension.Dimension.[CaseMode.]Outcome`
+- test methods live under `tests/Roslyn.DeMagic.Tests/Analyzers/`
 
-Examples:
+## DM001 Covered Permutations
 
-- `DM001.Public.FileMismatch.Warning`
-- `DM002.Exact.Const.DefaultCase.Match`
-- `DM002.Substring.Attribute.CaseSensitive.NonMatch`
+| ID | Supported behavior | Evidence | Package-smoke evidence | State |
+| --- | --- | --- | --- | --- |
+| `DM001-001` | `public const` outside the designated file reports a diagnostic | `DM001/PublicConstOutsideDesignatedFile.cs`; `PositiveSamples_ReportExpectedDiagnostics` | `Samples/DM001/PublicConstOutsideDesignatedFile.cs` manifest entry | `covered` |
+| `DM001-002` | `internal const` outside the designated file reports a diagnostic | `DM001/InternalConstOutsideDesignatedFile.cs`; `PositiveSamples_ReportExpectedDiagnostics` | `Samples/DM001/InternalConstOutsideDesignatedFile.cs` manifest entry | `covered` |
+| `DM001-003` | configured `designated_class` mismatch reports a diagnostic | `DM001/DesignatedClassMismatch.cs`; `PositiveSamples_ReportExpectedDiagnostics` | not part of the package-smoke subset | `covered` |
+| `DM001-004` | matching designated file suppresses the diagnostic, including case-insensitive file-name comparison | `DM001/DesignatedFileCompliantConst.cs`; `NegativeAndConfigSamples_DoNotReport` with `CompliantConfig` | `Samples/DM001/DesignatedFileCompliantConst.cs` expected-clean entry | `covered` |
+| `DM001-005` | matching designated class suppresses the diagnostic, including case-insensitive class-name comparison | `DM001/DesignatedFileCompliantConst.cs`; `NegativeAndConfigSamples_DoNotReport` with `CaseInsensitiveClassConfig` | not part of the package-smoke subset | `covered` |
+| `DM001-006` | non-target visibilities (`private`, `protected`, `private protected`, `protected internal`) are ignored | `DM001/PrivateProtectedIgnored.cs`; `NegativeAndConfigSamples_DoNotReport` | not part of the package-smoke subset | `covered` |
+| `DM001-007` | local `const` declarations are ignored | `DM001/LocalConstIgnored.cs`; `NegativeAndConfigSamples_DoNotReport` | not part of the package-smoke subset | `covered` |
+| `DM001-008` | missing config fails closed with no diagnostic | `DM001/MissingConfigNoDiagnostics.cs`; `NegativeAndConfigSamples_DoNotReport` | not part of the package-smoke subset | `covered` |
+| `DM001-009` | disabled config produces no diagnostic | `DM001/PublicConstOutsideDesignatedFile.cs`; `NegativeAndConfigSamples_DoNotReport` with `DisabledConfig` | not part of the package-smoke subset | `covered` |
+| `DM001-010` | invalid severity fails closed with no diagnostic | `DM001/PublicConstOutsideDesignatedFile.cs`; `NegativeAndConfigSamples_DoNotReport` with `InvalidSeverityConfig` | not part of the package-smoke subset | `covered` |
+| `DM001-011` | configured severity `hidden` is honored | `DM001/PublicConstOutsideDesignatedFile.cs`; `SeverityFromConfig_UsesConfiguredSeverity` | not part of the package-smoke subset | `covered` |
+| `DM001-012` | configured severity `info` is honored | `DM001/PublicConstOutsideDesignatedFile.cs`; `SeverityFromConfig_UsesConfiguredSeverity` | not part of the package-smoke subset | `covered` |
+| `DM001-013` | configured severity `warning` is honored | `DM001/PublicConstOutsideDesignatedFile.cs`; `PositiveSamples_ReportExpectedDiagnostics` | `Samples/DM001/PublicConstOutsideDesignatedFile.cs` manifest entry | `covered` |
+| `DM001-014` | configured severity `error` is honored | `DM001/PublicConstOutsideDesignatedFile.cs`; `SeverityFromConfig_UsesConfiguredSeverity` | not part of the package-smoke subset | `covered` |
+| `DM001-015` | `#pragma warning disable DM001` suppresses the diagnostic | `DM001/SuppressedConst.cs`; `PragmaSuppression_Works` | `Samples/DM001/SuppressedConst.cs` expected-clean entry | `covered` |
+| `DM001-016` | the unsuppressed control for the suppression sample still reports a diagnostic | `DM001/SuppressedConst.cs`; `PragmaSuppression_Works` unsuppressed control branch | `Samples/DM001/UnsuppressedConstControl.cs` manifest entry | `covered` |
 
-## DM001 Supported Dimensions
+## DM002 Covered Permutations
 
-- visibilities:
-  `public`, `internal`, `private`, `protected`, `private protected`,
-  `protected internal`, `local const`
-- designated file modes:
-  `match`, `mismatch`, `case-insensitive match`
-- designated class modes:
-  `not configured`, `configured and match`,
-  `configured and mismatch`, `configured and case-insensitive match`
-- config states:
-  `enabled`, `disabled`, `missing`, `invalid severity`
-- severity states:
-  `hidden`, `info`, `warning`, `error`
-- suppression states:
-  `suppressed`, `unsuppressed`
-
-## DM001 Permutations
-
-### Diagnostic Behavior
-
-| ID | Visibility | Designated file | Designated class | Expected | Analyzer corpus fixture | Package smoke fixture | State |
-| --- | --- | --- | --- | --- | --- | --- | --- |
-| `DM001-001` | `public` | mismatch | not configured | diagnostic | `DM001/PublicConstOutsideDesignatedFile.cs` | `Samples/DM001/PublicConstOutsideDesignatedFile.cs` | `covered` |
-| `DM001-002` | `internal` | mismatch | not configured | diagnostic | `DM001/InternalConstOutsideDesignatedFile.cs` | `Samples/DM001/InternalConstOutsideDesignatedFile.cs` | `covered` |
-| `DM001-003` | `public` | mismatch | configured and mismatch | diagnostic | `DM001/DesignatedClassMismatch.cs` | `Samples/DM001/PublicConstDesignatedClassMismatch.cs` | `planned` |
-| `DM001-004` | `internal` | mismatch | configured and mismatch | diagnostic | `DM001/InternalConstDesignatedClassMismatch.cs` | `Samples/DM001/InternalConstDesignatedClassMismatch.cs` | `planned` |
-| `DM001-005` | `public` | match | configured and match | no diagnostic | `DM001/DesignatedFileCompliantConst.cs` | `Samples/DM001/DesignatedFileCompliantConst.cs` | `covered` |
-| `DM001-006` | `internal` | match | configured and match | no diagnostic | `DM001/InternalDesignatedFileCompliantConst.cs` | `Samples/DM001/InternalDesignatedFileCompliantConst.cs` | `planned` |
-| `DM001-007` | `public` | case-insensitive match | configured and match | no diagnostic | `DM001/CaseInsensitiveDesignatedFileMatch.cs` | `Samples/DM001/CaseInsensitiveDesignatedFileMatch.cs` | `planned` |
-| `DM001-008` | `public` | match | configured and case-insensitive match | no diagnostic | `DM001/CaseInsensitiveDesignatedClassMatch.cs` | `Samples/DM001/CaseInsensitiveDesignatedClassMatch.cs` | `planned` |
-
-### Ignored Visibility And Scope Behavior
-
-| ID | Shape | Expected | Analyzer corpus fixture | Package smoke fixture | State |
-| --- | --- | --- | --- | --- | --- |
-| `DM001-009` | `private const` field outside designated file | no diagnostic | `DM001/PrivateProtectedIgnored.cs` | `Samples/DM001/PrivateIgnoredConst.cs` | `planned` |
-| `DM001-010` | `protected const` field outside designated file | no diagnostic | `DM001/PrivateProtectedIgnored.cs` | `Samples/DM001/ProtectedIgnoredConst.cs` | `planned` |
-| `DM001-011` | `private protected const` field outside designated file | no diagnostic | `DM001/PrivateProtectedIgnored.cs` | `Samples/DM001/PrivateProtectedIgnoredConst.cs` | `planned` |
-| `DM001-012` | `protected internal const` field outside designated file | no diagnostic | `DM001/PrivateProtectedIgnored.cs` | `Samples/DM001/ProtectedInternalIgnoredConst.cs` | `planned` |
-| `DM001-013` | local `const` inside a method body | no diagnostic | `DM001/LocalConstIgnored.cs` | `Samples/DM001/LocalConstIgnored.cs` | `planned` |
-
-### Config, Severity, And Suppression
-
-| ID | Mode | Expected | Analyzer corpus fixture | Package smoke fixture | State |
-| --- | --- | --- | --- | --- | --- |
-| `DM001-014` | missing config | no diagnostic | `DM001/MissingConfigNoDiagnostics.cs` | `Samples/DM001/MissingConfigNoDiagnostics.cs` | `planned` |
-| `DM001-015` | disabled config | no diagnostic | `DM001/PublicConstOutsideDesignatedFile.cs` | `Samples/DM001/DisabledConfigNoDiagnostics.cs` | `planned` |
-| `DM001-016` | invalid severity | no diagnostic | `DM001/PublicConstOutsideDesignatedFile.cs` | `Samples/DM001/InvalidSeverityNoDiagnostics.cs` | `planned` |
-| `DM001-017` | severity `hidden` | hidden diagnostic | `DM001/SeverityHidden.cs` | `Samples/DM001/SeverityHidden.cs` | `planned` |
-| `DM001-018` | severity `info` | info diagnostic | `DM001/SeverityInfo.cs` | `Samples/DM001/SeverityInfo.cs` | `planned` |
-| `DM001-019` | severity `warning` | warning diagnostic | `DM001/PublicConstOutsideDesignatedFile.cs` | `Samples/DM001/PublicConstOutsideDesignatedFile.cs` | `covered` |
-| `DM001-020` | severity `error` | error diagnostic | `DM001/SeverityFromConfig.cs` | `Samples/DM001/SeverityFromConfig.cs` | `planned` |
-| `DM001-021` | `#pragma` suppression | no diagnostic | `DM001/SuppressedConst.cs` | `Samples/DM001/SuppressedConst.cs` | `covered` |
-| `DM001-022` | unsuppressed control for suppression sample | diagnostic | `DM001/SuppressedConst.cs` | `Samples/DM001/UnsuppressedConstControl.cs` | `covered` |
-
-## DM002 Supported Dimensions
-
-- pattern kinds:
-  `exact`, `prefix`, `suffix`, `substring`
-- syntax contexts:
-  `const field`, `comparison`, `method argument`, `return value`,
-  `attribute argument`, `switch arm`
-- case modes:
-  default case-insensitive, `case_sensitive = true`
-- match modes:
-  matching literal, non-matching literal
-- ignored content:
-  comments, XML documentation, interpolated string holes
-- config states:
-  `enabled`, `disabled`, `missing`, `invalid severity`
-- severity states:
-  `hidden`, `info`, `warning`, `error`
-- suppression states:
-  `suppressed`, `unsuppressed`
-
-## DM002 Permutations
-
-### Default Case-Insensitive Matching: Positive Matrix
-
-Expected result for every cell in this matrix: `DM002` diagnostic reported.
-
-| Pattern kind \ Context | Const field | Comparison | Method argument | Return value | Attribute argument | Switch arm |
-| --- | --- | --- | --- | --- | --- | --- |
-| exact | `DM002.Exact.Const.DefaultCase.Match` `covered` | `DM002.Exact.Comparison.DefaultCase.Match` `planned` | `DM002.Exact.MethodArgument.DefaultCase.Match` `planned` | `DM002.Exact.Return.DefaultCase.Match` `planned` | `DM002.Exact.Attribute.DefaultCase.Match` `planned` | `DM002.Exact.SwitchArm.DefaultCase.Match` `planned` |
-| prefix | `DM002.Prefix.Const.DefaultCase.Match` `planned` | `DM002.Prefix.Comparison.DefaultCase.Match` `planned` | `DM002.Prefix.MethodArgument.DefaultCase.Match` `covered` | `DM002.Prefix.Return.DefaultCase.Match` `planned` | `DM002.Prefix.Attribute.DefaultCase.Match` `planned` | `DM002.Prefix.SwitchArm.DefaultCase.Match` `planned` |
-| suffix | `DM002.Suffix.Const.DefaultCase.Match` `planned` | `DM002.Suffix.Comparison.DefaultCase.Match` `covered` | `DM002.Suffix.MethodArgument.DefaultCase.Match` `planned` | `DM002.Suffix.Return.DefaultCase.Match` `planned` | `DM002.Suffix.Attribute.DefaultCase.Match` `planned` | `DM002.Suffix.SwitchArm.DefaultCase.Match` `planned` |
-| substring | `DM002.Substring.Const.DefaultCase.Match` `planned` | `DM002.Substring.Comparison.DefaultCase.Match` `planned` | `DM002.Substring.MethodArgument.DefaultCase.Match` `planned` | `DM002.Substring.Return.DefaultCase.Match` `covered` | `DM002.Substring.Attribute.DefaultCase.Match` `covered` | `DM002.Substring.SwitchArm.DefaultCase.Match` `planned` |
-
-### Default Case-Insensitive Matching: Negative Matrix
-
-Expected result for every cell in this matrix: no `DM002` diagnostic.
-
-| Pattern kind \ Context | Const field | Comparison | Method argument | Return value | Attribute argument | Switch arm |
-| --- | --- | --- | --- | --- | --- | --- |
-| exact | `DM002.Exact.Const.DefaultCase.NonMatch` `covered` | `DM002.Exact.Comparison.DefaultCase.NonMatch` `planned` | `DM002.Exact.MethodArgument.DefaultCase.NonMatch` `planned` | `DM002.Exact.Return.DefaultCase.NonMatch` `planned` | `DM002.Exact.Attribute.DefaultCase.NonMatch` `planned` | `DM002.Exact.SwitchArm.DefaultCase.NonMatch` `planned` |
-| prefix | `DM002.Prefix.Const.DefaultCase.NonMatch` `planned` | `DM002.Prefix.Comparison.DefaultCase.NonMatch` `planned` | `DM002.Prefix.MethodArgument.DefaultCase.NonMatch` `planned` | `DM002.Prefix.Return.DefaultCase.NonMatch` `planned` | `DM002.Prefix.Attribute.DefaultCase.NonMatch` `planned` | `DM002.Prefix.SwitchArm.DefaultCase.NonMatch` `planned` |
-| suffix | `DM002.Suffix.Const.DefaultCase.NonMatch` `planned` | `DM002.Suffix.Comparison.DefaultCase.NonMatch` `planned` | `DM002.Suffix.MethodArgument.DefaultCase.NonMatch` `planned` | `DM002.Suffix.Return.DefaultCase.NonMatch` `planned` | `DM002.Suffix.Attribute.DefaultCase.NonMatch` `planned` | `DM002.Suffix.SwitchArm.DefaultCase.NonMatch` `planned` |
-| substring | `DM002.Substring.Const.DefaultCase.NonMatch` `planned` | `DM002.Substring.Comparison.DefaultCase.NonMatch` `planned` | `DM002.Substring.MethodArgument.DefaultCase.NonMatch` `planned` | `DM002.Substring.Return.DefaultCase.NonMatch` `planned` | `DM002.Substring.Attribute.DefaultCase.NonMatch` `planned` | `DM002.Substring.SwitchArm.DefaultCase.NonMatch` `planned` |
-
-### Case-Sensitive Matching: Positive Matrix
-
-Expected result for every cell in this matrix: `DM002` diagnostic reported when
-pattern casing and literal casing are identical.
-
-| Pattern kind \ Context | Const field | Comparison | Method argument | Return value | Attribute argument | Switch arm |
-| --- | --- | --- | --- | --- | --- | --- |
-| exact | `DM002.Exact.Const.CaseSensitive.Match` `planned` | `DM002.Exact.Comparison.CaseSensitive.Match` `planned` | `DM002.Exact.MethodArgument.CaseSensitive.Match` `planned` | `DM002.Exact.Return.CaseSensitive.Match` `planned` | `DM002.Exact.Attribute.CaseSensitive.Match` `planned` | `DM002.Exact.SwitchArm.CaseSensitive.Match` `planned` |
-| prefix | `DM002.Prefix.Const.CaseSensitive.Match` `planned` | `DM002.Prefix.Comparison.CaseSensitive.Match` `planned` | `DM002.Prefix.MethodArgument.CaseSensitive.Match` `planned` | `DM002.Prefix.Return.CaseSensitive.Match` `planned` | `DM002.Prefix.Attribute.CaseSensitive.Match` `planned` | `DM002.Prefix.SwitchArm.CaseSensitive.Match` `planned` |
-| suffix | `DM002.Suffix.Const.CaseSensitive.Match` `planned` | `DM002.Suffix.Comparison.CaseSensitive.Match` `planned` | `DM002.Suffix.MethodArgument.CaseSensitive.Match` `planned` | `DM002.Suffix.Return.CaseSensitive.Match` `planned` | `DM002.Suffix.Attribute.CaseSensitive.Match` `planned` | `DM002.Suffix.SwitchArm.CaseSensitive.Match` `planned` |
-| substring | `DM002.Substring.Const.CaseSensitive.Match` `planned` | `DM002.Substring.Comparison.CaseSensitive.Match` `planned` | `DM002.Substring.MethodArgument.CaseSensitive.Match` `planned` | `DM002.Substring.Return.CaseSensitive.Match` `planned` | `DM002.Substring.Attribute.CaseSensitive.Match` `planned` | `DM002.Substring.SwitchArm.CaseSensitive.Match` `planned` |
-
-### Case-Sensitive Matching: Negative Matrix
-
-Expected result for every cell in this matrix: no `DM002` diagnostic when the
-literal differs only by casing.
-
-| Pattern kind \ Context | Const field | Comparison | Method argument | Return value | Attribute argument | Switch arm |
-| --- | --- | --- | --- | --- | --- | --- |
-| exact | `DM002.Exact.Const.CaseSensitive.NonMatch` `covered` | `DM002.Exact.Comparison.CaseSensitive.NonMatch` `planned` | `DM002.Exact.MethodArgument.CaseSensitive.NonMatch` `planned` | `DM002.Exact.Return.CaseSensitive.NonMatch` `planned` | `DM002.Exact.Attribute.CaseSensitive.NonMatch` `planned` | `DM002.Exact.SwitchArm.CaseSensitive.NonMatch` `planned` |
-| prefix | `DM002.Prefix.Const.CaseSensitive.NonMatch` `planned` | `DM002.Prefix.Comparison.CaseSensitive.NonMatch` `planned` | `DM002.Prefix.MethodArgument.CaseSensitive.NonMatch` `planned` | `DM002.Prefix.Return.CaseSensitive.NonMatch` `planned` | `DM002.Prefix.Attribute.CaseSensitive.NonMatch` `planned` | `DM002.Prefix.SwitchArm.CaseSensitive.NonMatch` `planned` |
-| suffix | `DM002.Suffix.Const.CaseSensitive.NonMatch` `planned` | `DM002.Suffix.Comparison.CaseSensitive.NonMatch` `planned` | `DM002.Suffix.MethodArgument.CaseSensitive.NonMatch` `planned` | `DM002.Suffix.Return.CaseSensitive.NonMatch` `planned` | `DM002.Suffix.Attribute.CaseSensitive.NonMatch` `planned` | `DM002.Suffix.SwitchArm.CaseSensitive.NonMatch` `planned` |
-| substring | `DM002.Substring.Const.CaseSensitive.NonMatch` `planned` | `DM002.Substring.Comparison.CaseSensitive.NonMatch` `planned` | `DM002.Substring.MethodArgument.CaseSensitive.NonMatch` `planned` | `DM002.Substring.Return.CaseSensitive.NonMatch` `planned` | `DM002.Substring.Attribute.CaseSensitive.NonMatch` `planned` | `DM002.Substring.SwitchArm.CaseSensitive.NonMatch` `planned` |
-
-### Ignored Content, Config, Severity, And Suppression
-
-| ID | Mode | Expected | Analyzer corpus fixture | Package smoke fixture | State |
-| --- | --- | --- | --- | --- | --- |
-| `DM002-001` | interpolated hole | no diagnostic | `DM002/InterpolatedHole.cs` | `Samples/DM002/InterpolatedHole.cs` | `planned` |
-| `DM002-002` | comments | no diagnostic | `DM002/CommentsAndDocumentationIgnored.cs` | `Samples/DM002/CommentsIgnored.cs` | `planned` |
-| `DM002-003` | XML documentation | no diagnostic | `DM002/CommentsAndDocumentationIgnored.cs` | `Samples/DM002/XmlDocumentationIgnored.cs` | `planned` |
-| `DM002-004` | missing config | no diagnostic | `DM002/MissingConfigNoDiagnostics.cs` | `Samples/DM002/MissingConfigNoDiagnostics.cs` | `planned` |
-| `DM002-005` | disabled config | no diagnostic | `DM002/ExactMatchConstField.cs` | `Samples/DM002/DisabledConfigNoDiagnostics.cs` | `planned` |
-| `DM002-006` | invalid severity | no diagnostic | `DM002/InvalidConfigNoDiagnostics.cs` | `Samples/DM002/InvalidSeverityNoDiagnostics.cs` | `planned` |
-| `DM002-007` | severity `hidden` | hidden diagnostic | `DM002/SeverityHidden.cs` | `Samples/DM002/SeverityHidden.cs` | `planned` |
-| `DM002-008` | severity `info` | info diagnostic | `DM002/SeverityFromConfig.cs` | `Samples/DM002/SeverityInfo.cs` | `planned` |
-| `DM002-009` | severity `warning` | warning diagnostic | `DM002/PrefixMethodArgument.cs` | `Samples/DM002/SeverityWarning.cs` | `planned` |
-| `DM002-010` | severity `error` | error diagnostic | `DM002/ExactMatchConstField.cs` | `Samples/DM002/SeverityError.cs` | `planned` |
-| `DM002-011` | `#pragma` suppression | no diagnostic | `DM002/SuppressedLiteral.cs` | `Samples/DM002/SuppressedLiteral.cs` | `covered` |
-| `DM002-012` | unsuppressed control for suppression sample | diagnostic | `DM002/SuppressedLiteral.cs` | `Samples/DM002/UnsuppressedLiteralControl.cs` | `covered` |
+| ID | Supported behavior | Evidence | Package-smoke evidence | State |
+| --- | --- | --- | --- | --- |
+| `DM002-001` | exact-pattern match in a const field reports a diagnostic | `DM002/ExactMatchConstField.cs`; `PositiveSamples_ReportExpectedDiagnostics` | `Samples/DM002/ExactMatchConstField.cs` manifest entry | `covered` |
+| `DM002-002` | prefix-pattern match in a method argument reports a diagnostic | `DM002/PrefixMethodArgument.cs`; `PositiveSamples_ReportExpectedDiagnostics` | `Samples/DM002/PrefixMethodArgument.cs` manifest entry | `covered` |
+| `DM002-003` | suffix-pattern match in a comparison reports a diagnostic | `DM002/SuffixComparison.cs`; `PositiveSamples_ReportExpectedDiagnostics` | `Samples/DM002/SuffixComparison.cs` manifest entry | `covered` |
+| `DM002-004` | substring-pattern match in a return expression reports a diagnostic | `DM002/SubstringReturnValue.cs`; `PositiveSamples_ReportExpectedDiagnostics` | `Samples/DM002/SubstringReturnValue.cs` manifest entry | `covered` |
+| `DM002-005` | attribute-argument literals are analyzed | `DM002/AttributeArgument.cs`; `PositiveSamples_ReportExpectedDiagnostics` | `Samples/DM002/AttributeArgument.cs` manifest entry | `covered` |
+| `DM002-006` | switch-arm literals are analyzed | `DM002/SwitchArmLiteral.cs`; `PositiveSamples_ReportExpectedDiagnostics` | not part of the package-smoke subset | `covered` |
+| `DM002-007` | default matching is case-insensitive | `DM002/CaseSensitiveMismatch.cs`; `PositiveSamples_ReportExpectedDiagnostics` with `case_sensitive = false` | not part of the package-smoke subset | `covered` |
+| `DM002-008` | `case_sensitive = true` reports a diagnostic when casing is identical | `DM002/ExactMatchConstField.cs`; `PositiveSamples_ReportExpectedDiagnostics` with `case_sensitive = true` | not part of the package-smoke subset | `covered` |
+| `DM002-009` | `case_sensitive = true` suppresses diagnostics when casing differs | `DM002/CaseSensitiveMismatch.cs`; `NegativeAndConfigSamples_DoNotReport` with `case_sensitive = true` | not part of the package-smoke subset | `covered` |
+| `DM002-010` | non-matching literals do not report diagnostics | `DM002/NonMatchingLiteral.cs`; `NegativeAndConfigSamples_DoNotReport` | `Samples/DM002/CompliantLiteral.cs` expected-clean entry | `covered` |
+| `DM002-011` | interpolated-string holes are ignored | `DM002/InterpolatedHole.cs`; `NegativeAndConfigSamples_DoNotReport` | unsupported in package smoke because interpolated-hole diagnostics are intentionally excluded from the v1 smoke subset | `covered` |
+| `DM002-012` | comments are ignored | `DM002/CommentsAndDocumentationIgnored.cs`; `NegativeAndConfigSamples_DoNotReport` | unsupported in package smoke because comments are not analyzer diagnostics | `covered` |
+| `DM002-013` | XML documentation is ignored | `DM002/CommentsAndDocumentationIgnored.cs`; `NegativeAndConfigSamples_DoNotReport` | unsupported in package smoke because XML docs are not analyzer diagnostics | `covered` |
+| `DM002-014` | missing config fails closed with no diagnostic | `DM002/MissingConfigNoDiagnostics.cs`; `NegativeAndConfigSamples_DoNotReport` | unsupported in package smoke because the smoke project is intentionally configured | `covered` |
+| `DM002-015` | disabled config produces no diagnostic | `DM002/ExactMatchConstField.cs`; `NegativeAndConfigSamples_DoNotReport` with disabled config | unsupported in package smoke because the smoke project is intentionally configured | `covered` |
+| `DM002-016` | invalid severity fails closed with no diagnostic | `DM002/InvalidConfigNoDiagnostics.cs`; `NegativeAndConfigSamples_DoNotReport` | unsupported in package smoke because invalid-config scenarios stay in the analyzer corpus | `covered` |
+| `DM002-017` | configured severity `hidden` is honored | `DM002/SeverityFromConfig.cs`; `SeverityFromConfig_UsesConfiguredSeverity` | unsupported in package smoke because the smoke manifest asserts the shipping warning profile only | `covered` |
+| `DM002-018` | configured severity `info` is honored | `DM002/AttributeArgument.cs`; `PositiveSamples_ReportExpectedDiagnostics` and `DM002/SeverityFromConfig.cs`; `SeverityFromConfig_UsesConfiguredSeverity` | unsupported in package smoke because the smoke manifest asserts the shipping warning profile only | `covered` |
+| `DM002-019` | configured severity `warning` is honored | `DM002/PrefixMethodArgument.cs`; `PositiveSamples_ReportExpectedDiagnostics` and `DM002/SeverityFromConfig.cs`; `SeverityFromConfig_UsesConfiguredSeverity` | `Samples/DM002/PrefixMethodArgument.cs` manifest entry | `covered` |
+| `DM002-020` | configured severity `error` is honored | `DM002/ExactMatchConstField.cs`; `PositiveSamples_ReportExpectedDiagnostics` and `DM002/SeverityFromConfig.cs`; `SeverityFromConfig_UsesConfiguredSeverity` | unsupported in package smoke because the smoke manifest asserts the shipping warning profile only | `covered` |
+| `DM002-021` | `#pragma warning disable DM002` suppresses the diagnostic | `DM002/SuppressedLiteral.cs`; `PragmaSuppression_Works` | `Samples/DM002/SuppressedLiteral.cs` expected-clean entry | `covered` |
+| `DM002-022` | the unsuppressed control for the suppression sample still reports a diagnostic | `DM002/SuppressedLiteral.cs`; `PragmaSuppression_Works` unsuppressed control branch | `Samples/DM002/UnsuppressedLiteralControl.cs` manifest entry | `covered` |
 
 ## Unsupported By Design In v1
 
 | ID | Permutation | Reason | State |
 | --- | --- | --- | --- |
-| `UNSUPPORTED-001` | `DM001` on `static readonly` fields | deferred by PRD open question | `unsupported` |
-| `UNSUPPORTED-002` | `DM002` inside interpolated string holes | explicitly excluded by requirements | `unsupported` |
-| `UNSUPPORTED-003` | `DM002` on comments or XML doc text as diagnostics | analyzer is syntax-literal scoped only | `unsupported` |
+| `UNSUPPORTED-001` | `DM001` on `static readonly` fields | deferred by the PRD; v1 only governs `const` fields | `unsupported` |
+| `UNSUPPORTED-002` | diagnostics inside interpolated-string holes | explicitly excluded from the requirements | `unsupported` |
+| `UNSUPPORTED-003` | diagnostics on comments or XML documentation text | `DM002` is syntax-literal scoped only | `unsupported` |
 | `UNSUPPORTED-004` | code-fix permutations for either rule | code fixes are out of scope for v1 | `unsupported` |

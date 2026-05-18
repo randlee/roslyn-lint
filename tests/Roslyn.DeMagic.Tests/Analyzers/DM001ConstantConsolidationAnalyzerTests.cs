@@ -44,6 +44,7 @@ public sealed class DM001ConstantConsolidationAnalyzerTests
         new()
         {
             { "DM001/DesignatedFileCompliantConst.cs", CompliantConfig },
+            { "DM001/DesignatedFileCompliantConst.cs", CaseInsensitiveClassConfig },
             { "DM001/PrivateProtectedIgnored.cs", EnabledWarningConfig },
             { "DM001/LocalConstIgnored.cs", EnabledWarningConfig },
             { "DM001/MissingConfigNoDiagnostics.cs", null },
@@ -104,22 +105,20 @@ public sealed class DM001ConstantConsolidationAnalyzerTests
         diagnostics.Should().BeEmpty();
     }
 
-    [Fact]
-    public async Task SeverityFromConfig_UsesConfiguredSeverity()
+    [Theory]
+    [InlineData("hidden", DiagnosticSeverity.Hidden)]
+    [InlineData("info", DiagnosticSeverity.Info)]
+    [InlineData("warning", DiagnosticSeverity.Warning)]
+    [InlineData("error", DiagnosticSeverity.Error)]
+    public async Task SeverityFromConfig_UsesConfiguredSeverity(string configuredSeverity, DiagnosticSeverity expectedSeverity)
     {
         var diagnostics = await GetDiagnosticsAsync(
-            "DM001/SeverityFromConfig.cs",
-            """
-            [dm001]
-            enabled = true
-            severity = "error"
-            designated_file = "Constants.cs"
-            designated_class = "Constants"
-            """);
+            "DM001/PublicConstOutsideDesignatedFile.cs",
+            BuildConfig(configuredSeverity, "Constants.cs", "ApiClient"));
 
         diagnostics.Should().ContainSingle();
         diagnostics[0].Id.Should().Be(DM001ConstantConsolidationAnalyzer.DiagnosticId);
-        diagnostics[0].Severity.Should().Be(DiagnosticSeverity.Error);
+        diagnostics[0].Severity.Should().Be(expectedSeverity);
         diagnostics[0].Descriptor.Category.Should().Be("roslyn-lint.Organization");
     }
 
@@ -226,6 +225,27 @@ public sealed class DM001ConstantConsolidationAnalyzerTests
         designated_file = "designatedfilecompliantconst.cs"
         designated_class = "Constants"
         """;
+
+    private const string CaseInsensitiveClassConfig =
+        """
+        [dm001]
+        enabled = true
+        severity = "warning"
+        designated_file = "DesignatedFileCompliantConst.cs"
+        designated_class = "constants"
+        """;
+
+    private static string BuildConfig(string severity, string designatedFile, string designatedClass)
+    {
+        return
+            $"""
+            [dm001]
+            enabled = true
+            severity = "{severity}"
+            designated_file = "{designatedFile}"
+            designated_class = "{designatedClass}"
+            """;
+    }
 
     private static Task<IReadOnlyList<Diagnostic>> GetDiagnosticsAsync(string fixturePath, string? config)
     {
