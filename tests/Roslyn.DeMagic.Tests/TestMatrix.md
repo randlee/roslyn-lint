@@ -4,6 +4,21 @@ This matrix ties the approved `Roslyn.DeMagic` analyzer-behavior,
 configuration, and validation requirements exercised in A10 to concrete
 automated samples and tests.
 
+## A12 Production-Readiness Signoff
+
+Phase A production-readiness requires this matrix to close with no requirement
+gaps for the shipped analyzer set.
+
+- shipped rule set: `DM001`, `DM002`
+- requirement rows: every approved `REQ-DM*` row below maps to concrete
+  analyzer samples and automated test methods
+- permutation closure: `tests/Roslyn.DeMagic.Tests/PermutationMatrix.md`
+  remains the authoritative supported-permutation inventory for publish
+  signoff
+- packaged-consumer closure: `examples/Roslyn.DeMagic.PackageSmoke/` plus
+  `eng/roslyn-demagic-package-expected-diagnostics.json` are the authoritative
+  package-consumer validation artifacts for Phase A v0.1.0
+
 ## Requirement Coverage
 
 | Requirement | Rule | Sample(s) | Owning test method(s) | Kind |

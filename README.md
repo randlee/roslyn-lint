@@ -5,11 +5,12 @@ at strongly typed, automation-friendly C# code quality workflows.
 
 ## Phase A status
 
-- `Roslyn.DeMagic` is the active implementation line.
-- analyzer packaging is validated in CI and prepared for independent release
-  as `Roslyn.DeMagic`
-- `roslyn-lint` now carries the approved Phase A contract baseline for suite
-  orchestration and metadata inspection
+- `Roslyn.DeMagic` is the primary Phase A deliverable and current production-testing target.
+- the shipped analyzer rule set for Phase A is `DM001` plus `DM002`
+- packaged-consumer validation is in place through the local package-smoke project and
+  the expected-diagnostics manifest under `eng/`
+- `roslyn-lint` remains a secondary Phase A surface; its contract baseline and current
+  commands exist, but analyzer readiness takes precedence over further CLI scope
 
 ## Products
 
@@ -18,8 +19,9 @@ at strongly typed, automation-friendly C# code quality workflows.
   - `DM001` constant-consolidation enforcement
   - `DM002` forbidden string literal detection
 - `src/Roslyn.Lint`
-  future AI-first CLI surface with a stable JSON envelope, typed errors, and
-  MCP-ready DTO reuse
+  AI-first CLI surface with a stable JSON envelope, typed errors, and
+  MCP-ready DTO reuse, retained here as a supporting suite tool rather than
+  the primary Phase A release target
 
 ## Current CLI surfaces
 
@@ -33,8 +35,8 @@ at strongly typed, automation-friendly C# code quality workflows.
 - `roslyn-lint version`
 
 `view rules` currently surfaces `Roslyn.DeMagic` rule metadata for `DM001` and
-`DM002`, while the delegated backend process runner and JSON normalization seam
-are in place for future package-owned tool backends.
+`DM002`. Phase A production testing should focus on the analyzer package and
+its packaged-consumer validation path first.
 
 ## Governing docs
 
