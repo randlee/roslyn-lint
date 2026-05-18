@@ -20,6 +20,10 @@ design line rather than assuming the current spike is valid.
   rule
 - a locally packaged analyzer-consumer example that proves the built package can
   be used from a normal .NET project
+- CI gates that validate the packaged analyzer-consumer path on every relevant
+  change
+- GitHub Packages publication for repo-produced packages, with NuGet.org
+  publication still documented as a manual first-release step
 
 ## 3. Execution Branch
 
@@ -47,6 +51,14 @@ design line rather than assuming the current spike is valid.
 - `src/Roslyn.DeMagic/AnalyzerReleases.Unshipped.md`
 - `src/Roslyn.DeMagic/Roslyn.DeMagic.csproj`
 - `tests/Roslyn.DeMagic.Tests/Analyzers/`
+- `tests/Roslyn.DeMagic.Tests/TestData/DM001/`
+- `tests/Roslyn.DeMagic.Tests/TestData/DM002/`
+- `tests/Roslyn.DeMagic.Tests/TestData/README.md`
+- `tests/Roslyn.DeMagic.Tests/TestMatrix.md`
+- `examples/Roslyn.DeMagic.PackageSmoke/`
+- `eng/validate-roslyn-demagic-package.sh`
+- `eng/validate-roslyn-demagic-package.ps1`
+- `eng/roslyn-demagic-package-expected-diagnostics.json`
 - `src/Roslyn.Lint/Program.cs`
 - `src/Roslyn.Lint/Commands/LintCommand.cs`
 - `src/Roslyn.Lint/Contracts/`
@@ -59,6 +71,8 @@ design line rather than assuming the current spike is valid.
 - `tests/Roslyn.Lint.Tests/Operations/`
 - `.github/workflows/ci.yml`
 - `.github/workflows/publish.yml`
+- `docs/phase-A/production-readiness-checklist.md`
+- `docs/releasing.md`
 
 ## 6. Sprint Sequence
 
@@ -76,7 +90,8 @@ design line rather than assuming the current spike is valid.
 | A9 | `DM001` completion and rule parity | Implement the constant-consolidation rule against the PRD and close the analyzer parity gap |
 | A10 | Analyzer sample corpus and rule matrix | Add exhaustive positive, negative, suppression, and corner-case samples for every analyzer rule |
 | A11 | Packaged consumer validation | Prove the locally built `Roslyn.DeMagic` package works from a normal consuming project via a local feed |
-| A12 | Production-readiness hardening and release gate | Make analyzer packaging, sample consumption, docs, and CI all reflect the real shippable rule set |
+| A12 | Production-readiness convergence | Make analyzer metadata, sample consumption, docs, and readiness evidence reflect one real shippable rule set |
+| A13 | CI publish and manual release handoff | Validate package-consumer gates in CI, publish repo packages to GitHub Packages, and document the manual NuGet.org first release |
 
 ## 7. Implementation Strategy
 
@@ -97,12 +112,15 @@ design line rather than assuming the current spike is valid.
   for every rule and documented corner case
 - A11 proves package-consumer behavior by packing `Roslyn.DeMagic` and
   consuming it from an example project through a local feed
-- A12 hardens CI, release metadata, and repo docs so the analyzer can enter
-  production testing without relying on undocumented assumptions
+- A12 converges release metadata, packaged-consumer evidence, and repo docs so
+  the analyzer can enter production testing without relying on undocumented
+  assumptions
+- A13 adds the CI package-consumer gate, GitHub Packages publication path, and
+  manual NuGet.org release handoff documentation
 - no sprint in Phase A should preserve current spike semantics merely because
   code already exists
 - no additional CLI expansion should take precedence over unfinished analyzer
-  production-readiness work until A12 is complete
+  production-readiness work until A13 is complete
 
 ### 7.1 Named Type Inventory
 
@@ -128,6 +146,9 @@ introduced during the development sprints:
   `LintToolRequest`, `LintToolResult`, `LintFinding`, `ViewRequest`,
   `ViewResult`, `CheckRequest`, `CheckResult`, `ClippyRequest`,
   `ClippyResult`, `CiRequest`, `CiResult`, `VersionResult`
+- package-validation types:
+  `ExpectedPackageDiagnostic`, `PackageValidationManifest`,
+  `PackageValidationSampleKind`, `PackageValidationResult`
 
 ## 8. Acceptance
 
@@ -140,6 +161,9 @@ Phase A is complete only when:
   case
 - the locally built analyzer package is validated through a normal consuming
   project rather than only through in-repo unit tests
+- CI validates the packaged-consumer path before Phase A is called complete
+- GitHub Packages publication is configured for repo-produced packages, and the
+  first NuGet.org release remains manual but documented
 - the CLI baseline no longer treats the current implementation as an approved
   design
 - the Phase A execution rules explicitly prefer deleting and replacing

@@ -26,33 +26,60 @@ target: integration/phase-A
 
 - `tests/Roslyn.DeMagic.Tests/Analyzers/DM001ConstantConsolidationAnalyzerTests.cs`
 - `tests/Roslyn.DeMagic.Tests/Analyzers/DM002ForbiddenStringLiteralAnalyzerTests.cs`
-- `tests/Roslyn.DeMagic.Tests/TestData/DM001/*`
-- `tests/Roslyn.DeMagic.Tests/TestData/DM002/*`
+- `tests/Roslyn.DeMagic.Tests/TestData/DM001/PublicConstOutsideDesignatedFile.cs`
+- `tests/Roslyn.DeMagic.Tests/TestData/DM001/InternalConstOutsideDesignatedFile.cs`
+- `tests/Roslyn.DeMagic.Tests/TestData/DM001/DesignatedFileCompliantConst.cs`
+- `tests/Roslyn.DeMagic.Tests/TestData/DM001/DesignatedClassMismatch.cs`
+- `tests/Roslyn.DeMagic.Tests/TestData/DM001/PrivateProtectedIgnored.cs`
+- `tests/Roslyn.DeMagic.Tests/TestData/DM001/LocalConstIgnored.cs`
+- `tests/Roslyn.DeMagic.Tests/TestData/DM001/SuppressedConst.cs`
+- `tests/Roslyn.DeMagic.Tests/TestData/DM001/MissingConfigNoDiagnostics.cs`
+- `tests/Roslyn.DeMagic.Tests/TestData/DM001/SeverityFromConfig.cs`
+- `tests/Roslyn.DeMagic.Tests/TestData/DM002/ExactMatchConstField.cs`
+- `tests/Roslyn.DeMagic.Tests/TestData/DM002/PrefixMethodArgument.cs`
+- `tests/Roslyn.DeMagic.Tests/TestData/DM002/SuffixComparison.cs`
+- `tests/Roslyn.DeMagic.Tests/TestData/DM002/SubstringReturnValue.cs`
+- `tests/Roslyn.DeMagic.Tests/TestData/DM002/AttributeArgument.cs`
+- `tests/Roslyn.DeMagic.Tests/TestData/DM002/NonMatchingLiteral.cs`
+- `tests/Roslyn.DeMagic.Tests/TestData/DM002/CaseSensitiveMismatch.cs`
+- `tests/Roslyn.DeMagic.Tests/TestData/DM002/SuppressedLiteral.cs`
+- `tests/Roslyn.DeMagic.Tests/TestData/DM002/MissingConfigNoDiagnostics.cs`
+- `tests/Roslyn.DeMagic.Tests/TestData/DM002/InvalidConfigNoDiagnostics.cs`
+- `tests/Roslyn.DeMagic.Tests/TestData/DM002/SeverityFromConfig.cs`
 - `tests/Roslyn.DeMagic.Tests/TestData/README.md`
 - `tests/Roslyn.DeMagic.Tests/TestMatrix.md`
 
 ## Important Interfaces, Records/Structs, And Enums
 
 - immutable payload types:
-  analyzer sample source files, expected-diagnostic fixtures, and requirement
-  traceability rows
+  `ExpectedDiagnostic`, `RequirementTraceabilityRow`
+- enums:
+  `AnalyzerSampleKind`
 
 ## Required Work
 
 - add positive and negative `DM001` samples for:
   designated-file mismatch, designated-class mismatch, compliant constants,
-  private/protected constants, and local constants
+  private/protected constants, local constants, suppression, missing config,
+  and severity-from-config behavior
 - expand `DM002` samples so the PRD checklist is represented directly in test
-  data
+  data, including suppression, missing config, invalid config, and
+  severity-from-config behavior
 - add suppression samples for both `DM001` and `DM002`
-- add corner-case samples for both rules, including config-driven severity and
-  missing/invalid config behavior
+- add corner-case samples for both rules without leaving any PRD checkbox
+  covered only by prose
 - create a matrix document that maps every PRD rule checkbox to one or more
   automated tests or sample files
+- define `AnalyzerSampleKind` so sample ownership is explicit:
+  positive, negative, suppression, config-failure, severity, or corner-case
+- define `RequirementTraceabilityRow` so `TestMatrix.md` records:
+  requirement id, rule id, sample file, owning test method, and validation mode
 
 ## Acceptance Criteria
 
 - every approved analyzer rule has positive, negative, and suppression samples
+- every config behavior promised by the PRD has at least one concrete automated
+  sample
 - `DM001` and `DM002` PRD checklists are traceable to concrete automated tests
 - the sample corpus is readable as documentation for production testing
 - `TestMatrix.md` is sufficient for a reviewer to verify coverage without

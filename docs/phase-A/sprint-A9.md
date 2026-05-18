@@ -34,12 +34,17 @@ target: integration/phase-A
 - `src/Roslyn.DeMagic/Diagnostics/DeMagicDiagnosticDescriptors.cs`
 - `src/Roslyn.DeMagic/AnalyzerReleases.Unshipped.md`
 - `tests/Roslyn.DeMagic.Tests/Analyzers/DM001ConstantConsolidationAnalyzerTests.cs`
-- `tests/Roslyn.DeMagic.Tests/TestData/DM001/*`
+- `tests/Roslyn.DeMagic.Tests/TestData/DM001/PublicConstOutsideDesignatedFile.cs`
+- `tests/Roslyn.DeMagic.Tests/TestData/DM001/InternalConstOutsideDesignatedFile.cs`
+- `tests/Roslyn.DeMagic.Tests/TestData/DM001/DesignatedFileCompliantConst.cs`
+- `tests/Roslyn.DeMagic.Tests/TestData/DM001/DesignatedClassMismatch.cs`
+- `tests/Roslyn.DeMagic.Tests/TestData/DM001/PrivateProtectedIgnored.cs`
+- `tests/Roslyn.DeMagic.Tests/TestData/DM001/LocalConstIgnored.cs`
 
 ## Important Interfaces, Records/Structs, And Enums
 
 - interfaces:
-  `IDeMagicConfigLoader`
+  `IDeMagicConfigLoader`, `IAdditionalFileConfigSelector`
 - immutable payload types:
   `DeMagicConfig`, `Dm001Options`, `AdditionalFileConfigSelection`
 - enums:
@@ -56,6 +61,8 @@ target: integration/phase-A
 - honor configured severity instead of hard-coding effective rule behavior
 - update analyzer release metadata so `DM001` is no longer described as
   unimplemented when the sprint is complete
+- land the first concrete `DM001` sample files needed for implementation and
+  baseline behavior verification before A10 expands the full corpus
 
 ## Acceptance Criteria
 
@@ -67,6 +74,8 @@ target: integration/phase-A
 - `DM001` stays suppressible through standard Roslyn suppression mechanisms
 - `DM001` test coverage exists in
   `DM001ConstantConsolidationAnalyzerTests.cs` with fixture-backed samples
+- the initial `DM001` sample files exist for the core positive and negative
+  cases that A10 will later expand into the full production-testing corpus
 
 ## Required Validation
 

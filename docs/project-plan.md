@@ -24,6 +24,9 @@ Phase A deliverables:
 - a production-ready analyzer validation path that covers every approved rule
 - a packaged-consumer example proving the built analyzer works through a local
   feed
+- CI gates that validate the packaged-consumer path before merge
+- GitHub Packages publication for repo-produced packages, with the first
+  NuGet.org release remaining manual and documented
 
 ## 3. Project Inventory
 
@@ -73,7 +76,8 @@ Merge target:
 | A9 | `DM001` completion and rule parity | Implement the missing constant-consolidation analyzer behavior and close the rule gap |
 | A10 | Analyzer sample corpus and rule matrix | Add exhaustive analyzer samples and traceability for every rule and corner case |
 | A11 | Packaged consumer validation | Pack the analyzer and consume it from a normal project via a local feed |
-| A12 | Production-readiness hardening and release gate | Align CI, package metadata, docs, and sample validation to the shippable analyzer set |
+| A12 | Production-readiness convergence | Align package metadata, docs, sample validation, and readiness evidence to the shippable analyzer set |
+| A13 | CI publish and manual release handoff | Add CI package-consumer gates, GitHub Packages publication, and the documented manual NuGet.org first release path |
 
 Phase A must not treat the current CLI spike as an approved product contract.
 
@@ -91,10 +95,15 @@ these code paths:
 - `examples/Roslyn.DeMagic.PackageSmoke/`
 - `eng/validate-roslyn-demagic-package.sh`
 - `eng/validate-roslyn-demagic-package.ps1`
+- `eng/roslyn-demagic-package-expected-diagnostics.json`
+- `docs/phase-A/production-readiness-checklist.md`
+- `docs/releasing.md`
 - `tests/Roslyn.DeMagic.Tests/Analyzers/DM002ForbiddenStringLiteralAnalyzerTests.cs`
 - `tests/Roslyn.DeMagic.Tests/Analyzers/DM001ConstantConsolidationAnalyzerTests.cs`
 - `tests/Roslyn.DeMagic.Tests/TestData/DM001/`
 - `tests/Roslyn.DeMagic.Tests/TestData/DM002/`
+- `tests/Roslyn.DeMagic.Tests/TestData/README.md`
+- `tests/Roslyn.DeMagic.Tests/TestMatrix.md`
 - `src/Roslyn.Lint/Program.cs`
 - `src/Roslyn.Lint/Commands/LintCommand.cs`
 - `src/Roslyn.Lint/Roslyn.Lint.csproj`
@@ -172,6 +181,8 @@ Planned replacement-oriented CLI implementation units when CLI work resumes:
   the analyzer baseline is approved
 - after A8, Phase A work returns to analyzer production-readiness and package
   consumer validation before any further CLI scope is considered
+- GitHub Packages publication work remains analyzer-first support work and must
+  not displace unfinished analyzer rule, sample, or package-consumer gaps
 - future CLI implementation must inherit the contract rules defined in
   `docs/roslyn-lint/requirements.md` and `docs/roslyn-lint/architecture.md`
 - if spike code does not comply with approved requirements or architecture, the
@@ -195,6 +206,8 @@ Phase A planning is complete only when:
   plans
 - analyzer sample coverage and packaged-consumer validation are explicit in the
   sprint plans
+- CI package-consumer validation and GitHub Packages publication expectations
+  are explicit in the sprint plans
 - the CLI baseline no longer treats the current implementation as an approved
   design
 - the execution rules explicitly prefer deleting and replacing noncompliant

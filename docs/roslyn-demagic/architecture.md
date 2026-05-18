@@ -161,6 +161,10 @@ Tests should validate:
   `Roslyn.DeMagic` NuGet package from a local feed
 - requirement-to-sample traceability for every approved rule and documented
   corner case
+- a structured expected-diagnostics manifest that scripts can compare against
+  actual package-consumer build output
+- CI execution of the packaged-consumer validation path before GitHub Packages
+  publication is considered passing
 
 The test suite must be built around PRD behavior, not around preserving the
 current spike's literal-detection semantics.

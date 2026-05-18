@@ -99,6 +99,10 @@ Packaging requirement IDs:
 - `REQ-DM-PACK-005` The package description, tags, and README references must
   describe constant-consolidation and forbidden-string diagnostics, not generic
   magic-number or magic-string linting.
+- `REQ-DM-PACK-006` CI must be able to publish `Roslyn.DeMagic` and any
+  repo-produced package dependencies to GitHub Packages.
+- `REQ-DM-PACK-007` The first NuGet.org publication remains manual; the manual
+  release handoff must be documented before automation is considered.
 
 ## 7. Validation Requirements
 
@@ -120,3 +124,7 @@ Validation requirement IDs:
   a locally built NuGet package from a local feed.
 - `REQ-DM-TEST-008` The analyzer test matrix must map every PRD rule checkbox
   to one or more concrete automated tests or packaged-consumer samples.
+- `REQ-DM-TEST-009` CI must run the packaged-consumer validation path rather
+  than relying only on in-repo analyzer tests.
+- `REQ-DM-TEST-010` The packaged-consumer validation path must assert expected
+  diagnostics from a structured manifest rather than by manual console review.

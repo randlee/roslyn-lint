@@ -29,15 +29,28 @@ target: integration/phase-A
 - `examples/Roslyn.DeMagic.PackageSmoke/Directory.Build.props`
 - `examples/Roslyn.DeMagic.PackageSmoke/Roslyn.DeMagic.PackageSmoke.csproj`
 - `examples/Roslyn.DeMagic.PackageSmoke/.roslyn-lint/config-src.toml`
-- `examples/Roslyn.DeMagic.PackageSmoke/Samples/DM001/*`
-- `examples/Roslyn.DeMagic.PackageSmoke/Samples/DM002/*`
+- `examples/Roslyn.DeMagic.PackageSmoke/Samples/DM001/PublicConstOutsideDesignatedFile.cs`
+- `examples/Roslyn.DeMagic.PackageSmoke/Samples/DM001/InternalConstOutsideDesignatedFile.cs`
+- `examples/Roslyn.DeMagic.PackageSmoke/Samples/DM001/DesignatedFileCompliantConst.cs`
+- `examples/Roslyn.DeMagic.PackageSmoke/Samples/DM001/SuppressedConst.cs`
+- `examples/Roslyn.DeMagic.PackageSmoke/Samples/DM002/ExactMatchConstField.cs`
+- `examples/Roslyn.DeMagic.PackageSmoke/Samples/DM002/PrefixMethodArgument.cs`
+- `examples/Roslyn.DeMagic.PackageSmoke/Samples/DM002/SuffixComparison.cs`
+- `examples/Roslyn.DeMagic.PackageSmoke/Samples/DM002/SubstringReturnValue.cs`
+- `examples/Roslyn.DeMagic.PackageSmoke/Samples/DM002/AttributeArgument.cs`
+- `examples/Roslyn.DeMagic.PackageSmoke/Samples/DM002/CompliantLiteral.cs`
+- `examples/Roslyn.DeMagic.PackageSmoke/Samples/DM002/SuppressedLiteral.cs`
 - `eng/validate-roslyn-demagic-package.sh`
 - `eng/validate-roslyn-demagic-package.ps1`
+- `eng/roslyn-demagic-package-expected-diagnostics.json`
 
 ## Important Interfaces, Records/Structs, And Enums
 
 - immutable payload types:
-  sample projects, local-feed package references, expected-diagnostic fixtures
+  `ExpectedPackageDiagnostic`, `PackageValidationManifest`,
+  `PackageValidationResult`
+- enums:
+  `PackageValidationSampleKind`
 
 ## Required Work
 
@@ -47,8 +60,12 @@ target: integration/phase-A
 - add example source files that intentionally trigger every analyzer rule
 - add compliant and suppression examples so the package consumer can verify both
   diagnostic presence and absence
+- add `eng/roslyn-demagic-package-expected-diagnostics.json` so the validation
+  scripts compare build output to a structured expected-diagnostics manifest
 - provide cross-platform validation scripts that pack, restore, build, and
   assert expected diagnostics from the consumer project
+- define `PackageValidationSampleKind` so each example file is tagged as:
+  positive, negative, suppression, or config-behavior
 
 ## Acceptance Criteria
 
@@ -56,6 +73,8 @@ target: integration/phase-A
 - the example project emits expected diagnostics for `DM001` and `DM002`
 - compliant and suppressed samples behave as expected when the package is
   consumed normally
+- the expected diagnostics are asserted from a structured manifest rather than
+  by manual console inspection
 - package-consumer validation does not rely on in-repo project references or
   special test-only analyzer wiring
 
