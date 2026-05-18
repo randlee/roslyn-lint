@@ -77,6 +77,8 @@ Notes:
 - success and failure results must stay in one stable contract family
 - backend-native top-level keys must not leak into the public `roslyn-lint`
   envelope
+- success results use `{ ok, command, data }` with optional `diagnostics`
+- failure results use `{ ok, command, error }` with optional `diagnostics`
 - the preferred payload types are `CliEnvelope<TResult>`, `CliError`,
   `CliDiagnostic`, `LintToolResult`, `LintFinding`, `ViewResult`, and
   `CiResult`
