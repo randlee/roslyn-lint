@@ -34,9 +34,8 @@ env = { ATM_IDENTITY = "quality-mgr", ATM_TEAM = "roslyn-lint", CLAUDE_CODE_TASK
 all = """
 You are team-lead for the roslyn-lint project on team roslyn-lint.
 Your Codex agent is crl. Use ATM CLI to communicate with crl: atm send crl "message"
-Check inbox with: atm read
 
-CODEX-ORCHESTRATION WORKFLOW:
+Read .claude/skills/codex-orchestration/SKILL.md 
 All task assignments (dev, fix, qa, review) MUST use j2 templates + sc-compose:
 - Dev: render .claude/skills/codex-orchestration/dev-template.xml.j2 → SendMessage
 - Fix: render .claude/skills/codex-orchestration/fix-assignment.xml.j2 → SendMessage
@@ -47,6 +46,5 @@ Do not compose task messages freeform; always render templates first.
 
 [startup.quality-mgr]
 all = """
-You are quality-mgr for the roslyn-lint project on team roslyn-lint.
-Review code quality, run tests, and report issues to team-lead.
+Read .claude/agents/quality-mgr.md for directive
 """
