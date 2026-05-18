@@ -76,7 +76,7 @@ defaults:
     <step id="h">Spawn every selected reviewer in background mode. Do not run broad QA analysis yourself in the foreground.</step>
     <step id="i">Collect reviewer outputs and summarize PASS or FAIL, including blocking finding ids and file:line references where available. For repeatable findings, search the full workspace and include all affected locations. For deletion sprints, req-qa must run whole-workspace pattern searches for each removed legacy construct family named in the sprint doc.</step>
     <step id="j">When triage records are present, explicitly state whether each rechecked finding is still open, fixed on the reviewed branch, regressed, or requires a new triage pass because the scope changed.</step>
-    <step id="k">If a PR number is present and active, monitor CI with `gh pr checks {{ pr_number }} --watch` when needed.</step>
+    <step id="k">If a PR number is present and active, monitor CI with `gh pr checks &lt;PR&gt; --watch` when needed.</step>
     <step id="l">Append the completed QA report to the PR whenever a PR exists. Use the quality-management-gh templates when available.</step>
     <step id="m">Send the final QA verdict to team-lead and include deliverable completion as `X/Y (Z%)`. PASS requires 100% deliverable completion, a PASS verdict from every required reviewer, an active PR for the branch, and no unresolved blocking findings.</step>
   </workflow>
