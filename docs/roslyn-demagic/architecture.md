@@ -16,6 +16,7 @@ Relevant ADRs:
 
 - `ADR-001`
 - `ADR-002`
+- `ADR-006`
 
 ## 2. Inputs and Outputs
 
@@ -71,6 +72,7 @@ The Phase A analyzer design expects these named types to exist in the
 implementation plan:
 
 - `IAdditionalFileConfigSelector`
+- `IDeMagicConfigLoader`
 - `ITomlConfigParser`
 - `IForbiddenPatternCompiler`
 - `DeMagicConfig`
@@ -81,6 +83,7 @@ implementation plan:
 - `CompiledForbiddenPattern`
 - `ConfiguredSeverity`
 - `ForbiddenPatternKind`
+- `ForbiddenPatternMatcher`
 
 Type guidance:
 
@@ -157,6 +160,30 @@ Tests should validate:
 - invalid-config fail-closed behavior
 - severity mapping
 - shipped and unshipped analyzer release metadata alignment
+- packaged-consumer behavior through a project that references the locally built
+  `Roslyn.DeMagic` NuGet package from a local feed
+- requirement-to-sample traceability for every approved rule and documented
+  corner case
+- a structured expected-diagnostics manifest that scripts can compare against
+  actual package-consumer build output
+- CI execution of the packaged-consumer validation path before GitHub Packages
+  publication is considered passing
+
+The package-validation support types used by that path are planned compiled
+types owned by `tests/Roslyn.DeMagic.Tests/PackageValidation/`:
+
+- `ExpectedPackageDiagnostic`
+- `PackageValidationManifest`
+- `PackageValidationResult`
+- `PackageValidationSampleKind`
+- `ProductionReadinessChecklistRow`
+
+The analyzer sample-corpus and traceability support types are planned compiled
+test-support types owned by `tests/Roslyn.DeMagic.Tests/Testing/`:
+
+- `ExpectedDiagnostic`
+- `RequirementTraceabilityRow`
+- `AnalyzerSampleKind`
 
 The test suite must be built around PRD behavior, not around preserving the
 current spike's literal-detection semantics.

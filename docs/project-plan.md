@@ -20,8 +20,13 @@ Phase A deliverables:
 - accepted repository ADRs for enforceable Phase A decisions
 - a sprinted Phase A plan
 - a PRD-aligned `Roslyn.DeMagic` v1 implementation
-- an AI-first CLI foundation with shared tool-module abstractions and working
-  machine-readable `version` and `view tools` commands
+- a CLI design baseline aligned with the repository's AI-first CLI rules
+- a production-ready analyzer validation path that covers every approved rule
+- a packaged-consumer example proving the built analyzer works through a local
+  feed
+- CI gates that validate the packaged-consumer path before merge
+- GitHub Packages publication for repo-produced packages, with the first
+  NuGet.org release remaining manual and documented
 
 ## 3. Project Inventory
 
@@ -64,12 +69,31 @@ Merge target:
 | A2 | `DM002` forbidden-pattern analyzer | Align forbidden-string analysis, config parsing, and analyzer validation with the PRD |
 | A3 | `DM002` hardening and release alignment | Remove remaining spike leftovers, align release metadata, and route analyzer seams through interfaces |
 | A4 | Packaging and CLI baseline correction | Finalize analyzer packaging gates and lock the CLI design baseline to AI-first contract rules |
-| A5 | CLI foundation and abstractions package | Replace the Spectre spike with the first working System.CommandLine host and shared tool-module abstractions |
+| A5 | CLI foundation and abstractions package | Replace the Spectre spike with the first working `System.CommandLine` host and shared tool-module abstractions |
 | A6 | DeMagic backend integration and first usable lint flow | Deliver `roslyn-lint lint demagic` and the first usable `lint fast` smoke path |
 | A7 | Profiles plus check, clippy, and ci workflows | Deliver reusable lint profiles and the first .NET-native `check`, `clippy`, and `ci` workflows |
 | A8 | View surfaces, boundary metadata, and tool-module hardening | Harden the multi-tool CLI surface and delegated backend seams |
+| A9 | `DM001` completion and rule parity | Implement the missing constant-consolidation analyzer behavior and close the rule gap |
+| A10 | Analyzer sample corpus and rule matrix | Add exhaustive analyzer samples and traceability for every rule and corner case |
+| A11 | Packaged consumer validation | Pack the analyzer and consume it from a normal project via a local feed |
+| A12 | Production-readiness convergence | Align package metadata, docs, sample validation, and readiness evidence to the shippable analyzer set |
+| A13 | CI publish and manual release handoff | Add CI package-consumer gates, GitHub Packages publication, and the documented manual NuGet.org first release path |
 
 Phase A must not treat the current CLI spike as an approved product contract.
+
+Phase A continuation after the initial CLI-baseline and analyzer-foundation
+sprints is:
+
+- `A9` closes the missing `DM001` implementation so the analyzer actually
+  matches the approved rule inventory.
+- `A10` adds the exhaustive analyzer sample corpus and requirement traceability
+  matrix.
+- `A11` validates the built analyzer as a locally packed package consumed from
+  a normal project.
+- `A12` converges docs, manifests, release metadata, and readiness evidence
+  onto one real shippable analyzer set.
+- `A13` adds CI enforcement for packaged-consumer validation and staged
+  publication, while keeping the first NuGet.org release manual.
 
 ### Phase A Implementation Inventory
 
@@ -82,11 +106,21 @@ these code paths:
 - `src/Roslyn.DeMagic/AnalyzerReleases.Shipped.md`
 - `src/Roslyn.DeMagic/AnalyzerReleases.Unshipped.md`
 - `src/Roslyn.DeMagic/Roslyn.DeMagic.csproj`
+- `examples/Roslyn.DeMagic.PackageSmoke/`
+- `eng/validate-roslyn-demagic-package.sh`
+- `eng/validate-roslyn-demagic-package.ps1`
+- `eng/roslyn-demagic-package-expected-diagnostics.json`
+- `tests/Roslyn.DeMagic.Tests/PackageValidation/`
+- `docs/phase-A/production-readiness-checklist.md`
+- `docs/releasing.md`
 - `tests/Roslyn.DeMagic.Tests/Analyzers/DM002ForbiddenStringLiteralAnalyzerTests.cs`
+- `tests/Roslyn.DeMagic.Tests/Analyzers/DM001ConstantConsolidationAnalyzerTests.cs`
+- `tests/Roslyn.DeMagic.Tests/TestData/DM001/`
+- `tests/Roslyn.DeMagic.Tests/TestData/DM002/`
+- `tests/Roslyn.DeMagic.Tests/TestData/README.md`
+- `tests/Roslyn.DeMagic.Tests/TestMatrix.md`
 - `src/Roslyn.Lint/Program.cs`
-- `src/Roslyn.Lint/Commands/LintCommand.cs`
 - `src/Roslyn.Lint/Roslyn.Lint.csproj`
-- `tests/Roslyn.Lint.Tests/Commands/LintCommandSettingsTests.cs`
 - `.github/workflows/ci.yml`
 - `.github/workflows/publish.yml`
 
@@ -126,19 +160,18 @@ Planned replacement-oriented CLI implementation units when CLI work resumes:
 - `src/Roslyn.Lint.Abstractions/Contracts/CliError.cs`
 - `src/Roslyn.Lint.Abstractions/Contracts/CliDiagnostic.cs`
 - `src/Roslyn.Lint.Abstractions/Contracts/CliErrorKind.cs`
-- `src/Roslyn.Lint.Abstractions/ILintWorkspaceAdapter.cs`
 - `src/Roslyn.Lint.Abstractions/Contracts/LintToolRequest.cs`
 - `src/Roslyn.Lint.Abstractions/Contracts/LintToolResult.cs`
 - `src/Roslyn.Lint.Abstractions/Contracts/LintFinding.cs`
-- `src/Roslyn.Lint/Contracts/ViewRequest.cs`
-- `src/Roslyn.Lint/Contracts/ViewResult.cs`
-- `src/Roslyn.Lint/Contracts/CheckRequest.cs`
-- `src/Roslyn.Lint/Contracts/CheckResult.cs`
-- `src/Roslyn.Lint/Contracts/ClippyRequest.cs`
-- `src/Roslyn.Lint/Contracts/ClippyResult.cs`
-- `src/Roslyn.Lint/Contracts/CiRequest.cs`
-- `src/Roslyn.Lint/Contracts/CiResult.cs`
-- `src/Roslyn.Lint/Contracts/VersionResult.cs`
+- `src/Roslyn.Lint.Abstractions/Contracts/ViewRequest.cs`
+- `src/Roslyn.Lint.Abstractions/Contracts/ViewResult.cs`
+- `src/Roslyn.Lint.Abstractions/Contracts/CheckRequest.cs`
+- `src/Roslyn.Lint.Abstractions/Contracts/CheckResult.cs`
+- `src/Roslyn.Lint.Abstractions/Contracts/ClippyRequest.cs`
+- `src/Roslyn.Lint.Abstractions/Contracts/ClippyResult.cs`
+- `src/Roslyn.Lint.Abstractions/Contracts/CiRequest.cs`
+- `src/Roslyn.Lint.Abstractions/Contracts/CiResult.cs`
+- `src/Roslyn.Lint.Abstractions/Contracts/VersionResult.cs`
 - `src/Roslyn.Lint/Dispatch/IBackendToolDispatcher.cs`
 - `src/Roslyn.Lint/Dispatch/IBackendProcessRunner.cs`
 - `src/Roslyn.Lint/Dispatch/BackendJsonNormalizer.cs`
@@ -153,12 +186,24 @@ Planned replacement-oriented CLI implementation units when CLI work resumes:
 - `tests/Roslyn.Lint.Tests/Contracts/`
 - `tests/Roslyn.Lint.Tests/Operations/`
 
+Planned package-validation support units:
+
+- `tests/Roslyn.DeMagic.Tests/PackageValidation/ExpectedPackageDiagnostic.cs`
+- `tests/Roslyn.DeMagic.Tests/PackageValidation/PackageValidationManifest.cs`
+- `tests/Roslyn.DeMagic.Tests/PackageValidation/PackageValidationResult.cs`
+- `tests/Roslyn.DeMagic.Tests/PackageValidation/PackageValidationSampleKind.cs`
+- `tests/Roslyn.DeMagic.Tests/PackageValidation/ProductionReadinessChecklistRow.cs`
+
 ## 5. Execution Rules
 
 - requirements and architecture documents are authoritative over the current
   spike implementation
 - analyzer-first work takes precedence over speculative CLI feature work until
   the analyzer baseline is approved
+- after A8, Phase A work returns to analyzer production-readiness and package
+  consumer validation before any further CLI scope is considered
+- GitHub Packages publication work remains analyzer-first support work and must
+  not displace unfinished analyzer rule, sample, or package-consumer gaps
 - future CLI implementation must inherit the contract rules defined in
   `docs/roslyn-lint/requirements.md` and `docs/roslyn-lint/architecture.md`
 - if spike code does not comply with approved requirements or architecture, the
@@ -180,6 +225,10 @@ Phase A planning is complete only when:
   current spike
 - analyzer packaging and validation expectations are explicit in the sprint
   plans
+- analyzer sample coverage and packaged-consumer validation are explicit in the
+  sprint plans
+- CI package-consumer validation and GitHub Packages publication expectations
+  are explicit in the sprint plans
 - the CLI baseline no longer treats the current implementation as an approved
   design
 - the execution rules explicitly prefer deleting and replacing noncompliant
