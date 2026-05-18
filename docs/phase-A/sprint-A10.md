@@ -69,6 +69,9 @@ target: integration/phase-A
   designated-file mismatch, designated-class mismatch, compliant constants,
   private/protected constants, local constants, suppression, missing config,
   and severity-from-config behavior
+- record the v1 `DM001` visibility boundary explicitly: `private`,
+  `protected`, `private protected`, and `protected internal` constants remain
+  out of scope
 - expand `DM002` samples so the PRD checklist is represented directly in test
   data, including suppression, missing config, invalid config, and
   severity-from-config behavior

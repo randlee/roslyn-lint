@@ -222,6 +222,7 @@ public sealed class DM001ConstantConsolidationAnalyzerTests
         [dm001]
         enabled = true
         severity = "warning"
+        // lowercase to verify case-insensitive file-name comparison
         designated_file = "designatedfilecompliantconst.cs"
         designated_class = "Constants"
         """;
