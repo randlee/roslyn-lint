@@ -45,6 +45,7 @@ target: integration/phase-A
 - `examples/Roslyn.DeMagic.PackageSmoke/Samples/DM002/AttributeArgument.cs`
 - `examples/Roslyn.DeMagic.PackageSmoke/Samples/DM002/CompliantLiteral.cs`
 - `examples/Roslyn.DeMagic.PackageSmoke/Samples/DM002/SuppressedLiteral.cs`
+- `examples/Roslyn.DeMagic.PackageSmoke/Samples/DM002/UnsuppressedLiteralControl.cs`
 - `eng/validate-roslyn-demagic-package.sh`
 - `eng/validate-roslyn-demagic-package.ps1`
 - `eng/roslyn-demagic-package-expected-diagnostics.json`
@@ -98,7 +99,7 @@ target: integration/phase-A
   consumed normally
 - the expected diagnostics are asserted from a structured manifest rather than
   by manual console inspection
-- package-smoke validation closes with 7 expected diagnostics present and 4
+- package-smoke validation closes with 9 expected diagnostics present and 4
   expected-clean files remaining clean
 - `tests/Roslyn.DeMagic.Tests/PermutationMatrix.md` contains one row for every
   supported analyzer permutation and no implicit coverage gaps remain

@@ -50,6 +50,12 @@
       "id": "DM002",
       "severity": "warning",
       "sampleKind": "positive"
+    },
+    {
+      "file": "Samples/DM002/UnsuppressedLiteralControl.cs",
+      "id": "DM002",
+      "severity": "warning",
+      "sampleKind": "positive"
     }
   ],
   "expectedCleanFiles": [

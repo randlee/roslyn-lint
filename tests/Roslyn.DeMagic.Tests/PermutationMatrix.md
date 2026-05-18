@@ -168,7 +168,7 @@ literal differs only by casing.
 | `DM002-009` | severity `warning` | warning diagnostic | `DM002/PrefixMethodArgument.cs` | `Samples/DM002/SeverityWarning.cs` | `planned` |
 | `DM002-010` | severity `error` | error diagnostic | `DM002/ExactMatchConstField.cs` | `Samples/DM002/SeverityError.cs` | `planned` |
 | `DM002-011` | `#pragma` suppression | no diagnostic | `DM002/SuppressedLiteral.cs` | `Samples/DM002/SuppressedLiteral.cs` | `covered` |
-| `DM002-012` | unsuppressed control for suppression sample | diagnostic | `DM002/SuppressedLiteral.cs` | `Samples/DM002/SuppressedLiteral.cs` | `covered` |
+| `DM002-012` | unsuppressed control for suppression sample | diagnostic | `DM002/SuppressedLiteral.cs` | `Samples/DM002/UnsuppressedLiteralControl.cs` | `covered` |
 
 ## Unsupported By Design In v1
 
