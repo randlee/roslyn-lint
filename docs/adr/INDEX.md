@@ -9,3 +9,4 @@ This index lists repository-wide ADRs in `docs/adr/`.
 - [ADR-003 — AI-First CLI JSON Contract And MCP-Ready DTO Boundary](./ADR-003-ai-cli-json-contract.md)
 - [ADR-004 — roslyn-lint Command Surface, Backend Delegation, And Parser Baseline](./ADR-004-roslyn-lint-command-surface-and-parser.md)
 - [ADR-005 — roslyn-lint Abstractions Package And Standard .NET Suppression Preference](./ADR-005-roslyn-lint-abstractions-package.md)
+- [ADR-006 — Packaged Analyzer Validation And Staged Publication Policy](./ADR-006-packaged-analyzer-validation-and-staged-publication.md)

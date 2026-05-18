@@ -81,8 +81,8 @@ internal sealed class DotnetCommandRunner : IDotnetCommandRunner
             using var process = Process.Start(startInfo)
                 ?? throw new InvalidOperationException("Failed to start the dotnet process.");
 
-            var outputTask = process.StandardOutput.ReadToEndAsync();
-            var errorTask = process.StandardError.ReadToEndAsync();
+            var outputTask = process.StandardOutput.ReadToEndAsync(cancellationToken);
+            var errorTask = process.StandardError.ReadToEndAsync(cancellationToken);
 
             try
             {

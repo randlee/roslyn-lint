@@ -1,0 +1,16 @@
+[dm001]
+enabled = true
+severity = "warning"
+designated_file = "DesignatedFileCompliantConst.cs"
+designated_class = "Constants"
+
+[dm002]
+enabled = true
+severity = "warning"
+forbidden = [
+  "atm",
+  "atm*",
+  "*atm",
+  "*atm*"
+]
+case_sensitive = false

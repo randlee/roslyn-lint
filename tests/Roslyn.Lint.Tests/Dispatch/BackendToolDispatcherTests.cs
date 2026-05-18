@@ -42,6 +42,8 @@ public sealed class BackendToolDispatcherTests
             ["lint"],
             ["lint.demagic"]);
 
+        public IReadOnlyList<ToolRuleDescriptor> Rules { get; } = [];
+
         public bool TryResolveCommandHandler<TRequest, TResponse>(out ILintToolCommandHandler<TRequest, TResponse>? resolvedHandler)
         {
             if (typeof(TRequest) == typeof(LintToolRequest) && typeof(TResponse) == typeof(LintToolResult))
