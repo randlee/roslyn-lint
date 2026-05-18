@@ -42,6 +42,10 @@ Before starting a sprint:
 ## Sprint Flow
 
 1. `team-lead` assigns development to `crl` using `dev-template.xml.j2`.
+   Every dev assignment must include the sprint-plan document path as
+   `sprint_doc`, and that sprint document is the authoritative source for the
+   task. Assignment prose may summarize, but it must not replace or weaken the
+   sprint doc.
 2. `crl` ACKs, implements, commits, pushes, and reports branch plus SHA.
 3. Before QA-1, `crl` performs a self-directed hygiene sweep on the sprint
    branch using the same `review_targets` planned for QA-1 and fixes obvious
@@ -49,6 +53,12 @@ Before starting a sprint:
    developer cleanup step, not a QA surprise.
 4. `team-lead` opens or updates the PR.
 5. `team-lead` assigns QA to `quality-mgr` using `qa-template.xml.j2`.
+   Every QA assignment must include `sprint_doc`, and `quality-mgr` must treat
+   that sprint document as the authoritative QA scope source.
+   Every QA assignment must also list task deliverables and acceptance criteria.
+   If the task omits deliverables, `quality-mgr` must immediately report the
+   assignment as incomplete to `team-lead`, continue the review against
+   `sprint_doc`, and return a blocking FAIL verdict.
 6. `quality-mgr` launches the reviewer set:
    - `req-qa`
    - `arch-qa`
@@ -57,7 +67,26 @@ Before starting a sprint:
 8. If QA fails, `team-lead` triages the findings across worktrees and
    determines the promoted fix branch.
 9. After triage completes, `team-lead` routes concrete fixes back to `crl`
-   using `fix-assignment.xml.j2`.
+   using `fix-assignment.xml.j2`. Fix assignments must also include
+   `sprint_doc`, and the sprint document remains authoritative if the task
+   summary omits or compresses details.
+
+## QA Coverage Rule
+
+- `quality-mgr` must extract every deliverable, acceptance criterion, deletion
+  target, required validation item, and expected artifact from `sprint_doc`
+  before launching `req-qa`
+- `quality-mgr` must reject non-XML QA assignments from `team-lead`; no
+  free-form QA task is valid
+- `req-qa` must independently treat `sprint_doc` as authoritative and must not
+  assume the hand-authored deliverables list is exhaustive
+- `req-qa` must count deliverable completion and report a completion percentage
+- `arch-qa` must inspect task-listed structural gate artifacts directly when a
+  deliverable points to a boundary, packaging, release-tracking, or validation
+  gate
+- a QA assignment that lists 8 of 12 sprint-doc deliverables is incomplete;
+  the 4 omitted items must still be reviewed
+- QA cannot PASS unless deliverable completion is 100%
 
 ## Phase-End Review
 

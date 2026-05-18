@@ -43,6 +43,7 @@ The task must end with two required hardening passes:
 Together they must produce:
 - complete/consistent planning docs
 - a hardened sprint doc for every sprint still required to finish the phase
+- an explicit detailed deliverables list in every hardened sprint doc
 - no unassigned in-scope implementation work
 - no overloaded sprint whose deliverables cannot all land at a production-ready
   level
@@ -81,6 +82,8 @@ sprints are needed, hardening must create them.
    - every remaining work item is assigned to a sprint
    - missing sprint docs were created if needed
    - every committed deliverable is assigned to exactly one sprint
+   - every sprint doc has an explicit, detailed deliverables list rather than
+     umbrella bullets or thematic placeholders
    - if any sprint was overloaded or had production-ready risk, it was split
    - important interfaces/features/enums/boundaries have explicit code samples
    - branch was pushed and validation reported
@@ -97,6 +100,8 @@ sprints are needed, hardening must create them.
    - read the updated phase plan and every new or changed sprint doc
    - review sprint deliverables for concrete ownership, production-ready scope,
      and execution clarity
+   - review that each sprint deliverables section is an explicit detailed list
+     of individually verifiable items, not a broad category label
    - review acceptance criteria for explicit, testable closeout gates
    - review whether any sprint still appears overloaded and should be split
    - review whether any important interface/feature/enum is still promised
@@ -131,6 +136,8 @@ critical review focused on whether:
 - every committed deliverable is expected to land at a production-ready level
 - any sprint still has too many deliverables and should be split now
 - sprint deliverables are concrete enough that a dev agent can prove presence
+- every sprint doc uses an explicit detailed deliverables list rather than
+  umbrella bullets that hide multiple implementation outcomes
 - acceptance criteria are explicit enough that `quality-mgr` can verify them
 - important interfaces/features/enums/boundaries have explicit code samples or
   signatures
