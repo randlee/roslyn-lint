@@ -26,6 +26,7 @@ target: integration/phase-A
 
 - `tests/Roslyn.DeMagic.Tests/Analyzers/DM001ConstantConsolidationAnalyzerTests.cs`
 - `tests/Roslyn.DeMagic.Tests/Analyzers/DM002ForbiddenStringLiteralAnalyzerTests.cs`
+- `tests/Roslyn.DeMagic.Tests/Configuration/DeMagicConfigLoaderTests.cs`
 - `tests/Roslyn.DeMagic.Tests/TestData/DM001/PublicConstOutsideDesignatedFile.cs`
 - `tests/Roslyn.DeMagic.Tests/TestData/DM001/InternalConstOutsideDesignatedFile.cs`
 - `tests/Roslyn.DeMagic.Tests/TestData/DM001/DesignatedFileCompliantConst.cs`
@@ -68,6 +69,9 @@ target: integration/phase-A
   designated-file mismatch, designated-class mismatch, compliant constants,
   private/protected constants, local constants, suppression, missing config,
   and severity-from-config behavior
+- record the v1 `DM001` visibility boundary explicitly: `private`,
+  `protected`, `private protected`, and `protected internal` constants remain
+  out of scope
 - expand `DM002` samples so the PRD checklist is represented directly in test
   data, including suppression, missing config, invalid config, and
   severity-from-config behavior
@@ -83,12 +87,17 @@ target: integration/phase-A
 - define the compiled test-support types above under
   `tests/Roslyn.DeMagic.Tests/Testing/` so sample expectations and traceability
   rows have one explicit project home
+- add explicit config-loader coverage for source/test config routing, missing
+  config disablement, invalid-config error reporting, and config independence
+  without merging or inheritance between source and test config files
 
 ## Acceptance Criteria
 
 - every approved analyzer rule has positive, negative, and suppression samples
 - every config behavior promised by the PRD has at least one concrete automated
   sample
+- source/test config routing and no-merge independence are verified directly in
+  `DeMagicConfigLoaderTests`
 - `DM001` and `DM002` PRD checklists are traceable to concrete automated tests
 - the sample corpus is readable as documentation for production testing
 - `TestMatrix.md` is sufficient for a reviewer to verify coverage without

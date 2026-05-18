@@ -21,9 +21,9 @@ automated samples and tests.
 | `REQ-DM002-005` | `DM002` | `DM002/InterpolatedHole.cs`, `DM002/CommentsAndDocumentationIgnored.cs` | `NegativeAndConfigSamples_DoNotReport` | corner-case |
 | `REQ-DM002-006` | `DM002` | `DM002/SuppressedLiteral.cs` | `PragmaSuppression_Works` | suppression |
 | `REQ-DM-CONFIG-002` | config | `.roslyn-lint/config-src.toml` | `TryLoad_ConfigSrcToml_ParsesExpectedSettings` | config |
-| `REQ-DM-CONFIG-003` | config | `.roslyn-lint/config-test.toml` | `TryLoad_CaseSensitiveTrue_ParsesExpectedSettings` | config |
-| `REQ-DM-CONFIG-005` | `DM001`, `DM002` | `DM001/MissingConfigNoDiagnostics.cs`, `DM002/MissingConfigNoDiagnostics.cs` | `NegativeAndConfigSamples_DoNotReport` | config-failure |
-| `REQ-DM-CONFIG-008` | `DM001`, `DM002` | `DM001/PublicConstOutsideDesignatedFile.cs`, `DM002/InvalidConfigNoDiagnostics.cs` | `NegativeAndConfigSamples_DoNotReport` | config-failure |
+| `REQ-DM-CONFIG-003` | config | `.roslyn-lint/config-test.toml` | `TryLoad_ConfigTestToml_WinsAndDoesNotMergeSourceConfig`, `TryLoad_CaseSensitiveTrue_ParsesExpectedSettings` | config |
+| `REQ-DM-CONFIG-005` | `DM001`, `DM002` | `DM001/MissingConfigNoDiagnostics.cs`, `DM002/MissingConfigNoDiagnostics.cs` | `NegativeAndConfigSamples_DoNotReport`, `TryLoad_NoConfigFiles_ReturnsDisabledConfig` | config-failure |
+| `REQ-DM-CONFIG-008` | `DM001`, `DM002` | `DM001/PublicConstOutsideDesignatedFile.cs`, `DM002/InvalidConfigNoDiagnostics.cs`, `.roslyn-lint/config-test.toml` | `NegativeAndConfigSamples_DoNotReport`, `TryLoad_InvalidSeverity_ReturnsErrors` | config-failure |
 | `REQ-DM-DIAG-001` | `DM001`, `DM002` | `DM001/PublicConstOutsideDesignatedFile.cs`, `DM002/ExactMatchConstField.cs` | `PositiveSamples_ReportExpectedDiagnostics` | positive |
 | `REQ-DM-DIAG-002` | `DM001`, `DM002` | `DM001/PublicConstOutsideDesignatedFile.cs`, `DM002/ExactMatchConstField.cs` | `PositiveSamples_ReportExpectedDiagnostics` | positive |
 | `REQ-DM-DIAG-003` | `DM001`, `DM002` | `DM001/SeverityFromConfig.cs`, `DM002/SeverityFromConfig.cs` | `SeverityFromConfig_UsesConfiguredSeverity` | severity |
@@ -42,7 +42,7 @@ automated samples and tests.
 | --- | --- | --- |
 | Public `const` field outside designated file raises `DM001` | `DM001/PublicConstOutsideDesignatedFile.cs` | `PositiveSamples_ReportExpectedDiagnostics` |
 | Internal `const` field outside designated file raises `DM001` | `DM001/InternalConstOutsideDesignatedFile.cs` | `PositiveSamples_ReportExpectedDiagnostics` |
-| Private `const` field does not raise `DM001` | `DM001/PrivateProtectedIgnored.cs` | `NegativeAndConfigSamples_DoNotReport` |
+| Non-public-or-internal `const` visibilities stay out of scope in v1, including `private`, `protected`, `private protected`, and `protected internal` | `DM001/PrivateProtectedIgnored.cs` | `NegativeAndConfigSamples_DoNotReport` |
 | Local `const` inside a method body does not raise `DM001` | `DM001/LocalConstIgnored.cs` | `NegativeAndConfigSamples_DoNotReport` |
 | `const` in the designated file does not raise `DM001` | `DM001/DesignatedFileCompliantConst.cs` | `NegativeAndConfigSamples_DoNotReport` |
 | Rule is suppressible via `#pragma warning disable DM001` | `DM001/SuppressedConst.cs` | `PragmaSuppression_Works` |
@@ -70,9 +70,10 @@ automated samples and tests.
 | PRD checklist item | Sample(s) | Owning test method |
 | --- | --- | --- |
 | `config-src.toml` is loaded for non-test projects | `.roslyn-lint/config-src.toml` | `TryLoad_ConfigSrcToml_ParsesExpectedSettings` |
-| `config-test.toml` is loaded for test projects | `.roslyn-lint/config-test.toml` | `TryLoad_CaseSensitiveTrue_ParsesExpectedSettings` |
-| Missing config file disables all rules gracefully | `DM001/MissingConfigNoDiagnostics.cs`, `DM002/MissingConfigNoDiagnostics.cs` | `NegativeAndConfigSamples_DoNotReport` |
+| `config-test.toml` is loaded for test projects and remains fully independent from `config-src.toml` with no merging or inheritance | `.roslyn-lint/config-test.toml`, `.roslyn-lint/config-src.toml` | `TryLoad_ConfigTestToml_WinsAndDoesNotMergeSourceConfig` |
+| Missing config file disables all rules gracefully | `DM001/MissingConfigNoDiagnostics.cs`, `DM002/MissingConfigNoDiagnostics.cs` | `NegativeAndConfigSamples_DoNotReport`, `TryLoad_NoConfigFiles_ReturnsDisabledConfig` |
 | Malformed config disables the affected rule without crashing analysis | `DM001/PublicConstOutsideDesignatedFile.cs`, `DM002/InvalidConfigNoDiagnostics.cs` | `NegativeAndConfigSamples_DoNotReport` |
+| Malformed config emits loader errors instead of failing silently | `.roslyn-lint/config-test.toml` | `TryLoad_InvalidSeverity_ReturnsErrors` |
 
 ## A11 Foundation
 
