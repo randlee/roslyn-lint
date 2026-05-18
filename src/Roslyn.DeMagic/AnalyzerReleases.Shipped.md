@@ -7,3 +7,4 @@
 
 Rule ID | Category | Severity | Notes
 --------|----------|----------|-------
+DM001 | roslyn-lint.Organization | Warning | DM001ConstantConsolidationAnalyzer: Enforces designated-file consolidation for public and internal constants

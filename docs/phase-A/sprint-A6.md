@@ -101,6 +101,6 @@ target: integration/phase-A
 - `dotnet restore roslyn-lint.sln`
 - `dotnet build roslyn-lint.sln --configuration Release`
 - `dotnet test tests/Roslyn.Lint.Tests/Roslyn.Lint.Tests.csproj --configuration Release --verbosity normal`
-- `dotnet run --project src/Roslyn.Lint/Roslyn.Lint.csproj -- lint demagic --json`
-- `dotnet run --project src/Roslyn.Lint/Roslyn.Lint.csproj -- lint fast --json`
+- `dotnet run --framework net10.0 --project src/Roslyn.Lint/Roslyn.Lint.csproj -- lint demagic --json`
+- `dotnet run --framework net10.0 --project src/Roslyn.Lint/Roslyn.Lint.csproj -- lint fast --json`
 - `git diff --check`

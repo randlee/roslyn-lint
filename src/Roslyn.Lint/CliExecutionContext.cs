@@ -18,10 +18,11 @@ internal sealed class CliExecutionContext
         Option<bool> jsonOption,
         IReadOnlyList<ILintToolModule> toolModules,
         ILintToolOperation lintToolOperation,
+        IViewOperation viewOperation,
         ICheckOperation checkOperation,
         IClippyOperation clippyOperation,
         ICiOperation ciOperation,
-        BackendJsonNormalizer backendJsonNormalizer,
+        IBackendJsonNormalizer backendJsonNormalizer,
         IJsonEnvelopeWriter jsonEnvelopeWriter,
         string version)
     {
@@ -30,6 +31,7 @@ internal sealed class CliExecutionContext
         JsonOption = jsonOption;
         ToolModules = toolModules;
         LintToolOperation = lintToolOperation;
+        ViewOperation = viewOperation;
         CheckOperation = checkOperation;
         ClippyOperation = clippyOperation;
         CiOperation = ciOperation;
@@ -48,13 +50,15 @@ internal sealed class CliExecutionContext
 
     public ILintToolOperation LintToolOperation { get; }
 
+    public IViewOperation ViewOperation { get; }
+
     public ICheckOperation CheckOperation { get; }
 
     public IClippyOperation ClippyOperation { get; }
 
     public ICiOperation CiOperation { get; }
 
-    public BackendJsonNormalizer BackendJsonNormalizer { get; }
+    public IBackendJsonNormalizer BackendJsonNormalizer { get; }
 
     public IJsonEnvelopeWriter JsonEnvelopeWriter { get; }
 
