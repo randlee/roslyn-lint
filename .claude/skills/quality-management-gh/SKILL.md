@@ -27,6 +27,7 @@ Every QA update, both ATM and PR, must include:
 - sprint or task identifier
 - branch, commit, PR number
 - verdict (`PASS | FAIL | IN-FLIGHT`)
+- deliverable completion (`complete`, `total`, `percent`)
 - finding counts by severity (`blocking`, `important`, `minor`)
 - blocking ids with concise summaries
 - next required action plus owner
@@ -81,7 +82,7 @@ Template:
 Recommended flow:
 1. Gather findings from QA agents.
 2. Render markdown from the template with required variables.
-3. Post to the PR as a blocking review or status comment.
+3. Append the report to the PR as a blocking review or status comment.
 
 Suggested commands:
 - blocking review:
@@ -107,7 +108,7 @@ Template:
 Recommended flow:
 1. Confirm final QA pass and summarize validation scope.
 2. Render markdown from the template with required variables.
-3. Post as final closeout review or comment.
+3. Append as final closeout review or comment.
 
 Suggested command:
 - `sc-compose render --root .claude/skills/quality-management-gh --file quality-report.md.j2 --var-file <vars.json> | gh pr review <PR> --approve --body-file -`
@@ -121,6 +122,8 @@ Use the final template only for `PASS` closeout.
 - Fix-pass updates revise status and open findings.
 - Final pass posts `PASS` closeout with residual risk and readiness and should
   use `--approve`.
+- Do not keep QA results ATM-only when a PR exists; append every completed QA
+  update to the PR.
 - Rendered reports must include a fenced JSON block for machine parsing.
 
 ## ATM Coordination Protocol

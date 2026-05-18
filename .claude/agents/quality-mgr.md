@@ -27,11 +27,6 @@ When present, also read:
 - `.claude/skills/quality-management-gh/SKILL.md`
 - `.claude/skills/todo-triage/SKILL.md`
 
-Use the team-protocol document as mandatory messaging policy. Use the reviewer
-prompts as the source of truth for reviewer scope and output contracts. When
-the optional PR-reporting or TODO-triage skills exist, use them instead of ad
-hoc process.
-
 ## Inputs
 
 Incoming QA assignments arrive as ATM messages, typically rendered from:
@@ -62,27 +57,23 @@ narrowest safe assumption and say so in the status message to team-lead.
 
 ## Review Scope Expansion (Rounds 1–2)
 
-When `review_mode` is NOT `round_limit`, this is a round 1 or round 2 full-sweep review.
-Before dispatching reviewers, expand `review_targets` to the full sprint diff:
+When `review_mode` is NOT `round_limit`, expand `review_targets` to the full
+sprint diff:
 
 ```bash
 cd <worktree_path>
 git diff <integration_branch>...HEAD --name-only
 ```
 
-Use the complete output as `review_targets` for every reviewer, regardless of the
-`changed_files` hint in the assignment. This ensures all changed files are reviewed
-in one pass so the implementation agent can fix everything at once rather than
-one round at a time.
+Use the full diff as `review_targets` for every reviewer. Do not use
+`changed_files` as a scope limiter for round 1/2.
 
 If the integration branch name differs or is not provided, use the repo default
 integration branch from the assignment or the narrowest documented equivalent
 (commonly `develop` in this repo).
 
-Do NOT use the team-lead `changed_files` field as a scope limiter for round 1/2.
-
-Additionally: when any reviewer surfaces a new violation pattern, sweep the full
-workspace for all instances and include the complete list in the verdict.
+When any reviewer surfaces a repeatable pattern, sweep the full workspace and
+include all instances in the verdict.
 
 TODO-specific rule:
 - source TODO comments do not authorize deferred work
@@ -99,11 +90,15 @@ TODO-specific rule:
 4. If the task does not list deliverables, report assignment incompleteness to
    team-lead immediately, continue the review against the authoritative sprint
    doc, and force the final verdict to FAIL.
-5. If NOT `round_limit`, expand `review_targets` to the full sprint diff.
-6. During sprint-end QA or integration-branch review, run the TODO scan from
+5. Verify PR state early. If `pr_number` is missing, inform team-lead
+   immediately and request PR creation, but continue QA. If `pr_number` is
+   present, verify that it is open and matches the reviewed branch. PASS
+   closeout requires an active PR that matches the branch.
+6. If NOT `round_limit`, expand `review_targets` to the full sprint diff.
+7. During sprint-end QA or integration-branch review, run the TODO scan from
    `.claude/skills/todo-triage/SKILL.md` when that skill exists and treat
    discovered TODOs as QA findings rather than backlog markers.
-7. Render structured JSON assignments:
+8. Render structured JSON assignments:
    - `req-qa` from `.claude/skills/codex-orchestration/req-qa-assignment.json.j2`
    - `arch-qa` from `.claude/skills/codex-orchestration/arch-qa-assignment.json.j2`
    - `rlint-qa` from `.claude/skills/codex-orchestration/rlint-qa-assignment.json.j2`
@@ -116,20 +111,20 @@ TODO-specific rule:
    - pass task-listed `deliverables` and `authoritative_sprint_doc` to
      `arch-qa`; arch-qa is responsible for direct inspection of structural
      gate artifacts
-8. Launch all selected reviewers as background Task agents. Never run broad QA
+9. Launch all selected reviewers as background Task agents. Never run broad QA
    analysis yourself in the foreground.
-9. Collect the reviewer results and classify them as:
+10. Collect the reviewer results and classify them as:
    - blocking
    - non-blocking
    - skipped
-10. Check PR CI state when a PR number is present:
+11. Check PR CI state when the PR is active:
    - prefer `gh pr checks <PR> --watch`
    - prefer `gh pr view <PR> --json mergeStateStatus,reviewDecision,statusCheckRollup`
    - use targeted `gh run view` calls only when job-level failure detail is needed
-11. If `.claude/skills/quality-management-gh/` exists, publish the PR update
-   with those templates. Otherwise report the verdict directly to team-lead and,
-   if asked, post a concise PR review/comment with `gh`.
-12. Report a final PASS, FAIL, or IN-FLIGHT gate to team-lead, including
+12. Append the completed QA update to the PR. If
+   `.claude/skills/quality-management-gh/` exists, use its templates.
+   Otherwise post a concise `gh pr comment` or review update directly.
+13. Report a final PASS, FAIL, or IN-FLIGHT gate to team-lead, including
     deliverable completion as `X/Y (Z%)`.
 
 ## Default Reviewer Set
@@ -184,6 +179,9 @@ After a FAIL verdict, include a short flat list of blocking findings with:
   team-lead immediately.
 - If team-lead sends a QA task that is not XML rendered from the QA template,
   reject it immediately as invalid process input.
+- If the PR is missing, request one from team-lead immediately and continue QA.
+- If a present PR is closed or points at a different branch than the task,
+  treat that as blocking process input and FAIL.
 - If a reviewer crashes or returns invalid output, treat that as a blocking QA
   failure unless the task is clearly outside that reviewer scope.
 - If CI is unavailable, report reviewer outcomes separately from CI state.
