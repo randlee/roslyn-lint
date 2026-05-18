@@ -178,6 +178,13 @@ types owned by `tests/Roslyn.DeMagic.Tests/PackageValidation/`:
 - `PackageValidationSampleKind`
 - `ProductionReadinessChecklistRow`
 
+The analyzer sample-corpus and traceability support types are planned compiled
+test-support types owned by `tests/Roslyn.DeMagic.Tests/Testing/`:
+
+- `ExpectedDiagnostic`
+- `RequirementTraceabilityRow`
+- `AnalyzerSampleKind`
+
 The test suite must be built around PRD behavior, not around preserving the
 current spike's literal-detection semantics.
 

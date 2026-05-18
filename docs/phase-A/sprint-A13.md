@@ -36,9 +36,6 @@ target: integration/phase-A
 - `docs/releasing.md`
 - `docs/roslyn-lint/requirements.md`
 - `docs/roslyn-lint/architecture.md`
-- `tests/Roslyn.DeMagic.Tests/PackageValidation/ExpectedPackageDiagnostic.cs`
-- `tests/Roslyn.DeMagic.Tests/PackageValidation/PackageValidationManifest.cs`
-- `tests/Roslyn.DeMagic.Tests/PackageValidation/PackageValidationResult.cs`
 
 ## Important Interfaces, Records/Structs, And Enums
 
@@ -50,9 +47,9 @@ target: integration/phase-A
 
 - add CI steps that pack `Roslyn.DeMagic`, restore the example consumer, and
   run the cross-platform package-validation scripts
-- decide and document the `Roslyn.Lint` packaging strategy before packing:
-  ship it as a .NET tool package with `PackAsTool`, a stable package id, and
-  the executable command name `roslyn-lint`
+- confirm and apply the documented `Roslyn.Lint` packaging strategy:
+  `PackAsTool`, command name `roslyn-lint`, per
+  `docs/roslyn-lint/architecture.md` Section 12 and `REQ-CLI-PACK-001`
 - configure GitHub Packages publication for `Roslyn.DeMagic`,
   `Roslyn.Lint`, and any package dependencies produced by this repo
 - ensure publication credentials and package-source assumptions live in CI and

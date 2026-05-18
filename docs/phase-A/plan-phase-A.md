@@ -136,6 +136,8 @@ introduced during the development sprints:
   `IForbiddenPatternCompiler`, `ForbiddenPattern`,
   `CompiledForbiddenPattern`, `ForbiddenPatternKind`,
   `ForbiddenPatternMatcher`
+- sample-corpus and traceability types:
+  `ExpectedDiagnostic`, `RequirementTraceabilityRow`, `AnalyzerSampleKind`
 - CLI contract and boundary types:
   `ILintToolModule`, `ILintToolCommandHandler<TRequest, TResponse>`,
   `IBackendToolDispatcher`, `IBackendProcessRunner`,
@@ -153,6 +155,10 @@ introduced during the development sprints:
 The package-validation types above are planned compiled validation-support
 types owned by `tests/Roslyn.DeMagic.Tests/PackageValidation/`. They are not
 analyzer runtime types and must not live in `Roslyn.DeMagic`.
+
+The sample-corpus and traceability types above are planned compiled
+test-support types owned by `tests/Roslyn.DeMagic.Tests/Testing/`. They are
+not analyzer runtime types and must not live in `Roslyn.DeMagic`.
 
 ## 8. Acceptance
 

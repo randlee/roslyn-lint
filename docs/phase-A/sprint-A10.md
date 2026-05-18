@@ -48,6 +48,9 @@ target: integration/phase-A
 - `tests/Roslyn.DeMagic.Tests/TestData/DM002/SeverityFromConfig.cs`
 - `tests/Roslyn.DeMagic.Tests/TestData/README.md`
 - `tests/Roslyn.DeMagic.Tests/TestMatrix.md`
+- `tests/Roslyn.DeMagic.Tests/Testing/ExpectedDiagnostic.cs`
+- `tests/Roslyn.DeMagic.Tests/Testing/RequirementTraceabilityRow.cs`
+- `tests/Roslyn.DeMagic.Tests/Testing/AnalyzerSampleKind.cs`
 
 ## Important Interfaces, Records/Structs, And Enums
 
@@ -74,6 +77,9 @@ target: integration/phase-A
   positive, negative, suppression, config-failure, severity, or corner-case
 - define `RequirementTraceabilityRow` so `TestMatrix.md` records:
   requirement id, rule id, sample file, owning test method, and validation mode
+- define the compiled test-support types above under
+  `tests/Roslyn.DeMagic.Tests/Testing/` so sample expectations and traceability
+  rows have one explicit project home
 
 ## Acceptance Criteria
 
