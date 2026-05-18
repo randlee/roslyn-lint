@@ -2,24 +2,54 @@ namespace Roslyn.Lint.Commands;
 
 using System.CommandLine;
 using Roslyn.Lint.Abstractions.Contracts;
+using Roslyn.Lint.Contracts;
+using Roslyn.Lint.Formatting;
 
 internal static class RegisterCiCommand
 {
     public static void AddTo(RootCommand rootCommand, CliExecutionContext context)
     {
-        var command = new Command("ci", "Run the planned CI workflow.");
+        var command = new Command("ci", "Run lint plus tests.");
+        var pathOption = new Option<string>("--path")
+        {
+            DefaultValueFactory = _ => ".",
+            Description = "Directory that contains the roslyn-lint solution.",
+        };
+        var configurationOption = new Option<string>("--configuration")
+        {
+            DefaultValueFactory = _ => "Release",
+            Description = "Build configuration to use.",
+        };
 
-        command.SetAction((parseResult, cancellationToken) =>
-            context.WriteFailureAsync(
-                "ci",
-                new CliError(
-                    CliErrorKind.Capability,
-                    "CLI.CAPABILITY_ERROR",
-                    "ci is planned for sprint A7.",
-                    new Dictionary<string, string?> { ["planned_sprint"] = "A7" },
-                    "Use the repo build and test commands directly until A7 lands."),
-                context.GetOutputMode(parseResult),
-                cancellationToken));
+        command.Options.Add(pathOption);
+        command.Options.Add(configurationOption);
+        command.SetAction(async (parseResult, cancellationToken) =>
+        {
+            var outputMode = context.GetOutputMode(parseResult);
+            var targetPath = Path.GetFullPath(parseResult.GetValue(pathOption) ?? ".");
+            var configuration = parseResult.GetValue(configurationOption) ?? "Release";
+
+            try
+            {
+                var result = await context.CiOperation.ExecuteAsync(
+                    new CiRequest(targetPath, configuration),
+                    cancellationToken);
+                return await context.WriteSuccessAsync(
+                    "ci",
+                    result,
+                    new CiHumanOutputFormatter(),
+                    outputMode,
+                    cancellationToken);
+            }
+            catch (Exception exception)
+            {
+                return await context.WriteFailureAsync(
+                    "ci",
+                    context.BackendJsonNormalizer.NormalizeWorkflowFailure("ci", exception),
+                    outputMode,
+                    cancellationToken);
+            }
+        });
 
         rootCommand.Subcommands.Add(command);
     }

@@ -4,6 +4,7 @@ using System.CommandLine;
 using Roslyn.DeMagic.Lint;
 using Roslyn.Lint.Abstractions;
 using Roslyn.Lint.Abstractions.Contracts;
+using Roslyn.Lint.Backends;
 using Roslyn.Lint.Commands;
 using Roslyn.Lint.Dispatch;
 using Roslyn.Lint.Operations;
@@ -13,16 +14,27 @@ public sealed class CliApplication
 {
     private readonly IReadOnlyList<ILintToolModule> toolModules;
     private readonly ILintToolOperation lintToolOperation;
+    private readonly ICheckOperation checkOperation;
+    private readonly IClippyOperation clippyOperation;
+    private readonly ICiOperation ciOperation;
     private readonly BackendJsonNormalizer backendJsonNormalizer;
     private readonly IJsonEnvelopeWriter jsonEnvelopeWriter;
 
     public CliApplication(
         IReadOnlyList<ILintToolModule>? toolModules = null,
-        IJsonEnvelopeWriter? jsonEnvelopeWriter = null)
+        IJsonEnvelopeWriter? jsonEnvelopeWriter = null,
+        ILintToolOperation? lintToolOperation = null,
+        ICheckOperation? checkOperation = null,
+        IClippyOperation? clippyOperation = null,
+        ICiOperation? ciOperation = null)
     {
         this.toolModules = toolModules ?? [new RoslynDeMagicToolModule()];
         var dispatcher = new BackendToolDispatcher(this.toolModules);
-        lintToolOperation = new RunLintToolOperation(dispatcher);
+        var dotnetCommandRunner = new DotnetCommandRunner();
+        this.lintToolOperation = lintToolOperation ?? new RunLintToolOperation(dispatcher);
+        this.checkOperation = checkOperation ?? new RunCheckOperation(dotnetCommandRunner);
+        this.clippyOperation = clippyOperation ?? new RunClippyOperation(dotnetCommandRunner);
+        this.ciOperation = ciOperation ?? new RunCiOperation(this.lintToolOperation, dotnetCommandRunner);
         backendJsonNormalizer = new BackendJsonNormalizer();
         this.jsonEnvelopeWriter = jsonEnvelopeWriter ?? new JsonEnvelopeWriter();
     }
@@ -51,6 +63,9 @@ public sealed class CliApplication
             jsonOption,
             toolModules,
             lintToolOperation,
+            checkOperation,
+            clippyOperation,
+            ciOperation,
             backendJsonNormalizer,
             jsonEnvelopeWriter,
             typeof(CliApplication).Assembly.GetName().Version?.ToString() ?? "0.0.0");

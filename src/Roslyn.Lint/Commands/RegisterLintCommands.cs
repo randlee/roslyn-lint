@@ -3,7 +3,9 @@ namespace Roslyn.Lint.Commands;
 using System.CommandLine;
 using Roslyn.Lint.Abstractions;
 using Roslyn.Lint.Abstractions.Contracts;
+using Roslyn.Lint.CommandModel;
 using Roslyn.Lint.Formatting;
+using Roslyn.Lint.Operations;
 
 internal static class RegisterLintCommands
 {
@@ -21,9 +23,9 @@ internal static class RegisterLintCommands
                 cancellationToken));
 
         lintCommand.Subcommands.Add(CreateLintCommand("demagic", "lint.demagic", new ToolId("demagic"), context));
-        lintCommand.Subcommands.Add(CreateLintCommand("fast", "lint.fast", new ToolId("demagic"), context));
-        lintCommand.Subcommands.Add(CreatePlaceholderCommand("full", "lint.full", "A7", context));
-        lintCommand.Subcommands.Add(CreatePlaceholderCommand("ci", "lint.ci", "A7", context));
+        lintCommand.Subcommands.Add(CreateProfileCommand("fast", LintProfile.Fast, context));
+        lintCommand.Subcommands.Add(CreateProfileCommand("full", LintProfile.Full, context));
+        lintCommand.Subcommands.Add(CreateProfileCommand("ci", LintProfile.Ci, context));
 
         rootCommand.Subcommands.Add(lintCommand);
     }
@@ -83,24 +85,61 @@ internal static class RegisterLintCommands
         return command;
     }
 
-    private static Command CreatePlaceholderCommand(
+    private static Command CreateProfileCommand(
         string name,
-        string commandId,
-        string sprint,
+        LintProfile profile,
         CliExecutionContext context)
     {
         var command = new Command(name);
-        command.SetAction((parseResult, cancellationToken) =>
-            context.WriteFailureAsync(
-                commandId,
-                new CliError(
-                    CliErrorKind.Capability,
-                    "CLI.CAPABILITY_ERROR",
-                    $"{commandId} is not implemented yet.",
-                    new Dictionary<string, string?> { ["planned_sprint"] = sprint },
-                    "Follow the sprint plan for the next implementation milestone."),
-                context.GetOutputMode(parseResult),
-                cancellationToken));
+        var pathOption = new Option<string>("--path")
+        {
+            DefaultValueFactory = _ => ".",
+            Description = "Directory to lint.",
+        };
+        command.Options.Add(pathOption);
+
+        command.SetAction(async (parseResult, cancellationToken) =>
+        {
+            var outputMode = context.GetOutputMode(parseResult);
+            var rawPath = parseResult.GetValue(pathOption) ?? ".";
+            var targetPath = Path.GetFullPath(rawPath);
+
+            if (!Directory.Exists(targetPath) && !File.Exists(targetPath))
+            {
+                return await context.WriteFailureAsync(
+                    LintProfileCatalog.GetRequired(profile).CommandId,
+                    CreateUsageError(
+                        $"Path '{rawPath}' does not exist.",
+                        new Dictionary<string, string?> { ["path"] = rawPath }),
+                    outputMode,
+                    cancellationToken);
+            }
+
+            try
+            {
+                var result = await LintProfileRunner.ExecuteAsync(
+                    profile,
+                    targetPath,
+                    context.LintToolOperation,
+                    cancellationToken);
+                return await context.WriteSuccessAsync(
+                    LintProfileCatalog.GetRequired(profile).CommandId,
+                    result,
+                    new LintProfileHumanOutputFormatter(),
+                    outputMode,
+                    cancellationToken);
+            }
+            catch (Exception exception)
+            {
+                return await context.WriteFailureAsync(
+                    LintProfileCatalog.GetRequired(profile).CommandId,
+                    context.BackendJsonNormalizer.NormalizeWorkflowFailure(
+                        LintProfileCatalog.GetRequired(profile).CommandId,
+                        exception),
+                    outputMode,
+                    cancellationToken);
+            }
+        });
 
         return command;
     }

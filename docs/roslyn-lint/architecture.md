@@ -176,16 +176,21 @@ The approved CLI implementation shape is:
 - `src/Roslyn.Lint/Contracts/ClippyResult.cs`
 - `src/Roslyn.Lint/Contracts/CiRequest.cs`
 - `src/Roslyn.Lint/Contracts/CiResult.cs`
+- `src/Roslyn.Lint/Contracts/LintProfileResult.cs`
+- `src/Roslyn.Lint/Contracts/WorkflowStepResult.cs`
 - `src/Roslyn.Lint/Contracts/VersionResult.cs`
+- `src/Roslyn.Lint/CommandModel/LintProfileCatalog.cs`
 - `src/Roslyn.Lint/Dispatch/BackendToolDescriptor.cs`
 - `src/Roslyn.Lint/Dispatch/IBackendToolDispatcher.cs`
 - `src/Roslyn.Lint/Dispatch/IBackendProcessRunner.cs`
 - `src/Roslyn.Lint/Dispatch/BackendJsonNormalizer.cs`
+- `src/Roslyn.Lint/Backends/DotnetCommandRunner.cs`
 - `src/Roslyn.Lint/Operations/ILintToolOperation.cs`
 - `src/Roslyn.Lint/Operations/IViewOperation.cs`
 - `src/Roslyn.Lint/Operations/ICheckOperation.cs`
 - `src/Roslyn.Lint/Operations/IClippyOperation.cs`
 - `src/Roslyn.Lint/Operations/ICiOperation.cs`
+- `src/Roslyn.Lint/Operations/LintProfileRunner.cs`
 - `src/Roslyn.Lint/Serialization/IJsonEnvelopeWriter.cs`
 - `src/Roslyn.Lint/Serialization/RoslynLintJsonContext.cs`
 - `src/Roslyn.Lint/Formatting/IHumanOutputFormatter.cs`
@@ -201,14 +206,15 @@ The CLI baseline expects these named types to exist when implementation begins:
 - interfaces:
   `ILintToolModule`, `ILintToolCommandHandler<TRequest, TResponse>`,
   `ILintWorkspaceAdapter`, `IBackendToolDispatcher`, `IBackendProcessRunner`,
-  `ILintToolOperation`, `IViewOperation`, `ICheckOperation`,
+  `IDotnetCommandRunner`, `ILintToolOperation`, `IViewOperation`, `ICheckOperation`,
   `IClippyOperation`, `ICiOperation`, `IJsonEnvelopeWriter`,
   `IHumanOutputFormatter<TResponse>`
 - records or immutable payload types:
   `ToolId`, `ToolDescriptor`, `CliEnvelope<TResult>`, `CliError`, `CliDiagnostic`,
   `BackendToolDescriptor`, `LintToolRequest`, `LintToolResult`,
-  `LintFinding`, `ViewRequest`, `ViewResult`, `CheckRequest`, `CheckResult`,
-  `ClippyRequest`, `ClippyResult`, `CiRequest`, `CiResult`, `VersionResult`
+  `LintFinding`, `LintProfileResult`, `WorkflowStepResult`, `ViewRequest`,
+  `ViewResult`, `CheckRequest`, `CheckResult`, `ClippyRequest`,
+  `ClippyResult`, `CiRequest`, `CiResult`, `VersionResult`
 - enums:
   `CommandFamily`, `LintProfile`, `OutputMode`, `BackendExecutionMode`,
   `CliErrorKind`
