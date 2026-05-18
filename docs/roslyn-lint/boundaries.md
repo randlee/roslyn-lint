@@ -134,3 +134,18 @@ Notes:
 - live and simulator implementations must sit behind the same contract
 - if no external integration exists yet, this remains a planned boundary
   rather than permission to couple future code directly into command handlers
+
+## ToolPackagingPolicy
+
+Purpose:
+
+- owns the approved shipping model for the `Roslyn.Lint` executable package
+
+Notes:
+
+- this boundary defines whether the CLI ships as a .NET tool package and what
+  command name and package metadata must stay stable
+- CI publication and manual-release docs must not invent a second packaging
+  model that contradicts the CLI requirements and architecture
+- the planned A13 baseline is a `PackAsTool` package with the executable name
+  `roslyn-lint`

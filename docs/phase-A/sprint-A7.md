@@ -26,12 +26,12 @@ target: integration/phase-A
 
 ## Exact Targets
 
-- `src/Roslyn.Lint/Contracts/CheckRequest.cs`
-- `src/Roslyn.Lint/Contracts/CheckResult.cs`
-- `src/Roslyn.Lint/Contracts/ClippyRequest.cs`
-- `src/Roslyn.Lint/Contracts/ClippyResult.cs`
-- `src/Roslyn.Lint/Contracts/CiRequest.cs`
-- `src/Roslyn.Lint/Contracts/CiResult.cs`
+- `src/Roslyn.Lint.Abstractions/Contracts/CheckRequest.cs`
+- `src/Roslyn.Lint.Abstractions/Contracts/CheckResult.cs`
+- `src/Roslyn.Lint.Abstractions/Contracts/ClippyRequest.cs`
+- `src/Roslyn.Lint.Abstractions/Contracts/ClippyResult.cs`
+- `src/Roslyn.Lint.Abstractions/Contracts/CiRequest.cs`
+- `src/Roslyn.Lint.Abstractions/Contracts/CiResult.cs`
 - `src/Roslyn.Lint/CommandModel/LintProfile.cs`
 - `src/Roslyn.Lint/Operations/ICheckOperation.cs`
 - `src/Roslyn.Lint/Operations/IClippyOperation.cs`

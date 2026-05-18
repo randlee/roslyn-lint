@@ -96,6 +96,8 @@ docs/
     ADR-002-demagic-additionalfiles-config.md
     ADR-003-ai-cli-json-contract.md
     ADR-004-roslyn-lint-command-surface-and-parser.md
+    ADR-005-roslyn-lint-abstractions-package.md
+    ADR-006-packaged-analyzer-validation-and-staged-publication.md
   prd/
     roslyn-demagic-prd.md
   phase-A/
@@ -108,6 +110,13 @@ docs/
     sprint-A6.md
     sprint-A7.md
     sprint-A8.md
+    sprint-A9.md
+    sprint-A10.md
+    sprint-A11.md
+    sprint-A12.md
+    sprint-A13.md
+    production-readiness-checklist.md
+  releasing.md
   roslyn-demagic/
     requirements.md
     architecture.md
@@ -124,6 +133,7 @@ Notes:
 - top-level docs remain the suite source of truth
 - project-level docs own project-specific boundaries and implementation detail
 - phase docs own sequencing and acceptance gates
+- release docs own package publication procedure and handoff rules
 - PRDs are input documents, not replacements for approved requirements and
   architecture
 

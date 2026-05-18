@@ -56,7 +56,7 @@ deliverables.
   `RegisterClippyCommands.cs`, `RegisterCiCommand.cs`,
   `RegisterVersionCommand.cs`
 - CLI contract files:
-  `src/Roslyn.Lint/Contracts/CliEnvelope.cs`,
+  `src/Roslyn.Lint.Abstractions/Contracts/CliEnvelope.cs`,
   `CliError.cs`, `CliDiagnostic.cs`, `CliErrorKind.cs`,
   `VersionResult.cs`, `ViewRequest.cs`, `ViewResult.cs`
 - CLI host support seams:

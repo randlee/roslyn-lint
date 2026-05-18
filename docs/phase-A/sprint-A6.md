@@ -31,9 +31,9 @@ target: integration/phase-A
 
 - `src/Roslyn.Lint.Abstractions/ILintToolModule.cs`
 - `src/Roslyn.Lint.Abstractions/ILintToolCommandHandler.cs`
-- `src/Roslyn.Lint/Contracts/LintToolRequest.cs`
-- `src/Roslyn.Lint/Contracts/LintToolResult.cs`
-- `src/Roslyn.Lint/Contracts/LintFinding.cs`
+- `src/Roslyn.Lint.Abstractions/Contracts/LintToolRequest.cs`
+- `src/Roslyn.Lint.Abstractions/Contracts/LintToolResult.cs`
+- `src/Roslyn.Lint.Abstractions/Contracts/LintFinding.cs`
 - `src/Roslyn.Lint/Dispatch/BackendToolDescriptor.cs`
 - `src/Roslyn.Lint/Dispatch/IBackendToolDispatcher.cs`
 - `src/Roslyn.Lint/Dispatch/BackendToolDispatcher.cs`

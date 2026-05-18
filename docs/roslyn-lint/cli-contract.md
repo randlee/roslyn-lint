@@ -181,7 +181,7 @@ before code lands:
 | `check` | `check` or `check.<target>` | compile or preflight runner | `usage`, `config`, `capability`, `backend_failure`, `backend_protocol`, `internal` |
 | `clippy` | `clippy` or `clippy.<target>` | lint-runner backend | `usage`, `config`, `capability`, `backend_failure`, `backend_protocol`, `internal` |
 | `ci` | `ci` | top-level orchestration layer | `usage`, `config`, `capability`, `backend_failure`, `backend_protocol`, `internal` |
-| `version` | `version` | top-level CLI crate | `usage`, `internal` |
+| `version` | `version` | top-level CLI executable | `usage`, `internal` |
 
 ## Backend-To-CLI Normalization
 

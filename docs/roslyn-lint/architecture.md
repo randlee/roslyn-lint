@@ -160,22 +160,22 @@ The approved CLI implementation shape is:
 - `src/Roslyn.Lint/CommandModel/LintProfile.cs`
 - `src/Roslyn.Lint/CommandModel/OutputMode.cs`
 - `src/Roslyn.Lint/CommandModel/BackendExecutionMode.cs`
-- `src/Roslyn.Lint/Contracts/CliEnvelope.cs`
-- `src/Roslyn.Lint/Contracts/CliError.cs`
-- `src/Roslyn.Lint/Contracts/CliDiagnostic.cs`
-- `src/Roslyn.Lint/Contracts/CliErrorKind.cs`
-- `src/Roslyn.Lint/Contracts/LintToolRequest.cs`
-- `src/Roslyn.Lint/Contracts/LintToolResult.cs`
-- `src/Roslyn.Lint/Contracts/LintFinding.cs`
-- `src/Roslyn.Lint/Contracts/ViewRequest.cs`
-- `src/Roslyn.Lint/Contracts/ViewResult.cs`
-- `src/Roslyn.Lint/Contracts/CheckRequest.cs`
-- `src/Roslyn.Lint/Contracts/CheckResult.cs`
-- `src/Roslyn.Lint/Contracts/ClippyRequest.cs`
-- `src/Roslyn.Lint/Contracts/ClippyResult.cs`
-- `src/Roslyn.Lint/Contracts/CiRequest.cs`
-- `src/Roslyn.Lint/Contracts/CiResult.cs`
-- `src/Roslyn.Lint/Contracts/VersionResult.cs`
+- `src/Roslyn.Lint.Abstractions/Contracts/CliEnvelope.cs`
+- `src/Roslyn.Lint.Abstractions/Contracts/CliError.cs`
+- `src/Roslyn.Lint.Abstractions/Contracts/CliDiagnostic.cs`
+- `src/Roslyn.Lint.Abstractions/Contracts/CliErrorKind.cs`
+- `src/Roslyn.Lint.Abstractions/Contracts/LintToolRequest.cs`
+- `src/Roslyn.Lint.Abstractions/Contracts/LintToolResult.cs`
+- `src/Roslyn.Lint.Abstractions/Contracts/LintFinding.cs`
+- `src/Roslyn.Lint.Abstractions/Contracts/ViewRequest.cs`
+- `src/Roslyn.Lint.Abstractions/Contracts/ViewResult.cs`
+- `src/Roslyn.Lint.Abstractions/Contracts/CheckRequest.cs`
+- `src/Roslyn.Lint.Abstractions/Contracts/CheckResult.cs`
+- `src/Roslyn.Lint.Abstractions/Contracts/ClippyRequest.cs`
+- `src/Roslyn.Lint.Abstractions/Contracts/ClippyResult.cs`
+- `src/Roslyn.Lint.Abstractions/Contracts/CiRequest.cs`
+- `src/Roslyn.Lint.Abstractions/Contracts/CiResult.cs`
+- `src/Roslyn.Lint.Abstractions/Contracts/VersionResult.cs`
 - `src/Roslyn.Lint/Dispatch/BackendToolDescriptor.cs`
 - `src/Roslyn.Lint/Dispatch/IBackendToolDispatcher.cs`
 - `src/Roslyn.Lint/Dispatch/IBackendProcessRunner.cs`
@@ -318,7 +318,20 @@ Target implementation guidance:
 - tests that assert DTO and serialized-field stability directly
 
 Parser-library choice is not open-ended in this baseline. The approved
-replacement line uses `System.CommandLine` per the local
-`creating-ai-clis` skill and `ADR-004`.
+parser and command-registration layer is `System.CommandLine`, and any future
+implementation proposal that deviates from it requires a new ADR.
+
+## 12. Packaging Baseline
+
+`Roslyn.Lint` is planned as a .NET tool package with a stable executable
+command name of `roslyn-lint`.
+
+Architectural rules:
+
+- tool packaging must be documented before A13 closes
+- package metadata, command name, and publication workflows must describe the
+  same shipping model
+- GitHub Packages publication may be automated in A13, but the first NuGet.org
+  release remains manual and documented
 
 Boundary ownership detail is defined in `docs/roslyn-lint/boundaries.md`.

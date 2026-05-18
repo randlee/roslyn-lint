@@ -1,7 +1,7 @@
 ---
 id: A8
 title: View surfaces, boundary metadata, and tool-module hardening
-status: planned
+status: in-progress
 branch: sprint/A8
 worktree: /Users/randlee/Documents/github/roslyn-lint-worktrees/sprint/A8
 target: integration/phase-A
@@ -27,8 +27,8 @@ target: integration/phase-A
 
 ## Exact Targets
 
-- `src/Roslyn.Lint/Contracts/ViewRequest.cs`
-- `src/Roslyn.Lint/Contracts/ViewResult.cs`
+- `src/Roslyn.Lint.Abstractions/Contracts/ViewRequest.cs`
+- `src/Roslyn.Lint.Abstractions/Contracts/ViewResult.cs`
 - `src/Roslyn.Lint/Operations/IViewOperation.cs`
 - `src/Roslyn.Lint/Operations/RunViewOperation.cs`
 - `src/Roslyn.Lint/Commands/RegisterViewCommands.cs`
