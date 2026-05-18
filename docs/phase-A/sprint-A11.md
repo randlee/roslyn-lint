@@ -1,7 +1,7 @@
 ---
 id: A11
 title: packaged consumer validation
-status: planned
+status: complete
 branch: sprint/A11
 worktree: /Users/randlee/Documents/github/roslyn-lint-worktrees/sprint/A11
 target: integration/phase-A
@@ -85,6 +85,8 @@ target: integration/phase-A
   consumed normally
 - the expected diagnostics are asserted from a structured manifest rather than
   by manual console inspection
+- package-smoke validation closes with 7 expected diagnostics present and 4
+  expected-clean files remaining clean
 - `tests/Roslyn.DeMagic.Tests/PermutationMatrix.md` contains one row for every
   supported analyzer permutation and no implicit coverage gaps remain
 - package-consumer validation does not rely on in-repo project references or
@@ -94,5 +96,6 @@ target: integration/phase-A
 
 - `dotnet restore roslyn-lint.sln`
 - `dotnet pack src/Roslyn.DeMagic/Roslyn.DeMagic.csproj --configuration Release -o artifacts/packages`
+- `dotnet test tests/Roslyn.DeMagic.Tests/Roslyn.DeMagic.Tests.csproj --configuration Release --verbosity normal`
 - `bash eng/validate-roslyn-demagic-package.sh`
 - `git diff --check`
