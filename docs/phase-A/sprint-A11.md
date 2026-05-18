@@ -25,6 +25,10 @@ target: integration/phase-A
 
 ## Exact Targets
 
+- `.github/workflows/ci.yml`
+- `src/Roslyn.DeMagic/AnalyzerReleases.Shipped.md`
+- `src/Roslyn.DeMagic/AnalyzerReleases.Unshipped.md`
+- `examples/Directory.Build.props`
 - `examples/Roslyn.DeMagic.PackageSmoke/NuGet.config`
 - `examples/Roslyn.DeMagic.PackageSmoke/Directory.Build.props`
 - `examples/Roslyn.DeMagic.PackageSmoke/Roslyn.DeMagic.PackageSmoke.csproj`
@@ -45,6 +49,7 @@ target: integration/phase-A
 - `eng/roslyn-demagic-package-expected-diagnostics.json`
 - `tests/Roslyn.DeMagic.Tests/PermutationMatrix.md`
 - `tests/Roslyn.DeMagic.Tests/PackageValidation/ExpectedPackageDiagnostic.cs`
+- `tests/Roslyn.DeMagic.Tests/PackageValidation/PackageValidationContractsTests.cs`
 - `tests/Roslyn.DeMagic.Tests/PackageValidation/PackageValidationManifest.cs`
 - `tests/Roslyn.DeMagic.Tests/PackageValidation/PackageValidationResult.cs`
 - `tests/Roslyn.DeMagic.Tests/PackageValidation/PackageValidationSampleKind.cs`
@@ -62,6 +67,9 @@ target: integration/phase-A
 - pack `Roslyn.DeMagic` from the repo build into a local package output
 - configure a local NuGet feed for the example consumer project
 - reference `Roslyn.DeMagic` by package reference, not by project reference
+- keep the package-smoke project on `.roslyn-lint/config-src.toml`; document
+  that `.roslyn-lint/config-test.toml` routing remains validated by
+  `DeMagicConfigLoaderTests` from A10 rather than by the A11 sample project
 - add example source files that intentionally trigger every analyzer rule
 - add compliant and suppression examples so the package consumer can verify both
   diagnostic presence and absence
@@ -74,6 +82,8 @@ target: integration/phase-A
   analyzer combination before package-smoke signoff
 - provide cross-platform validation scripts that pack, restore, build, and
   assert expected diagnostics from the consumer project
+- wire CI to pack the analyzer into `artifacts/packages` and run the package
+  validation scripts on both Unix and Windows runners
 - define `PackageValidationSampleKind` so each example file is tagged as:
   positive, negative, suppression, or config-behavior
 

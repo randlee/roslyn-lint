@@ -19,7 +19,7 @@ dotnet pack "$repo_root/src/Roslyn.DeMagic/Roslyn.DeMagic.csproj" \
 
 dotnet restore "$sample_project" --configfile "$nuget_config" --no-cache >/dev/null
 
-if ! dotnet build "$sample_project" --no-restore --nologo --verbosity minimal >"$build_log" 2>&1; then
+if ! dotnet build "$sample_project" --no-restore --nologo --verbosity minimal -t:Rebuild >"$build_log" 2>&1; then
   cat "$build_log"
   exit 1
 fi

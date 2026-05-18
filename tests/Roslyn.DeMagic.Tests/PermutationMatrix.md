@@ -65,11 +65,11 @@ Examples:
 
 | ID | Shape | Expected | Analyzer corpus fixture | Package smoke fixture | State |
 | --- | --- | --- | --- | --- | --- |
-| `DM001-009` | `private const` field outside designated file | no diagnostic | `DM001/PrivateProtectedIgnored.cs` | `Samples/DM001/PrivateIgnoredConst.cs` | `covered` |
-| `DM001-010` | `protected const` field outside designated file | no diagnostic | `DM001/PrivateProtectedIgnored.cs` | `Samples/DM001/ProtectedIgnoredConst.cs` | `covered` |
-| `DM001-011` | `private protected const` field outside designated file | no diagnostic | `DM001/PrivateProtectedIgnored.cs` | `Samples/DM001/PrivateProtectedIgnoredConst.cs` | `covered` |
-| `DM001-012` | `protected internal const` field outside designated file | no diagnostic | `DM001/PrivateProtectedIgnored.cs` | `Samples/DM001/ProtectedInternalIgnoredConst.cs` | `covered` |
-| `DM001-013` | local `const` inside a method body | no diagnostic | `DM001/LocalConstIgnored.cs` | `Samples/DM001/LocalConstIgnored.cs` | `covered` |
+| `DM001-009` | `private const` field outside designated file | no diagnostic | `DM001/PrivateProtectedIgnored.cs` | `Samples/DM001/PrivateIgnoredConst.cs` | `planned` |
+| `DM001-010` | `protected const` field outside designated file | no diagnostic | `DM001/PrivateProtectedIgnored.cs` | `Samples/DM001/ProtectedIgnoredConst.cs` | `planned` |
+| `DM001-011` | `private protected const` field outside designated file | no diagnostic | `DM001/PrivateProtectedIgnored.cs` | `Samples/DM001/PrivateProtectedIgnoredConst.cs` | `planned` |
+| `DM001-012` | `protected internal const` field outside designated file | no diagnostic | `DM001/PrivateProtectedIgnored.cs` | `Samples/DM001/ProtectedInternalIgnoredConst.cs` | `planned` |
+| `DM001-013` | local `const` inside a method body | no diagnostic | `DM001/LocalConstIgnored.cs` | `Samples/DM001/LocalConstIgnored.cs` | `planned` |
 
 ### Config, Severity, And Suppression
 
@@ -157,7 +157,7 @@ literal differs only by casing.
 
 | ID | Mode | Expected | Analyzer corpus fixture | Package smoke fixture | State |
 | --- | --- | --- | --- | --- | --- |
-| `DM002-001` | interpolated hole | no diagnostic | `DM002/InterpolatedHole.cs` | `Samples/DM002/InterpolatedHole.cs` | `covered` |
+| `DM002-001` | interpolated hole | no diagnostic | `DM002/InterpolatedHole.cs` | `Samples/DM002/InterpolatedHole.cs` | `planned` |
 | `DM002-002` | comments | no diagnostic | `DM002/CommentsAndDocumentationIgnored.cs` | `Samples/DM002/CommentsIgnored.cs` | `planned` |
 | `DM002-003` | XML documentation | no diagnostic | `DM002/CommentsAndDocumentationIgnored.cs` | `Samples/DM002/XmlDocumentationIgnored.cs` | `planned` |
 | `DM002-004` | missing config | no diagnostic | `DM002/MissingConfigNoDiagnostics.cs` | `Samples/DM002/MissingConfigNoDiagnostics.cs` | `planned` |
@@ -165,8 +165,8 @@ literal differs only by casing.
 | `DM002-006` | invalid severity | no diagnostic | `DM002/InvalidConfigNoDiagnostics.cs` | `Samples/DM002/InvalidSeverityNoDiagnostics.cs` | `planned` |
 | `DM002-007` | severity `hidden` | hidden diagnostic | `DM002/SeverityHidden.cs` | `Samples/DM002/SeverityHidden.cs` | `planned` |
 | `DM002-008` | severity `info` | info diagnostic | `DM002/SeverityFromConfig.cs` | `Samples/DM002/SeverityInfo.cs` | `planned` |
-| `DM002-009` | severity `warning` | warning diagnostic | `DM002/PrefixMethodArgument.cs` | `Samples/DM002/SeverityWarning.cs` | `covered` |
-| `DM002-010` | severity `error` | error diagnostic | `DM002/ExactMatchConstField.cs` | `Samples/DM002/SeverityError.cs` | `covered` |
+| `DM002-009` | severity `warning` | warning diagnostic | `DM002/PrefixMethodArgument.cs` | `Samples/DM002/SeverityWarning.cs` | `planned` |
+| `DM002-010` | severity `error` | error diagnostic | `DM002/ExactMatchConstField.cs` | `Samples/DM002/SeverityError.cs` | `planned` |
 | `DM002-011` | `#pragma` suppression | no diagnostic | `DM002/SuppressedLiteral.cs` | `Samples/DM002/SuppressedLiteral.cs` | `planned` |
 | `DM002-012` | unsuppressed control for suppression sample | diagnostic | `DM002/SuppressedLiteral.cs` | `Samples/DM002/SuppressedLiteral.cs` | `planned` |
 

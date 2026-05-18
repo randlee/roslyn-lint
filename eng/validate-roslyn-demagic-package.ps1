@@ -17,9 +17,18 @@ if (Test-Path $GlobalPackageDir) {
 dotnet pack (Join-Path $RepoRoot 'src/Roslyn.DeMagic/Roslyn.DeMagic.csproj') `
   --configuration Release `
   -o $ArtifactsDir | Out-Null
+if ($LASTEXITCODE -ne 0) {
+  exit $LASTEXITCODE
+}
 
 dotnet restore $SampleProject --configfile $NuGetConfig --no-cache | Out-Null
-dotnet build $SampleProject --no-restore --nologo --verbosity minimal *>&1 | Tee-Object -FilePath $BuildLog | Out-Null
+if ($LASTEXITCODE -ne 0) {
+  exit $LASTEXITCODE
+}
+dotnet build $SampleProject --no-restore --nologo --verbosity minimal -t:Rebuild *>&1 | Tee-Object -FilePath $BuildLog | Out-Null
+if ($LASTEXITCODE -ne 0) {
+  exit $LASTEXITCODE
+}
 
 $manifest = Get-Content $ManifestPath | ConvertFrom-Json
 $lines = Get-Content $BuildLog
