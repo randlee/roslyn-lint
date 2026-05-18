@@ -6,8 +6,6 @@ using Xunit;
 public sealed class LintPlaceholderCommandTests
 {
     [Theory]
-    [InlineData("demagic", "lint.demagic", "A6")]
-    [InlineData("fast", "lint.fast", "A6")]
     [InlineData("full", "lint.full", "A7")]
     [InlineData("ci", "lint.ci", "A7")]
     public async Task LintPlaceholder_WithJson_ReturnsTypedCapabilityEnvelope(

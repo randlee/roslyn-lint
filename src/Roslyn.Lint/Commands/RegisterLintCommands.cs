@@ -1,7 +1,10 @@
 namespace Roslyn.Lint.Commands;
 
 using System.CommandLine;
+using Roslyn.Lint.Abstractions;
 using Roslyn.Lint.Abstractions.Contracts;
+using Roslyn.Lint.Contracts;
+using Roslyn.Lint.Formatting;
 
 internal static class RegisterLintCommands
 {
@@ -18,12 +21,67 @@ internal static class RegisterLintCommands
                 context.GetOutputMode(parseResult),
                 cancellationToken));
 
-        lintCommand.Subcommands.Add(CreatePlaceholderCommand("demagic", "lint.demagic", "A6", context));
-        lintCommand.Subcommands.Add(CreatePlaceholderCommand("fast", "lint.fast", "A6", context));
+        lintCommand.Subcommands.Add(CreateLintCommand("demagic", "lint.demagic", new ToolId("demagic"), context));
+        lintCommand.Subcommands.Add(CreateLintCommand("fast", "lint.fast", new ToolId("demagic"), context));
         lintCommand.Subcommands.Add(CreatePlaceholderCommand("full", "lint.full", "A7", context));
         lintCommand.Subcommands.Add(CreatePlaceholderCommand("ci", "lint.ci", "A7", context));
 
         rootCommand.Subcommands.Add(lintCommand);
+    }
+
+    private static Command CreateLintCommand(
+        string name,
+        string commandId,
+        ToolId toolId,
+        CliExecutionContext context)
+    {
+        var command = new Command(name);
+        var pathOption = new Option<string>("--path")
+        {
+            DefaultValueFactory = _ => ".",
+            Description = "File or directory to lint.",
+        };
+        command.Options.Add(pathOption);
+        command.SetAction(async (parseResult, cancellationToken) =>
+        {
+            var outputMode = context.GetOutputMode(parseResult);
+            var rawPath = parseResult.GetValue(pathOption) ?? ".";
+            var targetPath = Path.GetFullPath(rawPath);
+
+            if (!Directory.Exists(targetPath) && !File.Exists(targetPath))
+            {
+                return await context.WriteFailureAsync(
+                    commandId,
+                    CreateUsageError(
+                        $"Path '{rawPath}' does not exist.",
+                        new Dictionary<string, string?> { ["path"] = rawPath }),
+                    outputMode,
+                    cancellationToken);
+            }
+
+            try
+            {
+                var result = await context.LintToolOperation.ExecuteAsync(
+                    new LintToolRequest(toolId, targetPath),
+                    cancellationToken);
+                return await context.WriteSuccessAsync(
+                    commandId,
+                    result,
+                    new LintToolHumanOutputFormatter(),
+                    outputMode,
+                    cancellationToken);
+            }
+            catch (Exception exception)
+            {
+                return await context.WriteFailureAsync(
+                    commandId,
+                    context.BackendJsonNormalizer.NormalizeLintFailure(toolId, exception),
+                    outputMode,
+                    cancellationToken);
+            }
+        });
+
+        return command;
     }
 
     private static Command CreatePlaceholderCommand(
