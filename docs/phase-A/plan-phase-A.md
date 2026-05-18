@@ -14,7 +14,7 @@ design line rather than assuming the current spike is valid.
 - project-level requirements and architecture for both products
 - project-level boundary inventories for both products
 - PRD-aligned `Roslyn.DeMagic` design and implementation plan
-- AI-first `roslyn-lint` CLI baseline
+- AI-first `roslyn-lint` CLI foundation
 - packaging and validation gates for the analyzer
 
 ## 3. Execution Branch
@@ -65,6 +65,10 @@ design line rather than assuming the current spike is valid.
 | A2 | `DM002` forbidden-pattern analyzer | Replace the generic string-literal spike with forbidden-pattern analysis and aligned release metadata |
 | A3 | `DM002` hardening and release alignment | Remove remaining spike leftovers, align release metadata, and route analyzer seams through injected interfaces |
 | A4 | Packaging and CLI baseline correction | Finalize analyzer package and release gates and define the replacement-oriented CLI baseline |
+| A5 | CLI foundation and abstractions package | Replace the Spectre spike with the first working System.CommandLine host and shared tool-module abstractions |
+| A6 | DeMagic backend integration and first usable lint flow | Deliver `roslyn-lint lint demagic` and the first usable `lint fast` smoke path |
+| A7 | Profiles plus check, clippy, and ci workflows | Deliver reusable lint profiles and the first .NET-native `check`, `clippy`, and `ci` workflows |
+| A8 | View surfaces, boundary metadata, and tool-module hardening | Harden the multi-tool CLI surface and delegated backend seams |
 
 ## 7. Implementation Strategy
 
@@ -77,6 +81,15 @@ design line rather than assuming the current spike is valid.
   matcher seams
 - A4 validates analyzer package outputs and leaves the CLI with a strict design
   baseline that future implementation must follow
+- A5 replaces the disposable Spectre host with the first working
+  `System.CommandLine` implementation, shared abstractions, and stable JSON
+  envelopes for `version` and `view tools`
+- A6 introduces the first real lint backend path and the initial `lint fast`
+  smoke-test profile
+- A7 adds reusable lint profiles plus `.NET`-native `check`, `clippy`, and
+  top-level `ci` workflows
+- A8 hardens the view/reporting surface and delegated backend seams for
+  additional suite tools
 - no sprint in Phase A should preserve current spike semantics merely because
   code already exists
 

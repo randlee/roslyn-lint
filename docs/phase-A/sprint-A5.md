@@ -1,7 +1,7 @@
 ---
 id: A5
 title: CLI foundation and abstractions package
-status: planned
+status: complete
 branch: sprint/A5
 worktree: /Users/randlee/Documents/github/roslyn-lint-worktrees/sprint/A5
 target: integration/phase-A

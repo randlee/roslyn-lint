@@ -20,7 +20,8 @@ Phase A deliverables:
 - accepted repository ADRs for enforceable Phase A decisions
 - a sprinted Phase A plan
 - a PRD-aligned `Roslyn.DeMagic` v1 implementation
-- a CLI design baseline aligned with the repository's AI-first CLI rules
+- an AI-first CLI foundation with shared tool-module abstractions and working
+  machine-readable `version` and `view tools` commands
 
 ## 3. Project Inventory
 
@@ -63,6 +64,10 @@ Merge target:
 | A2 | `DM002` forbidden-pattern analyzer | Align forbidden-string analysis, config parsing, and analyzer validation with the PRD |
 | A3 | `DM002` hardening and release alignment | Remove remaining spike leftovers, align release metadata, and route analyzer seams through interfaces |
 | A4 | Packaging and CLI baseline correction | Finalize analyzer packaging gates and lock the CLI design baseline to AI-first contract rules |
+| A5 | CLI foundation and abstractions package | Replace the Spectre spike with the first working System.CommandLine host and shared tool-module abstractions |
+| A6 | DeMagic backend integration and first usable lint flow | Deliver `roslyn-lint lint demagic` and the first usable `lint fast` smoke path |
+| A7 | Profiles plus check, clippy, and ci workflows | Deliver reusable lint profiles and the first .NET-native `check`, `clippy`, and `ci` workflows |
+| A8 | View surfaces, boundary metadata, and tool-module hardening | Harden the multi-tool CLI surface and delegated backend seams |
 
 Phase A must not treat the current CLI spike as an approved product contract.
 
