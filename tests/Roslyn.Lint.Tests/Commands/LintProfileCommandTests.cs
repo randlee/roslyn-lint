@@ -9,6 +9,22 @@ using Xunit;
 public sealed class LintProfileCommandTests
 {
     [Fact]
+    public async Task LintFast_WithJson_ReturnsProfileEnvelope()
+    {
+        var application = new CliApplication(
+            lintToolOperation: new StubLintToolOperation(
+                new LintToolResult("demagic", "/repo", "pass", 0, [])));
+
+        var result = await CliTestHost.InvokeAsync(application, "lint", "fast", "--json");
+
+        result.ExitCode.Should().Be(0);
+        var envelope = CliTestHost.ParseJsonObject(result.StdOut);
+        envelope["command"]!.GetValue<string>().Should().Be("lint.fast");
+        envelope["data"]!["profile"]!.GetValue<string>().Should().Be("fast");
+        envelope["data"]!["members"]!.AsArray().Should().ContainSingle(m => m!.GetValue<string>() == "demagic");
+    }
+
+    [Fact]
     public async Task LintFull_WithJson_ReturnsProfileEnvelope()
     {
         var application = new CliApplication(
@@ -21,7 +37,7 @@ public sealed class LintProfileCommandTests
         var envelope = CliTestHost.ParseJsonObject(result.StdOut);
         envelope["command"]!.GetValue<string>().Should().Be("lint.full");
         envelope["data"]!["profile"]!.GetValue<string>().Should().Be("full");
-        envelope["data"]!["members"]!.AsArray().Should().ContainSingle();
+        envelope["data"]!["members"]!.AsArray().Should().ContainSingle(m => m!.GetValue<string>() == "demagic");
     }
 
     [Fact]

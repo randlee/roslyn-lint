@@ -21,6 +21,18 @@ public sealed class RunCheckOperationTests
         runner.Invocations[0].Should().Contain("build");
     }
 
+    [Fact]
+    public async Task ExecuteAsync_WhenBuildFails_ThrowsDotnetCommandFailedException()
+    {
+        var runner = new StubRunner(new DotnetCommandResult("/repo", ["build"], 1, string.Empty, "boom"));
+        var operation = new RunCheckOperation(runner);
+
+        var act = () => operation.ExecuteAsync(new CheckRequest(GetRepoRoot(), "Release"), CancellationToken.None);
+
+        var exception = await act.Should().ThrowAsync<DotnetCommandFailedException>();
+        exception.Which.StepName.Should().Be("build");
+    }
+
     private static string GetRepoRoot()
         => Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, "..", "..", "..", "..", ".."));
 

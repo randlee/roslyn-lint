@@ -6,6 +6,12 @@ using Roslyn.Lint.Contracts;
 
 public sealed class RunCiOperation : ICiOperation
 {
+    private static readonly (string Name, string ProjectPath)[] TestProjects =
+    [
+        ("test-demagic", "tests/Roslyn.DeMagic.Tests/Roslyn.DeMagic.Tests.csproj"),
+        ("test-cli", "tests/Roslyn.Lint.Tests/Roslyn.Lint.Tests.csproj"),
+    ];
+
     private readonly ILintToolOperation lintToolOperation;
     private readonly IDotnetCommandRunner dotnetCommandRunner;
 
@@ -29,21 +35,28 @@ public sealed class RunCiOperation : ICiOperation
             throw new CiLintGateFailedException(lintResult);
         }
 
-        var testResult = await dotnetCommandRunner.RunAsync(
-            repoRoot,
-            [
-                "test",
-                "tests/Roslyn.Lint.Tests/Roslyn.Lint.Tests.csproj",
-                "--configuration",
-                request.Configuration,
-                "--verbosity",
-                "normal",
-            ],
-            cancellationToken);
+        var steps = new List<WorkflowStepResult>(TestProjects.Length);
 
-        if (!testResult.Succeeded)
+        foreach (var (name, projectPath) in TestProjects)
         {
-            throw new DotnetCommandFailedException("test", testResult);
+            var testResult = await dotnetCommandRunner.RunAsync(
+                repoRoot,
+                [
+                    "test",
+                    projectPath,
+                    "--configuration",
+                    request.Configuration,
+                    "--verbosity",
+                    "normal",
+                ],
+                cancellationToken);
+
+            if (!testResult.Succeeded)
+            {
+                throw new DotnetCommandFailedException("test", testResult);
+            }
+
+            steps.Add(new WorkflowStepResult(name, "dotnet", testResult.ArgumentsDisplay, testResult.ExitCode, "pass"));
         }
 
         return new CiResult(
@@ -51,6 +64,6 @@ public sealed class RunCiOperation : ICiOperation
             request.Configuration,
             "pass",
             lintResult,
-            [new WorkflowStepResult("test", "dotnet", testResult.ArgumentsDisplay, testResult.ExitCode, "pass")]);
+            steps);
     }
 }

@@ -244,7 +244,7 @@ Implemented profile membership table:
 | `lint fast` | `demagic` only smoke-test path | `demagic` |
 | `lint full` | not implemented | `demagic` |
 | `lint ci` | not implemented | `demagic` |
-| top-level `ci` | not implemented | `lint ci` plus `dotnet test tests/Roslyn.Lint.Tests/Roslyn.Lint.Tests.csproj --configuration Release --verbosity normal` |
+| top-level `ci` | not implemented | `lint ci` plus `dotnet test tests/Roslyn.DeMagic.Tests/Roslyn.DeMagic.Tests.csproj --configuration Release --verbosity normal` and `dotnet test tests/Roslyn.Lint.Tests/Roslyn.Lint.Tests.csproj --configuration Release --verbosity normal` |
 
 The distinction between `roslyn-lint lint ci` and top-level `roslyn-lint ci`
 is mandatory.
@@ -260,6 +260,7 @@ The first delivered `.NET` workflow commands are:
   - `dotnet format roslyn-lint.sln --verify-no-changes --no-restore`
 - top-level `ci`
   - `lint ci`
+  - `dotnet test tests/Roslyn.DeMagic.Tests/Roslyn.DeMagic.Tests.csproj --configuration Release --verbosity normal`
   - `dotnet test tests/Roslyn.Lint.Tests/Roslyn.Lint.Tests.csproj --configuration Release --verbosity normal`
 
 Workflow success payloads remain normalized under `data`; raw `dotnet`

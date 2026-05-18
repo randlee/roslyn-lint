@@ -22,6 +22,32 @@ public sealed class RunClippyOperationTests
         runner.Invocations.Should().HaveCount(2);
     }
 
+    [Fact]
+    public async Task ExecuteAsync_WhenBuildFails_ThrowsDotnetCommandFailedException()
+    {
+        var runner = new StubRunner(new DotnetCommandResult("/repo", ["build"], 1, string.Empty, "boom"));
+        var operation = new RunClippyOperation(runner);
+
+        var act = () => operation.ExecuteAsync(new ClippyRequest(GetRepoRoot(), "Release"), CancellationToken.None);
+
+        var exception = await act.Should().ThrowAsync<DotnetCommandFailedException>();
+        exception.Which.StepName.Should().Be("build");
+    }
+
+    [Fact]
+    public async Task ExecuteAsync_WhenFormatFails_ThrowsDotnetCommandFailedException()
+    {
+        var runner = new StubRunner(
+            new DotnetCommandResult("/repo", ["build"], 0, string.Empty, string.Empty),
+            new DotnetCommandResult("/repo", ["format"], 2, string.Empty, "boom"));
+        var operation = new RunClippyOperation(runner);
+
+        var act = () => operation.ExecuteAsync(new ClippyRequest(GetRepoRoot(), "Release"), CancellationToken.None);
+
+        var exception = await act.Should().ThrowAsync<DotnetCommandFailedException>();
+        exception.Which.StepName.Should().Be("format");
+    }
+
     private static string GetRepoRoot()
         => Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, "..", "..", "..", "..", ".."));
 

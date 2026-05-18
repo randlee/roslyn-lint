@@ -105,7 +105,7 @@ target: integration/phase-A
 | `lint fast` | `demagic` |
 | `lint full` | `demagic` |
 | `lint ci` | `demagic` |
-| top-level `ci` | `lint ci` plus `dotnet test tests/Roslyn.Lint.Tests/Roslyn.Lint.Tests.csproj --configuration Release --verbosity normal` |
+| top-level `ci` | `lint ci` plus `dotnet test tests/Roslyn.DeMagic.Tests/Roslyn.DeMagic.Tests.csproj --configuration Release --verbosity normal` and `dotnet test tests/Roslyn.Lint.Tests/Roslyn.Lint.Tests.csproj --configuration Release --verbosity normal` |
 
 ## Implemented Workflow Definitions
 
@@ -116,12 +116,15 @@ target: integration/phase-A
   followed by
   `dotnet format roslyn-lint.sln --verify-no-changes --no-restore`
 - top-level `ci` runs the `lint ci` profile first and then runs
+  `dotnet test tests/Roslyn.DeMagic.Tests/Roslyn.DeMagic.Tests.csproj --configuration Release --verbosity normal`
+  followed by
   `dotnet test tests/Roslyn.Lint.Tests/Roslyn.Lint.Tests.csproj --configuration Release --verbosity normal`
 
 ## Required Validation
 
 - `dotnet restore roslyn-lint.sln`
 - `dotnet build roslyn-lint.sln --configuration Release`
+- `dotnet test tests/Roslyn.DeMagic.Tests/Roslyn.DeMagic.Tests.csproj --configuration Release --verbosity normal`
 - `dotnet test tests/Roslyn.Lint.Tests/Roslyn.Lint.Tests.csproj --configuration Release --verbosity normal`
 - `dotnet run --framework net8.0 --project src/Roslyn.Lint/Roslyn.Lint.csproj -- lint fast --json`
 - `dotnet run --framework net8.0 --project src/Roslyn.Lint/Roslyn.Lint.csproj -- lint full --json`
