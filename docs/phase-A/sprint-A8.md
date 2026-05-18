@@ -85,6 +85,6 @@ target: integration/phase-A
 - `dotnet restore roslyn-lint.sln`
 - `dotnet build roslyn-lint.sln --configuration Release`
 - `dotnet test tests/Roslyn.Lint.Tests/Roslyn.Lint.Tests.csproj --configuration Release --verbosity normal`
-- `dotnet run --project src/Roslyn.Lint/Roslyn.Lint.csproj -- view tools --json`
-- `dotnet run --project src/Roslyn.Lint/Roslyn.Lint.csproj -- view rules --json`
+- `dotnet run --framework net10.0 --project src/Roslyn.Lint/Roslyn.Lint.csproj -- view tools --json`
+- `dotnet run --framework net10.0 --project src/Roslyn.Lint/Roslyn.Lint.csproj -- view rules --json`
 - `git diff --check`
