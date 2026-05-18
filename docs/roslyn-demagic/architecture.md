@@ -36,9 +36,9 @@ Architectural rules:
   config input
 - missing or invalid config must degrade predictably and not crash analysis
 
-## 3.1 Planned Implementation Units
+## 3.1 Delivered Phase A Implementation Units
 
-The preferred replacement-oriented implementation shape is:
+The delivered Phase A implementation shape is:
 
 - `Configuration/IAdditionalFileConfigSelector.cs` for selecting the applicable
   analyzer config payload from `AdditionalFiles`
@@ -66,10 +66,9 @@ The preferred replacement-oriented implementation shape is:
 The current `MagicNumberAnalyzer` file should be deleted if keeping it would
 preserve rejected semantics or misleading type names.
 
-## 3.2 Planned Interfaces, Records/Structs, and Enums
+## 3.2 Delivered Interfaces, Records/Structs, and Enums
 
-The Phase A analyzer design expects these named types to exist in the
-implementation plan:
+The delivered Phase A analyzer boundary uses these named types:
 
 - `IAdditionalFileConfigSelector`
 - `IDeMagicConfigLoader`
@@ -169,7 +168,7 @@ Tests should validate:
 - CI execution of the packaged-consumer validation path before GitHub Packages
   publication is considered passing
 
-The package-validation support types used by that path are planned compiled
+The package-validation support types used by that path are delivered compiled
 types owned by `tests/Roslyn.DeMagic.Tests/PackageValidation/`:
 
 - `ExpectedPackageDiagnostic`
@@ -178,8 +177,8 @@ types owned by `tests/Roslyn.DeMagic.Tests/PackageValidation/`:
 - `PackageValidationSampleKind`
 - `ProductionReadinessChecklistRow`
 
-The analyzer sample-corpus and traceability support types are planned compiled
-test-support types owned by `tests/Roslyn.DeMagic.Tests/Testing/`:
+The analyzer sample-corpus and traceability support types are delivered
+compiled test-support types owned by `tests/Roslyn.DeMagic.Tests/Testing/`:
 
 - `ExpectedDiagnostic`
 - `RequirementTraceabilityRow`
@@ -190,3 +189,21 @@ current spike's literal-detection semantics.
 
 If the current spike structure blocks compliance with this architecture,
 deletion and clean replacement is preferred over preserving the spike.
+
+## 7. Phase A Delivery State
+
+The shippable Phase A analyzer set is:
+
+- `DM001` constant consolidation
+- `DM002` forbidden string literals
+
+The production-testing contract for that set is:
+
+- release metadata and `AnalyzerReleases.*` describe only those two rules
+- `tests/Roslyn.DeMagic.Tests/TestMatrix.md` provides requirement traceability
+- `tests/Roslyn.DeMagic.Tests/PermutationMatrix.md` closes supported analyzer
+  permutations explicitly
+- `examples/Roslyn.DeMagic.PackageSmoke/` validates the locally packed NuGet
+  package through a normal consumer project
+- `eng/roslyn-demagic-package-expected-diagnostics.json` is the authoritative
+  machine-readable packaged-consumer expectation set for Phase A v0.1.0

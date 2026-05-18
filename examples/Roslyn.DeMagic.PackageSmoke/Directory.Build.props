@@ -1,0 +1,13 @@
+<Project>
+  <PropertyGroup>
+    <RoslynDeMagicVersion>0.1.0</RoslynDeMagicVersion>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <WarningsAsErrors></WarningsAsErrors>
+    <GenerateDocumentationFile>false</GenerateDocumentationFile>
+    <NoWarn>$(NoWarn);1591</NoWarn>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <AdditionalFiles Include="$(MSBuildThisFileDirectory).roslyn-lint/config-src.toml" />
+  </ItemGroup>
+</Project>

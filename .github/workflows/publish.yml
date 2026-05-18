@@ -39,6 +39,3 @@ jobs:
 
       - name: Publish to GitHub Packages
         run: dotnet nuget push ./packages/Roslyn.DeMagic.${{ steps.version.outputs.VERSION }}.nupkg --source "https://nuget.pkg.github.com/randlee/index.json" --api-key ${{ secrets.GITHUB_TOKEN }} --skip-duplicate
-
-      - name: Publish to NuGet.org
-        run: dotnet nuget push ./packages/Roslyn.DeMagic.${{ steps.version.outputs.VERSION }}.nupkg --source "https://api.nuget.org/v3/index.json" --api-key ${{ secrets.NUGET_API_KEY }} --skip-duplicate
