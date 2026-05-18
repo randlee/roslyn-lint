@@ -1,7 +1,7 @@
 ---
 id: A10
 title: analyzer sample corpus and rule matrix
-status: planned
+status: complete
 branch: sprint/A10
 worktree: /Users/randlee/Documents/github/roslyn-lint-worktrees/sprint/A10
 target: integration/phase-A
@@ -40,8 +40,11 @@ target: integration/phase-A
 - `tests/Roslyn.DeMagic.Tests/TestData/DM002/SuffixComparison.cs`
 - `tests/Roslyn.DeMagic.Tests/TestData/DM002/SubstringReturnValue.cs`
 - `tests/Roslyn.DeMagic.Tests/TestData/DM002/AttributeArgument.cs`
+- `tests/Roslyn.DeMagic.Tests/TestData/DM002/InterpolatedHole.cs`
 - `tests/Roslyn.DeMagic.Tests/TestData/DM002/NonMatchingLiteral.cs`
 - `tests/Roslyn.DeMagic.Tests/TestData/DM002/CaseSensitiveMismatch.cs`
+- `tests/Roslyn.DeMagic.Tests/TestData/DM002/SwitchArmLiteral.cs`
+- `tests/Roslyn.DeMagic.Tests/TestData/DM002/CommentsAndDocumentationIgnored.cs`
 - `tests/Roslyn.DeMagic.Tests/TestData/DM002/SuppressedLiteral.cs`
 - `tests/Roslyn.DeMagic.Tests/TestData/DM002/MissingConfigNoDiagnostics.cs`
 - `tests/Roslyn.DeMagic.Tests/TestData/DM002/InvalidConfigNoDiagnostics.cs`
