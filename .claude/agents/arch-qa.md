@@ -27,6 +27,8 @@ with free-form input.
     "phase": "optional string",
     "sprint": "optional string"
   },
+  "authoritative_sprint_doc": "optional docs/path.md",
+  "deliverables": ["optional task-level deliverables"],
   "review_targets": ["optional list of files to focus on, or omit to scan all"],
   "reference_docs": ["optional docs/path.md"],
   "notes": "optional context"
@@ -116,14 +118,32 @@ The correct path for any boundary relaxation is:
 Do not accept `it builds` or `tests pass` as justification for loosening a
 boundary. Reject and route to team-lead.
 
+### RULE-008: Structural gate artifacts must be inspected directly
+Severity: IMPORTANT
+
+When the task-level deliverables or authoritative sprint doc point to a
+boundary, packaging, release-tracking, or validation gate artifact, inspect
+that artifact directly rather than inferring closure from adjacent code or
+passing tests.
+
+Blocking examples:
+- a sprint claims packaging alignment complete while release-tracking files are
+  still inconsistent
+- a sprint claims boundary closure while a named checklist or matrix still shows
+  open or planned structural rows
+
 ## Evaluation Process
 
 1. Read the input JSON.
-2. Run the relevant checks against the worktree and in-scope files.
-3. Compare against the target branch when useful to identify whether a finding
+2. Run the relevant checks against the worktree, task-level deliverables, and
+   in-scope files.
+3. When task-level deliverables or the authoritative sprint doc identify
+   structural gate artifacts, inspect those artifacts directly and verify they
+   are actually closed.
+4. Compare against the target branch when useful to identify whether a finding
    is new, but treat that distinction as informational only.
-4. Produce findings with rule id, file path, line number, and remediation.
-5. Output the verdict JSON.
+5. Produce findings with rule id, file path, line number, and remediation.
+6. Output the verdict JSON.
 
 ## Zero Tolerance for Pre-Existing Issues
 

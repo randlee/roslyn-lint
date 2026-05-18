@@ -43,6 +43,11 @@ with free-form input.
     "docs/path/to/design-or-plan-doc-1.md",
     "docs/path/to/design-or-plan-doc-2.md"
   ],
+  "authoritative_sprint_doc": "docs/path/to/authoritative-sprint-doc.md",
+  "deliverable_enumeration_source": "authoritative_sprint_doc",
+  "deliverable_coverage_required": true,
+  "assignment_has_deliverables": true,
+  "coverage_rule": "string",
   "worktree_path": "/absolute/path/to/worktree",
   "branch": "optional branch name",
   "commit": "optional commit sha",
@@ -77,6 +82,11 @@ Rules:
 - `deliverables`, `acceptance_criteria`, and `expected_artifacts` are optional
   assignment overlays. When present, treat them as mandatory verification
   items, not as hints.
+- `authoritative_sprint_doc` is the primary task-level sprint source when
+  provided.
+- If `assignment_has_deliverables` is `false`, return `FAIL`, emit a Blocking
+  finding for assignment incompleteness, and continue the review by enumerating
+  deliverables from `authoritative_sprint_doc`.
 - Treat provided phase or sprint docs as in-scope constraints that must align
   with available baseline sources.
 - If required inputs are missing or malformed, return `FAIL` with an
@@ -106,6 +116,9 @@ Rules:
      requirements to implementation locations.
    - Treat "planned but not implemented" and "implemented differently than
      documented" as first-class failures.
+   - When a deliverable is a matrix, checklist, manifest, release-tracking
+     file, or other gate artifact, inspect that artifact directly and determine
+     whether it is actually closed.
 
 5. Cross-Document Consistency
    - Detect conflicting statements between:
@@ -139,13 +152,22 @@ For every req-qa review, explicitly perform these checks:
    - `partially-present`
    - `absent`
    - `not-verifiable`
-3. For every `partially-present`, `absent`, or `not-verifiable` item, emit a
-   finding.
-4. When a sprint doc names specific files, projects, analyzers, tests,
+3. For any checklist item that is a gate artifact, also classify its closure
+   state as:
+   - `closed`
+   - `open`
+   - `not-applicable`
+4. For every `partially-present`, `absent`, `not-verifiable`, or `open` gate
+   artifact, emit a finding.
+5. When a sprint doc names specific files, projects, analyzers, tests,
    commands, or artifacts, verify those concrete things exist and are wired
    into the actual implementation path where required.
-5. When a sprint doc promises a behavior change, verify the behavior path in
+6. When a sprint doc promises a behavior change, verify the behavior path in
    code rather than only the surrounding documentation.
+7. Compute a deliverable completion percentage as:
+   - numerator: checklist items that are `present` and, when applicable,
+     `closed`
+   - denominator: all checklist items
 
 Presence-check examples that must be treated as req-qa work:
 - "CLI command exists" means the command is reachable from the actual entrypoint
@@ -196,6 +218,7 @@ Return fenced JSON only.
     {
       "item": "named deliverable or acceptance criterion",
       "status": "present | partially-present | absent | not-verifiable",
+      "closure_state": "closed | open | not-applicable",
       "evidence_refs": [
         "docs/phase-X/sprint-X.md:10",
         "src/Roslyn.DeMagic/AnalyzerReleases.Unshipped.md:4"
@@ -223,7 +246,11 @@ Return fenced JSON only.
   "summary": {
     "total_findings": 0,
     "blocking_findings": 0,
-    "overall_compliance": "compliant | non-compliant"
+    "overall_compliance": "compliant | non-compliant",
+    "deliverables_total": 0,
+    "deliverables_complete": 0,
+    "deliverables_incomplete": 0,
+    "deliverable_completion_percent": 0.0
   },
   "gate_reason": "why PASS or FAIL"
 }
@@ -235,5 +262,7 @@ Gate policy:
 - `FAIL` if no usable baseline or in-scope planning source can be read.
 - `FAIL` if any named deliverable, required artifact, or acceptance criterion
   is absent or not verifiable.
+- `FAIL` if any gate artifact remains open.
+- `FAIL` if `deliverable_completion_percent` is below `100.0`.
 - `PASS` only when no Blocking findings exist and no unresolved cross-document
-  conflicts remain.
+  conflicts remain and deliverable completion is `100.0`.

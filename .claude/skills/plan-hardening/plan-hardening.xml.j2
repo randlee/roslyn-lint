@@ -82,7 +82,8 @@ required_variables:
     - goal
     - hard dependencies
     - exact code or document targets when applicable
-    - deliverables
+    - deliverables as an explicit detailed list of individually verifiable
+      items; umbrella bullets or thematic placeholders are not acceptable
     - required work
     - explicit statement that every listed deliverable is expected to land at a production-ready level for the scope this sprint claims
     - explicit code samples or signatures for important interfaces, features, enums, protocol types, or boundary contracts
@@ -148,6 +149,9 @@ required_variables:
       </required-documents>
 
       For every sprint doc, verify that:
+        - a deliverables section exists and enumerates concrete deliverables
+          explicitly; do not allow umbrella bullets that hide multiple
+          implementation outcomes
         - every committed deliverable is assigned to exactly one sprint
         - no deliverable is described in a way that allows partial completion
           while still claiming success
@@ -169,6 +173,7 @@ required_variables:
       <finding-types>
         <type id="GAP">Required detail is absent entirely, or a required document does not exist.</type>
         <type id="VAGUE">Language is ambiguous or leaves an implementation choice to the developer that the plan should resolve explicitly.</type>
+        <type id="DELIVERABLE-LIST">A sprint deliverables section is missing, too broad, or not detailed enough to verify each committed item independently.</type>
         <type id="SPLIT-RISK">A sprint is carrying too many deliverables, too much mixed closure work, or too much residual risk to credibly land every committed deliverable at a production-ready level.</type>
         <type id="DROP-RISK">A deliverable can be partially implemented, silently deferred, or lost without failing the sprint acceptance criteria.</type>
         <type id="NON-PROD">A sprint deliverable is described in a way that would allow shape-only, test-only, or non-production-ready completion.</type>

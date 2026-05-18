@@ -47,6 +47,7 @@ defaults:
   "authoritative_sprint_doc": "{{ sprint_doc }}",
   "deliverable_enumeration_source": "authoritative_sprint_doc",
   "deliverable_coverage_required": true,
+  "assignment_has_deliverables": {% if deliverables and deliverables|length > 0 %}true{% else %}false{% endif %},
   "coverage_rule": "Before reviewing, enumerate every deliverable, acceptance criterion, deletion target, required validation item, and expected artifact from authoritative_sprint_doc. Do not assume the provided deliverables list is exhaustive. If any sprint-doc item is missing from the hand-authored list, treat that as assignment incompleteness and still review it.",
   "worktree_path": {% if worktree_path %}"{{ worktree_path }}"{% else %}null{% endif %},
   "branch": {% if branch %}"{{ branch }}"{% else %}null{% endif %},
