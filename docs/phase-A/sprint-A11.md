@@ -43,6 +43,7 @@ target: integration/phase-A
 - `eng/validate-roslyn-demagic-package.sh`
 - `eng/validate-roslyn-demagic-package.ps1`
 - `eng/roslyn-demagic-package-expected-diagnostics.json`
+- `tests/Roslyn.DeMagic.Tests/PermutationMatrix.md`
 - `tests/Roslyn.DeMagic.Tests/PackageValidation/ExpectedPackageDiagnostic.cs`
 - `tests/Roslyn.DeMagic.Tests/PackageValidation/PackageValidationManifest.cs`
 - `tests/Roslyn.DeMagic.Tests/PackageValidation/PackageValidationResult.cs`
@@ -69,6 +70,8 @@ target: integration/phase-A
 - add compiled validation-support types in
   `tests/Roslyn.DeMagic.Tests/PackageValidation/` so the manifest shape and
   expected diagnostic rows have one named project home
+- complete a closed permutation matrix for every supported `DM001` and `DM002`
+  analyzer combination before package-smoke signoff
 - provide cross-platform validation scripts that pack, restore, build, and
   assert expected diagnostics from the consumer project
 - define `PackageValidationSampleKind` so each example file is tagged as:
@@ -82,6 +85,8 @@ target: integration/phase-A
   consumed normally
 - the expected diagnostics are asserted from a structured manifest rather than
   by manual console inspection
+- `tests/Roslyn.DeMagic.Tests/PermutationMatrix.md` contains one row for every
+  supported analyzer permutation and no implicit coverage gaps remain
 - package-consumer validation does not rely on in-repo project references or
   special test-only analyzer wiring
 
