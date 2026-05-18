@@ -66,7 +66,8 @@ public sealed class LintRoslynDeMagicCommandTests
         var envelope = CliTestHost.ParseJsonObject(result.StdOut);
         envelope["ok"]!.GetValue<bool>().Should().BeTrue();
         envelope["command"]!.GetValue<string>().Should().Be("lint.fast");
-        envelope["data"]!["tool"]!.GetValue<string>().Should().Be("demagic");
+        envelope["data"]!["profile"]!.GetValue<string>().Should().Be("fast");
+        envelope["data"]!["members"]!.AsArray()[0]!.GetValue<string>().Should().Be("demagic");
     }
 
     [Fact]

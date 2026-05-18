@@ -237,14 +237,30 @@ Profile semantics:
 - top-level `ci`
   - lint plus tests
 
-Planned profile membership table:
+Implemented profile membership table:
 
 | Profile or command | Required membership in A6 | Required membership in A7 |
 | --- | --- | --- |
-| `lint fast` | `demagic` only smoke-test path | `demagic` plus the explicitly documented low-latency lint set |
-| `lint full` | not implemented | stronger pre-push lint set defined in code and docs |
-| `lint ci` | not implemented | lint-only CI-parity set defined in code and docs |
-| top-level `ci` | not implemented | `lint ci` plus test execution |
+| `lint fast` | `demagic` only smoke-test path | `demagic` |
+| `lint full` | not implemented | `demagic` |
+| `lint ci` | not implemented | `demagic` |
+| top-level `ci` | not implemented | `lint ci` plus `dotnet test tests/Roslyn.Lint.Tests/Roslyn.Lint.Tests.csproj --configuration Release --verbosity normal` |
 
 The distinction between `roslyn-lint lint ci` and top-level `roslyn-lint ci`
 is mandatory.
+
+## A7 Workflow Definitions
+
+The first delivered `.NET` workflow commands are:
+
+- `check`
+  - `dotnet build roslyn-lint.sln --configuration Release --no-restore`
+- `clippy`
+  - `dotnet build roslyn-lint.sln --configuration Release --no-restore -warnaserror`
+  - `dotnet format roslyn-lint.sln --verify-no-changes --no-restore`
+- top-level `ci`
+  - `lint ci`
+  - `dotnet test tests/Roslyn.Lint.Tests/Roslyn.Lint.Tests.csproj --configuration Release --verbosity normal`
+
+Workflow success payloads remain normalized under `data`; raw `dotnet`
+standard output is not part of the public machine contract.
