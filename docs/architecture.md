@@ -6,7 +6,7 @@ The suite currently has two product boundaries:
 
 - `Roslyn.DeMagic` owns Roslyn diagnostic analysis and analyzer configuration
 - `roslyn-lint` owns CLI command parsing, contract serialization, and future
-  repo-facing operations
+  repo-facing operations across package-owned lint tools
 
 The repository architecture is intentionally split so the analyzer can mature
 as a NuGet package without being blocked by the CLI feature backlog.
@@ -19,6 +19,9 @@ Architectural rules:
   dependency on the CLI executable at runtime.
 - `roslyn-lint` may reference analyzer or shared operation assemblies, but it
   must not become the only way to consume `Roslyn.DeMagic`.
+- `roslyn-lint` is the stable orchestration surface for suite tools; backend
+  packages may be linked in-process or invoked out-of-process without changing
+  the public command contract.
 - Analyzer configuration ownership lives with the analyzer project, not the
   CLI presentation layer.
 - CLI presentation and transport concerns must not leak into analyzer rule
@@ -59,7 +62,10 @@ Architectural rules:
 The CLI architecture must follow an AI-first shape:
 
 - request parsing
+- command-family and tool-target resolution
 - request DTOs
+- backend dispatch or in-process execution
+- top-level result normalization
 - operation layer
 - response DTOs
 - JSON serialization
@@ -70,6 +76,9 @@ Architectural rules:
 - every command must support `--json`
 - JSON output is the normative contract
 - success and failure responses must remain in one stable envelope family
+- the stable envelope family for `roslyn-lint` must align with the `sc-lint`
+  product pattern: `ok`, `command`, `data`, `error`, and optional
+  `diagnostics`
 - error results must be typed, structured, and actionable
 - request and response DTOs must be reusable by a future MCP wrapper without
   reshaping business payloads
@@ -78,7 +87,7 @@ Architectural rules:
   simulator-backed testing is possible
 
 Project-level detail for those rules is defined in
-`docs/roslyn-lint/architecture.md`.
+`docs/roslyn-lint/architecture.md` and `docs/roslyn-lint/cli-contract.md`.
 
 Project-local boundary detail is owned by:
 

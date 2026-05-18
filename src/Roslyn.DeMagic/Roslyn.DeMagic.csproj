@@ -17,9 +17,10 @@
   <!-- NuGet Package Metadata (common properties inherited from Directory.Build.props) -->
   <PropertyGroup>
     <PackageId>Roslyn.DeMagic</PackageId>
-    <Description>Roslyn analyzer that detects magic values (numbers, strings) and suggests named constants</Description>
-    <PackageTags>roslyn;analyzer;magic-numbers;code-quality;csharp</PackageTags>
+    <Description>Roslyn analyzer package for constant-consolidation and forbidden-string diagnostics in C# solutions</Description>
+    <PackageTags>roslyn;analyzer;csharp;constants;domain-boundary;code-quality</PackageTags>
     <PackageReadmeFile>README.md</PackageReadmeFile>
+    <PackageReleaseNotes>Phase A analyzer package baseline for DM001 and DM002 validation and packaging gates.</PackageReleaseNotes>
   </PropertyGroup>
 
   <ItemGroup>

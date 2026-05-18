@@ -36,8 +36,10 @@ neutral DTOs and a thin command layer.
 This means:
 
 - every command supports `--json`
-- the baseline JSON envelope includes `success`, `operation`, and exactly one
-  of `result` or `error`
+- the baseline JSON envelope includes `ok`, `command`, and exactly one of
+  `data` or `error`
+- optional top-level `diagnostics` are additive only and must not replace the
+  business payload
 - error objects include `kind`, `code`, `message`, and optional `details` and
   `suggested_action`
 - DTOs live outside the entrypoint and remain reusable by a future MCP wrapper

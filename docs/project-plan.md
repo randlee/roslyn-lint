@@ -58,25 +58,26 @@ Merge target:
 
 | Sprint | Scope | Required outcome |
 | --- | --- | --- |
-| A1 | Documentation reset | Replace placeholders and unapproved assumptions with formal suite and project docs |
-| A2 | `DM001` design and config path | Align constant-consolidation behavior with the PRD and configuration model |
-| A3 | `DM002` and analyzer hardening | Align forbidden-string analysis, config parsing, and analyzer validation with the PRD |
+| A0 | Documentation reset | Replace placeholders and unapproved assumptions with formal suite and project docs |
+| A1 | Analyzer foundation | Add reusable configuration and forbidden-pattern infrastructure for `Roslyn.DeMagic` |
+| A2 | `DM002` forbidden-pattern analyzer | Align forbidden-string analysis, config parsing, and analyzer validation with the PRD |
+| A3 | `DM002` hardening and release alignment | Remove remaining spike leftovers, align release metadata, and route analyzer seams through interfaces |
 | A4 | Packaging and CLI baseline correction | Finalize analyzer packaging gates and lock the CLI design baseline to AI-first contract rules |
 
 Phase A must not treat the current CLI spike as an approved product contract.
 
 ### Phase A Implementation Inventory
 
-Phase A implementation work is expected to touch or replace these current code
-paths:
+Phase A implementation work is expected to touch, add, delete, or replace
+these code paths:
 
-- `src/Roslyn.DeMagic/Analyzers/MagicNumberAnalyzer.cs`
-- `src/Roslyn.DeMagic/Analyzers/MagicStringAnalyzer.cs`
+- `src/Roslyn.DeMagic/Analyzers/MagicNumberAnalyzer.cs` deleted in A3
+- `src/Roslyn.DeMagic/Analyzers/DM001ConstantConsolidationAnalyzer.cs`
+- `src/Roslyn.DeMagic/Analyzers/DM002ForbiddenStringLiteralAnalyzer.cs`
 - `src/Roslyn.DeMagic/AnalyzerReleases.Shipped.md`
 - `src/Roslyn.DeMagic/AnalyzerReleases.Unshipped.md`
 - `src/Roslyn.DeMagic/Roslyn.DeMagic.csproj`
-- `tests/Roslyn.DeMagic.Tests/Analyzers/MagicNumberAnalyzerTests.cs`
-- `tests/Roslyn.DeMagic.Tests/Analyzers/MagicStringAnalyzerTests.cs`
+- `tests/Roslyn.DeMagic.Tests/Analyzers/DM002ForbiddenStringLiteralAnalyzerTests.cs`
 - `src/Roslyn.Lint/Program.cs`
 - `src/Roslyn.Lint/Commands/LintCommand.cs`
 - `src/Roslyn.Lint/Roslyn.Lint.csproj`
@@ -105,15 +106,41 @@ Planned replacement-oriented analyzer implementation units:
 
 Planned replacement-oriented CLI implementation units when CLI work resumes:
 
+- `src/Roslyn.Lint.Abstractions/Roslyn.Lint.Abstractions.csproj`
+- `src/Roslyn.Lint.Abstractions/ToolId.cs`
+- `src/Roslyn.Lint.Abstractions/ToolDescriptor.cs`
+- `src/Roslyn.Lint.Abstractions/ILintToolModule.cs`
+- `src/Roslyn.Lint.Abstractions/ILintToolCommandHandler.cs`
+- `src/Roslyn.Lint/Commands/RegisterLintCommands.cs`
+- `src/Roslyn.Lint/Commands/RegisterViewCommands.cs`
+- `src/Roslyn.Lint/Commands/RegisterCheckCommands.cs`
+- `src/Roslyn.Lint/Commands/RegisterClippyCommands.cs`
+- `src/Roslyn.Lint/Commands/RegisterCiCommand.cs`
+- `src/Roslyn.Lint/Commands/RegisterVersionCommand.cs`
 - `src/Roslyn.Lint/Contracts/CliEnvelope.cs`
 - `src/Roslyn.Lint/Contracts/CliError.cs`
-- `src/Roslyn.Lint/Contracts/CliWarning.cs`
+- `src/Roslyn.Lint/Contracts/CliDiagnostic.cs`
 - `src/Roslyn.Lint/Contracts/CliErrorKind.cs`
-- `src/Roslyn.Lint/Contracts/LintRequest.cs`
-- `src/Roslyn.Lint/Contracts/LintResult.cs`
-- `src/Roslyn.Lint/Contracts/LintIssue.cs`
-- `src/Roslyn.Lint/Operations/ICommandOperation.cs`
-- `src/Roslyn.Lint/Operations/ILintWorkspaceAdapter.cs`
+- `src/Roslyn.Lint/Contracts/LintToolRequest.cs`
+- `src/Roslyn.Lint/Contracts/LintToolResult.cs`
+- `src/Roslyn.Lint/Contracts/LintFinding.cs`
+- `src/Roslyn.Lint/Contracts/ViewRequest.cs`
+- `src/Roslyn.Lint/Contracts/ViewResult.cs`
+- `src/Roslyn.Lint/Contracts/CheckRequest.cs`
+- `src/Roslyn.Lint/Contracts/CheckResult.cs`
+- `src/Roslyn.Lint/Contracts/ClippyRequest.cs`
+- `src/Roslyn.Lint/Contracts/ClippyResult.cs`
+- `src/Roslyn.Lint/Contracts/CiRequest.cs`
+- `src/Roslyn.Lint/Contracts/CiResult.cs`
+- `src/Roslyn.Lint/Contracts/VersionResult.cs`
+- `src/Roslyn.Lint/Dispatch/IBackendToolDispatcher.cs`
+- `src/Roslyn.Lint/Dispatch/IBackendProcessRunner.cs`
+- `src/Roslyn.Lint/Dispatch/BackendJsonNormalizer.cs`
+- `src/Roslyn.Lint/Operations/ILintToolOperation.cs`
+- `src/Roslyn.Lint/Operations/IViewOperation.cs`
+- `src/Roslyn.Lint/Operations/ICheckOperation.cs`
+- `src/Roslyn.Lint/Operations/IClippyOperation.cs`
+- `src/Roslyn.Lint/Operations/ICiOperation.cs`
 - `src/Roslyn.Lint/Serialization/IJsonEnvelopeWriter.cs`
 - `src/Roslyn.Lint/Formatting/IHumanOutputFormatter.cs`
 - `src/Roslyn.Lint/Adapters/`

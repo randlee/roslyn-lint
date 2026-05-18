@@ -33,6 +33,7 @@ Notes:
 - syntax callbacks must not parse raw TOML strings directly
 - the preferred implementation is a shared immutable config object created once
   per compilation
+- the preferred loader seam is `IDeMagicConfigLoader`
 - the preferred parsing seam is `ITomlConfigParser`
 - the preferred payload types are `DeMagicConfig`, `Dm001Options`, and
   `Dm002Options`
@@ -76,8 +77,7 @@ Notes:
 
 - this boundary owns literal matching against compiled pattern definitions
 - it does not own comment or documentation scanning in v1
-- replacement with a new analyzer type name is preferred over keeping the
-  `MagicStringAnalyzer` type
+- the approved analyzer type is `DM002ForbiddenStringLiteralAnalyzer`
 - the preferred payload types are `ForbiddenPattern`,
   `CompiledForbiddenPattern`, and the `ForbiddenPatternKind` enum
 
