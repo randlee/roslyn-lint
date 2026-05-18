@@ -34,7 +34,16 @@ jobs:
         run: dotnet test --no-build --configuration Release --verbosity normal --logger "trx;LogFileName=test-results.trx" --collect:"XPlat Code Coverage"
 
       - name: Pack Roslyn.DeMagic analyzer
-        run: dotnet pack src/Roslyn.DeMagic/Roslyn.DeMagic.csproj --configuration Release --no-build -o ./packages
+        run: dotnet pack src/Roslyn.DeMagic/Roslyn.DeMagic.csproj --configuration Release --no-build -o ./artifacts/packages
+
+      - name: Validate packaged analyzer on Unix
+        if: runner.os != 'Windows'
+        run: bash eng/validate-roslyn-demagic-package.sh
+
+      - name: Validate packaged analyzer on Windows
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: ./eng/validate-roslyn-demagic-package.ps1
 
       - name: Upload test results
         uses: actions/upload-artifact@v4
@@ -55,4 +64,4 @@ jobs:
         if: always()
         with:
           name: analyzer-packages-${{ matrix.os }}
-          path: "./packages/*.nupkg"
+          path: "./artifacts/packages/*.nupkg"

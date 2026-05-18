@@ -2,8 +2,6 @@ namespace Roslyn.Lint.Commands;
 
 using System.CommandLine;
 using Roslyn.Lint.Abstractions.Contracts;
-using Roslyn.Lint.CommandModel;
-using Roslyn.Lint.Contracts;
 using Roslyn.Lint.Formatting;
 
 internal static class RegisterViewCommands
@@ -18,7 +16,7 @@ internal static class RegisterViewCommands
             context.WriteFailureAsync(
                 "view",
                 CreateUsageError(
-                    "view requires a supported target such as 'tools'.",
+                    "view requires a supported target such as 'tools' or 'rules'.",
                     new Dictionary<string, string?> { ["command"] = "view" }),
                 context.GetOutputMode(parseResult),
                 cancellationToken));
@@ -26,35 +24,55 @@ internal static class RegisterViewCommands
         toolsCommand.SetAction(async (parseResult, cancellationToken) =>
         {
             var outputMode = context.GetOutputMode(parseResult);
-            var result = new ViewResult(
-                "tools",
-                context.ToolModules
-                    .Select(module => new ViewToolResult(
-                        module.Descriptor.Id.Value,
-                        module.Descriptor.DisplayName,
-                        module.Descriptor.Description,
-                        module.Descriptor.PackageName,
-                        module.Descriptor.CommandFamilies,
-                        module.Descriptor.Capabilities))
-                    .ToArray());
+            try
+            {
+                var result = await context.ViewOperation.ExecuteAsync(
+                    new ViewRequest("tools"),
+                    cancellationToken);
 
-            return await context.WriteSuccessAsync(
-                "view.tools",
-                result,
-                new ViewToolsHumanOutputFormatter(),
-                outputMode,
-                cancellationToken);
+                return await context.WriteSuccessAsync(
+                    "view.tools",
+                    result,
+                    new ViewToolsHumanOutputFormatter(),
+                    outputMode,
+                    cancellationToken);
+            }
+            catch (Exception exception)
+            {
+                return await context.WriteFailureAsync(
+                    "view.tools",
+                    context.BackendJsonNormalizer.NormalizeWorkflowFailure("view.tools", exception),
+                    outputMode,
+                    cancellationToken);
+            }
         });
 
-        rulesCommand.SetAction((parseResult, cancellationToken) =>
-            context.WriteFailureAsync(
-                "view.rules",
-                CreateCapabilityError(
-                    "view rules is planned for sprint A8.",
-                    "A8",
-                    "Use 'view tools' for the currently supported inspection surface."),
-                context.GetOutputMode(parseResult),
-                cancellationToken));
+        rulesCommand.SetAction(async (parseResult, cancellationToken) =>
+        {
+            var outputMode = context.GetOutputMode(parseResult);
+
+            try
+            {
+                var result = await context.ViewOperation.ExecuteAsync(
+                    new ViewRequest("rules"),
+                    cancellationToken);
+
+                return await context.WriteSuccessAsync(
+                    "view.rules",
+                    result,
+                    new ViewRulesHumanOutputFormatter(),
+                    outputMode,
+                    cancellationToken);
+            }
+            catch (Exception exception)
+            {
+                return await context.WriteFailureAsync(
+                    "view.rules",
+                    context.BackendJsonNormalizer.NormalizeWorkflowFailure("view.rules", exception),
+                    outputMode,
+                    cancellationToken);
+            }
+        });
 
         viewCommand.Subcommands.Add(toolsCommand);
         viewCommand.Subcommands.Add(rulesCommand);
@@ -68,12 +86,4 @@ internal static class RegisterViewCommands
             message,
             details,
             "Run the command with a supported subcommand or use --help.");
-
-    private static CliError CreateCapabilityError(string message, string sprint, string suggestedAction)
-        => new(
-            CliErrorKind.Capability,
-            "CLI.CAPABILITY_ERROR",
-            message,
-            new Dictionary<string, string?> { ["planned_sprint"] = sprint },
-            suggestedAction);
 }
