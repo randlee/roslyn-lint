@@ -21,8 +21,11 @@ target: integration/phase-A
 - `docs/roslyn-demagic/requirements.md`
 - `docs/roslyn-demagic/architecture.md`
 - `docs/phase-A/sprint-A12.md`
+- `tests/Roslyn.DeMagic.Tests/PermutationMatrix.md`
 - `docs/phase-A/production-readiness-checklist.md`
 - `eng/roslyn-demagic-package-expected-diagnostics.json`
+- `src/Roslyn.DeMagic/AnalyzerReleases.Shipped.md`
+- `src/Roslyn.DeMagic/AnalyzerReleases.Unshipped.md`
 
 ## Exact Targets
 
@@ -45,8 +48,18 @@ target: integration/phase-A
 
 ## Required Work
 
+- treat A12 closure as a hard closeout prerequisite, not a start prerequisite:
+  A13 work may begin before A12 QA closes, but A13 may not close, PASS, or
+  merge as complete until A12 gate artifacts are closed under their own rules
+  and A13 has revalidated against that baseline
 - add CI steps that pack `Roslyn.DeMagic`, restore the example consumer, and
   run the cross-platform package-validation scripts
+- require CI and publish flows to use the same authoritative A12 gate artifacts:
+  `tests/Roslyn.DeMagic.Tests/PermutationMatrix.md`,
+  `docs/phase-A/production-readiness-checklist.md`,
+  `eng/roslyn-demagic-package-expected-diagnostics.json`,
+  `src/Roslyn.DeMagic/AnalyzerReleases.Shipped.md`,
+  `src/Roslyn.DeMagic/AnalyzerReleases.Unshipped.md`
 - confirm and apply the documented `Roslyn.Lint` packaging strategy:
   `PackAsTool`, command name `roslyn-lint`, per
   `docs/roslyn-lint/architecture.md` Section 12 and `REQ-CLI-PACK-001`
@@ -58,11 +71,16 @@ target: integration/phase-A
   verify, and push steps and the point where future automation may begin
 - make the publish workflow depend on the same package-validation artifacts and
   manifest checks used by local validation
+- do not call A13 complete if it depends on an A12 artifact that is present but
+  still open under that artifact's own internal rule
 
 ## Acceptance Criteria
 
+- A12 gate artifacts are already closed on the reviewed branch and remain
+  closed after A13 changes
 - CI proves the packaged analyzer-consumer path before Phase A is called
-  complete
+  complete, using the same A12 gate artifacts and closure evidence consumed
+  locally
 - the `Roslyn.Lint` packaging model is explicit in docs and matches the
   pack/publish workflow
 - CI can publish repo-produced packages to GitHub Packages without changing the
