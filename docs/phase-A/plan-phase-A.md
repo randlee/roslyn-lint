@@ -16,6 +16,10 @@ design line rather than assuming the current spike is valid.
 - PRD-aligned `Roslyn.DeMagic` design and implementation plan
 - AI-first `roslyn-lint` CLI baseline
 - packaging and validation gates for the analyzer
+- a production-ready `Roslyn.DeMagic` analyzer package covering every approved
+  rule
+- a locally packaged analyzer-consumer example that proves the built package can
+  be used from a normal .NET project
 
 ## 3. Execution Branch
 
@@ -65,6 +69,14 @@ design line rather than assuming the current spike is valid.
 | A2 | `DM002` forbidden-pattern analyzer | Replace the generic string-literal spike with forbidden-pattern analysis and aligned release metadata |
 | A3 | `DM002` hardening and release alignment | Remove remaining spike leftovers, align release metadata, and route analyzer seams through injected interfaces |
 | A4 | Packaging and CLI baseline correction | Finalize analyzer package and release gates and define the replacement-oriented CLI baseline |
+| A5 | CLI foundation and abstractions package | Replace the Spectre spike with the first working `System.CommandLine` host and shared tool-module abstractions |
+| A6 | DeMagic backend integration and first usable lint flow | Deliver `roslyn-lint lint demagic` and the first usable `lint fast` smoke path |
+| A7 | Profiles plus check, clippy, and ci workflows | Deliver reusable lint profiles and the first .NET-native `check`, `clippy`, and `ci` workflows |
+| A8 | View surfaces, boundary metadata, and tool-module hardening | Harden the multi-tool CLI surface and delegated backend seams |
+| A9 | `DM001` completion and rule parity | Implement the constant-consolidation rule against the PRD and close the analyzer parity gap |
+| A10 | Analyzer sample corpus and rule matrix | Add exhaustive positive, negative, suppression, and corner-case samples for every analyzer rule |
+| A11 | Packaged consumer validation | Prove the locally built `Roslyn.DeMagic` package works from a normal consuming project via a local feed |
+| A12 | Production-readiness hardening and release gate | Make analyzer packaging, sample consumption, docs, and CI all reflect the real shippable rule set |
 
 ## 7. Implementation Strategy
 
@@ -77,8 +89,20 @@ design line rather than assuming the current spike is valid.
   matcher seams
 - A4 validates analyzer package outputs and leaves the CLI with a strict design
   baseline that future implementation must follow
+- A5 through A8 establish the first usable CLI shell, but they do not replace
+  the analyzer-first Phase A exit criteria
+- A9 completes the missing `DM001` behavior so the analyzer package implements
+  the full approved rule set
+- A10 adds the required analyzer sample corpus and requirement-to-test matrix
+  for every rule and documented corner case
+- A11 proves package-consumer behavior by packing `Roslyn.DeMagic` and
+  consuming it from an example project through a local feed
+- A12 hardens CI, release metadata, and repo docs so the analyzer can enter
+  production testing without relying on undocumented assumptions
 - no sprint in Phase A should preserve current spike semantics merely because
   code already exists
+- no additional CLI expansion should take precedence over unfinished analyzer
+  production-readiness work until A12 is complete
 
 ### 7.1 Named Type Inventory
 
@@ -112,6 +136,10 @@ Phase A is complete only when:
 - the repo documentation framework exists and is internally consistent
 - `Roslyn.DeMagic` behavior matches the PRD rather than the current spike
 - analyzer packaging and tests reflect the approved diagnostic set
+- analyzer sample coverage exists for every approved rule and documented corner
+  case
+- the locally built analyzer package is validated through a normal consuming
+  project rather than only through in-repo unit tests
 - the CLI baseline no longer treats the current implementation as an approved
   design
 - the Phase A execution rules explicitly prefer deleting and replacing

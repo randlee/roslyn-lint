@@ -113,3 +113,10 @@ Validation requirement IDs:
   shipped diagnostic set.
 - `REQ-DM-TEST-005` Tests for `DM001` and `DM002` must be rewritten if needed;
   preserving spike-era test names or expectations is not a requirement.
+- `REQ-DM-TEST-006` The repository must contain positive, negative,
+  suppression, and corner-case samples for every approved analyzer rule.
+- `REQ-DM-TEST-007` The repository must validate the packaged
+  `Roslyn.DeMagic` analyzer through a normal consuming project that references
+  a locally built NuGet package from a local feed.
+- `REQ-DM-TEST-008` The analyzer test matrix must map every PRD rule checkbox
+  to one or more concrete automated tests or packaged-consumer samples.

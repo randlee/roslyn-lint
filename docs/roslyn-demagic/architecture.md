@@ -157,6 +157,10 @@ Tests should validate:
 - invalid-config fail-closed behavior
 - severity mapping
 - shipped and unshipped analyzer release metadata alignment
+- packaged-consumer behavior through a project that references the locally built
+  `Roslyn.DeMagic` NuGet package from a local feed
+- requirement-to-sample traceability for every approved rule and documented
+  corner case
 
 The test suite must be built around PRD behavior, not around preserving the
 current spike's literal-detection semantics.

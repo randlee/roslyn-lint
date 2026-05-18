@@ -21,6 +21,9 @@ Phase A deliverables:
 - a sprinted Phase A plan
 - a PRD-aligned `Roslyn.DeMagic` v1 implementation
 - a CLI design baseline aligned with the repository's AI-first CLI rules
+- a production-ready analyzer validation path that covers every approved rule
+- a packaged-consumer example proving the built analyzer works through a local
+  feed
 
 ## 3. Project Inventory
 
@@ -63,6 +66,14 @@ Merge target:
 | A2 | `DM002` forbidden-pattern analyzer | Align forbidden-string analysis, config parsing, and analyzer validation with the PRD |
 | A3 | `DM002` hardening and release alignment | Remove remaining spike leftovers, align release metadata, and route analyzer seams through interfaces |
 | A4 | Packaging and CLI baseline correction | Finalize analyzer packaging gates and lock the CLI design baseline to AI-first contract rules |
+| A5 | CLI foundation and abstractions package | Replace the Spectre spike with the first working `System.CommandLine` host and shared tool-module abstractions |
+| A6 | DeMagic backend integration and first usable lint flow | Deliver `roslyn-lint lint demagic` and the first usable `lint fast` smoke path |
+| A7 | Profiles plus check, clippy, and ci workflows | Deliver reusable lint profiles and the first .NET-native `check`, `clippy`, and `ci` workflows |
+| A8 | View surfaces, boundary metadata, and tool-module hardening | Harden the multi-tool CLI surface and delegated backend seams |
+| A9 | `DM001` completion and rule parity | Implement the missing constant-consolidation analyzer behavior and close the rule gap |
+| A10 | Analyzer sample corpus and rule matrix | Add exhaustive analyzer samples and traceability for every rule and corner case |
+| A11 | Packaged consumer validation | Pack the analyzer and consume it from a normal project via a local feed |
+| A12 | Production-readiness hardening and release gate | Align CI, package metadata, docs, and sample validation to the shippable analyzer set |
 
 Phase A must not treat the current CLI spike as an approved product contract.
 
@@ -77,7 +88,13 @@ these code paths:
 - `src/Roslyn.DeMagic/AnalyzerReleases.Shipped.md`
 - `src/Roslyn.DeMagic/AnalyzerReleases.Unshipped.md`
 - `src/Roslyn.DeMagic/Roslyn.DeMagic.csproj`
+- `examples/Roslyn.DeMagic.PackageSmoke/`
+- `eng/validate-roslyn-demagic-package.sh`
+- `eng/validate-roslyn-demagic-package.ps1`
 - `tests/Roslyn.DeMagic.Tests/Analyzers/DM002ForbiddenStringLiteralAnalyzerTests.cs`
+- `tests/Roslyn.DeMagic.Tests/Analyzers/DM001ConstantConsolidationAnalyzerTests.cs`
+- `tests/Roslyn.DeMagic.Tests/TestData/DM001/`
+- `tests/Roslyn.DeMagic.Tests/TestData/DM002/`
 - `src/Roslyn.Lint/Program.cs`
 - `src/Roslyn.Lint/Commands/LintCommand.cs`
 - `src/Roslyn.Lint/Roslyn.Lint.csproj`
@@ -153,6 +170,8 @@ Planned replacement-oriented CLI implementation units when CLI work resumes:
   spike implementation
 - analyzer-first work takes precedence over speculative CLI feature work until
   the analyzer baseline is approved
+- after A8, Phase A work returns to analyzer production-readiness and package
+  consumer validation before any further CLI scope is considered
 - future CLI implementation must inherit the contract rules defined in
   `docs/roslyn-lint/requirements.md` and `docs/roslyn-lint/architecture.md`
 - if spike code does not comply with approved requirements or architecture, the
@@ -174,6 +193,8 @@ Phase A planning is complete only when:
   current spike
 - analyzer packaging and validation expectations are explicit in the sprint
   plans
+- analyzer sample coverage and packaged-consumer validation are explicit in the
+  sprint plans
 - the CLI baseline no longer treats the current implementation as an approved
   design
 - the execution rules explicitly prefer deleting and replacing noncompliant
