@@ -4,7 +4,6 @@ using FluentAssertions;
 using Roslyn.Lint.Abstractions;
 using Roslyn.Lint.Abstractions.Contracts;
 using Roslyn.Lint.Backends;
-using Roslyn.Lint.Contracts;
 using Roslyn.Lint.Operations;
 using Xunit;
 

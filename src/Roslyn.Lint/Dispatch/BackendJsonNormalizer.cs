@@ -6,7 +6,7 @@ using Roslyn.Lint.Abstractions;
 using Roslyn.Lint.Abstractions.Contracts;
 using Roslyn.Lint.Serialization;
 
-public sealed class BackendJsonNormalizer
+public sealed class BackendJsonNormalizer : IBackendJsonNormalizer
 {
     public CliError NormalizeLintFailure(ToolId toolId, Exception exception)
     {
@@ -271,11 +271,4 @@ public sealed class BackendJsonNormalizer
         => result.ExitCode == 0
             ? CreateProtocolError(commandId, message, new Dictionary<string, string?> { ["command"] = commandId })
             : CreateExecutionError(commandId, result, message);
-}
-
-public sealed record DelegatedBackendNormalizationResult<T>(bool IsSuccess, T? Data, CliError? Error)
-{
-    public static DelegatedBackendNormalizationResult<T> Success(T data) => new(true, data, null);
-
-    public static DelegatedBackendNormalizationResult<T> Failure(CliError error) => new(false, default, error);
 }

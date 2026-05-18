@@ -46,8 +46,8 @@ carry-forward scope from [`sprint-A4.md`](./sprint-A4.md):
 - `src/Roslyn.Lint.Abstractions/Contracts/CliDiagnostic.cs`
 - `src/Roslyn.Lint.Abstractions/Contracts/CliErrorKind.cs`
 - `src/Roslyn.Lint/Contracts/VersionResult.cs`
-- `src/Roslyn.Lint/Contracts/ViewRequest.cs`
-- `src/Roslyn.Lint/Contracts/ViewResult.cs`
+- `src/Roslyn.Lint.Abstractions/Contracts/ViewRequest.cs`
+- `src/Roslyn.Lint.Abstractions/Contracts/ViewResult.cs`
 - `src/Roslyn.Lint/Serialization/IJsonEnvelopeWriter.cs`
 - `src/Roslyn.Lint/Serialization/RoslynLintJsonContext.cs`
 - `src/Roslyn.Lint/Formatting/IHumanOutputFormatter.cs`
@@ -96,8 +96,8 @@ carry-forward scope from [`sprint-A4.md`](./sprint-A4.md):
 - `src/Roslyn.Lint.Abstractions/Contracts/CliDiagnostic.cs`
 - `src/Roslyn.Lint.Abstractions/Contracts/CliErrorKind.cs`
 - `src/Roslyn.Lint/Contracts/VersionResult.cs`
-- `src/Roslyn.Lint/Contracts/ViewRequest.cs`
-- `src/Roslyn.Lint/Contracts/ViewResult.cs`
+- `src/Roslyn.Lint.Abstractions/Contracts/ViewRequest.cs`
+- `src/Roslyn.Lint.Abstractions/Contracts/ViewResult.cs`
 - `src/Roslyn.Lint/Serialization/IJsonEnvelopeWriter.cs`
 - `src/Roslyn.Lint/Serialization/RoslynLintJsonContext.cs`
 - `src/Roslyn.Lint/Formatting/IHumanOutputFormatter.cs`

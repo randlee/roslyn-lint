@@ -27,13 +27,15 @@ target: integration/phase-A
 
 ## Exact Targets
 
-- `src/Roslyn.Lint/Contracts/ViewRequest.cs`
-- `src/Roslyn.Lint/Contracts/ViewResult.cs`
+- `src/Roslyn.Lint.Abstractions/Contracts/ViewRequest.cs`
+- `src/Roslyn.Lint.Abstractions/Contracts/ViewResult.cs`
 - `src/Roslyn.Lint.Abstractions/ToolRuleDescriptor.cs`
 - `src/Roslyn.Lint/Operations/IViewOperation.cs`
 - `src/Roslyn.Lint/Operations/RunViewOperation.cs`
 - `src/Roslyn.Lint/Commands/RegisterViewCommands.cs`
+- `src/Roslyn.Lint/Dispatch/IBackendJsonNormalizer.cs`
 - `src/Roslyn.Lint/Dispatch/IBackendProcessRunner.cs`
+- `src/Roslyn.Lint/Dispatch/DelegatedBackendNormalizationResult.cs`
 - `src/Roslyn.Lint/Dispatch/ProcessBackendRunner.cs`
 - `src/Roslyn.Lint/Dispatch/BackendJsonNormalizer.cs`
 - `src/Roslyn.Lint/Backends/ViewToolsHandler.cs`
@@ -49,10 +51,12 @@ target: integration/phase-A
 ## Important Interfaces, Records/Structs, And Enums
 
 - interfaces:
-  `ILintToolModule`, `IViewOperation`, `IBackendProcessRunner`
+  `ILintToolModule`, `IViewOperation`, `IBackendJsonNormalizer`,
+  `IBackendProcessRunner`
 - immutable payload types:
   `ToolDescriptor`, `ToolRuleDescriptor`, `ViewRequest`, `ViewResult`,
-  `BackendProcessRequest`, `BackendProcessResult`
+  `ViewToolResult`, `ViewRuleResult`, `BackendProcessRequest`,
+  `BackendProcessResult`, `DelegatedBackendNormalizationResult<T>`
 ## Required Work
 
 - implement stable `view` targets needed to use the suite immediately:

@@ -36,8 +36,8 @@ public sealed class ProcessBackendRunner : IBackendProcessRunner
             using var process = Process.Start(startInfo)
                 ?? throw new InvalidOperationException($"Failed to start backend process '{request.FileName}'.");
 
-            var outputTask = process.StandardOutput.ReadToEndAsync();
-            var errorTask = process.StandardError.ReadToEndAsync();
+            var outputTask = process.StandardOutput.ReadToEndAsync(cancellationToken);
+            var errorTask = process.StandardError.ReadToEndAsync(cancellationToken);
 
             try
             {

@@ -1,7 +1,7 @@
 namespace Roslyn.Lint.Backends;
 
 using Roslyn.Lint.Abstractions;
-using Roslyn.Lint.Contracts;
+using Roslyn.Lint.Abstractions.Contracts;
 
 public sealed class ViewToolsHandler : ILintToolCommandHandler<ViewRequest, ViewResult>
 {

@@ -173,7 +173,9 @@ Planned replacement-oriented CLI implementation units when CLI work resumes:
 - `src/Roslyn.Lint.Abstractions/Contracts/CiResult.cs`
 - `src/Roslyn.Lint.Abstractions/Contracts/VersionResult.cs`
 - `src/Roslyn.Lint/Dispatch/IBackendToolDispatcher.cs`
+- `src/Roslyn.Lint/Dispatch/IBackendJsonNormalizer.cs`
 - `src/Roslyn.Lint/Dispatch/IBackendProcessRunner.cs`
+- `src/Roslyn.Lint/Dispatch/DelegatedBackendNormalizationResult.cs`
 - `src/Roslyn.Lint/Dispatch/BackendJsonNormalizer.cs`
 - `src/Roslyn.Lint/Operations/ILintToolOperation.cs`
 - `src/Roslyn.Lint/Operations/IViewOperation.cs`

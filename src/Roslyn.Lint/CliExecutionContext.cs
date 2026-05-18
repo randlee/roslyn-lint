@@ -22,7 +22,7 @@ internal sealed class CliExecutionContext
         ICheckOperation checkOperation,
         IClippyOperation clippyOperation,
         ICiOperation ciOperation,
-        BackendJsonNormalizer backendJsonNormalizer,
+        IBackendJsonNormalizer backendJsonNormalizer,
         IJsonEnvelopeWriter jsonEnvelopeWriter,
         string version)
     {
@@ -58,7 +58,7 @@ internal sealed class CliExecutionContext
 
     public ICiOperation CiOperation { get; }
 
-    public BackendJsonNormalizer BackendJsonNormalizer { get; }
+    public IBackendJsonNormalizer BackendJsonNormalizer { get; }
 
     public IJsonEnvelopeWriter JsonEnvelopeWriter { get; }
 

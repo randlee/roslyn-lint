@@ -1,6 +1,6 @@
 namespace Roslyn.Lint.Formatting;
 
-using Roslyn.Lint.Contracts;
+using Roslyn.Lint.Abstractions.Contracts;
 
 public sealed class ViewToolsHumanOutputFormatter : IHumanOutputFormatter<ViewResult>
 {

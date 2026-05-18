@@ -2,16 +2,17 @@
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
+    <TargetFramework>net10.0</TargetFramework>
     <AssemblyName>roslyn-lint</AssemblyName>
   </PropertyGroup>
 
   <!-- NuGet Package Metadata (common properties inherited from Directory.Build.props) -->
   <PropertyGroup>
     <PackageId>roslyn-lint</PackageId>
-    <Description>Preview CLI baseline for the roslyn-lint suite; approved machine contract implementation remains pending</Description>
+    <Description>AI-first orchestration CLI for the roslyn-lint suite with a stable machine contract baseline</Description>
     <PackageTags>lint;roslyn;csharp;cli;preview;ai-first</PackageTags>
     <PackageReadmeFile>README.md</PackageReadmeFile>
-    <PackageReleaseNotes>Phase A preview only. The current CLI spike is disposable until the approved JSON contract and DTO layers are implemented.</PackageReleaseNotes>
+    <PackageReleaseNotes>Phase A CLI baseline with stable view, lint, and workflow contract surfaces.</PackageReleaseNotes>
   </PropertyGroup>
 
   <!-- .NET Tool Configuration -->

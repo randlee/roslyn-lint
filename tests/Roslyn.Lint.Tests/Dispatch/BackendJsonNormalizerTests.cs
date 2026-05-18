@@ -1,6 +1,7 @@
 namespace Roslyn.Lint.Tests.Dispatch;
 
 using FluentAssertions;
+using Roslyn.Lint.Abstractions;
 using Roslyn.Lint.Backends;
 using Roslyn.Lint.Dispatch;
 using Roslyn.Lint.Serialization;
@@ -127,5 +128,20 @@ public sealed class BackendJsonNormalizerTests
         error.Code.Should().Be("CLI.BACKEND_EXEC_FAILURE");
         error.Details.Should().ContainKey("step").WhoseValue.Should().Be("build");
         error.Details.Should().ContainKey("exit_code").WhoseValue.Should().Be("1");
+    }
+
+    [Fact]
+    public void NormalizeLintFailure_ReturnsBackendFailureForTool()
+    {
+        var normalizer = new BackendJsonNormalizer();
+
+        var error = normalizer.NormalizeLintFailure(
+            new ToolId("demagic"),
+            new InvalidOperationException("boom"));
+
+        error.Kind.Should().Be(Roslyn.Lint.Abstractions.Contracts.CliErrorKind.BackendFailure);
+        error.Code.Should().Be("CLI.BACKEND_EXEC_FAILURE");
+        error.Details.Should().ContainKey("tool").WhoseValue.Should().Be("demagic");
+        error.Details.Should().ContainKey("exception_type").WhoseValue.Should().Be(typeof(InvalidOperationException).FullName);
     }
 }

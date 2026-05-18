@@ -3,7 +3,7 @@ namespace Roslyn.DeMagic.Diagnostics;
 using Microsoft.CodeAnalysis;
 using Roslyn.DeMagic.Configuration;
 
-internal static class DeMagicDiagnosticDescriptors
+public static class DeMagicDiagnosticDescriptors
 {
     public const string Dm001Id = "DM001";
     public const string Dm002Id = "DM002";
@@ -37,5 +37,4 @@ internal static class DeMagicDiagnosticDescriptors
             _ => DiagnosticSeverity.Warning,
         };
     }
-
 }

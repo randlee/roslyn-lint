@@ -8,8 +8,8 @@ at strongly typed, automation-friendly C# code quality workflows.
 - `Roslyn.DeMagic` is the active implementation line.
 - analyzer packaging is validated in CI and prepared for independent release
   as `Roslyn.DeMagic`
-- the current `roslyn-lint` CLI is a disposable spike and not the approved
-  contract baseline
+- `roslyn-lint` now carries the approved Phase A contract baseline for suite
+  orchestration and metadata inspection
 
 ## Products
 

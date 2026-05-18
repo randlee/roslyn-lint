@@ -1,7 +1,6 @@
 namespace Roslyn.DeMagic.Lint;
 
-using Microsoft.CodeAnalysis;
-using Roslyn.DeMagic.Analyzers;
+using Roslyn.DeMagic.Diagnostics;
 using Roslyn.Lint.Abstractions;
 using Roslyn.Lint.Abstractions.Contracts;
 
@@ -10,8 +9,22 @@ public sealed class RoslynDeMagicToolModule : ILintToolModule
     private static readonly ToolId ToolId = new("demagic");
     private static readonly IReadOnlyList<ToolRuleDescriptor> RulesMetadata =
     [
-        CreateRuleDescriptor(new DM001ConstantConsolidationAnalyzer().SupportedDiagnostics[0]),
-        CreateRuleDescriptor(new DM002ForbiddenStringLiteralAnalyzer().SupportedDiagnostics[0]),
+        CreateRuleDescriptor(
+            DeMagicDiagnosticDescriptors.Dm001Id,
+            DeMagicDiagnosticDescriptors.Dm001Title,
+            DeMagicDiagnosticDescriptors.Dm001Category,
+            "warning",
+            true,
+            DeMagicDiagnosticDescriptors.Dm001MessageFormat,
+            DeMagicDiagnosticDescriptors.Dm001Description),
+        CreateRuleDescriptor(
+            DeMagicDiagnosticDescriptors.Dm002Id,
+            DeMagicDiagnosticDescriptors.Dm002Title,
+            DeMagicDiagnosticDescriptors.Dm002Category,
+            "error",
+            true,
+            DeMagicDiagnosticDescriptors.Dm002MessageFormat,
+            DeMagicDiagnosticDescriptors.Dm002Description),
     ];
 
     private readonly ILintToolCommandHandler<LintToolRequest, LintToolResult> lintHandler;
@@ -48,14 +61,21 @@ public sealed class RoslynDeMagicToolModule : ILintToolModule
         return false;
     }
 
-    private static ToolRuleDescriptor CreateRuleDescriptor(DiagnosticDescriptor descriptor)
+    private static ToolRuleDescriptor CreateRuleDescriptor(
+        string id,
+        string title,
+        string category,
+        string defaultSeverity,
+        bool isEnabledByDefault,
+        string messageFormat,
+        string description)
         => new(
             ToolId,
-            descriptor.Id,
-            descriptor.Title.ToString(),
-            descriptor.Category,
-            descriptor.DefaultSeverity.ToString().ToLowerInvariant(),
-            descriptor.IsEnabledByDefault,
-            descriptor.MessageFormat.ToString(),
-            descriptor.Description.ToString());
+            id,
+            title,
+            category,
+            defaultSeverity,
+            isEnabledByDefault,
+            messageFormat,
+            description);
 }

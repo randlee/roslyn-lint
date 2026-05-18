@@ -18,7 +18,7 @@ public sealed class CliApplication
     private readonly ICheckOperation checkOperation;
     private readonly IClippyOperation clippyOperation;
     private readonly ICiOperation ciOperation;
-    private readonly BackendJsonNormalizer backendJsonNormalizer;
+    private readonly IBackendJsonNormalizer backendJsonNormalizer;
     private readonly IJsonEnvelopeWriter jsonEnvelopeWriter;
 
     public CliApplication(
