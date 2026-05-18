@@ -20,7 +20,7 @@
     <Description>Roslyn analyzer package for constant-consolidation and forbidden-string diagnostics in C# solutions</Description>
     <PackageTags>roslyn;analyzer;csharp;constants;domain-boundary;code-quality</PackageTags>
     <PackageReadmeFile>README.md</PackageReadmeFile>
-    <PackageReleaseNotes>Phase A analyzer package baseline for DM001 and DM002 validation and packaging gates.</PackageReleaseNotes>
+    <PackageReleaseNotes>Phase A v0.1.0 production-testing candidate: ships DM001 and DM002 with packaged-consumer validation, requirement traceability, and release-readiness evidence.</PackageReleaseNotes>
   </PropertyGroup>
 
   <ItemGroup>

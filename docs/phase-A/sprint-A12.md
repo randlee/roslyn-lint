@@ -1,7 +1,7 @@
 ---
 id: A12
 title: production-readiness convergence
-status: planned
+status: complete
 branch: sprint/A12
 worktree: /Users/randlee/Documents/github/roslyn-lint-worktrees/sprint/A12
 target: integration/phase-A
@@ -39,6 +39,7 @@ target: integration/phase-A
 - `eng/validate-roslyn-demagic-package.ps1`
 - `eng/roslyn-demagic-package-expected-diagnostics.json`
 - `docs/phase-A/production-readiness-checklist.md`
+- `docs/releasing.md`
 - `tests/Roslyn.DeMagic.Tests/PackageValidation/ProductionReadinessChecklistRow.cs`
 
 ## Important Interfaces, Records/Structs, And Enums
@@ -78,4 +79,5 @@ target: integration/phase-A
 - `dotnet test tests/Roslyn.DeMagic.Tests/Roslyn.DeMagic.Tests.csproj --configuration Release --verbosity normal`
 - `dotnet pack src/Roslyn.DeMagic/Roslyn.DeMagic.csproj --configuration Release -o artifacts/packages`
 - `bash eng/validate-roslyn-demagic-package.sh`
+- `pwsh -File eng/validate-roslyn-demagic-package.ps1`
 - `git diff --check`
