@@ -1,7 +1,7 @@
 ---
 id: A9
 title: DM001 completion and rule parity
-status: planned
+status: complete
 branch: sprint/A9
 worktree: /Users/randlee/Documents/github/roslyn-lint-worktrees/sprint/A9
 target: integration/phase-A
