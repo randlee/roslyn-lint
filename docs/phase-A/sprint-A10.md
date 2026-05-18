@@ -1,7 +1,7 @@
 ---
 id: A10
 title: analyzer sample corpus and rule matrix
-status: planned
+status: complete
 branch: sprint/A10
 worktree: /Users/randlee/Documents/github/roslyn-lint-worktrees/sprint/A10
 target: integration/phase-A
