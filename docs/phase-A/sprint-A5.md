@@ -30,6 +30,7 @@ carry-forward scope from [`sprint-A4.md`](./sprint-A4.md):
 - `src/Roslyn.Lint.Abstractions/ToolDescriptor.cs`
 - `src/Roslyn.Lint.Abstractions/ILintToolModule.cs`
 - `src/Roslyn.Lint.Abstractions/ILintToolCommandHandler.cs`
+- `src/Roslyn.Lint.Abstractions/ILintWorkspaceAdapter.cs`
 - `src/Roslyn.Lint/Commands/RegisterLintCommands.cs`
 - `src/Roslyn.Lint/Commands/RegisterViewCommands.cs`
 - `src/Roslyn.Lint/Commands/RegisterCheckCommands.cs`
@@ -40,10 +41,10 @@ carry-forward scope from [`sprint-A4.md`](./sprint-A4.md):
 - `src/Roslyn.Lint/CommandModel/LintProfile.cs`
 - `src/Roslyn.Lint/CommandModel/OutputMode.cs`
 - `src/Roslyn.Lint/CommandModel/BackendExecutionMode.cs`
-- `src/Roslyn.Lint/Contracts/CliEnvelope.cs`
-- `src/Roslyn.Lint/Contracts/CliError.cs`
-- `src/Roslyn.Lint/Contracts/CliDiagnostic.cs`
-- `src/Roslyn.Lint/Contracts/CliErrorKind.cs`
+- `src/Roslyn.Lint.Abstractions/Contracts/CliEnvelope.cs`
+- `src/Roslyn.Lint.Abstractions/Contracts/CliError.cs`
+- `src/Roslyn.Lint.Abstractions/Contracts/CliDiagnostic.cs`
+- `src/Roslyn.Lint.Abstractions/Contracts/CliErrorKind.cs`
 - `src/Roslyn.Lint/Contracts/VersionResult.cs`
 - `src/Roslyn.Lint/Contracts/ViewRequest.cs`
 - `src/Roslyn.Lint/Contracts/ViewResult.cs`
@@ -51,6 +52,7 @@ carry-forward scope from [`sprint-A4.md`](./sprint-A4.md):
 - `src/Roslyn.Lint/Serialization/RoslynLintJsonContext.cs`
 - `src/Roslyn.Lint/Formatting/IHumanOutputFormatter.cs`
 - `tests/Roslyn.Lint.Tests/Commands/RootCommandTests.cs`
+- `tests/Roslyn.Lint.Tests/Commands/LintPlaceholderCommandTests.cs`
 - `tests/Roslyn.Lint.Tests/Commands/VersionCommandTests.cs`
 - `tests/Roslyn.Lint.Tests/Commands/ViewToolsCommandTests.cs`
 - `tests/Roslyn.Lint.Tests/Contracts/CliEnvelopeSerializationTests.cs`
@@ -75,6 +77,7 @@ carry-forward scope from [`sprint-A4.md`](./sprint-A4.md):
 - `src/Roslyn.Lint.Abstractions/ToolDescriptor.cs`
 - `src/Roslyn.Lint.Abstractions/ILintToolModule.cs`
 - `src/Roslyn.Lint.Abstractions/ILintToolCommandHandler.cs`
+- `src/Roslyn.Lint.Abstractions/ILintWorkspaceAdapter.cs`
 - `src/Roslyn.Lint.Abstractions/Attributes/` reserved only if later justified
 - `src/Roslyn.Lint/Program.cs`
 - `src/Roslyn.Lint/Roslyn.Lint.csproj`
@@ -88,10 +91,10 @@ carry-forward scope from [`sprint-A4.md`](./sprint-A4.md):
 - `src/Roslyn.Lint/CommandModel/LintProfile.cs`
 - `src/Roslyn.Lint/CommandModel/OutputMode.cs`
 - `src/Roslyn.Lint/CommandModel/BackendExecutionMode.cs`
-- `src/Roslyn.Lint/Contracts/CliEnvelope.cs`
-- `src/Roslyn.Lint/Contracts/CliError.cs`
-- `src/Roslyn.Lint/Contracts/CliDiagnostic.cs`
-- `src/Roslyn.Lint/Contracts/CliErrorKind.cs`
+- `src/Roslyn.Lint.Abstractions/Contracts/CliEnvelope.cs`
+- `src/Roslyn.Lint.Abstractions/Contracts/CliError.cs`
+- `src/Roslyn.Lint.Abstractions/Contracts/CliDiagnostic.cs`
+- `src/Roslyn.Lint.Abstractions/Contracts/CliErrorKind.cs`
 - `src/Roslyn.Lint/Contracts/VersionResult.cs`
 - `src/Roslyn.Lint/Contracts/ViewRequest.cs`
 - `src/Roslyn.Lint/Contracts/ViewResult.cs`
@@ -99,6 +102,7 @@ carry-forward scope from [`sprint-A4.md`](./sprint-A4.md):
 - `src/Roslyn.Lint/Serialization/RoslynLintJsonContext.cs`
 - `src/Roslyn.Lint/Formatting/IHumanOutputFormatter.cs`
 - `tests/Roslyn.Lint.Tests/Commands/RootCommandTests.cs`
+- `tests/Roslyn.Lint.Tests/Commands/LintPlaceholderCommandTests.cs`
 - `tests/Roslyn.Lint.Tests/Commands/VersionCommandTests.cs`
 - `tests/Roslyn.Lint.Tests/Commands/ViewToolsCommandTests.cs`
 - `tests/Roslyn.Lint.Tests/Contracts/CliEnvelopeSerializationTests.cs`
@@ -108,7 +112,8 @@ carry-forward scope from [`sprint-A4.md`](./sprint-A4.md):
 
 - interfaces:
   `ILintToolModule`, `ILintToolCommandHandler<TRequest, TResponse>`,
-  `IJsonEnvelopeWriter`, `IHumanOutputFormatter<TResponse>`
+  `ILintWorkspaceAdapter`, `IJsonEnvelopeWriter`,
+  `IHumanOutputFormatter<TResponse>`
 - immutable payload types:
   `ToolId`, `ToolDescriptor`, `CliEnvelope<TResult>`, `CliError`,
   `CliDiagnostic`, `VersionResult`, `ViewRequest`, `ViewResult`
@@ -133,6 +138,8 @@ carry-forward scope from [`sprint-A4.md`](./sprint-A4.md):
 - wire all top-level command families through one shared `--json` path and one
   shared envelope writer
 - fail with typed `CliError` payloads for missing subcommands or parse errors
+- keep the planned `lint demagic`, `lint fast`, `lint full`, and `lint ci`
+  surfaces registered with typed capability deferrals until A6 and A7 land
 
 ## Acceptance Criteria
 
@@ -147,6 +154,9 @@ carry-forward scope from [`sprint-A4.md`](./sprint-A4.md):
 - parse errors and missing command paths return JSON `CliError` payloads when
   `--json` is requested and are covered by
   `tests/Roslyn.Lint.Tests/Commands/RootCommandTests.cs`
+- deferred `lint demagic`, `lint fast`, `lint full`, and `lint ci` command
+  paths return typed capability envelopes with `planned_sprint` details and are
+  covered by `tests/Roslyn.Lint.Tests/Commands/LintPlaceholderCommandTests.cs`
 - the command families are registered through `System.CommandLine`
 - no low-level shared package depends on the CLI parser or entrypoint
 
@@ -157,4 +167,5 @@ carry-forward scope from [`sprint-A4.md`](./sprint-A4.md):
 - `dotnet test tests/Roslyn.Lint.Tests/Roslyn.Lint.Tests.csproj --configuration Release --verbosity normal`
 - `dotnet run --project src/Roslyn.Lint/Roslyn.Lint.csproj -- version --json`
 - `dotnet run --project src/Roslyn.Lint/Roslyn.Lint.csproj -- view tools --json`
+- `dotnet run --project src/Roslyn.Lint/Roslyn.Lint.csproj -- lint demagic --json`
 - `git diff --check`

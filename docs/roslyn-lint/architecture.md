@@ -160,10 +160,10 @@ The approved CLI implementation shape is:
 - `src/Roslyn.Lint/CommandModel/LintProfile.cs`
 - `src/Roslyn.Lint/CommandModel/OutputMode.cs`
 - `src/Roslyn.Lint/CommandModel/BackendExecutionMode.cs`
-- `src/Roslyn.Lint/Contracts/CliEnvelope.cs`
-- `src/Roslyn.Lint/Contracts/CliError.cs`
-- `src/Roslyn.Lint/Contracts/CliDiagnostic.cs`
-- `src/Roslyn.Lint/Contracts/CliErrorKind.cs`
+- `src/Roslyn.Lint.Abstractions/Contracts/CliEnvelope.cs`
+- `src/Roslyn.Lint.Abstractions/Contracts/CliError.cs`
+- `src/Roslyn.Lint.Abstractions/Contracts/CliDiagnostic.cs`
+- `src/Roslyn.Lint.Abstractions/Contracts/CliErrorKind.cs`
 - `src/Roslyn.Lint/Contracts/LintToolRequest.cs`
 - `src/Roslyn.Lint/Contracts/LintToolResult.cs`
 - `src/Roslyn.Lint/Contracts/LintFinding.cs`

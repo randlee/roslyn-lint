@@ -2,9 +2,9 @@ namespace Roslyn.Lint;
 
 using System.CommandLine;
 using Roslyn.Lint.Abstractions;
+using Roslyn.Lint.Abstractions.Contracts;
 using Roslyn.Lint.Backends;
 using Roslyn.Lint.Commands;
-using Roslyn.Lint.Contracts;
 using Roslyn.Lint.Serialization;
 
 public sealed class CliApplication

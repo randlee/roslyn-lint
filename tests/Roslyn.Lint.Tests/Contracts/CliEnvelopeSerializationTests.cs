@@ -1,6 +1,7 @@
 namespace Roslyn.Lint.Tests.Contracts;
 
 using FluentAssertions;
+using Roslyn.Lint.Abstractions.Contracts;
 using Roslyn.Lint.Contracts;
 using Roslyn.Lint.Serialization;
 using Xunit;
@@ -23,6 +24,7 @@ public sealed class CliEnvelopeSerializationTests
         json.Should().Contain("\"command\": \"version\"");
         json.Should().Contain("\"cli\": \"roslyn-lint\"");
         json.Should().NotContain("\"error\"");
+        json.Should().NotContain("\"diagnostics\"");
     }
 
     [Fact]
@@ -48,5 +50,7 @@ public sealed class CliEnvelopeSerializationTests
         json.Should().Contain("\"code\": \"CLI.USAGE_ERROR\"");
         json.Should().Contain("\"suggested_action\": \"Use --help.\"");
         json.Should().NotContain("\"data\"");
+        json.Should().NotContain("\"details\"");
+        json.Should().NotContain("\"diagnostics\"");
     }
 }

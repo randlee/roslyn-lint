@@ -1,6 +1,7 @@
 namespace Roslyn.Lint.Serialization;
 
 using System.Text.Json.Serialization;
+using Roslyn.Lint.Abstractions.Contracts;
 using Roslyn.Lint.Contracts;
 
 [JsonSourceGenerationOptions(

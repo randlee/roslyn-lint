@@ -122,10 +122,10 @@ Planned replacement-oriented CLI implementation units when CLI work resumes:
 - `src/Roslyn.Lint/Commands/RegisterClippyCommands.cs`
 - `src/Roslyn.Lint/Commands/RegisterCiCommand.cs`
 - `src/Roslyn.Lint/Commands/RegisterVersionCommand.cs`
-- `src/Roslyn.Lint/Contracts/CliEnvelope.cs`
-- `src/Roslyn.Lint/Contracts/CliError.cs`
-- `src/Roslyn.Lint/Contracts/CliDiagnostic.cs`
-- `src/Roslyn.Lint/Contracts/CliErrorKind.cs`
+- `src/Roslyn.Lint.Abstractions/Contracts/CliEnvelope.cs`
+- `src/Roslyn.Lint.Abstractions/Contracts/CliError.cs`
+- `src/Roslyn.Lint.Abstractions/Contracts/CliDiagnostic.cs`
+- `src/Roslyn.Lint.Abstractions/Contracts/CliErrorKind.cs`
 - `src/Roslyn.Lint/Contracts/LintToolRequest.cs`
 - `src/Roslyn.Lint/Contracts/LintToolResult.cs`
 - `src/Roslyn.Lint/Contracts/LintFinding.cs`

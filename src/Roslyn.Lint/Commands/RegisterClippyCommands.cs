@@ -1,7 +1,7 @@
 namespace Roslyn.Lint.Commands;
 
 using System.CommandLine;
-using Roslyn.Lint.Contracts;
+using Roslyn.Lint.Abstractions.Contracts;
 
 internal static class RegisterClippyCommands
 {

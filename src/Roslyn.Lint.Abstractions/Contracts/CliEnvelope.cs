@@ -1,4 +1,4 @@
-namespace Roslyn.Lint.Contracts;
+namespace Roslyn.Lint.Abstractions.Contracts;
 
 using System.Text.Json.Serialization;
 
@@ -15,7 +15,7 @@ public sealed record CliEnvelope<T>
         Command = command;
         Data = data;
         Error = error;
-        Diagnostics = diagnostics ?? [];
+        Diagnostics = diagnostics is { Count: > 0 } ? diagnostics : null;
     }
 
     public bool Ok { get; }
@@ -28,7 +28,8 @@ public sealed record CliEnvelope<T>
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public CliError? Error { get; }
 
-    public IReadOnlyList<CliDiagnostic> Diagnostics { get; }
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    public IReadOnlyList<CliDiagnostic>? Diagnostics { get; }
 
     public static CliEnvelope<T> Success(string command, T data, IReadOnlyList<CliDiagnostic>? diagnostics = null)
         => new(true, command, data, null, diagnostics);

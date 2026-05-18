@@ -1,4 +1,4 @@
-namespace Roslyn.Lint.Contracts;
+namespace Roslyn.Lint.Abstractions.Contracts;
 
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -14,7 +14,7 @@ public enum CliErrorKind
     Internal,
 }
 
-internal sealed class CliErrorKindJsonConverter : JsonConverter<CliErrorKind>
+public sealed class CliErrorKindJsonConverter : JsonConverter<CliErrorKind>
 {
     public override CliErrorKind Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
         => reader.GetString() switch

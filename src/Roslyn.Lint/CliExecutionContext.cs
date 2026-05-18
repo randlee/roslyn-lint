@@ -3,8 +3,8 @@ namespace Roslyn.Lint;
 using System.CommandLine;
 using System.CommandLine.Parsing;
 using Roslyn.Lint.Abstractions;
+using Roslyn.Lint.Abstractions.Contracts;
 using Roslyn.Lint.CommandModel;
-using Roslyn.Lint.Contracts;
 using Roslyn.Lint.Formatting;
 using Roslyn.Lint.Serialization;
 

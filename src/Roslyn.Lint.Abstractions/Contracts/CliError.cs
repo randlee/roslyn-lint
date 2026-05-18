@@ -1,4 +1,4 @@
-namespace Roslyn.Lint.Contracts;
+namespace Roslyn.Lint.Abstractions.Contracts;
 
 using System.Text.Json.Serialization;
 
@@ -14,7 +14,7 @@ public sealed record CliError
         Kind = kind;
         Code = code;
         Message = message;
-        Details = details ?? new Dictionary<string, string?>();
+        Details = details is { Count: > 0 } ? details : null;
         SuggestedAction = suggestedAction;
     }
 
@@ -24,7 +24,8 @@ public sealed record CliError
 
     public string Message { get; }
 
-    public IReadOnlyDictionary<string, string?> Details { get; }
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    public IReadOnlyDictionary<string, string?>? Details { get; }
 
     [JsonPropertyName("suggested_action")]
     public string? SuggestedAction { get; }
