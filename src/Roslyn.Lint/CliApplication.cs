@@ -1,15 +1,19 @@
 namespace Roslyn.Lint;
 
 using System.CommandLine;
+using Roslyn.DeMagic.Lint;
 using Roslyn.Lint.Abstractions;
 using Roslyn.Lint.Abstractions.Contracts;
-using Roslyn.Lint.Backends;
 using Roslyn.Lint.Commands;
+using Roslyn.Lint.Dispatch;
+using Roslyn.Lint.Operations;
 using Roslyn.Lint.Serialization;
 
 public sealed class CliApplication
 {
     private readonly IReadOnlyList<ILintToolModule> toolModules;
+    private readonly ILintToolOperation lintToolOperation;
+    private readonly BackendJsonNormalizer backendJsonNormalizer;
     private readonly IJsonEnvelopeWriter jsonEnvelopeWriter;
 
     public CliApplication(
@@ -17,6 +21,9 @@ public sealed class CliApplication
         IJsonEnvelopeWriter? jsonEnvelopeWriter = null)
     {
         this.toolModules = toolModules ?? [new RoslynDeMagicToolModule()];
+        var dispatcher = new BackendToolDispatcher(this.toolModules);
+        lintToolOperation = new RunLintToolOperation(dispatcher);
+        backendJsonNormalizer = new BackendJsonNormalizer();
         this.jsonEnvelopeWriter = jsonEnvelopeWriter ?? new JsonEnvelopeWriter();
     }
 
@@ -43,6 +50,8 @@ public sealed class CliApplication
             error,
             jsonOption,
             toolModules,
+            lintToolOperation,
+            backendJsonNormalizer,
             jsonEnvelopeWriter,
             typeof(CliApplication).Assembly.GetName().Version?.ToString() ?? "0.0.0");
 

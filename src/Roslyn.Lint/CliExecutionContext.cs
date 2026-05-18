@@ -5,7 +5,9 @@ using System.CommandLine.Parsing;
 using Roslyn.Lint.Abstractions;
 using Roslyn.Lint.Abstractions.Contracts;
 using Roslyn.Lint.CommandModel;
+using Roslyn.Lint.Dispatch;
 using Roslyn.Lint.Formatting;
+using Roslyn.Lint.Operations;
 using Roslyn.Lint.Serialization;
 
 internal sealed class CliExecutionContext
@@ -15,6 +17,8 @@ internal sealed class CliExecutionContext
         TextWriter error,
         Option<bool> jsonOption,
         IReadOnlyList<ILintToolModule> toolModules,
+        ILintToolOperation lintToolOperation,
+        BackendJsonNormalizer backendJsonNormalizer,
         IJsonEnvelopeWriter jsonEnvelopeWriter,
         string version)
     {
@@ -22,6 +26,8 @@ internal sealed class CliExecutionContext
         Error = error;
         JsonOption = jsonOption;
         ToolModules = toolModules;
+        LintToolOperation = lintToolOperation;
+        BackendJsonNormalizer = backendJsonNormalizer;
         JsonEnvelopeWriter = jsonEnvelopeWriter;
         Version = version;
     }
@@ -33,6 +39,10 @@ internal sealed class CliExecutionContext
     public Option<bool> JsonOption { get; }
 
     public IReadOnlyList<ILintToolModule> ToolModules { get; }
+
+    public ILintToolOperation LintToolOperation { get; }
+
+    public BackendJsonNormalizer BackendJsonNormalizer { get; }
 
     public IJsonEnvelopeWriter JsonEnvelopeWriter { get; }
 

@@ -160,6 +160,22 @@ carry-forward scope from [`sprint-A4.md`](./sprint-A4.md):
 - the command families are registered through `System.CommandLine`
 - no low-level shared package depends on the CLI parser or entrypoint
 
+## Deferrals
+
+- `tests/Roslyn.Lint.Tests/Commands/CheckPlaceholderCommandTests.cs`
+  remains deferred to A7 or A8 while `check` stays a registered placeholder
+  surface with explicit typed error responses.
+- `tests/Roslyn.Lint.Tests/Commands/ClippyPlaceholderCommandTests.cs`
+  remains deferred to A7 or A8 while `clippy` stays a registered placeholder
+  surface with explicit typed error responses.
+- `tests/Roslyn.Lint.Tests/Commands/CiPlaceholderCommandTests.cs`
+  remains deferred to A7 or A8 while `ci` stays a registered placeholder
+  surface with explicit typed error responses.
+- rationale: A5 is limited to the first usable CLI foundation and `demagic`
+  entry flow preparation. Full placeholder-family test coverage belongs with
+  the later sprints that implement the real `check`, `clippy`, and `ci`
+  behavior.
+
 ## Required Validation
 
 - `dotnet restore roslyn-lint.sln`

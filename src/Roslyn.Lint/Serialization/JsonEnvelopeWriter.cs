@@ -4,7 +4,7 @@ using System.Text.Json;
 
 public sealed class JsonEnvelopeWriter : IJsonEnvelopeWriter
 {
-    public Task WriteAsync(TextWriter writer, object envelope, CancellationToken cancellationToken)
+    public async Task WriteAsync(TextWriter writer, object envelope, CancellationToken cancellationToken)
     {
         cancellationToken.ThrowIfCancellationRequested();
 
@@ -13,6 +13,6 @@ public sealed class JsonEnvelopeWriter : IJsonEnvelopeWriter
             envelope.GetType(),
             RoslynLintJsonContext.Default.Options);
 
-        return writer.WriteLineAsync(json);
+        await writer.WriteLineAsync(json.AsMemory(), cancellationToken);
     }
 }

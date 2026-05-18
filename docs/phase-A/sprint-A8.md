@@ -37,7 +37,7 @@ target: integration/phase-A
 - `src/Roslyn.Lint/Dispatch/BackendJsonNormalizer.cs`
 - `src/Roslyn.Lint/Backends/ViewToolsHandler.cs`
 - `src/Roslyn.Lint/Backends/ViewRulesHandler.cs`
-- `src/Roslyn.Lint/Backends/RoslynDeMagicToolModule.cs`
+- `src/Roslyn.DeMagic.Lint/RoslynDeMagicToolModule.cs`
 - `tests/Roslyn.Lint.Tests/Commands/ViewCommandTests.cs`
 - `tests/Roslyn.Lint.Tests/Dispatch/ProcessBackendRunnerTests.cs`
 - `tests/Roslyn.Lint.Tests/Dispatch/BackendJsonNormalizerTests.cs`
