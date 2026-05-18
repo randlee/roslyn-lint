@@ -1,7 +1,7 @@
 ---
 id: A8
 title: View surfaces, boundary metadata, and tool-module hardening
-status: planned
+status: in-progress
 branch: sprint/A8
 worktree: /Users/randlee/Documents/github/roslyn-lint-worktrees/sprint/A8
 target: integration/phase-A
