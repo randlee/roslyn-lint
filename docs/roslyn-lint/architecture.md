@@ -321,4 +321,17 @@ Parser-library choice is not open-ended in this baseline. The approved
 parser and command-registration layer is `System.CommandLine`, and any future
 implementation proposal that deviates from it requires a new ADR.
 
+## 12. Packaging Baseline
+
+`Roslyn.Lint` is planned as a .NET tool package with a stable executable
+command name of `roslyn-lint`.
+
+Architectural rules:
+
+- tool packaging must be documented before A13 closes
+- package metadata, command name, and publication workflows must describe the
+  same shipping model
+- GitHub Packages publication may be automated in A13, but the first NuGet.org
+  release remains manual and documented
+
 Boundary ownership detail is defined in `docs/roslyn-lint/boundaries.md`.

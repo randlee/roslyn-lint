@@ -102,6 +102,18 @@ Suite requirement IDs:
   design baseline is governed by AI-first contract rules rather than the
   current CLI spike.
 
+### 4.1 Phase A Continuation
+
+After the initial CLI-baseline and analyzer-foundation work, Phase A continues
+through the analyzer-readiness line:
+
+- `A9` implements the missing `DM001` rule behavior.
+- `A10` adds exhaustive analyzer samples and requirement traceability.
+- `A11` validates the analyzer through a locally packed consumer project.
+- `A12` converges docs, manifests, release metadata, and readiness evidence.
+- `A13` adds CI enforcement for packaged-consumer validation and staged
+  package publication, while keeping the first NuGet.org release manual.
+
 ## 5. CLI Baseline
 
 The final detailed CLI feature requirements will be provided later, but the

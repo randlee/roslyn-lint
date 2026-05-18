@@ -127,6 +127,8 @@ Notes:
 - this boundary verifies package behavior, not just in-repo analyzer execution
 - local-feed restore, consumer build, and expected-diagnostic comparison belong
   here
+- the compiled support types for this boundary live in
+  `tests/Roslyn.DeMagic.Tests/PackageValidation/`
 - the preferred payload types are `ExpectedPackageDiagnostic`,
   `PackageValidationManifest`, and `PackageValidationResult`
 

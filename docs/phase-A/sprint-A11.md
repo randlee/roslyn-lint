@@ -43,6 +43,10 @@ target: integration/phase-A
 - `eng/validate-roslyn-demagic-package.sh`
 - `eng/validate-roslyn-demagic-package.ps1`
 - `eng/roslyn-demagic-package-expected-diagnostics.json`
+- `tests/Roslyn.DeMagic.Tests/PackageValidation/ExpectedPackageDiagnostic.cs`
+- `tests/Roslyn.DeMagic.Tests/PackageValidation/PackageValidationManifest.cs`
+- `tests/Roslyn.DeMagic.Tests/PackageValidation/PackageValidationResult.cs`
+- `tests/Roslyn.DeMagic.Tests/PackageValidation/PackageValidationSampleKind.cs`
 
 ## Important Interfaces, Records/Structs, And Enums
 
@@ -62,6 +66,9 @@ target: integration/phase-A
   diagnostic presence and absence
 - add `eng/roslyn-demagic-package-expected-diagnostics.json` so the validation
   scripts compare build output to a structured expected-diagnostics manifest
+- add compiled validation-support types in
+  `tests/Roslyn.DeMagic.Tests/PackageValidation/` so the manifest shape and
+  expected diagnostic rows have one named project home
 - provide cross-platform validation scripts that pack, restore, build, and
   assert expected diagnostics from the consumer project
 - define `PackageValidationSampleKind` so each example file is tagged as:

@@ -59,8 +59,8 @@ design line rather than assuming the current spike is valid.
 - `eng/validate-roslyn-demagic-package.sh`
 - `eng/validate-roslyn-demagic-package.ps1`
 - `eng/roslyn-demagic-package-expected-diagnostics.json`
+- `tests/Roslyn.DeMagic.Tests/PackageValidation/`
 - `src/Roslyn.Lint/Program.cs`
-- `src/Roslyn.Lint/Commands/LintCommand.cs`
 - `src/Roslyn.Lint.Abstractions/Contracts/`
 - `src/Roslyn.Lint/Operations/`
 - `src/Roslyn.Lint/Serialization/`
@@ -149,6 +149,10 @@ introduced during the development sprints:
 - package-validation types:
   `ExpectedPackageDiagnostic`, `PackageValidationManifest`,
   `PackageValidationSampleKind`, `PackageValidationResult`
+
+The package-validation types above are planned compiled validation-support
+types owned by `tests/Roslyn.DeMagic.Tests/PackageValidation/`. They are not
+analyzer runtime types and must not live in `Roslyn.DeMagic`.
 
 ## 8. Acceptance
 

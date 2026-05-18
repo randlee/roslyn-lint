@@ -6,7 +6,7 @@
 | Status | **Accepted** |
 | Date | 2026-05-18 |
 | Deciders | Rand Lee |
-| Relates to | REQ-DM-PACK-006, REQ-DM-PACK-007, REQ-DM-TEST-007, REQ-DM-TEST-009, REQ-DM-TEST-010 |
+| Relates to | REQ-DM-PACK-006, REQ-DM-PACK-007, REQ-DM-TEST-007, REQ-DM-TEST-009, REQ-DM-TEST-010, REQ-CLI-PACK-001, REQ-CLI-PACK-003 |
 | Supersedes | — |
 
 ---
@@ -46,6 +46,8 @@ This means:
   manual console review
 - CI must run the packaged-consumer validation path before publication is
   considered passing
+- `Roslyn.Lint` is treated as a .NET tool package for the staged publication
+  path rather than as an undefined library/package shape
 - CI may publish repo-produced packages to GitHub Packages once validation
   passes
 - the first NuGet.org publication remains manual and must be documented in

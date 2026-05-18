@@ -39,6 +39,7 @@ target: integration/phase-A
 - `eng/validate-roslyn-demagic-package.ps1`
 - `eng/roslyn-demagic-package-expected-diagnostics.json`
 - `docs/phase-A/production-readiness-checklist.md`
+- `tests/Roslyn.DeMagic.Tests/PackageValidation/ProductionReadinessChecklistRow.cs`
 
 ## Important Interfaces, Records/Structs, And Enums
 

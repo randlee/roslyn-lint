@@ -81,6 +81,20 @@ Merge target:
 
 Phase A must not treat the current CLI spike as an approved product contract.
 
+Phase A continuation after the initial CLI-baseline and analyzer-foundation
+sprints is:
+
+- `A9` closes the missing `DM001` implementation so the analyzer actually
+  matches the approved rule inventory.
+- `A10` adds the exhaustive analyzer sample corpus and requirement traceability
+  matrix.
+- `A11` validates the built analyzer as a locally packed package consumed from
+  a normal project.
+- `A12` converges docs, manifests, release metadata, and readiness evidence
+  onto one real shippable analyzer set.
+- `A13` adds CI enforcement for packaged-consumer validation and staged
+  publication, while keeping the first NuGet.org release manual.
+
 ### Phase A Implementation Inventory
 
 Phase A implementation work is expected to touch, add, delete, or replace
@@ -96,6 +110,7 @@ these code paths:
 - `eng/validate-roslyn-demagic-package.sh`
 - `eng/validate-roslyn-demagic-package.ps1`
 - `eng/roslyn-demagic-package-expected-diagnostics.json`
+- `tests/Roslyn.DeMagic.Tests/PackageValidation/`
 - `docs/phase-A/production-readiness-checklist.md`
 - `docs/releasing.md`
 - `tests/Roslyn.DeMagic.Tests/Analyzers/DM002ForbiddenStringLiteralAnalyzerTests.cs`
@@ -105,9 +120,7 @@ these code paths:
 - `tests/Roslyn.DeMagic.Tests/TestData/README.md`
 - `tests/Roslyn.DeMagic.Tests/TestMatrix.md`
 - `src/Roslyn.Lint/Program.cs`
-- `src/Roslyn.Lint/Commands/LintCommand.cs`
 - `src/Roslyn.Lint/Roslyn.Lint.csproj`
-- `tests/Roslyn.Lint.Tests/Commands/LintCommandSettingsTests.cs`
 - `.github/workflows/ci.yml`
 - `.github/workflows/publish.yml`
 
@@ -172,6 +185,14 @@ Planned replacement-oriented CLI implementation units when CLI work resumes:
 - `src/Roslyn.Lint/Adapters/`
 - `tests/Roslyn.Lint.Tests/Contracts/`
 - `tests/Roslyn.Lint.Tests/Operations/`
+
+Planned package-validation support units:
+
+- `tests/Roslyn.DeMagic.Tests/PackageValidation/ExpectedPackageDiagnostic.cs`
+- `tests/Roslyn.DeMagic.Tests/PackageValidation/PackageValidationManifest.cs`
+- `tests/Roslyn.DeMagic.Tests/PackageValidation/PackageValidationResult.cs`
+- `tests/Roslyn.DeMagic.Tests/PackageValidation/PackageValidationSampleKind.cs`
+- `tests/Roslyn.DeMagic.Tests/PackageValidation/ProductionReadinessChecklistRow.cs`
 
 ## 5. Execution Rules
 

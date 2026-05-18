@@ -34,7 +34,11 @@ target: integration/phase-A
 - `eng/validate-roslyn-demagic-package.ps1`
 - `eng/roslyn-demagic-package-expected-diagnostics.json`
 - `docs/releasing.md`
-- `docs/phase-A/sprint-A13.md`
+- `docs/roslyn-lint/requirements.md`
+- `docs/roslyn-lint/architecture.md`
+- `tests/Roslyn.DeMagic.Tests/PackageValidation/ExpectedPackageDiagnostic.cs`
+- `tests/Roslyn.DeMagic.Tests/PackageValidation/PackageValidationManifest.cs`
+- `tests/Roslyn.DeMagic.Tests/PackageValidation/PackageValidationResult.cs`
 
 ## Important Interfaces, Records/Structs, And Enums
 
@@ -46,6 +50,9 @@ target: integration/phase-A
 
 - add CI steps that pack `Roslyn.DeMagic`, restore the example consumer, and
   run the cross-platform package-validation scripts
+- decide and document the `Roslyn.Lint` packaging strategy before packing:
+  ship it as a .NET tool package with `PackAsTool`, a stable package id, and
+  the executable command name `roslyn-lint`
 - configure GitHub Packages publication for `Roslyn.DeMagic`,
   `Roslyn.Lint`, and any package dependencies produced by this repo
 - ensure publication credentials and package-source assumptions live in CI and
@@ -59,6 +66,8 @@ target: integration/phase-A
 
 - CI proves the packaged analyzer-consumer path before Phase A is called
   complete
+- the `Roslyn.Lint` packaging model is explicit in docs and matches the
+  pack/publish workflow
 - CI can publish repo-produced packages to GitHub Packages without changing the
   package-consumer contract
 - `docs/releasing.md` is sufficient for a maintainer to perform the first

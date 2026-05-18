@@ -169,6 +169,15 @@ Tests should validate:
 - CI execution of the packaged-consumer validation path before GitHub Packages
   publication is considered passing
 
+The package-validation support types used by that path are planned compiled
+types owned by `tests/Roslyn.DeMagic.Tests/PackageValidation/`:
+
+- `ExpectedPackageDiagnostic`
+- `PackageValidationManifest`
+- `PackageValidationResult`
+- `PackageValidationSampleKind`
+- `ProductionReadinessChecklistRow`
+
 The test suite must be built around PRD behavior, not around preserving the
 current spike's literal-detection semantics.
 
