@@ -37,6 +37,11 @@ Handoff expectations:
 
 - GitHub Actions must continue to validate the packaged-consumer path before
   publication behavior is considered passing
+- `tests/Roslyn.DeMagic.Tests/PermutationMatrix.md` and
+  `docs/phase-A/production-readiness-checklist.md` remain human-audit gate
+  artifacts: they must be reviewed as closed on the branch under their own
+  internal rules before release, but they are not treated as markdown grep
+  checks in CI
 - GitHub Packages publication is the automated package-distribution path for
   Phase A
 - the first NuGet.org release remains manual and must not be driven directly by
