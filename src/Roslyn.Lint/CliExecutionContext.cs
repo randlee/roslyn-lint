@@ -18,6 +18,7 @@ internal sealed class CliExecutionContext
         Option<bool> jsonOption,
         IReadOnlyList<ILintToolModule> toolModules,
         ILintToolOperation lintToolOperation,
+        IViewOperation viewOperation,
         ICheckOperation checkOperation,
         IClippyOperation clippyOperation,
         ICiOperation ciOperation,
@@ -30,6 +31,7 @@ internal sealed class CliExecutionContext
         JsonOption = jsonOption;
         ToolModules = toolModules;
         LintToolOperation = lintToolOperation;
+        ViewOperation = viewOperation;
         CheckOperation = checkOperation;
         ClippyOperation = clippyOperation;
         CiOperation = ciOperation;
@@ -47,6 +49,8 @@ internal sealed class CliExecutionContext
     public IReadOnlyList<ILintToolModule> ToolModules { get; }
 
     public ILintToolOperation LintToolOperation { get; }
+
+    public IViewOperation ViewOperation { get; }
 
     public ICheckOperation CheckOperation { get; }
 

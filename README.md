@@ -21,6 +21,21 @@ at strongly typed, automation-friendly C# code quality workflows.
   future AI-first CLI surface with a stable JSON envelope, typed errors, and
   MCP-ready DTO reuse
 
+## Current CLI surfaces
+
+- `roslyn-lint lint demagic`
+- `roslyn-lint lint fast|full|ci`
+- `roslyn-lint view tools`
+- `roslyn-lint view rules`
+- `roslyn-lint check`
+- `roslyn-lint clippy`
+- `roslyn-lint ci`
+- `roslyn-lint version`
+
+`view rules` currently surfaces `Roslyn.DeMagic` rule metadata for `DM001` and
+`DM002`, while the delegated backend process runner and JSON normalization seam
+are in place for future package-owned tool backends.
+
 ## Governing docs
 
 - `docs/roslyn-demagic/requirements.md`
