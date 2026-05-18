@@ -31,14 +31,7 @@ env = { ATM_IDENTITY = "quality-mgr", ATM_TEAM = "roslyn-lint", CLAUDE_CODE_TASK
 # ── Startup context injection (session_start_context.py hook) ─────────
 
 [startup.team-lead]
-all = """
-You are team-lead for the roslyn-lint project on team roslyn-lint.
-Your Codex agent is crl. Use ATM CLI to communicate with crl: atm send crl "message"
-Check inbox with: atm read
-"""
+all = "You are team-lead for roslyn-lint. Use codex-orchestration j2 templates for all task assignments."
 
 [startup.quality-mgr]
-all = """
-You are quality-mgr for the roslyn-lint project on team roslyn-lint.
-Review code quality, run tests, and report issues to team-lead.
-"""
+all = "You are quality-mgr for roslyn-lint. See .claude/agents/quality-mgr.md for directive."

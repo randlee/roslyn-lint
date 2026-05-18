@@ -56,6 +56,11 @@ Phase planning docs live under:
 - `docs/phase-A/sprint-A6.md`
 - `docs/phase-A/sprint-A7.md`
 - `docs/phase-A/sprint-A8.md`
+- `docs/phase-A/sprint-A9.md`
+- `docs/phase-A/sprint-A10.md`
+- `docs/phase-A/sprint-A11.md`
+- `docs/phase-A/sprint-A12.md`
+- `docs/phase-A/sprint-A13.md`
 
 Documentation requirement IDs:
 
@@ -96,6 +101,18 @@ Suite requirement IDs:
 - `REQ-SUITE-PHASEA-003` The CLI remains a separate project in Phase A, but its
   design baseline is governed by AI-first contract rules rather than the
   current CLI spike.
+
+### 4.1 Phase A Continuation
+
+After the initial CLI-baseline and analyzer-foundation work, Phase A continues
+through the analyzer-readiness line:
+
+- `A9` implements the missing `DM001` rule behavior.
+- `A10` adds exhaustive analyzer samples and requirement traceability.
+- `A11` validates the analyzer through a locally packed consumer project.
+- `A12` converges docs, manifests, release metadata, and readiness evidence.
+- `A13` adds CI enforcement for packaged-consumer validation and staged
+  package publication, while keeping the first NuGet.org release manual.
 
 ## 5. CLI Baseline
 
