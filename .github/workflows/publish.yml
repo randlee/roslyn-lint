@@ -6,7 +6,53 @@ on:
       - 'v*'  # Triggers on tags like v1.0.0, v0.5.1, etc.
 
 jobs:
+  validate-packages:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.0.x'
+          dotnet-quality: 'preview'
+
+      - name: Extract version from tag
+        id: version
+        shell: bash
+        run: echo "VERSION=${GITHUB_REF#refs/tags/v}" >> $GITHUB_OUTPUT
+
+      - name: Restore dependencies
+        run: dotnet restore
+
+      - name: Build
+        run: dotnet build -c Release --no-restore -p:Version=${{ steps.version.outputs.VERSION }}
+
+      - name: Run tests
+        run: dotnet test -c Release --no-build
+
+      - name: Pack Roslyn.DeMagic analyzer
+        run: dotnet pack src/Roslyn.DeMagic/Roslyn.DeMagic.csproj -c Release --no-build -p:Version=${{ steps.version.outputs.VERSION }} -o ./artifacts/packages
+
+      - name: Pack roslyn-lint tool
+        run: dotnet pack src/Roslyn.Lint/Roslyn.Lint.csproj -c Release --no-build -p:Version=${{ steps.version.outputs.VERSION }} -o ./artifacts/packages
+
+      - name: Validate packaged analyzer-consumer path on Unix
+        if: runner.os != 'Windows'
+        run: bash eng/validate-roslyn-demagic-package.sh
+
+      - name: Validate packaged analyzer-consumer path on Windows
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: ./eng/validate-roslyn-demagic-package.ps1
+
   publish:
+    needs: validate-packages
     runs-on: ubuntu-latest
     permissions:
       contents: read
