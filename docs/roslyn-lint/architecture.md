@@ -338,5 +338,10 @@ Architectural rules:
   same shipping model
 - GitHub Packages publication may be automated in A13, but the first NuGet.org
   release remains manual and documented
+- CI and publish workflows must pack the same `PackAsTool` artifact that local
+  validation commands produce
+- the release handoff must document the current signing policy, package-source
+  setup, exact publish commands, and post-release verification steps for the
+  tool package as well as the analyzer package
 
 Boundary ownership detail is defined in `docs/roslyn-lint/boundaries.md`.

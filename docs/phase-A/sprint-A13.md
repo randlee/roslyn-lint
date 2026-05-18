@@ -1,7 +1,7 @@
 ---
 id: A13
 title: ci publish and manual release handoff
-status: planned
+status: complete
 branch: sprint/A13
 worktree: /Users/randlee/Documents/github/roslyn-lint-worktrees/sprint/A13
 target: integration/phase-A
@@ -54,12 +54,16 @@ target: integration/phase-A
   and A13 has revalidated against that baseline
 - add CI steps that pack `Roslyn.DeMagic`, restore the example consumer, and
   run the cross-platform package-validation scripts
-- require CI and publish flows to use the same authoritative A12 gate artifacts:
-  `tests/Roslyn.DeMagic.Tests/PermutationMatrix.md`,
-  `docs/phase-A/production-readiness-checklist.md`,
-  `eng/roslyn-demagic-package-expected-diagnostics.json`,
-  `src/Roslyn.DeMagic/AnalyzerReleases.Shipped.md`,
-  `src/Roslyn.DeMagic/AnalyzerReleases.Unshipped.md`
+- require CI and publish flows to use the same authoritative A12 gate
+  artifacts, with verification mode called out explicitly:
+  `tests/Roslyn.DeMagic.Tests/PermutationMatrix.md` and
+  `docs/phase-A/production-readiness-checklist.md` remain human-audit gate
+  inputs that must be reviewed closed on the branch under their own internal
+  rules before A13 can PASS or merge; CI and publish automation must machine-
+  verify `eng/roslyn-demagic-package-expected-diagnostics.json`,
+  `src/Roslyn.DeMagic/AnalyzerReleases.Shipped.md`, and
+  `src/Roslyn.DeMagic/AnalyzerReleases.Unshipped.md` through the same package
+  validation path used locally
 - confirm and apply the documented `Roslyn.Lint` packaging strategy:
   `PackAsTool`, command name `roslyn-lint`, per
   `docs/roslyn-lint/architecture.md` Section 12 and `REQ-CLI-PACK-001`
@@ -79,8 +83,10 @@ target: integration/phase-A
 - A12 gate artifacts are already closed on the reviewed branch and remain
   closed after A13 changes
 - CI proves the packaged analyzer-consumer path before Phase A is called
-  complete, using the same A12 gate artifacts and closure evidence consumed
-  locally
+  complete, using the same machine-verifiable A12 gate artifacts and closure
+  evidence consumed locally, while `PermutationMatrix.md` and
+  `production-readiness-checklist.md` are explicitly reviewed as human-audit
+  closure artifacts on the branch
 - the `Roslyn.Lint` packaging model is explicit in docs and matches the
   pack/publish workflow
 - CI can publish repo-produced packages to GitHub Packages without changing the

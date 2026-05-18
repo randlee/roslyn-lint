@@ -1,7 +1,7 @@
 ---
 id: A12
 title: production-readiness convergence
-status: in-progress
+status: complete
 branch: sprint/A12
 worktree: /Users/randlee/Documents/github/roslyn-lint-worktrees/sprint/A12
 target: integration/phase-A
