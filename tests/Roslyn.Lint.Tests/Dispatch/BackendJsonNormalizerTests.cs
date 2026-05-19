@@ -1,11 +1,12 @@
-namespace Roslyn.Lint.Tests.Dispatch;
-
 using FluentAssertions;
-using Roslyn.Lint.Abstractions;
-using Roslyn.Lint.Backends;
-using Roslyn.Lint.Dispatch;
-using Roslyn.Lint.Serialization;
+using sc.lint.roslyn.abstractions;
+using sc.lint.roslyn.abstractions.Contracts;
+using sc.lint.roslyn.Backends;
+using sc.lint.roslyn.Dispatch;
+using sc.lint.roslyn.Serialization;
 using Xunit;
+
+namespace sc.lint.roslyn.tests.Dispatch;
 
 public sealed class BackendJsonNormalizerTests
 {
@@ -77,7 +78,7 @@ public sealed class BackendJsonNormalizerTests
         normalized.IsSuccess.Should().BeFalse();
         normalized.Error.Should().NotBeNull();
         normalized.Error!.Code.Should().Be("DM.RULES_FAILURE");
-        normalized.Error.Kind.Should().Be(Roslyn.Lint.Abstractions.Contracts.CliErrorKind.BackendFailure);
+        normalized.Error.Kind.Should().Be(CliErrorKind.BackendFailure);
     }
 
     [Fact]
@@ -97,7 +98,7 @@ public sealed class BackendJsonNormalizerTests
         normalized.IsSuccess.Should().BeFalse();
         normalized.Error.Should().NotBeNull();
         normalized.Error!.Code.Should().Be("CLI.BACKEND_PROTOCOL_ERROR");
-        normalized.Error.Kind.Should().Be(Roslyn.Lint.Abstractions.Contracts.CliErrorKind.BackendProtocol);
+        normalized.Error.Kind.Should().Be(CliErrorKind.BackendProtocol);
     }
 
     [Fact]
@@ -109,7 +110,7 @@ public sealed class BackendJsonNormalizerTests
             "view.rules",
             new DotnetToolUnavailableException(new FileNotFoundException("dotnet")));
 
-        error.Kind.Should().Be(Roslyn.Lint.Abstractions.Contracts.CliErrorKind.Capability);
+        error.Kind.Should().Be(CliErrorKind.Capability);
         error.Code.Should().Be("CLI.CAPABILITY_ERROR");
         error.Details.Should().ContainKey("tool").WhoseValue.Should().Be("dotnet");
     }
@@ -124,7 +125,7 @@ public sealed class BackendJsonNormalizerTests
             "check",
             new DotnetCommandFailedException("build", result));
 
-        error.Kind.Should().Be(Roslyn.Lint.Abstractions.Contracts.CliErrorKind.BackendFailure);
+        error.Kind.Should().Be(CliErrorKind.BackendFailure);
         error.Code.Should().Be("CLI.BACKEND_EXEC_FAILURE");
         error.Details.Should().ContainKey("step").WhoseValue.Should().Be("build");
         error.Details.Should().ContainKey("exit_code").WhoseValue.Should().Be("1");
@@ -139,7 +140,7 @@ public sealed class BackendJsonNormalizerTests
             new ToolId("demagic"),
             new InvalidOperationException("boom"));
 
-        error.Kind.Should().Be(Roslyn.Lint.Abstractions.Contracts.CliErrorKind.BackendFailure);
+        error.Kind.Should().Be(CliErrorKind.BackendFailure);
         error.Code.Should().Be("CLI.BACKEND_EXEC_FAILURE");
         error.Details.Should().ContainKey("tool").WhoseValue.Should().Be("demagic");
         error.Details.Should().ContainKey("exception_type").WhoseValue.Should().Be(typeof(InvalidOperationException).FullName);
