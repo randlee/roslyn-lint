@@ -14,7 +14,7 @@
 
   <!-- NuGet Package Metadata (common properties inherited from Directory.Build.props) -->
   <PropertyGroup>
-    <PackageId>Roslyn.DeMagic</PackageId>
+    <PackageId>roslyn-demagic</PackageId>
     <Description>Roslyn analyzer package for constant-consolidation and forbidden-string diagnostics in C# solutions</Description>
     <PackageTags>roslyn;analyzer;csharp;constants;domain-boundary;code-quality</PackageTags>
     <PackageReadmeFile>README.md</PackageReadmeFile>
