@@ -49,7 +49,7 @@ Handoff expectations:
 - maintainers should treat
   `docs/phase-A/production-readiness-checklist.md` as the release gate input
 
-## Maintainer Review Before A13
+## Maintainer Review Before First Release
 
 Before the first Phase A release is published anywhere, maintainers should
 confirm:

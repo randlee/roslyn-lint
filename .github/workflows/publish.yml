@@ -51,10 +51,11 @@ jobs:
         shell: pwsh
         run: ./eng/validate-roslyn-demagic-package.ps1
 
-      - name: Upload validated packages
+      - name: Upload canonical validated packages
+        if: runner.os == 'Linux'
         uses: actions/upload-artifact@v4
         with:
-          name: validated-packages-${{ matrix.os }}
+          name: validated-packages
           path: ./artifacts/packages/*.nupkg
 
   publish:
@@ -67,8 +68,7 @@ jobs:
     steps:
       - uses: actions/download-artifact@v4
         with:
-          pattern: validated-packages-*
-          merge-multiple: true
+          name: validated-packages
           path: ./artifacts/packages
 
       - name: Publish repo-produced packages to GitHub Packages
