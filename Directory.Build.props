@@ -22,15 +22,13 @@
 
   <!-- NuGet dependency versions: single source of truth -->
   <PropertyGroup Label="PackageVersions">
-    <MicrosoftCodeAnalysisCSharpVersion>5.3.0</MicrosoftCodeAnalysisCSharpVersion>
+    <MicrosoftCodeAnalysisCSharpVersion>5.0.0</MicrosoftCodeAnalysisCSharpVersion>
     <MicrosoftCodeAnalysisAnalyzersVersion>5.3.0</MicrosoftCodeAnalysisAnalyzersVersion>
-    <SpectreConsoleVersion>0.55.2</SpectreConsoleVersion>
-    <SpectreConsoleCliVersion>0.55.0</SpectreConsoleCliVersion>
     <!-- Test packages -->
     <MicrosoftNetTestSdkVersion>18.5.1</MicrosoftNetTestSdkVersion>
     <XunitVersion>2.9.3</XunitVersion>
     <XunitRunnerVisualStudioVersion>3.1.5</XunitRunnerVisualStudioVersion>
-    <FluentAssertionsVersion>8.10.0</FluentAssertionsVersion>
+    <FluentAssertionsVersion>7.0.0</FluentAssertionsVersion>
     <CoverletCollectorVersion>10.0.0</CoverletCollectorVersion>
   </PropertyGroup>
 

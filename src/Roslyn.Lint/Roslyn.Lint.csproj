@@ -8,10 +8,10 @@
   <!-- NuGet Package Metadata (common properties inherited from Directory.Build.props) -->
   <PropertyGroup>
     <PackageId>roslyn-lint</PackageId>
-    <Description>Roslyn-based lint CLI for C# code quality analysis</Description>
-    <PackageTags>lint;roslyn;csharp;code-quality;analyzer;cli</PackageTags>
+    <Description>AI-first orchestration CLI for the roslyn-lint suite with a stable machine contract baseline</Description>
+    <PackageTags>lint;roslyn;csharp;cli;preview;ai-first</PackageTags>
     <PackageReadmeFile>README.md</PackageReadmeFile>
-    <PackageReleaseNotes>Initial release of roslyn-lint.</PackageReleaseNotes>
+    <PackageReleaseNotes>Phase A v0.1.0 .NET tool baseline prepared for GitHub Packages publication and first-release manual NuGet.org handoff.</PackageReleaseNotes>
   </PropertyGroup>
 
   <!-- .NET Tool Configuration -->
@@ -21,18 +21,19 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Roslyn.DeMagic\Roslyn.DeMagic.csproj" />
+    <ProjectReference Include="..\Roslyn.Lint.Abstractions\Roslyn.Lint.Abstractions.csproj" />
+    <ProjectReference Include="..\Roslyn.DeMagic.Lint\Roslyn.DeMagic.Lint.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="$(MicrosoftCodeAnalysisCSharpVersion)" />
-    <PackageReference Include="Spectre.Console" Version="$(SpectreConsoleVersion)" />
-    <PackageReference Include="Spectre.Console.Cli" Version="$(SpectreConsoleCliVersion)" />
+    <PackageReference Include="System.Collections.Immutable" Version="9.0.0" />
+    <PackageReference Include="System.Reflection.Metadata" Version="9.0.0" />
+    <PackageReference Include="System.CommandLine" Version="2.0.7" />
   </ItemGroup>
 
   <!-- Include README in Package -->
   <ItemGroup>
-    <None Include="..\..\README.md" Pack="true" PackagePath="\" />
+    <None Include="../../README.md" Pack="true" PackagePath="/" />
   </ItemGroup>
 
 </Project>

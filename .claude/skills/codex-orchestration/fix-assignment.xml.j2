@@ -1,0 +1,87 @@
+---
+name: fix-task
+version: 1.0.0
+description: team-lead post-triage fix assignment template for codex-orchestration QA findings.
+format: xml
+required_variables:
+  - task_id
+  - branch
+  - worktree_path
+  - finding_ids
+  - triage_records
+  - required_fixes
+  - acceptance_criteria
+optional_variables:
+  - phase
+  - sprint_doc
+  - pr_target
+  - description
+  - references
+  - validation_requirements
+defaults:
+  phase: ""
+  sprint_doc: ""
+  pr_target: ""
+  description: ""
+  references: ""
+  validation_requirements: ""
+---
+{% set branch_name = branch | default("", true) %}
+{% set phase_value = phase | default("", true) %}
+{% if not phase_value and branch_name|replace("integration/phase-", "") != branch_name %}
+{% set phase_value = branch_name|replace("integration/phase-", "") %}
+{% elif not phase_value and branch_name|replace("sprint/", "") != branch_name %}
+{% set phase_value = (branch_name|replace("sprint/", ""))[0] %}
+{% endif %}
+{% set sprint_doc_value = sprint_doc | default("", true) %}
+{% if not sprint_doc_value and branch_name|replace("sprint/", "") != branch_name %}
+{% set sprint_name = branch_name|replace("sprint/", "") %}
+{% set sprint_doc_value = "docs/phase-" ~ sprint_name[0] ~ "/sprint-" ~ sprint_name ~ ".md" %}
+{% elif not sprint_doc_value and branch_name|replace("integration/", "") != branch_name %}
+{% set phase_path = branch_name|replace("integration/", "") %}
+{% set phase_name = branch_name|replace("integration/phase-", "") %}
+{% set sprint_doc_value = "docs/" ~ phase_path ~ "/plan-phase-" ~ phase_name ~ ".md" %}
+{% endif %}
+<atm-task id="{{ task_id }}" phase="{{ phase_value }}" assignee="crl" mode="fix">
+  <description>{{ description | default("", true) }}</description>
+
+  <branch>{{ branch }}</branch>
+  <worktree>{{ worktree_path }}</worktree>
+  <pr-target>{{ pr_target | default("", true) }}</pr-target>
+  <authoritative-sprint-doc>{{ sprint_doc_value }}</authoritative-sprint-doc>
+
+  <finding-ids>
+{{ finding_ids }}
+  </finding-ids>
+
+  <triage-records>
+{{ triage_records }}
+  </triage-records>
+
+  <required-fixes>
+{{ required_fixes }}
+  </required-fixes>
+
+  <acceptance-criteria>
+{{ acceptance_criteria }}
+  </acceptance-criteria>
+
+  <validation-requirements>
+{{ validation_requirements }}
+  </validation-requirements>
+
+  <references>
+{{ references | default("", true) }}
+  </references>
+
+  <workflow>
+    <step id="a">ACK this message immediately. Begin work in the same session unless blocked.</step>
+    <step id="b">Read `{{ sprint_doc_value }}` before editing. Treat it as the authoritative source for sprint scope, retained requirements, deletion targets, validation, and acceptance criteria. If this assignment summary and the sprint doc differ, the sprint doc wins and the mismatch must be reported.</step>
+    <step id="c">Update the assigned worktree from the target branch before editing. Include all earlier-sprint fixes already merged forward to that branch.</step>
+    <step id="d">Read the referenced triage records first. Treat the listed occurrences as the minimum required scope on this branch.</step>
+    <step id="e">Fix every promoted-branch occurrence in scope. Do not stop at the first location when the triage record marks the finding as repeatable.</step>
+    <step id="f">As soon as the branch is pushable, commit and push immediately. Send branch name and commit hash right away so follow-up QA can start in parallel.</step>
+    <step id="g">Run the required validation after the push report and send a second report with PASS or FAIL plus concrete failure details.</step>
+    <step id="h">After the validation report, read ATM again for follow-up work.</step>
+  </workflow>
+</atm-task>

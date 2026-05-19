@@ -1,0 +1,10 @@
+[dm001]
+enabled = false
+
+[dm002]
+enabled = true
+severity = "warning"
+forbidden = [
+  "atm",
+]
+case_sensitive = false

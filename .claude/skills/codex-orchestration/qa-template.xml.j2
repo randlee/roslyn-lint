@@ -1,0 +1,83 @@
+---
+name: qa-task
+version: 1.0.0
+description: quality-mgr QA assignment template for codex-orchestration sprint and phase reviews.
+format: xml
+required_variables:
+  - task_id
+  - sprint
+  - sprint_doc
+  - review_mode
+  - description
+  - branch
+  - worktree_path
+  - commits
+  - review_targets
+  - references
+  - deliverables
+  - acceptance_criteria
+optional_variables:
+  - pr_number
+  - changed_files
+  - triage_records
+  - expected_artifacts
+defaults:
+  pr_number: ""
+  changed_files: ""
+  triage_records: ""
+  expected_artifacts: ""
+---
+<repo-qa-task id="{{ task_id }}" sprint="{{ sprint }}" assignee="quality-mgr">
+  <description>{{ description }}</description>
+
+  <review-mode>{{ review_mode }}</review-mode>
+  <authoritative-sprint-doc>{{ sprint_doc }}</authoritative-sprint-doc>
+  <pr-number>{{ pr_number }}</pr-number>
+  <branch>{{ branch }}</branch>
+  <worktree>{{ worktree_path }}</worktree>
+  <commits>{{ commits }}</commits>
+
+  <review-targets>
+{{ review_targets }}
+  </review-targets>
+
+  <changed-files>
+{{ changed_files }}
+  </changed-files>
+
+  <triage-records>
+{{ triage_records }}
+  </triage-records>
+
+  <references>
+{{ references }}
+  </references>
+
+  <deliverables>
+{{ deliverables }}
+  </deliverables>
+
+  <acceptance-criteria>
+{{ acceptance_criteria }}
+  </acceptance-criteria>
+
+  <expected-artifacts>
+{{ expected_artifacts }}
+  </expected-artifacts>
+
+  <workflow>
+    <step id="a">ACK this message immediately.</step>
+    <step id="b">Reject the task immediately if the assignment is not an XML payload rendered from this template. Read `{{ sprint_doc }}` first and treat it as the authoritative source for QA scope. Render structured JSON assignments for `req-qa`, `arch-qa`, and `rlint-qa` using the templates in `.claude/skills/codex-orchestration/`. Do not send free-form reviewer prompts.</step>
+    <step id="c">If the task does not list deliverables, immediately inform team-lead that the QA assignment is incomplete. Continue the review using `{{ sprint_doc }}` as the authoritative fallback, but force the final QA verdict to FAIL.</step>
+    <step id="d">For `req-qa`, extract every deliverable, acceptance criterion, deletion requirement, required validation item, and expected artifact from `{{ sprint_doc }}` into the assignment or an attached coverage matrix. The hand-authored QA assignment must not omit sprint-doc scope. Pass the task-listed deliverables to `arch-qa` as structural review inputs as well.</step>
+    <step id="e">Treat the sprint doc and planning artifacts as explicit acceptance-gate items: verify `{{ sprint_doc }}` exists, the sprint doc frontmatter sets `status: complete`, `branch:`, and `worktree:`, and `docs/project-plan.md` includes the sprint entry before QA can PASS.</step>
+    <step id="f">Verify PR state early. If `pr_number` is missing, notify team-lead immediately and request PR creation, but continue QA. If `pr_number` is present, verify that it is active and points at the reviewed branch. QA may start without a PR, but PASS closeout requires an active PR that matches the branch.</step>
+    <step id="g">If triage records are provided, read them before spawning reviewers. Treat them as the canonical prior scope for follow-up QA, not as a substitute for verification.</step>
+    <step id="h">Spawn every selected reviewer in background mode. Do not run broad QA analysis yourself in the foreground.</step>
+    <step id="i">Collect reviewer outputs and summarize PASS or FAIL, including blocking finding ids and file:line references where available. For repeatable findings, search the full workspace and include all affected locations. For deletion sprints, req-qa must run whole-workspace pattern searches for each removed legacy construct family named in the sprint doc.</step>
+    <step id="j">When triage records are present, explicitly state whether each rechecked finding is still open, fixed on the reviewed branch, regressed, or requires a new triage pass because the scope changed.</step>
+    <step id="k">If a PR number is present and active, monitor CI with `gh pr checks &lt;PR&gt; --watch` when needed.</step>
+    <step id="l">Append the completed QA report to the PR whenever a PR exists. Use the quality-management-gh templates when available.</step>
+    <step id="m">Send the final QA verdict to team-lead and include deliverable completion as `X/Y (Z%)`. PASS requires 100% deliverable completion, a PASS verdict from every required reviewer, an active PR for the branch, and no unresolved blocking findings.</step>
+  </workflow>
+</repo-qa-task>
