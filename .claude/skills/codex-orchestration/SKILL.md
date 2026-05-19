@@ -1,7 +1,7 @@
 ---
 name: codex-orchestration
 version: 0.1.0
-description: Orchestrate roslyn-lint sprint work where team-lead coordinates, crl is the sole developer, and quality-mgr enforces the QA gate.
+description: Orchestrate sc-lint-roslyn sprint work where team-lead coordinates, crl is the sole developer, and quality-mgr enforces the QA gate.
 depends_on:
   quality-management-gh: 1.x
   quality-mgr: 0.x
@@ -12,7 +12,7 @@ depends_on:
 
 # Codex Orchestration
 
-This skill defines the repo-local orchestration workflow for `roslyn-lint`.
+This skill defines the repo-local orchestration workflow for `sc-lint-roslyn`.
 
 ## Model
 

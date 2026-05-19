@@ -3,7 +3,7 @@ name: restore-team-communications
 version: 0.2.0
 description: >
   Repair Claude teammate routing after same-session compaction or resume when
-  the roslyn-lint team still exists on disk and the saved leadSessionId still
+  the sc-lint-roslyn team still exists on disk and the saved leadSessionId still
   matches the current SESSION_ID, but SendMessage or teammate reachability is
   broken.
 ---
@@ -13,7 +13,7 @@ description: >
 Use this skill only when all of these are true:
 - `ATM_IDENTITY=team-lead`
 - `SESSION_ID` still matches `leadSessionId` in
-  `~/.claude/teams/roslyn-lint/config.json`
+  `~/.claude/teams/sc-lint-roslyn/config.json`
 - the team directory still exists on disk
 - Claude teammate communication is broken or suspect after compaction or resume
 
@@ -26,7 +26,7 @@ full restore procedure instead.
 First, try normal Claude-to-Claude communication before changing anything:
 
 ```text
-SendMessage(to="<claude-teammate>", message="ping: verify roslyn-lint communications path")
+SendMessage(to="<claude-teammate>", message="ping: verify sc-lint-roslyn communications path")
 ```
 
 If the message is delivered and acknowledged, stop. No repair is needed.
@@ -38,9 +38,9 @@ Do not read inbox files, session files, or tmux panes directly on this path.
 Back up before any destructive recovery:
 
 ```bash
-atm teams backup roslyn-lint
-BACKUP_PATH=$(ls -td ~/.claude/teams/.backups/roslyn-lint/*/ | head -1)
-cp -r ~/.claude/tasks/roslyn-lint/ "$BACKUP_PATH/tasks-cc"
+atm teams backup sc-lint-roslyn
+BACKUP_PATH=$(ls -td ~/.claude/teams/.backups/sc-lint-roslyn/*/ | head -1)
+cp -r ~/.claude/tasks/sc-lint-roslyn/ "$BACKUP_PATH/tasks-cc"
 echo "CC task list backed up to $BACKUP_PATH/tasks-cc"
 ```
 
@@ -53,7 +53,7 @@ TeamDelete
 ```
 
 ```bash
-rm -rf ~/.claude/teams/roslyn-lint
+rm -rf ~/.claude/teams/sc-lint-roslyn
 ```
 
 If `TeamDelete` reports no active team name, proceed. That means live routing
@@ -64,13 +64,13 @@ was already absent.
 Recreate the team:
 
 ```text
-TeamCreate(team_name="roslyn-lint", description="roslyn-lint team", agent_type="team-lead")
+TeamCreate(team_name="sc-lint-roslyn", description="sc-lint-roslyn team", agent_type="team-lead")
 ```
 
 Then restore from the most recent backup:
 
 ```bash
-atm teams restore roslyn-lint --from "$BACKUP_PATH"
+atm teams restore sc-lint-roslyn --from "$BACKUP_PATH"
 ```
 
 If required members are missing after restore, add them before verification.
@@ -87,13 +87,13 @@ For Codex-directed ATM sends, the nudge must include a clear call to action, not
 just a passive unread-mail announcement. Preferred structured nudge payload:
 
 ```text
-<atm><action>read atm --team roslyn-lint</action><action>ack the message</action><action>execute the assigned task</action><when idle="immediate" busy="after-current-task"/><console announce="concise" pause="false"/></atm>
+<atm><action>read atm --team sc-lint-roslyn</action><action>ack the message</action><action>execute the assigned task</action><when idle="immediate" busy="after-current-task"/><console announce="concise" pause="false"/></atm>
 ```
 
 Fallback plain-text wording:
 
 ```text
-read atm --team roslyn-lint for task <TASK-ID> and complete it before stopping
+read atm --team sc-lint-roslyn for task <TASK-ID> and complete it before stopping
 ```
 
 If the task is queued behind active work, use a queued-task nudge instead of an

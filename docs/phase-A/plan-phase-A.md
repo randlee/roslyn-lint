@@ -3,7 +3,7 @@
 ## 1. Goal
 
 Phase A establishes the repository's formal documentation baseline and delivers
-the first approved implementation line for `Roslyn.DeMagic`.
+the first approved implementation line for `sc.lint.roslyn.demagic`.
 
 The CLI is still part of the suite, but Phase A treats it as a contract-first
 design line rather than assuming the current spike is valid.
@@ -13,10 +13,10 @@ design line rather than assuming the current spike is valid.
 - suite-level documentation framework
 - project-level requirements and architecture for both products
 - project-level boundary inventories for both products
-- PRD-aligned `Roslyn.DeMagic` design and implementation plan
-- AI-first `roslyn-lint` CLI baseline
+- PRD-aligned `sc.lint.roslyn.demagic` design and implementation plan
+- AI-first `sc-lint-roslyn` CLI baseline
 - packaging and validation gates for the analyzer
-- a production-ready `Roslyn.DeMagic` analyzer package covering every approved
+- a production-ready `sc.lint.roslyn.demagic` analyzer package covering every approved
   rule
 - a locally packaged analyzer-consumer example that proves the built package can
   be used from a normal .NET project
@@ -32,43 +32,43 @@ design line rather than assuming the current spike is valid.
 
 ## 4. Hard Dependencies
 
-- `docs/prd/roslyn-demagic-prd.md`
+- `docs/prd/sc-lint-roslyn-demagic-prd.md`
 - `docs/requirements.md`
 - `docs/architecture.md`
 - `docs/project-plan.md`
-- `docs/roslyn-demagic/*`
-- `docs/roslyn-lint/*`
+- `docs/sc-lint-roslyn-demagic/*`
+- `docs/sc-lint-roslyn/*`
 - `.claude/skills/creating-ai-clis/`
 
 ## 5. Exact Implementation Targets
 
-- `src/Roslyn.DeMagic/Analyzers/DM001ConstantConsolidationAnalyzer.cs`
-- `src/Roslyn.DeMagic/Analyzers/DM002ForbiddenStringLiteralAnalyzer.cs`
-- `src/Roslyn.DeMagic/Configuration/`
-- `src/Roslyn.DeMagic/Diagnostics/`
-- `src/Roslyn.DeMagic/Patterns/`
-- `src/Roslyn.DeMagic/AnalyzerReleases.Shipped.md`
-- `src/Roslyn.DeMagic/AnalyzerReleases.Unshipped.md`
-- `src/Roslyn.DeMagic/Roslyn.DeMagic.csproj`
-- `tests/Roslyn.DeMagic.Tests/Analyzers/`
-- `tests/Roslyn.DeMagic.Tests/TestData/DM001/`
-- `tests/Roslyn.DeMagic.Tests/TestData/DM002/`
-- `tests/Roslyn.DeMagic.Tests/TestData/README.md`
-- `tests/Roslyn.DeMagic.Tests/PermutationMatrix.md`
-- `examples/Roslyn.DeMagic.PackageSmoke/`
-- `eng/validate-roslyn-demagic-package.sh`
-- `eng/validate-roslyn-demagic-package.ps1`
-- `eng/roslyn-demagic-package-expected-diagnostics.json`
-- `tests/Roslyn.DeMagic.Tests/PackageValidation/`
-- `src/Roslyn.Lint/Program.cs`
-- `src/Roslyn.Lint.Abstractions/Contracts/`
-- `src/Roslyn.Lint/Operations/`
-- `src/Roslyn.Lint/Serialization/`
-- `src/Roslyn.Lint/Formatting/`
-- `src/Roslyn.Lint/Roslyn.Lint.csproj`
-- `tests/Roslyn.Lint.Tests/Commands/`
-- `tests/Roslyn.Lint.Tests/Contracts/`
-- `tests/Roslyn.Lint.Tests/Operations/`
+- `src/sc.lint.roslyn.demagic/analyzers/DM001ConstantConsolidationAnalyzer.cs`
+- `src/sc.lint.roslyn.demagic/analyzers/DM002ForbiddenStringLiteralAnalyzer.cs`
+- `src/sc.lint.roslyn.demagic/configuration/`
+- `src/sc.lint.roslyn.demagic/diagnostics/`
+- `src/sc.lint.roslyn.demagic/patterns/`
+- `src/sc.lint.roslyn.demagic/AnalyzerReleases.Shipped.md`
+- `src/sc.lint.roslyn.demagic/AnalyzerReleases.Unshipped.md`
+- `src/sc.lint.roslyn.demagic/sc.lint.roslyn.demagic.csproj`
+- `tests/sc.lint.roslyn.demagic.tests/analyzers/`
+- `tests/sc.lint.roslyn.demagic.tests/testdata/dm001/`
+- `tests/sc.lint.roslyn.demagic.tests/testdata/dm002/`
+- `tests/sc.lint.roslyn.demagic.tests/testdata/README.md`
+- `tests/sc.lint.roslyn.demagic.tests/PermutationMatrix.md`
+- `examples/sc.lint.roslyn.demagic.package-smoke/`
+- `eng/validate-sc-lint-roslyn-demagic-package.sh`
+- `eng/validate-sc-lint-roslyn-demagic-package.ps1`
+- `eng/sc-lint-roslyn-demagic-package-expected-diagnostics.json`
+- `tests/sc.lint.roslyn.demagic.tests/packagevalidation/`
+- `src/sc.lint.roslyn/Program.cs`
+- `src/sc.lint.roslyn.abstractions/contracts/`
+- `src/sc.lint.roslyn/operations/`
+- `src/sc.lint.roslyn/serialization/`
+- `src/sc.lint.roslyn/formatting/`
+- `src/sc.lint.roslyn/sc.lint.roslyn.csproj`
+- `tests/sc.lint.roslyn.tests/commands/`
+- `tests/sc.lint.roslyn.tests/contracts/`
+- `tests/sc.lint.roslyn.tests/operations/`
 - `.github/workflows/ci.yml`
 - `.github/workflows/publish.yml`
 - `docs/phase-A/production-readiness-checklist.md`
@@ -79,17 +79,17 @@ design line rather than assuming the current spike is valid.
 | Sprint | Title | Outcome |
 | --- | --- | --- |
 | A0 | Documentation reset | Replace placeholders and unapproved assumptions with approved suite and project docs |
-| A1 | Analyzer foundation | Add reusable configuration and forbidden-pattern infrastructure for `Roslyn.DeMagic` |
+| A1 | Analyzer foundation | Add reusable configuration and forbidden-pattern infrastructure for `sc.lint.roslyn.demagic` |
 | A2 | `DM002` forbidden-pattern analyzer | Replace the generic string-literal spike with forbidden-pattern analysis and aligned release metadata |
 | A3 | `DM002` hardening and release alignment | Remove remaining spike leftovers, align release metadata, and route analyzer seams through injected interfaces |
 | A4 | Packaging and CLI baseline correction | Finalize analyzer package and release gates and define the replacement-oriented CLI baseline |
 | A5 | CLI foundation and abstractions package | Replace the Spectre spike with the first working `System.CommandLine` host and shared tool-module abstractions |
-| A6 | DeMagic backend integration and first usable lint flow | Deliver `roslyn-lint lint demagic` and the first usable `lint fast` smoke path |
+| A6 | DeMagic backend integration and first usable lint flow | Deliver `sc-lint-roslyn lint demagic` and the first usable `lint fast` smoke path |
 | A7 | Profiles plus check, clippy, and ci workflows | Deliver reusable lint profiles and the first .NET-native `check`, `clippy`, and `ci` workflows |
 | A8 | View surfaces, boundary metadata, and tool-module hardening | Harden the multi-tool CLI surface and delegated backend seams |
 | A9 | `DM001` completion and rule parity | Implement the constant-consolidation rule against the PRD and close the analyzer parity gap |
 | A10 | Analyzer sample corpus and rule matrix | Add exhaustive positive, negative, suppression, and corner-case samples for every analyzer rule |
-| A11 | Packaged consumer validation | Prove the locally built `Roslyn.DeMagic` package works from a normal consuming project via a local feed |
+| A11 | Packaged consumer validation | Prove the locally built `sc.lint.roslyn.demagic` package works from a normal consuming project via a local feed |
 | A12 | Production-readiness convergence | Make analyzer metadata, sample consumption, docs, and readiness evidence reflect one real shippable rule set |
 | A13 | CI publish and manual release handoff | Validate package-consumer gates in CI, publish repo packages to GitHub Packages, and document the manual NuGet.org first release |
 
@@ -114,7 +114,7 @@ design line rather than assuming the current spike is valid.
   the full approved rule set
 - A10 adds the required analyzer sample corpus and requirement-to-test matrix
   for every rule and documented corner case
-- A11 proves package-consumer behavior by packing `Roslyn.DeMagic` and
+- A11 proves package-consumer behavior by packing `sc.lint.roslyn.demagic` and
   consuming it from an example project through a local feed
 - A12 converges release metadata, packaged-consumer evidence, and repo docs so
   the analyzer can enter production testing without relying on undocumented
@@ -161,19 +161,19 @@ introduced during the development sprints:
   `PackageValidationSampleKind`, `PackageValidationResult`
 
 The package-validation types above are planned compiled validation-support
-types owned by `tests/Roslyn.DeMagic.Tests/PackageValidation/`. They are not
-analyzer runtime types and must not live in `Roslyn.DeMagic`.
+types owned by `tests/sc.lint.roslyn.demagic.tests/packagevalidation/`. They are not
+analyzer runtime types and must not live in `sc.lint.roslyn.demagic`.
 
 The sample-corpus and traceability types above are planned compiled
-test-support types owned by `tests/Roslyn.DeMagic.Tests/Testing/`. They are
-not analyzer runtime types and must not live in `Roslyn.DeMagic`.
+test-support types owned by `tests/sc.lint.roslyn.demagic.tests/testing/`. They are
+not analyzer runtime types and must not live in `sc.lint.roslyn.demagic`.
 
 ## 8. Acceptance
 
 Phase A is complete only when:
 
 - the repo documentation framework exists and is internally consistent
-- `Roslyn.DeMagic` behavior matches the PRD rather than the current spike
+- `sc.lint.roslyn.demagic` behavior matches the PRD rather than the current spike
 - analyzer packaging and tests reflect the approved diagnostic set
 - analyzer sample coverage exists for every approved rule and documented corner
   case

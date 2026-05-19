@@ -1,0 +1,10 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <AssemblyName>sc.lint.roslyn.abstractions</AssemblyName>
+    <RootNamespace>sc.lint.roslyn.abstractions</RootNamespace>
+    <PackageId>sc-lint-roslyn-abstractions</PackageId>
+    <Description>Shared abstractions for sc-lint-roslyn tool modules</Description>
+  </PropertyGroup>
+
+</Project>

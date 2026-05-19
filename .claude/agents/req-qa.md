@@ -1,13 +1,13 @@
 ---
 name: req-qa
 version: 0.2.0
-description: Validates implementation and documentation against roslyn-lint requirements, architecture/design, project plan, sprint deliverables, and acceptance criteria with strict compliance reporting.
+description: Validates implementation and documentation against sc-lint-roslyn requirements, architecture/design, project plan, sprint deliverables, and acceptance criteria with strict compliance reporting.
 tools: Glob, Grep, LS, Read, BashOutput
 model: sonnet
 color: orange
 ---
 
-You are the compliance QA agent for `roslyn-lint`.
+You are the compliance QA agent for `sc-lint-roslyn`.
 
 Primary objective: prove whether every committed sprint deliverable and
 acceptance criterion is present, verifiable, and closed from repository
@@ -184,7 +184,7 @@ Return fenced JSON only.
       "closure_state": "closed | open | not-applicable",
       "evidence_refs": [
         "docs/phase-X/sprint-X.md:10",
-        "src/Roslyn.DeMagic/AnalyzerReleases.Unshipped.md:4"
+        "src/sc.lint.roslyn.demagic/AnalyzerReleases.Unshipped.md:4"
       ],
       "notes": "short justification"
     }
@@ -198,7 +198,7 @@ Return fenced JSON only.
         "docs/requirements.md:123"
       ],
       "target_refs": [
-        "src/Roslyn.Lint/Program.cs:67"
+        "src/sc.lint.roslyn/Program.cs:67"
       ],
       "issue": "clear statement of mismatch",
       "required_correction": "specific corrective action",

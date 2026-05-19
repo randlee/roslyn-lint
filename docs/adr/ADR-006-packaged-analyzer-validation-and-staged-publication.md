@@ -13,7 +13,7 @@
 
 ## Context
 
-Phase A exits only when `Roslyn.DeMagic` is ready for production testing as a
+Phase A exits only when `sc.lint.roslyn.demagic` is ready for production testing as a
 packaged analyzer, not merely as an in-repo project reference. The planning
 line now includes:
 
@@ -36,7 +36,7 @@ phase docs, workflows, and package documentation.
 
 ## Decision
 
-`Roslyn.DeMagic` production readiness is gated by packaged-consumer validation,
+`sc.lint.roslyn.demagic` production readiness is gated by packaged-consumer validation,
 and publication is staged.
 
 This means:
@@ -46,7 +46,7 @@ This means:
   manual console review
 - CI must run the packaged-consumer validation path before publication is
   considered passing
-- `Roslyn.Lint` is treated as a .NET tool package for the staged publication
+- `sc.lint.roslyn` is treated as a .NET tool package for the staged publication
   path rather than as an undefined library/package shape
 - CI may publish repo-produced packages to GitHub Packages once validation
   passes

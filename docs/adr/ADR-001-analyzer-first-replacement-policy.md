@@ -19,7 +19,7 @@ preserved.
 
 Phase A also has an asymmetric priority:
 
-- `Roslyn.DeMagic` is the first implementation line that must become
+- `sc.lint.roslyn.demagic` is the first implementation line that must become
   production-correct
 - the CLI must keep a strict design baseline, but detailed CLI product
   requirements will arrive later
@@ -43,7 +43,7 @@ Phase A is analyzer-first, and noncompliant spike code is replacement-first.
 
 This means:
 
-- `Roslyn.DeMagic` implementation work takes priority over speculative CLI
+- `sc.lint.roslyn.demagic` implementation work takes priority over speculative CLI
   feature expansion
 - if a spike file, class, or test encodes rejected behavior or misleading
   naming, deletion and replacement is preferred over preserving it

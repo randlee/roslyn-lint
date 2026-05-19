@@ -1,4 +1,4 @@
-# AGENTS Instructions for roslyn-lint
+# AGENTS Instructions for sc-lint-roslyn
 
 ## MUST READ
 

@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <AssemblyName>sc.lint.roslyn.demagic.packagesmoke</AssemblyName>
+    <RootNamespace>sc.lint.roslyn.demagic.packagesmoke</RootNamespace>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <LangVersion>latest</LangVersion>
+    <EnableNETAnalyzers>true</EnableNETAnalyzers>
+    <AnalysisLevel>latest</AnalysisLevel>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="sc-lint-roslyn-demagic" Version="$(ScLintRoslynDemagicVersion)" />
+  </ItemGroup>
+</Project>

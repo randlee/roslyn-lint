@@ -30,7 +30,7 @@ machine-contract first and future-MCP compatible.
 
 ## Decision
 
-The `roslyn-lint` CLI uses a stable AI-first JSON contract with transport-
+The `sc-lint-roslyn` CLI uses a stable AI-first JSON contract with transport-
 neutral DTOs and a thin command layer.
 
 This means:

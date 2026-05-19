@@ -37,9 +37,9 @@
     <Authors>Rand Lee</Authors>
     <Company>RoslynLint</Company>
     <Copyright>Copyright (c) 2026 Rand Lee</Copyright>
-    <RepositoryUrl>https://github.com/randlee/roslyn-lint</RepositoryUrl>
+    <RepositoryUrl>https://github.com/randlee/sc-lint-roslyn</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
-    <PackageProjectUrl>https://github.com/randlee/roslyn-lint</PackageProjectUrl>
+    <PackageProjectUrl>https://github.com/randlee/sc-lint-roslyn</PackageProjectUrl>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
   </PropertyGroup>
 
