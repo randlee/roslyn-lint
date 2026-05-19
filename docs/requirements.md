@@ -1,26 +1,26 @@
-# Roslyn Lint Suite Requirements
+# sc-lint-roslyn Suite Requirements
 
 ## 1. Product Definition
 
-The `roslyn-lint` repository owns a .NET linting suite with two distinct product
+The `sc-lint-roslyn` repository owns a .NET linting suite with two distinct product
 surfaces:
 
-- `Roslyn.DeMagic`, a Roslyn analyzer package that enforces configurable code
+- `sc.lint.roslyn.demagic`, a Roslyn analyzer package that enforces configurable code
   hygiene rules inside consuming C# projects
-- `roslyn-lint`, a command-line tool that will expose analyzer and repository
+- `sc-lint-roslyn`, a command-line tool that will expose analyzer and repository
   operations through an AI-first machine contract
 
 Suite requirement IDs:
 
 - `REQ-SUITE-PRODUCT-001` The repository must preserve separate product
   ownership for the analyzer package and the CLI tool.
-- `REQ-SUITE-PRODUCT-002` Phase A implementation focus is `Roslyn.DeMagic`.
+- `REQ-SUITE-PRODUCT-002` Phase A implementation focus is `sc.lint.roslyn.demagic`.
 - `REQ-SUITE-PRODUCT-003` Existing code or documentation that conflicts with
   approved requirements is disposable and may be deleted rather than preserved
   for compatibility with an unapproved spike.
 
-The current `Roslyn.DeMagic` analyzer line is the approved Phase A
-production-testing baseline. The `roslyn-lint` CLI remains a secondary suite
+The current `sc.lint.roslyn.demagic` analyzer line is the approved Phase A
+production-testing baseline. The `sc-lint-roslyn` CLI remains a secondary suite
 surface whose contract is defined in docs, but whose longer-term feature scope
 is still intentionally constrained.
 
@@ -35,13 +35,13 @@ Top-level suite documents in `docs/` are the product source of truth:
 
 Project-level ownership docs live under:
 
-- `docs/roslyn-demagic/requirements.md`
-- `docs/roslyn-demagic/architecture.md`
-- `docs/roslyn-demagic/boundaries.md`
-- `docs/roslyn-lint/requirements.md`
-- `docs/roslyn-lint/architecture.md`
-- `docs/roslyn-lint/cli-contract.md`
-- `docs/roslyn-lint/boundaries.md`
+- `docs/sc-lint-roslyn-demagic/requirements.md`
+- `docs/sc-lint-roslyn-demagic/architecture.md`
+- `docs/sc-lint-roslyn-demagic/boundaries.md`
+- `docs/sc-lint-roslyn/requirements.md`
+- `docs/sc-lint-roslyn/architecture.md`
+- `docs/sc-lint-roslyn/cli-contract.md`
+- `docs/sc-lint-roslyn/boundaries.md`
 
 Documentation structure and ownership rules are defined in:
 
@@ -97,10 +97,10 @@ Phase A is an analyzer-first line.
 Suite requirement IDs:
 
 - `REQ-SUITE-PHASEA-001` Phase A must deliver a requirements-compliant
-  `Roslyn.DeMagic` analyzer before the repository treats the CLI as a primary
+  `sc.lint.roslyn.demagic` analyzer before the repository treats the CLI as a primary
   implementation line.
 - `REQ-SUITE-PHASEA-002` The analyzer design baseline is the PRD at
-  `docs/prd/roslyn-demagic-prd.md`.
+  `docs/prd/sc-lint-roslyn-demagic-prd.md`.
 - `REQ-SUITE-PHASEA-003` The CLI remains a separate project in Phase A, but its
   design baseline is governed by AI-first contract rules rather than the
   current CLI spike.
@@ -133,17 +133,17 @@ Suite requirement IDs:
   future MCP wrapper with no business-payload reshaping.
 - `REQ-SUITE-CLI-005` Mutating CLI commands must have corresponding readback
   commands so state changes are auditable.
-- `REQ-SUITE-CLI-006` The stable top-level executable remains `roslyn-lint`,
+- `REQ-SUITE-CLI-006` The stable top-level executable remains `sc-lint-roslyn`,
   which owns the public command surface for the suite's lint tools.
 - `REQ-SUITE-CLI-007` The top-level command families must match the `sc-lint`
   product pattern:
   `lint`, `view`, `check`, `clippy`, `ci`, and `version`.
 - `REQ-SUITE-CLI-008` Backend tool packages must be invoked through
-  `roslyn-lint`; package-local executables or libraries are implementation
+  `sc-lint-roslyn`; package-local executables or libraries are implementation
   details, not separate public products.
 - `REQ-SUITE-CLI-009` The CLI contract must scale to a multi-tool suite without
   top-level envelope drift as new lint packages are added.
 
 Project-level detail for those CLI obligations is defined in
-`docs/roslyn-lint/requirements.md`, `docs/roslyn-lint/architecture.md`, and
-`docs/roslyn-lint/cli-contract.md`.
+`docs/sc-lint-roslyn/requirements.md`, `docs/sc-lint-roslyn/architecture.md`, and
+`docs/sc-lint-roslyn/cli-contract.md`.

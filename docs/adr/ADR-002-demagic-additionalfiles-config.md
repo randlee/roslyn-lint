@@ -1,4 +1,4 @@
-# ADR-002 — Roslyn.DeMagic AdditionalFiles Configuration Boundary
+# ADR-002 — sc.lint.roslyn.demagic AdditionalFiles Configuration Boundary
 
 | Field | Value |
 |---|---|
@@ -13,7 +13,7 @@
 
 ## Context
 
-The PRD defines a configuration model rooted in `.roslyn-lint/` with separate
+The PRD defines a configuration model rooted in `.sc-lint-roslyn/` with separate
 source and test config files wired through `Directory.Build.props`.
 
 The current analyzer spike does not implement this boundary. Without an
@@ -31,7 +31,7 @@ project split.
 
 ## Decision
 
-`Roslyn.DeMagic` configuration is owned inside the analyzer package and enters
+`sc.lint.roslyn.demagic` configuration is owned inside the analyzer package and enters
 through Roslyn `AdditionalFiles` only.
 
 This means:
@@ -60,6 +60,6 @@ This means:
 
 ## Follow-Up Work
 
-- implement shared config model and loader units in `src/Roslyn.DeMagic`
+- implement shared config model and loader units in `src/sc.lint.roslyn.demagic`
 - align tests with missing-config and invalid-config behavior
 - document solution wiring in package and repository docs

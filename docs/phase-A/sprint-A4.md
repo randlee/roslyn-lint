@@ -3,7 +3,7 @@ id: A4
 title: Packaging and CLI baseline correction
 status: closed-with-deferrals
 branch: sprint/A4
-worktree: /Users/randlee/Documents/github/roslyn-lint-worktrees/sprint/A4
+worktree: /Users/randlee/Documents/github/sc-lint-roslyn-worktrees/sprint/A4
 target: integration/phase-A
 ---
 
@@ -18,23 +18,23 @@ target: integration/phase-A
 
 ## Hard Dependencies
 
-- `docs/roslyn-demagic/requirements.md`
-- `docs/roslyn-demagic/architecture.md`
-- `docs/roslyn-lint/requirements.md`
-- `docs/roslyn-lint/architecture.md`
-- `docs/roslyn-lint/boundaries.md`
+- `docs/sc-lint-roslyn-demagic/requirements.md`
+- `docs/sc-lint-roslyn-demagic/architecture.md`
+- `docs/sc-lint-roslyn/requirements.md`
+- `docs/sc-lint-roslyn/architecture.md`
+- `docs/sc-lint-roslyn/boundaries.md`
 - `docs/phase-A/sprint-A3.md`
 - `.claude/skills/creating-ai-clis/`
 
 ## Exact Targets
 
-- `src/Roslyn.DeMagic/Roslyn.DeMagic.csproj`
-- `src/Roslyn.DeMagic/AnalyzerReleases.Shipped.md`
-- `src/Roslyn.DeMagic/AnalyzerReleases.Unshipped.md`
-- `src/Roslyn.Lint/Program.cs`
-- `src/Roslyn.Lint/Commands/LintCommand.cs`
-- `src/Roslyn.Lint/Roslyn.Lint.csproj`
-- `tests/Roslyn.Lint.Tests/Commands/LintCommandSettingsTests.cs`
+- `src/sc.lint.roslyn.demagic/sc.lint.roslyn.demagic.csproj`
+- `src/sc.lint.roslyn.demagic/AnalyzerReleases.Shipped.md`
+- `src/sc.lint.roslyn.demagic/AnalyzerReleases.Unshipped.md`
+- `src/sc.lint.roslyn/Program.cs`
+- `src/sc.lint.roslyn/commands/LintCommand.cs`
+- `src/sc.lint.roslyn/sc.lint.roslyn.csproj`
+- `tests/sc.lint.roslyn.tests/commands/LintCommandSettingsTests.cs`
 - `.github/workflows/ci.yml`
 - `.github/workflows/publish.yml`
 - `README.md`
@@ -47,29 +47,29 @@ on `sprint/A4`. They are explicitly carried forward into
 deliverables.
 
 - shared abstractions package:
-  `src/Roslyn.Lint.Abstractions/Roslyn.Lint.Abstractions.csproj`,
+  `src/sc.lint.roslyn.abstractions/sc.lint.roslyn.abstractions.csproj`,
   `ToolId.cs`, `ToolDescriptor.cs`, `ILintToolModule.cs`,
   `ILintToolCommandHandler.cs`
 - command registration split:
-  `src/Roslyn.Lint/Commands/RegisterLintCommands.cs`,
+  `src/sc.lint.roslyn/commands/RegisterLintCommands.cs`,
   `RegisterViewCommands.cs`, `RegisterCheckCommands.cs`,
   `RegisterClippyCommands.cs`, `RegisterCiCommand.cs`,
   `RegisterVersionCommand.cs`
 - CLI contract files:
-  `src/Roslyn.Lint.Abstractions/Contracts/CliEnvelope.cs`,
+  `src/sc.lint.roslyn.abstractions/contracts/CliEnvelope.cs`,
   `CliError.cs`, `CliDiagnostic.cs`, `CliErrorKind.cs`,
   `VersionResult.cs`, `ViewRequest.cs`, `ViewResult.cs`
 - CLI host support seams:
-  `src/Roslyn.Lint/CommandModel/CommandFamily.cs`,
+  `src/sc.lint.roslyn/commandmodel/CommandFamily.cs`,
   `LintProfile.cs`, `OutputMode.cs`, `BackendExecutionMode.cs`,
-  `src/Roslyn.Lint/Serialization/IJsonEnvelopeWriter.cs`,
-  `src/Roslyn.Lint/Serialization/RoslynLintJsonContext.cs`,
-  `src/Roslyn.Lint/Formatting/IHumanOutputFormatter.cs`
+  `src/sc.lint.roslyn/serialization/IJsonEnvelopeWriter.cs`,
+  `src/sc.lint.roslyn/serialization/RoslynLintJsonContext.cs`,
+  `src/sc.lint.roslyn/formatting/IHumanOutputFormatter.cs`
 - A5 validation-oriented tests:
-  `tests/Roslyn.Lint.Tests/Commands/RootCommandTests.cs`,
+  `tests/sc.lint.roslyn.tests/commands/RootCommandTests.cs`,
   `VersionCommandTests.cs`, `ViewToolsCommandTests.cs`,
-  `tests/Roslyn.Lint.Tests/Contracts/CliEnvelopeSerializationTests.cs`,
-  `tests/Roslyn.Lint.Tests/Abstractions/ToolDescriptorTests.cs`
+  `tests/sc.lint.roslyn.tests/contracts/CliEnvelopeSerializationTests.cs`,
+  `tests/sc.lint.roslyn.tests/abstractions/ToolDescriptorTests.cs`
 
 ## Important Interfaces, Records/Structs, and Enums
 
@@ -118,8 +118,8 @@ deliverables.
 
 ## Required Validation
 
-- `dotnet restore roslyn-lint.sln`
-- `dotnet build roslyn-lint.sln --configuration Release`
-- `dotnet test roslyn-lint.sln --configuration Release --verbosity normal`
-- `dotnet pack src/Roslyn.DeMagic/Roslyn.DeMagic.csproj --configuration Release --no-build`
+- `dotnet restore sc-lint-roslyn.sln`
+- `dotnet build sc-lint-roslyn.sln --configuration Release`
+- `dotnet test sc-lint-roslyn.sln --configuration Release --verbosity normal`
+- `dotnet pack src/sc.lint.roslyn.demagic/sc.lint.roslyn.demagic.csproj --configuration Release --no-build`
 - `git diff --check`

@@ -1,7 +1,7 @@
 ---
 name: rlint-qa
 version: 0.1.0
-description: Runs roslyn-lint build, test, packaging, and portability QA through a strict JSON contract, emphasizing execution facts over policy review.
+description: Runs sc-lint-roslyn build, test, packaging, and portability QA through a strict JSON contract, emphasizing execution facts over policy review.
 tools: Glob, Grep, LS, Read, NotebookRead, TodoWrite, KillShell, BashOutput, Bash
 model: sonnet
 color: purple
@@ -19,9 +19,9 @@ Always read:
 - `Directory.Build.props`
 
 Read the impacted project files when they are in scope, especially:
-- `roslyn-lint.sln`
-- `src/Roslyn.Lint/Roslyn.Lint.csproj`
-- `src/Roslyn.DeMagic/Roslyn.DeMagic.csproj`
+- `sc-lint-roslyn.sln`
+- `src/sc.lint.roslyn/sc.lint.roslyn.csproj`
+- `src/sc.lint.roslyn.demagic/sc.lint.roslyn.demagic.csproj`
 
 ## Input Contract
 
@@ -35,7 +35,7 @@ with free-form input.
   "review_targets": [
     "src/",
     "tests/",
-    "roslyn-lint.sln"
+    "sc-lint-roslyn.sln"
   ],
   "run_checks": {
     "restore": true,
@@ -84,12 +84,12 @@ Use the repo CI commands as the default shape. If one check depends on another,
 run the narrowest safe equivalent and report the exact command used.
 
 Suggested commands:
-- restore: `dotnet restore roslyn-lint.sln`
-- format: `dotnet format roslyn-lint.sln --verify-no-changes`
-- build after explicit restore: `dotnet build roslyn-lint.sln --no-restore --configuration Release`
-- build without explicit restore: `dotnet build roslyn-lint.sln --configuration Release`
-- tests after explicit build: `dotnet test roslyn-lint.sln --no-build --configuration Release --verbosity normal --logger "trx;LogFileName=test-results.trx" --collect:"XPlat Code Coverage"`
-- tests without explicit build: `dotnet test roslyn-lint.sln --configuration Release --verbosity normal --logger "trx;LogFileName=test-results.trx" --collect:"XPlat Code Coverage"`
+- restore: `dotnet restore sc-lint-roslyn.sln`
+- format: `dotnet format sc-lint-roslyn.sln --verify-no-changes`
+- build after explicit restore: `dotnet build sc-lint-roslyn.sln --no-restore --configuration Release`
+- build without explicit restore: `dotnet build sc-lint-roslyn.sln --configuration Release`
+- tests after explicit build: `dotnet test sc-lint-roslyn.sln --no-build --configuration Release --verbosity normal --logger "trx;LogFileName=test-results.trx" --collect:"XPlat Code Coverage"`
+- tests without explicit build: `dotnet test sc-lint-roslyn.sln --configuration Release --verbosity normal --logger "trx;LogFileName=test-results.trx" --collect:"XPlat Code Coverage"`
 - coverage: inspect the generated `coverage.cobertura.xml` artifacts from the requested test run and fail if coverage was requested but no coverage artifact is produced
 
 Any execution failure is still a finding. Do not treat it as separate from the review result.
@@ -132,19 +132,19 @@ Return fenced JSON only.
     "executed_checks": {
       "restore": {
         "status": "pass | fail | not_run",
-        "command": "dotnet restore roslyn-lint.sln"
+        "command": "dotnet restore sc-lint-roslyn.sln"
       },
       "format": {
         "status": "pass | fail | not_run",
-        "command": "dotnet format roslyn-lint.sln --verify-no-changes"
+        "command": "dotnet format sc-lint-roslyn.sln --verify-no-changes"
       },
       "build": {
         "status": "pass | fail | not_run",
-        "command": "dotnet build roslyn-lint.sln --configuration Release"
+        "command": "dotnet build sc-lint-roslyn.sln --configuration Release"
       },
       "tests": {
         "status": "pass | fail | not_run",
-        "command": "dotnet test roslyn-lint.sln --configuration Release --verbosity normal --logger \"trx;LogFileName=test-results.trx\" --collect:\"XPlat Code Coverage\""
+        "command": "dotnet test sc-lint-roslyn.sln --configuration Release --verbosity normal --logger \"trx;LogFileName=test-results.trx\" --collect:\"XPlat Code Coverage\""
       },
       "coverage": {
         "status": "pass | fail | not_run",
@@ -161,7 +161,7 @@ Return fenced JSON only.
         "id": "QA-001",
         "category": "restore | format | build | tests | coverage | artifacts | portability | packaging | correctness",
         "severity": "critical | important | minor",
-        "file": "src/Roslyn.DeMagic/Roslyn.DeMagic.csproj",
+        "file": "src/sc.lint.roslyn.demagic/sc.lint.roslyn.demagic.csproj",
         "line": 18,
         "issue": "Short description of the issue.",
         "recommendation": "Specific remediation.",

@@ -1,11 +1,11 @@
-# Roslyn Lint Suite Architecture
+# sc-lint-roslyn Suite Architecture
 
 ## 1. Overview
 
 The suite currently has two product boundaries:
 
-- `Roslyn.DeMagic` owns Roslyn diagnostic analysis and analyzer configuration
-- `roslyn-lint` owns CLI command parsing, contract serialization, and future
+- `sc.lint.roslyn.demagic` owns Roslyn diagnostic analysis and analyzer configuration
+- `sc-lint-roslyn` owns CLI command parsing, contract serialization, and future
   repo-facing operations across package-owned lint tools
 
 The repository architecture is intentionally split so the analyzer can mature
@@ -15,11 +15,11 @@ as a NuGet package without being blocked by the CLI feature backlog.
 
 Architectural rules:
 
-- `Roslyn.DeMagic` must remain usable as a standalone analyzer package with no
+- `sc.lint.roslyn.demagic` must remain usable as a standalone analyzer package with no
   dependency on the CLI executable at runtime.
-- `roslyn-lint` may reference analyzer or shared operation assemblies, but it
-  must not become the only way to consume `Roslyn.DeMagic`.
-- `roslyn-lint` is the stable orchestration surface for suite tools; backend
+- `sc-lint-roslyn` may reference analyzer or shared operation assemblies, but it
+  must not become the only way to consume `sc.lint.roslyn.demagic`.
+- `sc-lint-roslyn` is the stable orchestration surface for suite tools; backend
   packages may be linked in-process or invoked out-of-process without changing
   the public command contract.
 - Analyzer configuration ownership lives with the analyzer project, not the
@@ -46,15 +46,15 @@ Accepted repository ADRs live in `docs/adr/` and are indexed by
 
 Phase A keeps the suite split into:
 
-- an analyzer-first implementation line for `Roslyn.DeMagic`
-- a contract-first design line for `roslyn-lint`
+- an analyzer-first implementation line for `sc.lint.roslyn.demagic`
+- a contract-first design line for `sc-lint-roslyn`
 
 Architectural rules:
 
 - the analyzer is the first production deliverable
 - the current `DM001` and `DM002` implementations are not architectural proof
   that the PRD is satisfied
-- the current Spectre-based CLI spike is not the approved `roslyn-lint`
+- the current Spectre-based CLI spike is not the approved `sc-lint-roslyn`
   architecture baseline
 
 ## 5. CLI Architecture Baseline
@@ -76,7 +76,7 @@ Architectural rules:
 - every command must support `--json`
 - JSON output is the normative contract
 - success and failure responses must remain in one stable envelope family
-- the stable envelope family for `roslyn-lint` must align with the `sc-lint`
+- the stable envelope family for `sc-lint-roslyn` must align with the `sc-lint`
   product pattern: `ok`, `command`, `data`, `error`, and optional
   `diagnostics`
 - error results must be typed, structured, and actionable
@@ -87,9 +87,9 @@ Architectural rules:
   simulator-backed testing is possible
 
 Project-level detail for those rules is defined in
-`docs/roslyn-lint/architecture.md` and `docs/roslyn-lint/cli-contract.md`.
+`docs/sc-lint-roslyn/architecture.md` and `docs/sc-lint-roslyn/cli-contract.md`.
 
 Project-local boundary detail is owned by:
 
-- `docs/roslyn-demagic/boundaries.md`
-- `docs/roslyn-lint/boundaries.md`
+- `docs/sc-lint-roslyn-demagic/boundaries.md`
+- `docs/sc-lint-roslyn/boundaries.md`

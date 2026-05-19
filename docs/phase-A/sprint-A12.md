@@ -3,7 +3,7 @@ id: A12
 title: production-readiness convergence
 status: complete
 branch: sprint/A12
-worktree: /Users/randlee/Documents/github/roslyn-lint-worktrees/sprint/A12
+worktree: /Users/randlee/Documents/github/sc-lint-roslyn-worktrees/sprint/A12
 target: integration/phase-A
 ---
 
@@ -11,7 +11,7 @@ target: integration/phase-A
 
 ## Goal
 
-- Make `Roslyn.DeMagic` ready for production testing as the primary Phase A
+- Make `sc.lint.roslyn.demagic` ready for production testing as the primary Phase A
   deliverable.
 - Align package metadata, documentation, release metadata, and
   packaged-consumer validation with the actual shipped analyzer rule set.
@@ -19,12 +19,12 @@ target: integration/phase-A
 
 ## Hard Dependencies
 
-- `docs/roslyn-demagic/requirements.md`
-- `docs/roslyn-demagic/architecture.md`
+- `docs/sc-lint-roslyn-demagic/requirements.md`
+- `docs/sc-lint-roslyn-demagic/architecture.md`
 - `docs/phase-A/sprint-A11.md`
-- `src/Roslyn.DeMagic/AnalyzerReleases.Shipped.md`
-- `src/Roslyn.DeMagic/AnalyzerReleases.Unshipped.md`
-- `eng/roslyn-demagic-package-expected-diagnostics.json`
+- `src/sc.lint.roslyn.demagic/AnalyzerReleases.Shipped.md`
+- `src/sc.lint.roslyn.demagic/AnalyzerReleases.Unshipped.md`
+- `eng/sc-lint-roslyn-demagic-package-expected-diagnostics.json`
 - `docs/phase-A/production-readiness-checklist.md`
 
 ## Exact Targets
@@ -32,16 +32,16 @@ target: integration/phase-A
 - `.github/workflows/ci.yml`
 - `.github/workflows/publish.yml`
 - `README.md`
-- `src/Roslyn.DeMagic/AnalyzerReleases.Shipped.md`
-- `src/Roslyn.DeMagic/AnalyzerReleases.Unshipped.md`
-- `src/Roslyn.DeMagic/Roslyn.DeMagic.csproj`
-- `examples/Roslyn.DeMagic.PackageSmoke/`
-- `eng/validate-roslyn-demagic-package.sh`
-- `eng/validate-roslyn-demagic-package.ps1`
-- `eng/roslyn-demagic-package-expected-diagnostics.json`
+- `src/sc.lint.roslyn.demagic/AnalyzerReleases.Shipped.md`
+- `src/sc.lint.roslyn.demagic/AnalyzerReleases.Unshipped.md`
+- `src/sc.lint.roslyn.demagic/sc.lint.roslyn.demagic.csproj`
+- `examples/sc.lint.roslyn.demagic.package-smoke/`
+- `eng/validate-sc-lint-roslyn-demagic-package.sh`
+- `eng/validate-sc-lint-roslyn-demagic-package.ps1`
+- `eng/sc-lint-roslyn-demagic-package-expected-diagnostics.json`
 - `docs/phase-A/production-readiness-checklist.md`
-- `tests/Roslyn.DeMagic.Tests/PermutationMatrix.md`
-- `tests/Roslyn.DeMagic.Tests/PackageValidation/ProductionReadinessChecklistRow.cs`
+- `tests/sc.lint.roslyn.demagic.tests/PermutationMatrix.md`
+- `tests/sc.lint.roslyn.demagic.tests/packagevalidation/ProductionReadinessChecklistRow.cs`
 
 ## Important Interfaces, Records/Structs, And Enums
 
@@ -55,11 +55,11 @@ target: integration/phase-A
 - update repo documentation so analyzer readiness is described accurately and
   CLI work is not misrepresented as the primary Phase A outcome
 - treat these files as authoritative gate artifacts for A12 closeout:
-  `tests/Roslyn.DeMagic.Tests/PermutationMatrix.md`,
+  `tests/sc.lint.roslyn.demagic.tests/PermutationMatrix.md`,
   `docs/phase-A/production-readiness-checklist.md`,
-  `src/Roslyn.DeMagic/AnalyzerReleases.Shipped.md`,
-  `src/Roslyn.DeMagic/AnalyzerReleases.Unshipped.md`,
-  `eng/roslyn-demagic-package-expected-diagnostics.json`
+  `src/sc.lint.roslyn.demagic/AnalyzerReleases.Shipped.md`,
+  `src/sc.lint.roslyn.demagic/AnalyzerReleases.Unshipped.md`,
+  `eng/sc-lint-roslyn-demagic-package-expected-diagnostics.json`
 - apply each gate artifact's own internal completion rule when judging closure;
   sprint wording may require the artifact, but does not override the artifact's
   own gate
@@ -87,25 +87,25 @@ target: integration/phase-A
 - docs no longer imply unimplemented analyzer behavior is production-ready
 - rule metadata, release metadata, and sample corpus all describe the same
   shippable analyzer set
-- `tests/Roslyn.DeMagic.Tests/PermutationMatrix.md` is closed under its own
+- `tests/sc.lint.roslyn.demagic.tests/PermutationMatrix.md` is closed under its own
   internal gate; every supported row is `covered` or `unsupported`
 - `docs/phase-A/production-readiness-checklist.md` is complete and auditable,
   with no open required row
-- `src/Roslyn.DeMagic/AnalyzerReleases.Unshipped.md` contains no pending rule
+- `src/sc.lint.roslyn.demagic/AnalyzerReleases.Unshipped.md` contains no pending rule
   entries beyond the required header
 - the packaged-consumer manifest and validation scripts describe the same
   shipped diagnostics that release metadata and docs describe
-- `eng/roslyn-demagic-package-expected-diagnostics.json` matches the package
+- `eng/sc-lint-roslyn-demagic-package-expected-diagnostics.json` matches the package
   validation assertions and packaged-consumer evidence
 - no CI publication behavior is still ambiguous when A12 closes; A13 inherits a
   finished readiness contract rather than redefining one
 
 ## Required Validation
 
-- `dotnet restore roslyn-lint.sln`
-- `dotnet build roslyn-lint.sln --configuration Release`
-- `dotnet test tests/Roslyn.DeMagic.Tests/Roslyn.DeMagic.Tests.csproj --configuration Release --verbosity normal`
-- `dotnet pack src/Roslyn.DeMagic/Roslyn.DeMagic.csproj --configuration Release -o artifacts/packages`
-- `bash eng/validate-roslyn-demagic-package.sh`
-- `pwsh -File eng/validate-roslyn-demagic-package.ps1`
+- `dotnet restore sc-lint-roslyn.sln`
+- `dotnet build sc-lint-roslyn.sln --configuration Release`
+- `dotnet test tests/sc.lint.roslyn.demagic.tests/sc.lint.roslyn.demagic.tests.csproj --configuration Release --verbosity normal`
+- `dotnet pack src/sc.lint.roslyn.demagic/sc.lint.roslyn.demagic.csproj --configuration Release -o artifacts/packages`
+- `bash eng/validate-sc-lint-roslyn-demagic-package.sh`
+- `pwsh -File eng/validate-sc-lint-roslyn-demagic-package.ps1`
 - `git diff --check`

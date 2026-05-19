@@ -1,52 +1,52 @@
 ---
 id: A1
-title: Roslyn.DeMagic analyzer foundation
+title: sc.lint.roslyn.demagic analyzer foundation
 status: complete
 branch: sprint/A1
-worktree: /Users/randlee/Documents/github/roslyn-lint-worktrees/sprint/A1
+worktree: /Users/randlee/Documents/github/sc-lint-roslyn-worktrees/sprint/A1
 target: integration/phase-A
 qa_fix_commit: f0668e0
 ---
 
-# Sprint A1 - Roslyn.DeMagic Analyzer Foundation
+# Sprint A1 - sc.lint.roslyn.demagic Analyzer Foundation
 
 ## Goal
 
-- Establish the reusable foundation for `Roslyn.DeMagic` before rule-specific
+- Establish the reusable foundation for `sc.lint.roslyn.demagic` before rule-specific
   implementation work in A2 and A3.
 - Add configuration loading, pattern compilation, and a basic analyzer test
   harness without preserving rejected spike semantics.
 
 ## Hard Dependencies
 
-- `docs/prd/roslyn-demagic-prd.md`
-- `docs/roslyn-demagic/requirements.md`
-- `docs/roslyn-demagic/architecture.md`
-- `docs/roslyn-demagic/boundaries.md`
+- `docs/prd/sc-lint-roslyn-demagic-prd.md`
+- `docs/sc-lint-roslyn-demagic/requirements.md`
+- `docs/sc-lint-roslyn-demagic/architecture.md`
+- `docs/sc-lint-roslyn-demagic/boundaries.md`
 - `docs/phase-A/sprint-A0.md`
 
 ## Exact Targets
 
-- `src/Roslyn.DeMagic/Configuration/IAdditionalFileConfigSelector.cs`
-- `src/Roslyn.DeMagic/Configuration/AdditionalFileConfigSelector.cs`
-- `src/Roslyn.DeMagic/Configuration/ITomlConfigParser.cs`
-- `src/Roslyn.DeMagic/Configuration/IDeMagicConfigLoader.cs`
-- `src/Roslyn.DeMagic/Configuration/SimpleTomlConfigParser.cs`
-- `src/Roslyn.DeMagic/Configuration/DeMagicConfig.cs`
-- `src/Roslyn.DeMagic/Configuration/Dm001Options.cs`
-- `src/Roslyn.DeMagic/Configuration/Dm002Options.cs`
-- `src/Roslyn.DeMagic/Configuration/ConfiguredSeverity.cs`
-- `src/Roslyn.DeMagic/Configuration/AdditionalFileConfigSelection.cs`
-- `src/Roslyn.DeMagic/Configuration/DeMagicConfigLoader.cs`
-- `src/Roslyn.DeMagic/Patterns/IForbiddenPatternCompiler.cs`
-- `src/Roslyn.DeMagic/Patterns/ForbiddenPattern.cs`
-- `src/Roslyn.DeMagic/Patterns/ForbiddenPatternKind.cs`
-- `src/Roslyn.DeMagic/Patterns/CompiledForbiddenPattern.cs`
-- `src/Roslyn.DeMagic/Patterns/ForbiddenPatternMatcher.cs`
-- `tests/Roslyn.DeMagic.Tests/Configuration/DeMagicConfigLoaderTests.cs`
-- `tests/Roslyn.DeMagic.Tests/Configuration/ConfiguredSeverityTests.cs`
-- `tests/Roslyn.DeMagic.Tests/Patterns/ForbiddenPatternMatcherTests.cs`
-- `tests/Roslyn.DeMagic.Tests/Patterns/ForbiddenPatternCompilerTests.cs`
+- `src/sc.lint.roslyn.demagic/configuration/IAdditionalFileConfigSelector.cs`
+- `src/sc.lint.roslyn.demagic/configuration/AdditionalFileConfigSelector.cs`
+- `src/sc.lint.roslyn.demagic/configuration/ITomlConfigParser.cs`
+- `src/sc.lint.roslyn.demagic/configuration/IDeMagicConfigLoader.cs`
+- `src/sc.lint.roslyn.demagic/configuration/SimpleTomlConfigParser.cs`
+- `src/sc.lint.roslyn.demagic/configuration/DeMagicConfig.cs`
+- `src/sc.lint.roslyn.demagic/configuration/Dm001Options.cs`
+- `src/sc.lint.roslyn.demagic/configuration/Dm002Options.cs`
+- `src/sc.lint.roslyn.demagic/configuration/ConfiguredSeverity.cs`
+- `src/sc.lint.roslyn.demagic/configuration/AdditionalFileConfigSelection.cs`
+- `src/sc.lint.roslyn.demagic/configuration/DeMagicConfigLoader.cs`
+- `src/sc.lint.roslyn.demagic/patterns/IForbiddenPatternCompiler.cs`
+- `src/sc.lint.roslyn.demagic/patterns/ForbiddenPattern.cs`
+- `src/sc.lint.roslyn.demagic/patterns/ForbiddenPatternKind.cs`
+- `src/sc.lint.roslyn.demagic/patterns/CompiledForbiddenPattern.cs`
+- `src/sc.lint.roslyn.demagic/patterns/ForbiddenPatternMatcher.cs`
+- `tests/sc.lint.roslyn.demagic.tests/configuration/DeMagicConfigLoaderTests.cs`
+- `tests/sc.lint.roslyn.demagic.tests/configuration/ConfiguredSeverityTests.cs`
+- `tests/sc.lint.roslyn.demagic.tests/patterns/ForbiddenPatternMatcherTests.cs`
+- `tests/sc.lint.roslyn.demagic.tests/patterns/ForbiddenPatternCompilerTests.cs`
 
 ## Important Interfaces, Records/Structs, and Enums
 
@@ -85,7 +85,7 @@ qa_fix_commit: f0668e0
 
 ## Required Validation
 
-- `dotnet restore roslyn-lint.sln`
-- `dotnet build roslyn-lint.sln --configuration Release`
-- `dotnet test tests/Roslyn.DeMagic.Tests/Roslyn.DeMagic.Tests.csproj --configuration Release --verbosity normal`
+- `dotnet restore sc-lint-roslyn.sln`
+- `dotnet build sc-lint-roslyn.sln --configuration Release`
+- `dotnet test tests/sc.lint.roslyn.demagic.tests/sc.lint.roslyn.demagic.tests.csproj --configuration Release --verbosity normal`
 - `git diff --check`

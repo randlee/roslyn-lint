@@ -3,7 +3,7 @@ id: A6
 title: DeMagic backend integration and first usable lint flow
 status: complete
 branch: sprint/A6
-worktree: /Users/randlee/Documents/github/roslyn-lint-worktrees/sprint/A6
+worktree: /Users/randlee/Documents/github/sc-lint-roslyn-worktrees/sprint/A6
 target: integration/phase-A
 ---
 
@@ -11,48 +11,48 @@ target: integration/phase-A
 
 ## Goal
 
-- Make `roslyn-lint lint demagic` the first real usable command path.
+- Make `sc-lint-roslyn lint demagic` the first real usable command path.
 - Add the dispatch and normalization seams for in-process tool execution.
 - Expose rule and finding payloads through the approved CLI contract.
 
 ## Hard Dependencies
 
-- `docs/roslyn-demagic/requirements.md`
-- `docs/roslyn-demagic/architecture.md`
-- `docs/roslyn-lint/requirements.md`
-- `docs/roslyn-lint/architecture.md`
-- `docs/roslyn-lint/cli-contract.md`
+- `docs/sc-lint-roslyn-demagic/requirements.md`
+- `docs/sc-lint-roslyn-demagic/architecture.md`
+- `docs/sc-lint-roslyn/requirements.md`
+- `docs/sc-lint-roslyn/architecture.md`
+- `docs/sc-lint-roslyn/cli-contract.md`
 - `docs/phase-A/sprint-A5.md`
 - `docs/adr/ADR-003-ai-cli-json-contract.md`
-- `docs/adr/ADR-004-roslyn-lint-command-surface-and-parser.md`
-- `docs/adr/ADR-005-roslyn-lint-abstractions-package.md`
+- `docs/adr/ADR-004-sc-lint-roslyn-command-surface-and-parser.md`
+- `docs/adr/ADR-005-sc-lint-roslyn-abstractions-package.md`
 
 ## Exact Targets
 
-- `src/Roslyn.Lint.Abstractions/ILintToolModule.cs`
-- `src/Roslyn.Lint.Abstractions/ILintToolCommandHandler.cs`
-- `src/Roslyn.Lint.Abstractions/ILintWorkspaceAdapter.cs`
-- `src/Roslyn.Lint.Abstractions/Contracts/LintToolRequest.cs`
-- `src/Roslyn.Lint.Abstractions/Contracts/LintToolResult.cs`
-- `src/Roslyn.Lint.Abstractions/Contracts/LintFinding.cs`
-- `src/Roslyn.Lint/Dispatch/BackendToolDescriptor.cs`
-- `src/Roslyn.Lint/Dispatch/IBackendToolDispatcher.cs`
-- `src/Roslyn.Lint/Dispatch/BackendToolDispatcher.cs`
-- `src/Roslyn.Lint/Dispatch/BackendJsonNormalizer.cs`
-- `src/Roslyn.Lint/Operations/ILintToolOperation.cs`
-- `src/Roslyn.Lint/Operations/RunLintToolOperation.cs`
-- `src/Roslyn.Lint/Commands/RegisterLintCommands.cs`
-- `src/Roslyn.DeMagic.Lint/Roslyn.DeMagic.Lint.csproj`
-- `src/Roslyn.DeMagic.Lint/DeMagicWorkspaceAdapter.cs`
-- `src/Roslyn.DeMagic.Lint/RoslynDeMagicToolModule.cs`
-- `src/Roslyn.DeMagic.Lint/RoslynDeMagicLintHandler.cs`
-- `src/Roslyn.Lint/Formatting/LintToolHumanOutputFormatter.cs`
-- `src/Roslyn.Lint/Roslyn.Lint.csproj`
-- `tests/Roslyn.Lint.Tests/Dispatch/BackendToolDispatcherTests.cs`
-- `tests/Roslyn.Lint.Tests/Operations/RunLintToolOperationTests.cs`
-- `tests/Roslyn.Lint.Tests/Commands/LintRoslynDeMagicCommandTests.cs`
-- `tests/Roslyn.Lint.Tests/Contracts/LintToolSerializationTests.cs`
-- `tests/Roslyn.Lint.Tests/TestData/Lint/*`
+- `src/sc.lint.roslyn.abstractions/ILintToolModule.cs`
+- `src/sc.lint.roslyn.abstractions/ILintToolCommandHandler.cs`
+- `src/sc.lint.roslyn.abstractions/ILintWorkspaceAdapter.cs`
+- `src/sc.lint.roslyn.abstractions/contracts/LintToolRequest.cs`
+- `src/sc.lint.roslyn.abstractions/contracts/LintToolResult.cs`
+- `src/sc.lint.roslyn.abstractions/contracts/LintFinding.cs`
+- `src/sc.lint.roslyn/dispatch/BackendToolDescriptor.cs`
+- `src/sc.lint.roslyn/dispatch/IBackendToolDispatcher.cs`
+- `src/sc.lint.roslyn/dispatch/BackendToolDispatcher.cs`
+- `src/sc.lint.roslyn/dispatch/BackendJsonNormalizer.cs`
+- `src/sc.lint.roslyn/operations/ILintToolOperation.cs`
+- `src/sc.lint.roslyn/operations/RunLintToolOperation.cs`
+- `src/sc.lint.roslyn/commands/RegisterLintCommands.cs`
+- `src/sc.lint.roslyn.demagic.lint/sc.lint.roslyn.demagic.lint.csproj`
+- `src/sc.lint.roslyn.demagic.lint/DeMagicWorkspaceAdapter.cs`
+- `src/sc.lint.roslyn.demagic.lint/RoslynDeMagicToolModule.cs`
+- `src/sc.lint.roslyn.demagic.lint/RoslynDeMagicLintHandler.cs`
+- `src/sc.lint.roslyn/formatting/LintToolHumanOutputFormatter.cs`
+- `src/sc.lint.roslyn/sc.lint.roslyn.csproj`
+- `tests/sc.lint.roslyn.tests/dispatch/BackendToolDispatcherTests.cs`
+- `tests/sc.lint.roslyn.tests/operations/RunLintToolOperationTests.cs`
+- `tests/sc.lint.roslyn.tests/commands/LintRoslynDeMagicCommandTests.cs`
+- `tests/sc.lint.roslyn.tests/contracts/LintToolSerializationTests.cs`
+- `tests/sc.lint.roslyn.tests/testdata/Lint/*`
 
 ## Important Interfaces, Records/Structs, And Enums
 
@@ -68,8 +68,8 @@ target: integration/phase-A
 
 - register `demagic` as the first real tool module
 - implement one shared dispatch seam for in-process tool execution
-- implement `roslyn-lint lint demagic`
-- implement the first `roslyn-lint lint fast` smoke-test path as a documented
+- implement `sc-lint-roslyn lint demagic`
+- implement the first `sc-lint-roslyn lint fast` smoke-test path as a documented
   alias to the `demagic` lint flow only
 - support a target path option so the first lint flow can run against the
   current repository or fixture-backed test directories
@@ -84,9 +84,9 @@ target: integration/phase-A
 
 ## Acceptance Criteria
 
-- `roslyn-lint lint demagic` works in human and JSON modes
-- `roslyn-lint lint demagic --json` emits `lint.demagic`
-- `roslyn-lint lint fast --json` works as the documented A6 smoke-test path
+- `sc-lint-roslyn lint demagic` works in human and JSON modes
+- `sc-lint-roslyn lint demagic --json` emits `lint.demagic`
+- `sc-lint-roslyn lint fast --json` works as the documented A6 smoke-test path
   and emits `lint.fast`
 - findings are emitted under `data` rather than as family-specific top-level
   fields
@@ -94,13 +94,13 @@ target: integration/phase-A
 - the dispatch path does not depend on parser-specific types
 - the tool module registration path is reusable for future tools
 - `RoslynDeMagicToolModule`, `RoslynDeMagicLintHandler`, and the concrete
-  `ILintWorkspaceAdapter` implementation live outside `Roslyn.Lint`
+  `ILintWorkspaceAdapter` implementation live outside `sc.lint.roslyn`
 
 ## Required Validation
 
-- `dotnet restore roslyn-lint.sln`
-- `dotnet build roslyn-lint.sln --configuration Release`
-- `dotnet test tests/Roslyn.Lint.Tests/Roslyn.Lint.Tests.csproj --configuration Release --verbosity normal`
-- `dotnet run --framework net10.0 --project src/Roslyn.Lint/Roslyn.Lint.csproj -- lint demagic --json`
-- `dotnet run --framework net10.0 --project src/Roslyn.Lint/Roslyn.Lint.csproj -- lint fast --json`
+- `dotnet restore sc-lint-roslyn.sln`
+- `dotnet build sc-lint-roslyn.sln --configuration Release`
+- `dotnet test tests/sc.lint.roslyn.tests/sc.lint.roslyn.tests.csproj --configuration Release --verbosity normal`
+- `dotnet run --framework net10.0 --project src/sc.lint.roslyn/sc.lint.roslyn.csproj -- lint demagic --json`
+- `dotnet run --framework net10.0 --project src/sc.lint.roslyn/sc.lint.roslyn.csproj -- lint fast --json`
 - `git diff --check`

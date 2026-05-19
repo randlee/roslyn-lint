@@ -1,8 +1,8 @@
-# Roslyn Lint Documentation Guidelines
+# sc-lint-roslyn Documentation Guidelines
 
 ## 1. Purpose
 
-This document defines how `roslyn-lint` suite and project documentation is
+This document defines how `sc-lint-roslyn` suite and project documentation is
 organized.
 
 The goals are:
@@ -40,7 +40,7 @@ that detail is necessary to explain a suite-level decision.
 
 ### 2.3 Project Docs Define Ownership
 
-Files in `docs/roslyn-demagic/` and `docs/roslyn-lint/` define:
+Files in `docs/sc-lint-roslyn-demagic/` and `docs/sc-lint-roslyn/` define:
 
 - what each project owns
 - how each project satisfies referenced suite requirements
@@ -95,11 +95,11 @@ docs/
     ADR-001-analyzer-first-replacement-policy.md
     ADR-002-demagic-additionalfiles-config.md
     ADR-003-ai-cli-json-contract.md
-    ADR-004-roslyn-lint-command-surface-and-parser.md
-    ADR-005-roslyn-lint-abstractions-package.md
+    ADR-004-sc-lint-roslyn-command-surface-and-parser.md
+    ADR-005-sc-lint-roslyn-abstractions-package.md
     ADR-006-packaged-analyzer-validation-and-staged-publication.md
   prd/
-    roslyn-demagic-prd.md
+    sc-lint-roslyn-demagic-prd.md
   phase-A/
     plan-phase-A.md
     sprint-A1.md
@@ -117,11 +117,11 @@ docs/
     sprint-A13.md
     production-readiness-checklist.md
   releasing.md
-  roslyn-demagic/
+  sc-lint-roslyn-demagic/
     requirements.md
     architecture.md
     boundaries.md
-  roslyn-lint/
+  sc-lint-roslyn/
     requirements.md
     architecture.md
     cli-contract.md
@@ -208,7 +208,7 @@ Sprint plan files must use the standard planning shape:
 
 ## 5. Project-Level Document Responsibilities
 
-### 5.1 `docs/roslyn-demagic/`
+### 5.1 `docs/sc-lint-roslyn-demagic/`
 
 Owns analyzer-specific documentation:
 
@@ -219,7 +219,7 @@ Owns analyzer-specific documentation:
 
 It must not own CLI transport, formatting, or MCP wrapper concerns.
 
-### 5.2 `docs/roslyn-lint/`
+### 5.2 `docs/sc-lint-roslyn/`
 
 Owns CLI-specific documentation:
 

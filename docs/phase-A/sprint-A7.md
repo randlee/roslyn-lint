@@ -3,7 +3,7 @@ id: A7
 title: Profiles plus check, clippy, and ci workflows
 status: complete
 branch: sprint/A7
-worktree: /Users/randlee/Documents/github/roslyn-lint-worktrees/sprint/A7
+worktree: /Users/randlee/Documents/github/sc-lint-roslyn-worktrees/sprint/A7
 target: integration/phase-A
 ---
 
@@ -17,49 +17,49 @@ target: integration/phase-A
 
 ## Hard Dependencies
 
-- `docs/roslyn-lint/requirements.md`
-- `docs/roslyn-lint/architecture.md`
-- `docs/roslyn-lint/cli-contract.md`
+- `docs/sc-lint-roslyn/requirements.md`
+- `docs/sc-lint-roslyn/architecture.md`
+- `docs/sc-lint-roslyn/cli-contract.md`
 - `docs/phase-A/sprint-A6.md`
 - `docs/adr/ADR-003-ai-cli-json-contract.md`
-- `docs/adr/ADR-004-roslyn-lint-command-surface-and-parser.md`
+- `docs/adr/ADR-004-sc-lint-roslyn-command-surface-and-parser.md`
 
 ## Exact Targets
 
-- `src/Roslyn.Lint/Contracts/CheckRequest.cs`
-- `src/Roslyn.Lint/Contracts/CheckResult.cs`
-- `src/Roslyn.Lint/Contracts/ClippyRequest.cs`
-- `src/Roslyn.Lint/Contracts/ClippyResult.cs`
-- `src/Roslyn.Lint/Contracts/CiRequest.cs`
-- `src/Roslyn.Lint/Contracts/CiResult.cs`
-- `src/Roslyn.Lint/Contracts/LintProfileResult.cs`
-- `src/Roslyn.Lint/Contracts/WorkflowStepResult.cs`
-- `src/Roslyn.Lint/CommandModel/LintProfile.cs`
-- `src/Roslyn.Lint/CommandModel/LintProfileCatalog.cs`
-- `src/Roslyn.Lint/Operations/ICheckOperation.cs`
-- `src/Roslyn.Lint/Operations/IClippyOperation.cs`
-- `src/Roslyn.Lint/Operations/ICiOperation.cs`
-- `src/Roslyn.Lint/Operations/LintProfileRunner.cs`
-- `src/Roslyn.Lint/Operations/RepositoryPathResolver.cs`
-- `src/Roslyn.Lint/Operations/RunCheckOperation.cs`
-- `src/Roslyn.Lint/Operations/RunClippyOperation.cs`
-- `src/Roslyn.Lint/Operations/RunCiOperation.cs`
-- `src/Roslyn.Lint/Commands/RegisterLintCommands.cs`
-- `src/Roslyn.Lint/Commands/RegisterCheckCommands.cs`
-- `src/Roslyn.Lint/Commands/RegisterClippyCommands.cs`
-- `src/Roslyn.Lint/Commands/RegisterCiCommand.cs`
-- `src/Roslyn.Lint/Backends/DotnetCommandRunner.cs`
-- `src/Roslyn.Lint/Formatting/LintProfileHumanOutputFormatter.cs`
-- `src/Roslyn.Lint/Formatting/CheckHumanOutputFormatter.cs`
-- `src/Roslyn.Lint/Formatting/ClippyHumanOutputFormatter.cs`
-- `src/Roslyn.Lint/Formatting/CiHumanOutputFormatter.cs`
-- `tests/Roslyn.Lint.Tests/Commands/LintProfileCommandTests.cs`
-- `tests/Roslyn.Lint.Tests/Commands/CheckCommandTests.cs`
-- `tests/Roslyn.Lint.Tests/Commands/ClippyCommandTests.cs`
-- `tests/Roslyn.Lint.Tests/Commands/CiCommandTests.cs`
-- `tests/Roslyn.Lint.Tests/Operations/RunCheckOperationTests.cs`
-- `tests/Roslyn.Lint.Tests/Operations/RunClippyOperationTests.cs`
-- `tests/Roslyn.Lint.Tests/Operations/RunCiOperationTests.cs`
+- `src/sc.lint.roslyn/contracts/CheckRequest.cs`
+- `src/sc.lint.roslyn/contracts/CheckResult.cs`
+- `src/sc.lint.roslyn/contracts/ClippyRequest.cs`
+- `src/sc.lint.roslyn/contracts/ClippyResult.cs`
+- `src/sc.lint.roslyn/contracts/CiRequest.cs`
+- `src/sc.lint.roslyn/contracts/CiResult.cs`
+- `src/sc.lint.roslyn/contracts/LintProfileResult.cs`
+- `src/sc.lint.roslyn/contracts/WorkflowStepResult.cs`
+- `src/sc.lint.roslyn/commandmodel/LintProfile.cs`
+- `src/sc.lint.roslyn/commandmodel/LintProfileCatalog.cs`
+- `src/sc.lint.roslyn/operations/ICheckOperation.cs`
+- `src/sc.lint.roslyn/operations/IClippyOperation.cs`
+- `src/sc.lint.roslyn/operations/ICiOperation.cs`
+- `src/sc.lint.roslyn/operations/LintProfileRunner.cs`
+- `src/sc.lint.roslyn/operations/RepositoryPathResolver.cs`
+- `src/sc.lint.roslyn/operations/RunCheckOperation.cs`
+- `src/sc.lint.roslyn/operations/RunClippyOperation.cs`
+- `src/sc.lint.roslyn/operations/RunCiOperation.cs`
+- `src/sc.lint.roslyn/commands/RegisterLintCommands.cs`
+- `src/sc.lint.roslyn/commands/RegisterCheckCommands.cs`
+- `src/sc.lint.roslyn/commands/RegisterClippyCommands.cs`
+- `src/sc.lint.roslyn/commands/RegisterCiCommand.cs`
+- `src/sc.lint.roslyn/backends/DotnetCommandRunner.cs`
+- `src/sc.lint.roslyn/formatting/LintProfileHumanOutputFormatter.cs`
+- `src/sc.lint.roslyn/formatting/CheckHumanOutputFormatter.cs`
+- `src/sc.lint.roslyn/formatting/ClippyHumanOutputFormatter.cs`
+- `src/sc.lint.roslyn/formatting/CiHumanOutputFormatter.cs`
+- `tests/sc.lint.roslyn.tests/commands/LintProfileCommandTests.cs`
+- `tests/sc.lint.roslyn.tests/commands/CheckCommandTests.cs`
+- `tests/sc.lint.roslyn.tests/commands/ClippyCommandTests.cs`
+- `tests/sc.lint.roslyn.tests/commands/CiCommandTests.cs`
+- `tests/sc.lint.roslyn.tests/operations/RunCheckOperationTests.cs`
+- `tests/sc.lint.roslyn.tests/operations/RunClippyOperationTests.cs`
+- `tests/sc.lint.roslyn.tests/operations/RunCiOperationTests.cs`
 
 ## Important Interfaces, Records/Structs, And Enums
 
@@ -88,13 +88,13 @@ target: integration/phase-A
 
 ## Acceptance Criteria
 
-- `roslyn-lint lint fast`, `full`, and `ci` are implemented and documented
+- `sc-lint-roslyn lint fast`, `full`, and `ci` are implemented and documented
 - the profile membership table is present in both
-  `docs/roslyn-lint/cli-contract.md` and this sprint doc, and the two match
-- `roslyn-lint check` is implemented and emits the stable envelope in JSON mode
-- `roslyn-lint clippy` is implemented and emits the stable envelope in JSON
+  `docs/sc-lint-roslyn/cli-contract.md` and this sprint doc, and the two match
+- `sc-lint-roslyn check` is implemented and emits the stable envelope in JSON mode
+- `sc-lint-roslyn clippy` is implemented and emits the stable envelope in JSON
   mode
-- `roslyn-lint ci` runs lint plus tests and remains distinct from `lint ci`
+- `sc-lint-roslyn ci` runs lint plus tests and remains distinct from `lint ci`
 - profile membership is explicit and test-covered
 - raw `dotnet` tool output does not become the public machine contract
 
@@ -105,31 +105,31 @@ target: integration/phase-A
 | `lint fast` | `demagic` |
 | `lint full` | `demagic` |
 | `lint ci` | `demagic` |
-| top-level `ci` | `lint ci` plus `dotnet test tests/Roslyn.DeMagic.Tests/Roslyn.DeMagic.Tests.csproj --configuration Release --verbosity normal` and `dotnet test tests/Roslyn.Lint.Tests/Roslyn.Lint.Tests.csproj --configuration Release --verbosity normal` |
+| top-level `ci` | `lint ci` plus `dotnet test tests/sc.lint.roslyn.demagic.tests/sc.lint.roslyn.demagic.tests.csproj --configuration Release --verbosity normal` and `dotnet test tests/sc.lint.roslyn.tests/sc.lint.roslyn.tests.csproj --configuration Release --verbosity normal` |
 
 ## Implemented Workflow Definitions
 
 - `check` runs
-  `dotnet build roslyn-lint.sln --configuration Release --no-restore`
+  `dotnet build sc-lint-roslyn.sln --configuration Release --no-restore`
 - `clippy` runs
-  `dotnet build roslyn-lint.sln --configuration Release --no-restore -warnaserror`
+  `dotnet build sc-lint-roslyn.sln --configuration Release --no-restore -warnaserror`
   followed by
-  `dotnet format roslyn-lint.sln --verify-no-changes --no-restore`
+  `dotnet format sc-lint-roslyn.sln --verify-no-changes --no-restore`
 - top-level `ci` runs the `lint ci` profile first and then runs
-  `dotnet test tests/Roslyn.DeMagic.Tests/Roslyn.DeMagic.Tests.csproj --configuration Release --verbosity normal`
+  `dotnet test tests/sc.lint.roslyn.demagic.tests/sc.lint.roslyn.demagic.tests.csproj --configuration Release --verbosity normal`
   followed by
-  `dotnet test tests/Roslyn.Lint.Tests/Roslyn.Lint.Tests.csproj --configuration Release --verbosity normal`
+  `dotnet test tests/sc.lint.roslyn.tests/sc.lint.roslyn.tests.csproj --configuration Release --verbosity normal`
 
 ## Required Validation
 
-- `dotnet restore roslyn-lint.sln`
-- `dotnet build roslyn-lint.sln --configuration Release`
-- `dotnet test tests/Roslyn.DeMagic.Tests/Roslyn.DeMagic.Tests.csproj --configuration Release --verbosity normal`
-- `dotnet test tests/Roslyn.Lint.Tests/Roslyn.Lint.Tests.csproj --configuration Release --verbosity normal`
-- `dotnet run --framework net8.0 --project src/Roslyn.Lint/Roslyn.Lint.csproj -- lint fast --json`
-- `dotnet run --framework net8.0 --project src/Roslyn.Lint/Roslyn.Lint.csproj -- lint full --json`
-- `dotnet run --framework net8.0 --project src/Roslyn.Lint/Roslyn.Lint.csproj -- lint ci --json`
-- `dotnet run --framework net8.0 --project src/Roslyn.Lint/Roslyn.Lint.csproj -- check --json`
-- `dotnet run --framework net8.0 --project src/Roslyn.Lint/Roslyn.Lint.csproj -- clippy --json`
-- `dotnet run --framework net8.0 --project src/Roslyn.Lint/Roslyn.Lint.csproj -- ci --json`
+- `dotnet restore sc-lint-roslyn.sln`
+- `dotnet build sc-lint-roslyn.sln --configuration Release`
+- `dotnet test tests/sc.lint.roslyn.demagic.tests/sc.lint.roslyn.demagic.tests.csproj --configuration Release --verbosity normal`
+- `dotnet test tests/sc.lint.roslyn.tests/sc.lint.roslyn.tests.csproj --configuration Release --verbosity normal`
+- `dotnet run --framework net8.0 --project src/sc.lint.roslyn/sc.lint.roslyn.csproj -- lint fast --json`
+- `dotnet run --framework net8.0 --project src/sc.lint.roslyn/sc.lint.roslyn.csproj -- lint full --json`
+- `dotnet run --framework net8.0 --project src/sc.lint.roslyn/sc.lint.roslyn.csproj -- lint ci --json`
+- `dotnet run --framework net8.0 --project src/sc.lint.roslyn/sc.lint.roslyn.csproj -- check --json`
+- `dotnet run --framework net8.0 --project src/sc.lint.roslyn/sc.lint.roslyn.csproj -- clippy --json`
+- `dotnet run --framework net8.0 --project src/sc.lint.roslyn/sc.lint.roslyn.csproj -- ci --json`
 - `git diff --check`

@@ -1,9 +1,9 @@
-# Roslyn Lint Suite Project Plan
+# sc-lint-roslyn Suite Project Plan
 
 ## 1. Goal
 
 Establish a formal documentation and delivery framework for the repository
-while driving the first approved implementation line for `Roslyn.DeMagic`.
+while driving the first approved implementation line for `sc.lint.roslyn.demagic`.
 
 The repository does not assume the current code is correct. If the existing
 implementation conflicts with approved requirements or architecture, it may be
@@ -14,12 +14,12 @@ deleted and replaced.
 Phase A deliverables:
 
 - suite-level requirements, architecture, and project plan
-- project-level requirements and architecture for `Roslyn.DeMagic`
-- project-level requirements and architecture for `roslyn-lint`
+- project-level requirements and architecture for `sc.lint.roslyn.demagic`
+- project-level requirements and architecture for `sc-lint-roslyn`
 - project-level boundary inventories for both projects
 - accepted repository ADRs for enforceable Phase A decisions
 - a sprinted Phase A plan
-- a PRD-aligned `Roslyn.DeMagic` v1 implementation
+- a PRD-aligned `sc.lint.roslyn.demagic` v1 implementation
 - a CLI design baseline aligned with the repository's AI-first CLI rules
 - a production-ready analyzer validation path that covers every approved rule
 - a packaged-consumer example proving the built analyzer works through a local
@@ -32,19 +32,19 @@ Phase A deliverables:
 
 Current project inventory:
 
-- `src/Roslyn.DeMagic`
-- `src/Roslyn.Lint`
-- `tests/Roslyn.DeMagic.Tests`
-- `tests/Roslyn.Lint.Tests`
+- `src/sc.lint.roslyn.demagic`
+- `src/sc.lint.roslyn`
+- `tests/sc.lint.roslyn.demagic.tests`
+- `tests/sc.lint.roslyn.tests`
 
 Owned project documents:
 
-- `docs/roslyn-demagic/requirements.md`
-- `docs/roslyn-demagic/architecture.md`
-- `docs/roslyn-demagic/boundaries.md`
-- `docs/roslyn-lint/requirements.md`
-- `docs/roslyn-lint/architecture.md`
-- `docs/roslyn-lint/boundaries.md`
+- `docs/sc-lint-roslyn-demagic/requirements.md`
+- `docs/sc-lint-roslyn-demagic/architecture.md`
+- `docs/sc-lint-roslyn-demagic/boundaries.md`
+- `docs/sc-lint-roslyn/requirements.md`
+- `docs/sc-lint-roslyn/architecture.md`
+- `docs/sc-lint-roslyn/boundaries.md`
 - `docs/documentation-guidelines.md`
 - `docs/adr/INDEX.md`
 
@@ -65,12 +65,12 @@ Merge target:
 | Sprint | Scope | Required outcome |
 | --- | --- | --- |
 | A0 | Documentation reset | Replace placeholders and unapproved assumptions with formal suite and project docs |
-| A1 | Analyzer foundation | Add reusable configuration and forbidden-pattern infrastructure for `Roslyn.DeMagic` |
+| A1 | Analyzer foundation | Add reusable configuration and forbidden-pattern infrastructure for `sc.lint.roslyn.demagic` |
 | A2 | `DM002` forbidden-pattern analyzer | Align forbidden-string analysis, config parsing, and analyzer validation with the PRD |
 | A3 | `DM002` hardening and release alignment | Remove remaining spike leftovers, align release metadata, and route analyzer seams through interfaces |
 | A4 | Packaging and CLI baseline correction | Finalize analyzer packaging gates and lock the CLI design baseline to AI-first contract rules |
 | A5 | CLI foundation and abstractions package | Replace the Spectre spike with the first working `System.CommandLine` host and shared tool-module abstractions |
-| A6 | DeMagic backend integration and first usable lint flow | Deliver `roslyn-lint lint demagic` and the first usable `lint fast` smoke path |
+| A6 | DeMagic backend integration and first usable lint flow | Deliver `sc-lint-roslyn lint demagic` and the first usable `lint fast` smoke path |
 | A7 | Profiles plus check, clippy, and ci workflows | Deliver reusable lint profiles and the first .NET-native `check`, `clippy`, and `ci` workflows |
 | A8 | View surfaces, boundary metadata, and tool-module hardening | Harden the multi-tool CLI surface and delegated backend seams |
 | A9 | `DM001` completion and rule parity | Implement the missing constant-consolidation analyzer behavior and close the rule gap |
@@ -100,67 +100,67 @@ sprints is:
 Phase A implementation work is expected to touch, add, delete, or replace
 these code paths:
 
-- `src/Roslyn.DeMagic/Analyzers/MagicNumberAnalyzer.cs` deleted in A3
-- `src/Roslyn.DeMagic/Analyzers/DM001ConstantConsolidationAnalyzer.cs`
-- `src/Roslyn.DeMagic/Analyzers/DM002ForbiddenStringLiteralAnalyzer.cs`
-- `src/Roslyn.DeMagic/AnalyzerReleases.Shipped.md`
-- `src/Roslyn.DeMagic/AnalyzerReleases.Unshipped.md`
-- `src/Roslyn.DeMagic/Roslyn.DeMagic.csproj`
-- `examples/Roslyn.DeMagic.PackageSmoke/`
-- `eng/validate-roslyn-demagic-package.sh`
-- `eng/validate-roslyn-demagic-package.ps1`
-- `eng/roslyn-demagic-package-expected-diagnostics.json`
-- `tests/Roslyn.DeMagic.Tests/PackageValidation/`
+- `src/sc.lint.roslyn.demagic/analyzers/MagicNumberAnalyzer.cs` deleted in A3
+- `src/sc.lint.roslyn.demagic/analyzers/DM001ConstantConsolidationAnalyzer.cs`
+- `src/sc.lint.roslyn.demagic/analyzers/DM002ForbiddenStringLiteralAnalyzer.cs`
+- `src/sc.lint.roslyn.demagic/AnalyzerReleases.Shipped.md`
+- `src/sc.lint.roslyn.demagic/AnalyzerReleases.Unshipped.md`
+- `src/sc.lint.roslyn.demagic/sc.lint.roslyn.demagic.csproj`
+- `examples/sc.lint.roslyn.demagic.package-smoke/`
+- `eng/validate-sc-lint-roslyn-demagic-package.sh`
+- `eng/validate-sc-lint-roslyn-demagic-package.ps1`
+- `eng/sc-lint-roslyn-demagic-package-expected-diagnostics.json`
+- `tests/sc.lint.roslyn.demagic.tests/packagevalidation/`
 - `docs/phase-A/production-readiness-checklist.md`
 - `docs/releasing.md`
-- `tests/Roslyn.DeMagic.Tests/Analyzers/DM002ForbiddenStringLiteralAnalyzerTests.cs`
-- `tests/Roslyn.DeMagic.Tests/Analyzers/DM001ConstantConsolidationAnalyzerTests.cs`
-- `tests/Roslyn.DeMagic.Tests/TestData/DM001/`
-- `tests/Roslyn.DeMagic.Tests/TestData/DM002/`
-- `tests/Roslyn.DeMagic.Tests/TestData/README.md`
-- `tests/Roslyn.DeMagic.Tests/PermutationMatrix.md`
-- `src/Roslyn.Lint/Program.cs`
-- `src/Roslyn.Lint/Roslyn.Lint.csproj`
+- `tests/sc.lint.roslyn.demagic.tests/analyzers/DM002ForbiddenStringLiteralAnalyzerTests.cs`
+- `tests/sc.lint.roslyn.demagic.tests/analyzers/DM001ConstantConsolidationAnalyzerTests.cs`
+- `tests/sc.lint.roslyn.demagic.tests/testdata/dm001/`
+- `tests/sc.lint.roslyn.demagic.tests/testdata/dm002/`
+- `tests/sc.lint.roslyn.demagic.tests/testdata/README.md`
+- `tests/sc.lint.roslyn.demagic.tests/PermutationMatrix.md`
+- `src/sc.lint.roslyn/Program.cs`
+- `src/sc.lint.roslyn/sc.lint.roslyn.csproj`
 - `.github/workflows/ci.yml`
 - `.github/workflows/publish.yml`
 
 Delivered Phase A analyzer implementation units:
 
-- `src/Roslyn.DeMagic/Configuration/` for analyzer config selection, parsing,
+- `src/sc.lint.roslyn.demagic/configuration/` for analyzer config selection, parsing,
   and immutable `DM001`/`DM002` option models
-- `src/Roslyn.DeMagic/Diagnostics/` for centralized diagnostic descriptor
+- `src/sc.lint.roslyn.demagic/diagnostics/` for centralized diagnostic descriptor
   ownership
-- `src/Roslyn.DeMagic/Patterns/` for forbidden-pattern compilation and match
+- `src/sc.lint.roslyn.demagic/patterns/` for forbidden-pattern compilation and match
   behavior
-- `src/Roslyn.DeMagic/Analyzers/DM001ConstantConsolidationAnalyzer.cs`
-- `src/Roslyn.DeMagic/Analyzers/DM002ForbiddenStringLiteralAnalyzer.cs`
-- `src/Roslyn.DeMagic/AnalyzerReleases.Shipped.md`
-- `src/Roslyn.DeMagic/AnalyzerReleases.Unshipped.md`
+- `src/sc.lint.roslyn.demagic/analyzers/DM001ConstantConsolidationAnalyzer.cs`
+- `src/sc.lint.roslyn.demagic/analyzers/DM002ForbiddenStringLiteralAnalyzer.cs`
+- `src/sc.lint.roslyn.demagic/AnalyzerReleases.Shipped.md`
+- `src/sc.lint.roslyn.demagic/AnalyzerReleases.Unshipped.md`
 
 Delivered Phase A CLI and tooling baseline units:
 
-- `src/Roslyn.Lint.Abstractions/` for shared tool descriptors, command
+- `src/sc.lint.roslyn.abstractions/` for shared tool descriptors, command
   handlers, workspace seam, and stable envelope contracts
-- `src/Roslyn.Lint/Commands/` for `System.CommandLine` registration of the
+- `src/sc.lint.roslyn/commands/` for `System.CommandLine` registration of the
   shipped Phase A command families
-- `src/Roslyn.Lint/CommandModel/` and `src/Roslyn.Lint/Contracts/` for the
+- `src/sc.lint.roslyn/commandmodel/` and `src/sc.lint.roslyn/contracts/` for the
   stable CLI contract surface and workflow result models
-- `src/Roslyn.Lint/Dispatch/` for in-process and delegated backend
+- `src/sc.lint.roslyn/dispatch/` for in-process and delegated backend
   normalization and process seams
-- `src/Roslyn.Lint/Operations/` for reusable command operations and workflow
+- `src/sc.lint.roslyn/operations/` for reusable command operations and workflow
   runners
-- `src/Roslyn.Lint/Serialization/` and `src/Roslyn.Lint/Formatting/` for JSON
+- `src/sc.lint.roslyn/serialization/` and `src/sc.lint.roslyn/formatting/` for JSON
   envelope serialization and human output
-- `tests/Roslyn.Lint.Tests/Contracts/` and
-  `tests/Roslyn.Lint.Tests/Operations/` for contract and workflow coverage
+- `tests/sc.lint.roslyn.tests/contracts/` and
+  `tests/sc.lint.roslyn.tests/operations/` for contract and workflow coverage
 
 Delivered Phase A package-validation support units:
 
-- `tests/Roslyn.DeMagic.Tests/PackageValidation/ExpectedPackageDiagnostic.cs`
-- `tests/Roslyn.DeMagic.Tests/PackageValidation/PackageValidationManifest.cs`
-- `tests/Roslyn.DeMagic.Tests/PackageValidation/PackageValidationResult.cs`
-- `tests/Roslyn.DeMagic.Tests/PackageValidation/PackageValidationSampleKind.cs`
-- `tests/Roslyn.DeMagic.Tests/PackageValidation/ProductionReadinessChecklistRow.cs`
+- `tests/sc.lint.roslyn.demagic.tests/packagevalidation/ExpectedPackageDiagnostic.cs`
+- `tests/sc.lint.roslyn.demagic.tests/packagevalidation/PackageValidationManifest.cs`
+- `tests/sc.lint.roslyn.demagic.tests/packagevalidation/PackageValidationResult.cs`
+- `tests/sc.lint.roslyn.demagic.tests/packagevalidation/PackageValidationSampleKind.cs`
+- `tests/sc.lint.roslyn.demagic.tests/packagevalidation/ProductionReadinessChecklistRow.cs`
 
 ## 5. Execution Rules
 
@@ -178,7 +178,7 @@ Delivered Phase A package-validation support units:
 - GitHub Packages publication work remains analyzer-first support work and must
   not displace unfinished analyzer rule, sample, or package-consumer gaps
 - future CLI implementation must inherit the contract rules defined in
-  `docs/roslyn-lint/requirements.md` and `docs/roslyn-lint/architecture.md`
+  `docs/sc-lint-roslyn/requirements.md` and `docs/sc-lint-roslyn/architecture.md`
 - if spike code does not comply with approved requirements or architecture, the
   preferred action is full removal and replacement rather than incremental
   editing to preserve unapproved structure
@@ -194,7 +194,7 @@ Delivered Phase A package-validation support units:
 Phase A planning is complete only when:
 
 - the repo documentation framework exists and is internally consistent
-- `Roslyn.DeMagic` behavior is planned against the PRD rather than against the
+- `sc.lint.roslyn.demagic` behavior is planned against the PRD rather than against the
   current spike
 - analyzer packaging and validation expectations are explicit in the sprint
   plans
