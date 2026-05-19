@@ -20,6 +20,8 @@ env = { ATM_IDENTITY = "team-lead", ATM_TEAM = "roslyn-lint", CLAUDE_CODE_TASK_L
 
 [[rmux.windows.panes]]
 name = "crl"
+model = "codex"
+tmux_pane_id = "%70"
 command = "codex -c features.codex_hooks=true --yolo"
 env = { ATM_IDENTITY = "crl", ATM_TEAM = "roslyn-lint", CLAUDE_CODE_TASK_LIST_ID = "roslyn-lint" }
 
