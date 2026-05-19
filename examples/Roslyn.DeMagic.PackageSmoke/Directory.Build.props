@@ -1,6 +1,6 @@
 <Project>
   <PropertyGroup>
-    <RoslynDeMagicVersion>0.1.0</RoslynDeMagicVersion>
+    <RoslynDeMagicVersion>0.1.1</RoslynDeMagicVersion>
     <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
     <WarningsAsErrors></WarningsAsErrors>
     <GenerateDocumentationFile>false</GenerateDocumentationFile>
