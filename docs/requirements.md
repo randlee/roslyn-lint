@@ -48,6 +48,7 @@ Documentation structure and ownership rules are defined in:
 Phase planning docs live under:
 
 - `docs/phase-A/plan-phase-A.md`
+- `docs/phase-A/sprint-A0.md`
 - `docs/phase-A/sprint-A1.md`
 - `docs/phase-A/sprint-A2.md`
 - `docs/phase-A/sprint-A3.md`
