@@ -2,6 +2,7 @@ namespace sc.lint.roslyn.demagic.tests.packagevalidation;
 
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using System.Xml.Linq;
 using FluentAssertions;
 using Xunit;
 
@@ -19,8 +20,21 @@ public sealed class PackageValidationContractsTests
             "..",
             "eng",
             "sc-lint-roslyn-demagic-package-expected-diagnostics.json");
+        var directoryBuildPropsPath = Path.Combine(
+            AppContext.BaseDirectory,
+            "..",
+            "..",
+            "..",
+            "..",
+            "..",
+            "Directory.Build.props");
 
         var json = File.ReadAllText(Path.GetFullPath(manifestPath));
+        var directoryBuildProps = XDocument.Load(Path.GetFullPath(directoryBuildPropsPath));
+        var expectedVersion = directoryBuildProps.Root?
+            .Descendants("Version")
+            .Select(element => element.Value)
+            .FirstOrDefault();
         var options = new JsonSerializerOptions
         {
             PropertyNameCaseInsensitive = true,
@@ -31,7 +45,8 @@ public sealed class PackageValidationContractsTests
 
         manifest.Should().NotBeNull();
         manifest!.PackageId.Should().Be("sc-lint-roslyn-demagic");
-        manifest.PackageVersion.Should().Be("0.1.1");
+        expectedVersion.Should().NotBeNullOrWhiteSpace();
+        manifest.PackageVersion.Should().Be(expectedVersion);
         manifest.ExpectedDiagnostics.Should().HaveCount(9);
         manifest.ExpectedDiagnostics.Select(diagnostic => diagnostic.SampleKind)
             .Should().OnlyContain(kind => kind == PackageValidationSampleKind.Positive);
