@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <AssemblyName>sc.lint.roslyn.demagic.lint</AssemblyName>
+    <RootNamespace>sc.lint.roslyn.demagic.lint</RootNamespace>
+    <PackageId>sc-lint-roslyn-demagic-lint</PackageId>
+    <Description>CLI adapter layer for sc.lint.roslyn.demagic tool-module integration</Description>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\sc.lint.roslyn.demagic\sc.lint.roslyn.demagic.csproj" />
+    <ProjectReference Include="..\sc.lint.roslyn.abstractions\sc.lint.roslyn.abstractions.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="$(MicrosoftCodeAnalysisCSharpVersion)" />
+    <PackageReference Include="System.Collections.Immutable" Version="9.0.0" />
+    <PackageReference Include="System.Reflection.Metadata" Version="9.0.0" />
+  </ItemGroup>
+
+</Project>

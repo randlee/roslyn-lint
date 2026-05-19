@@ -3,7 +3,7 @@ id: A2
 title: DM002 forbidden-pattern analyzer
 status: complete
 branch: sprint/A2
-worktree: /Users/randlee/Documents/github/roslyn-lint-worktrees/sprint/A2
+worktree: /Users/randlee/Documents/github/sc-lint-roslyn-worktrees/sprint/A2
 target: integration/phase-A
 ---
 
@@ -18,30 +18,30 @@ target: integration/phase-A
 
 ## Hard Dependencies
 
-- `docs/prd/roslyn-demagic-prd.md`
-- `docs/roslyn-demagic/requirements.md`
-- `docs/roslyn-demagic/architecture.md`
-- `docs/roslyn-demagic/boundaries.md`
+- `docs/prd/sc-lint-roslyn-demagic-prd.md`
+- `docs/sc-lint-roslyn-demagic/requirements.md`
+- `docs/sc-lint-roslyn-demagic/architecture.md`
+- `docs/sc-lint-roslyn-demagic/boundaries.md`
 - `docs/phase-A/sprint-A1.md`
 
 ## Exact Targets
 
-- `src/Roslyn.DeMagic/Analyzers/DM002ForbiddenStringLiteralAnalyzer.cs`
-- `src/Roslyn.DeMagic/Analyzers/MagicStringAnalyzer.cs` deleted
-- `src/Roslyn.DeMagic/Diagnostics/DeMagicDiagnosticDescriptors.cs`
-- `src/Roslyn.DeMagic/Patterns/IForbiddenPatternCompiler.cs`
-- `src/Roslyn.DeMagic/Patterns/ForbiddenPattern.cs`
-- `src/Roslyn.DeMagic/Patterns/ForbiddenPatternKind.cs`
-- `src/Roslyn.DeMagic/Patterns/CompiledForbiddenPattern.cs`
-- `src/Roslyn.DeMagic/Patterns/ForbiddenPatternMatcher.cs`
-- `src/Roslyn.DeMagic/Roslyn.DeMagic.csproj`
-- `src/Roslyn.DeMagic/AnalyzerReleases.Unshipped.md`
-- `src/Roslyn.Lint/Commands/LintCommand.cs`
-- `tests/Roslyn.DeMagic.Tests/Analyzers/DM002ForbiddenStringLiteralAnalyzerTests.cs`
-- `tests/Roslyn.DeMagic.Tests/Analyzers/MagicStringAnalyzerTests.cs` deleted
-- `tests/Roslyn.DeMagic.Tests/Testing/AnalyzerTestHarness.cs`
-- `tests/Roslyn.DeMagic.Tests/Testing/TestAdditionalText.cs`
-- `tests/Roslyn.DeMagic.Tests/TestData/DM002/*`
+- `src/sc.lint.roslyn.demagic/analyzers/DM002ForbiddenStringLiteralAnalyzer.cs`
+- `src/sc.lint.roslyn.demagic/analyzers/MagicStringAnalyzer.cs` deleted
+- `src/sc.lint.roslyn.demagic/diagnostics/DeMagicDiagnosticDescriptors.cs`
+- `src/sc.lint.roslyn.demagic/patterns/IForbiddenPatternCompiler.cs`
+- `src/sc.lint.roslyn.demagic/patterns/ForbiddenPattern.cs`
+- `src/sc.lint.roslyn.demagic/patterns/ForbiddenPatternKind.cs`
+- `src/sc.lint.roslyn.demagic/patterns/CompiledForbiddenPattern.cs`
+- `src/sc.lint.roslyn.demagic/patterns/ForbiddenPatternMatcher.cs`
+- `src/sc.lint.roslyn.demagic/sc.lint.roslyn.demagic.csproj`
+- `src/sc.lint.roslyn.demagic/AnalyzerReleases.Unshipped.md`
+- `src/sc.lint.roslyn/commands/LintCommand.cs`
+- `tests/sc.lint.roslyn.demagic.tests/analyzers/DM002ForbiddenStringLiteralAnalyzerTests.cs`
+- `tests/sc.lint.roslyn.demagic.tests/analyzers/MagicStringAnalyzerTests.cs` deleted
+- `tests/sc.lint.roslyn.demagic.tests/testing/AnalyzerTestHarness.cs`
+- `tests/sc.lint.roslyn.demagic.tests/testing/TestAdditionalText.cs`
+- `tests/sc.lint.roslyn.demagic.tests/testdata/dm002/*`
 
 ## Important Interfaces, Records/Structs, and Enums
 
@@ -80,7 +80,7 @@ target: integration/phase-A
 
 ## Required Validation
 
-- `dotnet restore roslyn-lint.sln`
-- `dotnet build roslyn-lint.sln --configuration Release`
-- `dotnet test tests/Roslyn.DeMagic.Tests/Roslyn.DeMagic.Tests.csproj --configuration Release --verbosity normal`
+- `dotnet restore sc-lint-roslyn.sln`
+- `dotnet build sc-lint-roslyn.sln --configuration Release`
+- `dotnet test tests/sc.lint.roslyn.demagic.tests/sc.lint.roslyn.demagic.tests.csproj --configuration Release --verbosity normal`
 - `git diff --check`

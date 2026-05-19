@@ -3,7 +3,7 @@ id: A13
 title: ci publish and manual release handoff
 status: complete
 branch: sprint/A13
-worktree: /Users/randlee/Documents/github/roslyn-lint-worktrees/sprint/A13
+worktree: /Users/randlee/Documents/github/sc-lint-roslyn-worktrees/sprint/A13
 target: integration/phase-A
 ---
 
@@ -18,27 +18,27 @@ target: integration/phase-A
 
 ## Hard Dependencies
 
-- `docs/roslyn-demagic/requirements.md`
-- `docs/roslyn-demagic/architecture.md`
+- `docs/sc-lint-roslyn-demagic/requirements.md`
+- `docs/sc-lint-roslyn-demagic/architecture.md`
 - `docs/phase-A/sprint-A12.md`
-- `tests/Roslyn.DeMagic.Tests/PermutationMatrix.md`
+- `tests/sc.lint.roslyn.demagic.tests/PermutationMatrix.md`
 - `docs/phase-A/production-readiness-checklist.md`
-- `eng/roslyn-demagic-package-expected-diagnostics.json`
-- `src/Roslyn.DeMagic/AnalyzerReleases.Shipped.md`
-- `src/Roslyn.DeMagic/AnalyzerReleases.Unshipped.md`
+- `eng/sc-lint-roslyn-demagic-package-expected-diagnostics.json`
+- `src/sc.lint.roslyn.demagic/AnalyzerReleases.Shipped.md`
+- `src/sc.lint.roslyn.demagic/AnalyzerReleases.Unshipped.md`
 
 ## Exact Targets
 
 - `.github/workflows/ci.yml`
 - `.github/workflows/publish.yml`
-- `src/Roslyn.DeMagic/Roslyn.DeMagic.csproj`
-- `src/Roslyn.Lint/Roslyn.Lint.csproj`
-- `eng/validate-roslyn-demagic-package.sh`
-- `eng/validate-roslyn-demagic-package.ps1`
-- `eng/roslyn-demagic-package-expected-diagnostics.json`
+- `src/sc.lint.roslyn.demagic/sc.lint.roslyn.demagic.csproj`
+- `src/sc.lint.roslyn/sc.lint.roslyn.csproj`
+- `eng/validate-sc-lint-roslyn-demagic-package.sh`
+- `eng/validate-sc-lint-roslyn-demagic-package.ps1`
+- `eng/sc-lint-roslyn-demagic-package-expected-diagnostics.json`
 - `docs/releasing.md`
-- `docs/roslyn-lint/requirements.md`
-- `docs/roslyn-lint/architecture.md`
+- `docs/sc-lint-roslyn/requirements.md`
+- `docs/sc-lint-roslyn/architecture.md`
 
 ## Important Interfaces, Records/Structs, And Enums
 
@@ -52,23 +52,23 @@ target: integration/phase-A
   A13 work may begin before A12 QA closes, but A13 may not close, PASS, or
   merge as complete until A12 gate artifacts are closed under their own rules
   and A13 has revalidated against that baseline
-- add CI steps that pack `Roslyn.DeMagic`, restore the example consumer, and
+- add CI steps that pack `sc.lint.roslyn.demagic`, restore the example consumer, and
   run the cross-platform package-validation scripts
 - require CI and publish flows to use the same authoritative A12 gate
   artifacts, with verification mode called out explicitly:
-  `tests/Roslyn.DeMagic.Tests/PermutationMatrix.md` and
+  `tests/sc.lint.roslyn.demagic.tests/PermutationMatrix.md` and
   `docs/phase-A/production-readiness-checklist.md` remain human-audit gate
   inputs that must be reviewed closed on the branch under their own internal
   rules before A13 can PASS or merge; CI and publish automation must machine-
-  verify `eng/roslyn-demagic-package-expected-diagnostics.json`,
-  `src/Roslyn.DeMagic/AnalyzerReleases.Shipped.md`, and
-  `src/Roslyn.DeMagic/AnalyzerReleases.Unshipped.md` through the same package
+  verify `eng/sc-lint-roslyn-demagic-package-expected-diagnostics.json`,
+  `src/sc.lint.roslyn.demagic/AnalyzerReleases.Shipped.md`, and
+  `src/sc.lint.roslyn.demagic/AnalyzerReleases.Unshipped.md` through the same package
   validation path used locally
-- confirm and apply the documented `Roslyn.Lint` packaging strategy:
-  `PackAsTool`, command name `roslyn-lint`, per
-  `docs/roslyn-lint/architecture.md` Section 12 and `REQ-CLI-PACK-001`
-- configure GitHub Packages publication for `Roslyn.DeMagic`,
-  `Roslyn.Lint`, and any package dependencies produced by this repo
+- confirm and apply the documented `sc.lint.roslyn` packaging strategy:
+  `PackAsTool`, command name `sc-lint-roslyn`, per
+  `docs/sc-lint-roslyn/architecture.md` Section 12 and `REQ-CLI-PACK-001`
+- configure GitHub Packages publication for `sc.lint.roslyn.demagic`,
+  `sc.lint.roslyn`, and any package dependencies produced by this repo
 - ensure publication credentials and package-source assumptions live in CI and
   release docs rather than in sample-project ad hoc setup
 - document the manual NuGet.org first-release procedure, including exact pack,
@@ -87,7 +87,7 @@ target: integration/phase-A
   evidence consumed locally, while `PermutationMatrix.md` and
   `production-readiness-checklist.md` are explicitly reviewed as human-audit
   closure artifacts on the branch
-- the `Roslyn.Lint` packaging model is explicit in docs and matches the
+- the `sc.lint.roslyn` packaging model is explicit in docs and matches the
   pack/publish workflow
 - CI can publish repo-produced packages to GitHub Packages without changing the
   package-consumer contract
@@ -98,11 +98,11 @@ target: integration/phase-A
 
 ## Required Validation
 
-- `dotnet restore roslyn-lint.sln`
-- `dotnet build roslyn-lint.sln --configuration Release`
-- `dotnet test roslyn-lint.sln --configuration Release --verbosity normal`
-- `dotnet pack src/Roslyn.DeMagic/Roslyn.DeMagic.csproj --configuration Release -o artifacts/packages`
-- `dotnet pack src/Roslyn.Lint/Roslyn.Lint.csproj --configuration Release -o artifacts/packages`
-- `bash eng/validate-roslyn-demagic-package.sh`
-- `pwsh -File eng/validate-roslyn-demagic-package.ps1`
+- `dotnet restore sc-lint-roslyn.sln`
+- `dotnet build sc-lint-roslyn.sln --configuration Release`
+- `dotnet test sc-lint-roslyn.sln --configuration Release --verbosity normal`
+- `dotnet pack src/sc.lint.roslyn.demagic/sc.lint.roslyn.demagic.csproj --configuration Release -o artifacts/packages`
+- `dotnet pack src/sc.lint.roslyn/sc.lint.roslyn.csproj --configuration Release -o artifacts/packages`
+- `bash eng/validate-sc-lint-roslyn-demagic-package.sh`
+- `pwsh -File eng/validate-sc-lint-roslyn-demagic-package.ps1`
 - `git diff --check`

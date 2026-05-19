@@ -3,7 +3,7 @@ id: A3
 title: DM002 hardening and release alignment
 status: complete
 branch: sprint/A3
-worktree: /Users/randlee/Documents/github/roslyn-lint-worktrees/sprint/A3
+worktree: /Users/randlee/Documents/github/sc-lint-roslyn-worktrees/sprint/A3
 target: integration/phase-A
 ---
 
@@ -18,22 +18,22 @@ target: integration/phase-A
 
 ## Hard Dependencies
 
-- `docs/prd/roslyn-demagic-prd.md`
-- `docs/roslyn-demagic/requirements.md`
-- `docs/roslyn-demagic/architecture.md`
-- `docs/roslyn-demagic/boundaries.md`
+- `docs/prd/sc-lint-roslyn-demagic-prd.md`
+- `docs/sc-lint-roslyn-demagic/requirements.md`
+- `docs/sc-lint-roslyn-demagic/architecture.md`
+- `docs/sc-lint-roslyn-demagic/boundaries.md`
 - `docs/phase-A/sprint-A2.md`
 
 ## Exact Targets
 
-- `src/Roslyn.DeMagic/Analyzers/DM002ForbiddenStringLiteralAnalyzer.cs`
-- `src/Roslyn.DeMagic/Analyzers/DM001ConstantConsolidationAnalyzer.cs`
-- `src/Roslyn.DeMagic/Analyzers/MagicNumberAnalyzer.cs` deleted
-- `src/Roslyn.DeMagic/Configuration/IDeMagicConfigLoader.cs`
-- `src/Roslyn.DeMagic/Configuration/DeMagicConfigLoader.cs`
-- `src/Roslyn.DeMagic/AnalyzerReleases.Unshipped.md`
-- `src/Roslyn.Lint/Commands/LintCommand.cs`
-- `tests/Roslyn.DeMagic.Tests/Analyzers/MagicNumberAnalyzerTests.cs` deleted
+- `src/sc.lint.roslyn.demagic/analyzers/DM002ForbiddenStringLiteralAnalyzer.cs`
+- `src/sc.lint.roslyn.demagic/analyzers/DM001ConstantConsolidationAnalyzer.cs`
+- `src/sc.lint.roslyn.demagic/analyzers/MagicNumberAnalyzer.cs` deleted
+- `src/sc.lint.roslyn.demagic/configuration/IDeMagicConfigLoader.cs`
+- `src/sc.lint.roslyn.demagic/configuration/DeMagicConfigLoader.cs`
+- `src/sc.lint.roslyn.demagic/AnalyzerReleases.Unshipped.md`
+- `src/sc.lint.roslyn/commands/LintCommand.cs`
+- `tests/sc.lint.roslyn.demagic.tests/analyzers/MagicNumberAnalyzerTests.cs` deleted
 
 ## Important Interfaces, Records/Structs, and Enums
 
@@ -68,7 +68,7 @@ target: integration/phase-A
 
 ## Required Validation
 
-- `dotnet restore roslyn-lint.sln`
-- `dotnet build roslyn-lint.sln --configuration Release`
-- `dotnet test tests/Roslyn.DeMagic.Tests/Roslyn.DeMagic.Tests.csproj --configuration Release --verbosity normal`
+- `dotnet restore sc-lint-roslyn.sln`
+- `dotnet build sc-lint-roslyn.sln --configuration Release`
+- `dotnet test tests/sc.lint.roslyn.demagic.tests/sc.lint.roslyn.demagic.tests.csproj --configuration Release --verbosity normal`
 - `git diff --check`

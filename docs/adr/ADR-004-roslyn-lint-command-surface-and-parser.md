@@ -1,4 +1,4 @@
-# ADR-004 — roslyn-lint Command Surface, Backend Delegation, And Parser Baseline
+# ADR-004 — sc-lint-roslyn Command Surface, Backend Delegation, And Parser Baseline
 
 | Field | Value |
 |---|---|
@@ -13,7 +13,7 @@
 
 ## Context
 
-`roslyn-lint` is not a one-off CLI for a single analyzer. It is the planned
+`sc-lint-roslyn` is not a one-off CLI for a single analyzer. It is the planned
 top-level surface for a multi-tool suite, and the user expects it to track the
 same command-family model used by `sc-lint`.
 
@@ -23,7 +23,7 @@ and preserved an unapproved Spectre-based entrypoint by default.
 
 ## Decision Drivers
 
-- `roslyn-lint` must remain the stable top-level executable for the suite
+- `sc-lint-roslyn` must remain the stable top-level executable for the suite
 - backend tool packages should be invokable through one umbrella CLI
 - the top-level command model should match `sc-lint` wherever the product shape
   is cross-language rather than Rust-specific
@@ -34,7 +34,7 @@ and preserved an unapproved Spectre-based entrypoint by default.
 
 ## Decision
 
-`roslyn-lint` adopts the `sc-lint` command-family model as its top-level CLI
+`sc-lint-roslyn` adopts the `sc-lint` command-family model as its top-level CLI
 shape and uses `System.CommandLine` as the parser baseline for the approved
 implementation line.
 
@@ -42,13 +42,13 @@ This means:
 
 - the public top-level command families are:
   `lint`, `view`, `check`, `clippy`, `ci`, and `version`
-- `roslyn-lint lint <tool>` is the primary analyzer entry path
-- package-owned tools are invoked through `roslyn-lint`, either in-process or
+- `sc-lint-roslyn lint <tool>` is the primary analyzer entry path
+- package-owned tools are invoked through `sc-lint-roslyn`, either in-process or
   through delegated process execution
 - the first approved lint target is `demagic`
 - named profiles are part of the public command model:
-  `roslyn-lint lint fast`, `roslyn-lint lint full`, `roslyn-lint lint ci`
-- top-level `roslyn-lint ci` remains distinct from `roslyn-lint lint ci`
+  `sc-lint-roslyn lint fast`, `sc-lint-roslyn lint full`, `sc-lint-roslyn lint ci`
+- top-level `sc-lint-roslyn ci` remains distinct from `sc-lint-roslyn lint ci`
 - `System.CommandLine` is the approved parser and command-registration layer
   for the replacement implementation line
 - the current Spectre-based spike is not part of the approved baseline and may
@@ -72,9 +72,9 @@ This means:
 
 ## Follow-Up Work
 
-- keep `docs/roslyn-lint/requirements.md`,
-  `docs/roslyn-lint/architecture.md`, and
-  `docs/roslyn-lint/cli-contract.md` aligned with this decision
+- keep `docs/sc-lint-roslyn/requirements.md`,
+  `docs/sc-lint-roslyn/architecture.md`, and
+  `docs/sc-lint-roslyn/cli-contract.md` aligned with this decision
 - plan future backend tool identifiers individually before they are exposed
 - implement the command-registration, dispatch, and normalization seams around
   `System.CommandLine` when CLI development resumes

@@ -3,7 +3,7 @@ id: A5
 title: CLI foundation and abstractions package
 status: complete
 branch: sprint/A5
-worktree: /Users/randlee/Documents/github/roslyn-lint-worktrees/sprint/A5
+worktree: /Users/randlee/Documents/github/sc-lint-roslyn-worktrees/sprint/A5
 target: integration/phase-A
 ---
 
@@ -13,9 +13,9 @@ target: integration/phase-A
 
 - Replace the current Spectre-based spike with the approved
   `System.CommandLine` foundation.
-- Introduce `Roslyn.Lint.Abstractions` as the one low-level shared tool-module
+- Introduce `sc.lint.roslyn.abstractions` as the one low-level shared tool-module
   package.
-- Ship a working top-level `roslyn-lint` executable with `version`,
+- Ship a working top-level `sc-lint-roslyn` executable with `version`,
   `view tools`, and parseable command-family skeletons for the remaining
   families.
 
@@ -25,88 +25,88 @@ A4 closed with explicit CLI replacement deferrals. A5 owns first delivery of
 the undelivered replacement units and must treat the following as mandatory
 carry-forward scope from [`sprint-A4.md`](./sprint-A4.md):
 
-- `src/Roslyn.Lint.Abstractions/Roslyn.Lint.Abstractions.csproj`
-- `src/Roslyn.Lint.Abstractions/ToolId.cs`
-- `src/Roslyn.Lint.Abstractions/ToolDescriptor.cs`
-- `src/Roslyn.Lint.Abstractions/ILintToolModule.cs`
-- `src/Roslyn.Lint.Abstractions/ILintToolCommandHandler.cs`
-- `src/Roslyn.Lint.Abstractions/ILintWorkspaceAdapter.cs`
-- `src/Roslyn.Lint/Commands/RegisterLintCommands.cs`
-- `src/Roslyn.Lint/Commands/RegisterViewCommands.cs`
-- `src/Roslyn.Lint/Commands/RegisterCheckCommands.cs`
-- `src/Roslyn.Lint/Commands/RegisterClippyCommands.cs`
-- `src/Roslyn.Lint/Commands/RegisterCiCommand.cs`
-- `src/Roslyn.Lint/Commands/RegisterVersionCommand.cs`
-- `src/Roslyn.Lint/CommandModel/CommandFamily.cs`
-- `src/Roslyn.Lint/CommandModel/LintProfile.cs`
-- `src/Roslyn.Lint/CommandModel/OutputMode.cs`
-- `src/Roslyn.Lint/CommandModel/BackendExecutionMode.cs`
-- `src/Roslyn.Lint.Abstractions/Contracts/CliEnvelope.cs`
-- `src/Roslyn.Lint.Abstractions/Contracts/CliError.cs`
-- `src/Roslyn.Lint.Abstractions/Contracts/CliDiagnostic.cs`
-- `src/Roslyn.Lint.Abstractions/Contracts/CliErrorKind.cs`
-- `src/Roslyn.Lint/Contracts/VersionResult.cs`
-- `src/Roslyn.Lint.Abstractions/Contracts/ViewRequest.cs`
-- `src/Roslyn.Lint.Abstractions/Contracts/ViewResult.cs`
-- `src/Roslyn.Lint/Serialization/IJsonEnvelopeWriter.cs`
-- `src/Roslyn.Lint/Serialization/RoslynLintJsonContext.cs`
-- `src/Roslyn.Lint/Formatting/IHumanOutputFormatter.cs`
-- `tests/Roslyn.Lint.Tests/Commands/RootCommandTests.cs`
-- `tests/Roslyn.Lint.Tests/Commands/LintPlaceholderCommandTests.cs`
-- `tests/Roslyn.Lint.Tests/Commands/VersionCommandTests.cs`
-- `tests/Roslyn.Lint.Tests/Commands/ViewToolsCommandTests.cs`
-- `tests/Roslyn.Lint.Tests/Contracts/CliEnvelopeSerializationTests.cs`
-- `tests/Roslyn.Lint.Tests/Abstractions/ToolDescriptorTests.cs`
+- `src/sc.lint.roslyn.abstractions/sc.lint.roslyn.abstractions.csproj`
+- `src/sc.lint.roslyn.abstractions/ToolId.cs`
+- `src/sc.lint.roslyn.abstractions/ToolDescriptor.cs`
+- `src/sc.lint.roslyn.abstractions/ILintToolModule.cs`
+- `src/sc.lint.roslyn.abstractions/ILintToolCommandHandler.cs`
+- `src/sc.lint.roslyn.abstractions/ILintWorkspaceAdapter.cs`
+- `src/sc.lint.roslyn/commands/RegisterLintCommands.cs`
+- `src/sc.lint.roslyn/commands/RegisterViewCommands.cs`
+- `src/sc.lint.roslyn/commands/RegisterCheckCommands.cs`
+- `src/sc.lint.roslyn/commands/RegisterClippyCommands.cs`
+- `src/sc.lint.roslyn/commands/RegisterCiCommand.cs`
+- `src/sc.lint.roslyn/commands/RegisterVersionCommand.cs`
+- `src/sc.lint.roslyn/commandmodel/CommandFamily.cs`
+- `src/sc.lint.roslyn/commandmodel/LintProfile.cs`
+- `src/sc.lint.roslyn/commandmodel/OutputMode.cs`
+- `src/sc.lint.roslyn/commandmodel/BackendExecutionMode.cs`
+- `src/sc.lint.roslyn.abstractions/contracts/CliEnvelope.cs`
+- `src/sc.lint.roslyn.abstractions/contracts/CliError.cs`
+- `src/sc.lint.roslyn.abstractions/contracts/CliDiagnostic.cs`
+- `src/sc.lint.roslyn.abstractions/contracts/CliErrorKind.cs`
+- `src/sc.lint.roslyn/contracts/VersionResult.cs`
+- `src/sc.lint.roslyn.abstractions/contracts/ViewRequest.cs`
+- `src/sc.lint.roslyn.abstractions/contracts/ViewResult.cs`
+- `src/sc.lint.roslyn/serialization/IJsonEnvelopeWriter.cs`
+- `src/sc.lint.roslyn/serialization/RoslynLintJsonContext.cs`
+- `src/sc.lint.roslyn/formatting/IHumanOutputFormatter.cs`
+- `tests/sc.lint.roslyn.tests/commands/RootCommandTests.cs`
+- `tests/sc.lint.roslyn.tests/commands/LintPlaceholderCommandTests.cs`
+- `tests/sc.lint.roslyn.tests/commands/VersionCommandTests.cs`
+- `tests/sc.lint.roslyn.tests/commands/ViewToolsCommandTests.cs`
+- `tests/sc.lint.roslyn.tests/contracts/CliEnvelopeSerializationTests.cs`
+- `tests/sc.lint.roslyn.tests/abstractions/ToolDescriptorTests.cs`
 
 ## Hard Dependencies
 
-- `docs/roslyn-lint/requirements.md`
-- `docs/roslyn-lint/architecture.md`
-- `docs/roslyn-lint/cli-contract.md`
-- `docs/roslyn-lint/boundaries.md`
+- `docs/sc-lint-roslyn/requirements.md`
+- `docs/sc-lint-roslyn/architecture.md`
+- `docs/sc-lint-roslyn/cli-contract.md`
+- `docs/sc-lint-roslyn/boundaries.md`
 - `docs/phase-A/sprint-A4.md`
 - `docs/adr/ADR-003-ai-cli-json-contract.md`
-- `docs/adr/ADR-004-roslyn-lint-command-surface-and-parser.md`
-- `docs/adr/ADR-005-roslyn-lint-abstractions-package.md`
+- `docs/adr/ADR-004-sc-lint-roslyn-command-surface-and-parser.md`
+- `docs/adr/ADR-005-sc-lint-roslyn-abstractions-package.md`
 - `.claude/skills/creating-ai-clis/`
 
 ## Exact Targets
 
-- `src/Roslyn.Lint.Abstractions/Roslyn.Lint.Abstractions.csproj`
-- `src/Roslyn.Lint.Abstractions/ToolId.cs`
-- `src/Roslyn.Lint.Abstractions/ToolDescriptor.cs`
-- `src/Roslyn.Lint.Abstractions/ILintToolModule.cs`
-- `src/Roslyn.Lint.Abstractions/ILintToolCommandHandler.cs`
-- `src/Roslyn.Lint.Abstractions/ILintWorkspaceAdapter.cs`
-- `src/Roslyn.Lint.Abstractions/Attributes/` reserved only if later justified
-- `src/Roslyn.Lint/Program.cs`
-- `src/Roslyn.Lint/Roslyn.Lint.csproj`
-- `src/Roslyn.Lint/Commands/RegisterLintCommands.cs`
-- `src/Roslyn.Lint/Commands/RegisterViewCommands.cs`
-- `src/Roslyn.Lint/Commands/RegisterCheckCommands.cs`
-- `src/Roslyn.Lint/Commands/RegisterClippyCommands.cs`
-- `src/Roslyn.Lint/Commands/RegisterCiCommand.cs`
-- `src/Roslyn.Lint/Commands/RegisterVersionCommand.cs`
-- `src/Roslyn.Lint/CommandModel/CommandFamily.cs`
-- `src/Roslyn.Lint/CommandModel/LintProfile.cs`
-- `src/Roslyn.Lint/CommandModel/OutputMode.cs`
-- `src/Roslyn.Lint/CommandModel/BackendExecutionMode.cs`
-- `src/Roslyn.Lint.Abstractions/Contracts/CliEnvelope.cs`
-- `src/Roslyn.Lint.Abstractions/Contracts/CliError.cs`
-- `src/Roslyn.Lint.Abstractions/Contracts/CliDiagnostic.cs`
-- `src/Roslyn.Lint.Abstractions/Contracts/CliErrorKind.cs`
-- `src/Roslyn.Lint/Contracts/VersionResult.cs`
-- `src/Roslyn.Lint.Abstractions/Contracts/ViewRequest.cs`
-- `src/Roslyn.Lint.Abstractions/Contracts/ViewResult.cs`
-- `src/Roslyn.Lint/Serialization/IJsonEnvelopeWriter.cs`
-- `src/Roslyn.Lint/Serialization/RoslynLintJsonContext.cs`
-- `src/Roslyn.Lint/Formatting/IHumanOutputFormatter.cs`
-- `tests/Roslyn.Lint.Tests/Commands/RootCommandTests.cs`
-- `tests/Roslyn.Lint.Tests/Commands/LintPlaceholderCommandTests.cs`
-- `tests/Roslyn.Lint.Tests/Commands/VersionCommandTests.cs`
-- `tests/Roslyn.Lint.Tests/Commands/ViewToolsCommandTests.cs`
-- `tests/Roslyn.Lint.Tests/Contracts/CliEnvelopeSerializationTests.cs`
-- `tests/Roslyn.Lint.Tests/Abstractions/ToolDescriptorTests.cs`
+- `src/sc.lint.roslyn.abstractions/sc.lint.roslyn.abstractions.csproj`
+- `src/sc.lint.roslyn.abstractions/ToolId.cs`
+- `src/sc.lint.roslyn.abstractions/ToolDescriptor.cs`
+- `src/sc.lint.roslyn.abstractions/ILintToolModule.cs`
+- `src/sc.lint.roslyn.abstractions/ILintToolCommandHandler.cs`
+- `src/sc.lint.roslyn.abstractions/ILintWorkspaceAdapter.cs`
+- `src/sc.lint.roslyn.abstractions/Attributes/` reserved only if later justified
+- `src/sc.lint.roslyn/Program.cs`
+- `src/sc.lint.roslyn/sc.lint.roslyn.csproj`
+- `src/sc.lint.roslyn/commands/RegisterLintCommands.cs`
+- `src/sc.lint.roslyn/commands/RegisterViewCommands.cs`
+- `src/sc.lint.roslyn/commands/RegisterCheckCommands.cs`
+- `src/sc.lint.roslyn/commands/RegisterClippyCommands.cs`
+- `src/sc.lint.roslyn/commands/RegisterCiCommand.cs`
+- `src/sc.lint.roslyn/commands/RegisterVersionCommand.cs`
+- `src/sc.lint.roslyn/commandmodel/CommandFamily.cs`
+- `src/sc.lint.roslyn/commandmodel/LintProfile.cs`
+- `src/sc.lint.roslyn/commandmodel/OutputMode.cs`
+- `src/sc.lint.roslyn/commandmodel/BackendExecutionMode.cs`
+- `src/sc.lint.roslyn.abstractions/contracts/CliEnvelope.cs`
+- `src/sc.lint.roslyn.abstractions/contracts/CliError.cs`
+- `src/sc.lint.roslyn.abstractions/contracts/CliDiagnostic.cs`
+- `src/sc.lint.roslyn.abstractions/contracts/CliErrorKind.cs`
+- `src/sc.lint.roslyn/contracts/VersionResult.cs`
+- `src/sc.lint.roslyn.abstractions/contracts/ViewRequest.cs`
+- `src/sc.lint.roslyn.abstractions/contracts/ViewResult.cs`
+- `src/sc.lint.roslyn/serialization/IJsonEnvelopeWriter.cs`
+- `src/sc.lint.roslyn/serialization/RoslynLintJsonContext.cs`
+- `src/sc.lint.roslyn/formatting/IHumanOutputFormatter.cs`
+- `tests/sc.lint.roslyn.tests/commands/RootCommandTests.cs`
+- `tests/sc.lint.roslyn.tests/commands/LintPlaceholderCommandTests.cs`
+- `tests/sc.lint.roslyn.tests/commands/VersionCommandTests.cs`
+- `tests/sc.lint.roslyn.tests/commands/ViewToolsCommandTests.cs`
+- `tests/sc.lint.roslyn.tests/contracts/CliEnvelopeSerializationTests.cs`
+- `tests/sc.lint.roslyn.tests/abstractions/ToolDescriptorTests.cs`
 
 ## Important Interfaces, Records/Structs, And Enums
 
@@ -125,15 +125,15 @@ carry-forward scope from [`sprint-A4.md`](./sprint-A4.md):
 
 - delete the current Spectre command host and replace it with
   `System.CommandLine`
-- create `Roslyn.Lint.Abstractions` with the shared types approved in
+- create `sc.lint.roslyn.abstractions` with the shared types approved in
   `ADR-005`
-- keep `Roslyn.Lint.Abstractions` free of parser, dispatch, and CLI-host
+- keep `sc.lint.roslyn.abstractions` free of parser, dispatch, and CLI-host
   dependencies
 - implement the stable top-level command families:
   `lint`, `view`, `check`, `clippy`, `ci`, and `version`
-- implement `roslyn-lint version` as a complete working command with stable
+- implement `sc-lint-roslyn version` as a complete working command with stable
   JSON and human output
-- implement `roslyn-lint view tools` as a complete working command that lists
+- implement `sc-lint-roslyn view tools` as a complete working command that lists
   registered tool modules and advertised capabilities
 - wire all top-level command families through one shared `--json` path and one
   shared envelope writer
@@ -143,32 +143,32 @@ carry-forward scope from [`sprint-A4.md`](./sprint-A4.md):
 
 ## Acceptance Criteria
 
-- the current Spectre-based host is removed from `Roslyn.Lint`
-- `Roslyn.Lint.Abstractions` builds and is referenced from `Roslyn.Lint`
-- `roslyn-lint version --json` returns the stable top-level envelope with
+- the current Spectre-based host is removed from `sc.lint.roslyn`
+- `sc.lint.roslyn.abstractions` builds and is referenced from `sc.lint.roslyn`
+- `sc-lint-roslyn version --json` returns the stable top-level envelope with
   `command: "version"` and is covered by
-  `tests/Roslyn.Lint.Tests/Commands/VersionCommandTests.cs`
-- `roslyn-lint view tools --json` returns the stable top-level envelope with
+  `tests/sc.lint.roslyn.tests/commands/VersionCommandTests.cs`
+- `sc-lint-roslyn view tools --json` returns the stable top-level envelope with
   `command: "view.tools"` and is covered by
-  `tests/Roslyn.Lint.Tests/Commands/ViewToolsCommandTests.cs`
+  `tests/sc.lint.roslyn.tests/commands/ViewToolsCommandTests.cs`
 - parse errors and missing command paths return JSON `CliError` payloads when
   `--json` is requested and are covered by
-  `tests/Roslyn.Lint.Tests/Commands/RootCommandTests.cs`
+  `tests/sc.lint.roslyn.tests/commands/RootCommandTests.cs`
 - deferred `lint demagic`, `lint fast`, `lint full`, and `lint ci` command
   paths return typed capability envelopes with `planned_sprint` details and are
-  covered by `tests/Roslyn.Lint.Tests/Commands/LintPlaceholderCommandTests.cs`
+  covered by `tests/sc.lint.roslyn.tests/commands/LintPlaceholderCommandTests.cs`
 - the command families are registered through `System.CommandLine`
 - no low-level shared package depends on the CLI parser or entrypoint
 
 ## Deferrals
 
-- `tests/Roslyn.Lint.Tests/Commands/CheckPlaceholderCommandTests.cs`
+- `tests/sc.lint.roslyn.tests/commands/CheckPlaceholderCommandTests.cs`
   remains deferred to A7 or A8 while `check` stays a registered placeholder
   surface with explicit typed error responses.
-- `tests/Roslyn.Lint.Tests/Commands/ClippyPlaceholderCommandTests.cs`
+- `tests/sc.lint.roslyn.tests/commands/ClippyPlaceholderCommandTests.cs`
   remains deferred to A7 or A8 while `clippy` stays a registered placeholder
   surface with explicit typed error responses.
-- `tests/Roslyn.Lint.Tests/Commands/CiPlaceholderCommandTests.cs`
+- `tests/sc.lint.roslyn.tests/commands/CiPlaceholderCommandTests.cs`
   remains deferred to A7 or A8 while `ci` stays a registered placeholder
   surface with explicit typed error responses.
 - rationale: A5 is limited to the first usable CLI foundation and `demagic`
@@ -178,10 +178,10 @@ carry-forward scope from [`sprint-A4.md`](./sprint-A4.md):
 
 ## Required Validation
 
-- `dotnet restore roslyn-lint.sln`
-- `dotnet build roslyn-lint.sln --configuration Release`
-- `dotnet test tests/Roslyn.Lint.Tests/Roslyn.Lint.Tests.csproj --configuration Release --verbosity normal`
-- `dotnet run --framework net10.0 --project src/Roslyn.Lint/Roslyn.Lint.csproj -- version --json`
-- `dotnet run --framework net10.0 --project src/Roslyn.Lint/Roslyn.Lint.csproj -- view tools --json`
-- `dotnet run --framework net10.0 --project src/Roslyn.Lint/Roslyn.Lint.csproj -- lint demagic --json`
+- `dotnet restore sc-lint-roslyn.sln`
+- `dotnet build sc-lint-roslyn.sln --configuration Release`
+- `dotnet test tests/sc.lint.roslyn.tests/sc.lint.roslyn.tests.csproj --configuration Release --verbosity normal`
+- `dotnet run --framework net10.0 --project src/sc.lint.roslyn/sc.lint.roslyn.csproj -- version --json`
+- `dotnet run --framework net10.0 --project src/sc.lint.roslyn/sc.lint.roslyn.csproj -- view tools --json`
+- `dotnet run --framework net10.0 --project src/sc.lint.roslyn/sc.lint.roslyn.csproj -- lint demagic --json`
 - `git diff --check`

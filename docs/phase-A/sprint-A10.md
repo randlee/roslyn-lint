@@ -3,7 +3,7 @@ id: A10
 title: analyzer sample corpus and rule matrix
 status: complete
 branch: sprint/A10
-worktree: /Users/randlee/Documents/github/roslyn-lint-worktrees/sprint/A10
+worktree: /Users/randlee/Documents/github/sc-lint-roslyn-worktrees/sprint/A10
 target: integration/phase-A
 ---
 
@@ -17,44 +17,44 @@ target: integration/phase-A
 
 ## Hard Dependencies
 
-- `docs/prd/roslyn-demagic-prd.md`
-- `docs/roslyn-demagic/requirements.md`
-- `docs/roslyn-demagic/architecture.md`
+- `docs/prd/sc-lint-roslyn-demagic-prd.md`
+- `docs/sc-lint-roslyn-demagic/requirements.md`
+- `docs/sc-lint-roslyn-demagic/architecture.md`
 - `docs/phase-A/sprint-A9.md`
 
 ## Exact Targets
 
-- `tests/Roslyn.DeMagic.Tests/Analyzers/DM001ConstantConsolidationAnalyzerTests.cs`
-- `tests/Roslyn.DeMagic.Tests/Analyzers/DM002ForbiddenStringLiteralAnalyzerTests.cs`
-- `tests/Roslyn.DeMagic.Tests/Configuration/DeMagicConfigLoaderTests.cs`
-- `tests/Roslyn.DeMagic.Tests/TestData/DM001/PublicConstOutsideDesignatedFile.cs`
-- `tests/Roslyn.DeMagic.Tests/TestData/DM001/InternalConstOutsideDesignatedFile.cs`
-- `tests/Roslyn.DeMagic.Tests/TestData/DM001/DesignatedFileCompliantConst.cs`
-- `tests/Roslyn.DeMagic.Tests/TestData/DM001/DesignatedClassMismatch.cs`
-- `tests/Roslyn.DeMagic.Tests/TestData/DM001/PrivateProtectedIgnored.cs`
-- `tests/Roslyn.DeMagic.Tests/TestData/DM001/LocalConstIgnored.cs`
-- `tests/Roslyn.DeMagic.Tests/TestData/DM001/SuppressedConst.cs`
-- `tests/Roslyn.DeMagic.Tests/TestData/DM001/MissingConfigNoDiagnostics.cs`
-- `tests/Roslyn.DeMagic.Tests/TestData/DM001/SeverityFromConfig.cs`
-- `tests/Roslyn.DeMagic.Tests/TestData/DM002/ExactMatchConstField.cs`
-- `tests/Roslyn.DeMagic.Tests/TestData/DM002/PrefixMethodArgument.cs`
-- `tests/Roslyn.DeMagic.Tests/TestData/DM002/SuffixComparison.cs`
-- `tests/Roslyn.DeMagic.Tests/TestData/DM002/SubstringReturnValue.cs`
-- `tests/Roslyn.DeMagic.Tests/TestData/DM002/AttributeArgument.cs`
-- `tests/Roslyn.DeMagic.Tests/TestData/DM002/InterpolatedHole.cs`
-- `tests/Roslyn.DeMagic.Tests/TestData/DM002/NonMatchingLiteral.cs`
-- `tests/Roslyn.DeMagic.Tests/TestData/DM002/CaseSensitiveMismatch.cs`
-- `tests/Roslyn.DeMagic.Tests/TestData/DM002/SwitchArmLiteral.cs`
-- `tests/Roslyn.DeMagic.Tests/TestData/DM002/CommentsAndDocumentationIgnored.cs`
-- `tests/Roslyn.DeMagic.Tests/TestData/DM002/SuppressedLiteral.cs`
-- `tests/Roslyn.DeMagic.Tests/TestData/DM002/MissingConfigNoDiagnostics.cs`
-- `tests/Roslyn.DeMagic.Tests/TestData/DM002/InvalidConfigNoDiagnostics.cs`
-- `tests/Roslyn.DeMagic.Tests/TestData/DM002/SeverityFromConfig.cs`
-- `tests/Roslyn.DeMagic.Tests/TestData/README.md`
-- `tests/Roslyn.DeMagic.Tests/TestMatrix.md`
-- `tests/Roslyn.DeMagic.Tests/Testing/ExpectedDiagnostic.cs`
-- `tests/Roslyn.DeMagic.Tests/Testing/RequirementTraceabilityRow.cs`
-- `tests/Roslyn.DeMagic.Tests/Testing/AnalyzerSampleKind.cs`
+- `tests/sc.lint.roslyn.demagic.tests/analyzers/DM001ConstantConsolidationAnalyzerTests.cs`
+- `tests/sc.lint.roslyn.demagic.tests/analyzers/DM002ForbiddenStringLiteralAnalyzerTests.cs`
+- `tests/sc.lint.roslyn.demagic.tests/configuration/DeMagicConfigLoaderTests.cs`
+- `tests/sc.lint.roslyn.demagic.tests/testdata/dm001/PublicConstOutsideDesignatedFile.cs`
+- `tests/sc.lint.roslyn.demagic.tests/testdata/dm001/InternalConstOutsideDesignatedFile.cs`
+- `tests/sc.lint.roslyn.demagic.tests/testdata/dm001/DesignatedFileCompliantConst.cs`
+- `tests/sc.lint.roslyn.demagic.tests/testdata/dm001/DesignatedClassMismatch.cs`
+- `tests/sc.lint.roslyn.demagic.tests/testdata/dm001/PrivateProtectedIgnored.cs`
+- `tests/sc.lint.roslyn.demagic.tests/testdata/dm001/LocalConstIgnored.cs`
+- `tests/sc.lint.roslyn.demagic.tests/testdata/dm001/SuppressedConst.cs`
+- `tests/sc.lint.roslyn.demagic.tests/testdata/dm001/MissingConfigNoDiagnostics.cs`
+- `tests/sc.lint.roslyn.demagic.tests/testdata/dm001/SeverityFromConfig.cs`
+- `tests/sc.lint.roslyn.demagic.tests/testdata/dm002/ExactMatchConstField.cs`
+- `tests/sc.lint.roslyn.demagic.tests/testdata/dm002/PrefixMethodArgument.cs`
+- `tests/sc.lint.roslyn.demagic.tests/testdata/dm002/SuffixComparison.cs`
+- `tests/sc.lint.roslyn.demagic.tests/testdata/dm002/SubstringReturnValue.cs`
+- `tests/sc.lint.roslyn.demagic.tests/testdata/dm002/AttributeArgument.cs`
+- `tests/sc.lint.roslyn.demagic.tests/testdata/dm002/InterpolatedHole.cs`
+- `tests/sc.lint.roslyn.demagic.tests/testdata/dm002/NonMatchingLiteral.cs`
+- `tests/sc.lint.roslyn.demagic.tests/testdata/dm002/CaseSensitiveMismatch.cs`
+- `tests/sc.lint.roslyn.demagic.tests/testdata/dm002/SwitchArmLiteral.cs`
+- `tests/sc.lint.roslyn.demagic.tests/testdata/dm002/CommentsAndDocumentationIgnored.cs`
+- `tests/sc.lint.roslyn.demagic.tests/testdata/dm002/SuppressedLiteral.cs`
+- `tests/sc.lint.roslyn.demagic.tests/testdata/dm002/MissingConfigNoDiagnostics.cs`
+- `tests/sc.lint.roslyn.demagic.tests/testdata/dm002/InvalidConfigNoDiagnostics.cs`
+- `tests/sc.lint.roslyn.demagic.tests/testdata/dm002/SeverityFromConfig.cs`
+- `tests/sc.lint.roslyn.demagic.tests/testdata/README.md`
+- `tests/sc.lint.roslyn.demagic.tests/TestMatrix.md`
+- `tests/sc.lint.roslyn.demagic.tests/testing/ExpectedDiagnostic.cs`
+- `tests/sc.lint.roslyn.demagic.tests/testing/RequirementTraceabilityRow.cs`
+- `tests/sc.lint.roslyn.demagic.tests/testing/AnalyzerSampleKind.cs`
 
 ## Important Interfaces, Records/Structs, And Enums
 
@@ -85,7 +85,7 @@ target: integration/phase-A
 - define `RequirementTraceabilityRow` so `TestMatrix.md` records:
   requirement id, rule id, sample file, owning test method, and validation mode
 - define the compiled test-support types above under
-  `tests/Roslyn.DeMagic.Tests/Testing/` so sample expectations and traceability
+  `tests/sc.lint.roslyn.demagic.tests/testing/` so sample expectations and traceability
   rows have one explicit project home
 - add explicit config-loader coverage for source/test config routing, missing
   config disablement, invalid-config error reporting, and config independence
@@ -105,7 +105,7 @@ target: integration/phase-A
 
 ## Required Validation
 
-- `dotnet restore roslyn-lint.sln`
-- `dotnet build roslyn-lint.sln --configuration Release`
-- `dotnet test tests/Roslyn.DeMagic.Tests/Roslyn.DeMagic.Tests.csproj --configuration Release --verbosity normal`
+- `dotnet restore sc-lint-roslyn.sln`
+- `dotnet build sc-lint-roslyn.sln --configuration Release`
+- `dotnet test tests/sc.lint.roslyn.demagic.tests/sc.lint.roslyn.demagic.tests.csproj --configuration Release --verbosity normal`
 - `git diff --check`

@@ -1,0 +1,67 @@
+{
+  "packageId": "sc-lint-roslyn-demagic",
+  "packageVersion": "0.1.2",
+  "sampleProject": "examples/sc.lint.roslyn.demagic.package-smoke/sc.lint.roslyn.demagic.package-smoke.csproj",
+  "expectedDiagnostics": [
+    {
+      "file": "samples/dm001/PublicConstOutsideDesignatedFile.cs",
+      "id": "DM001",
+      "severity": "warning",
+      "sampleKind": "positive"
+    },
+    {
+      "file": "samples/dm001/InternalConstOutsideDesignatedFile.cs",
+      "id": "DM001",
+      "severity": "warning",
+      "sampleKind": "positive"
+    },
+    {
+      "file": "samples/dm001/UnsuppressedConstControl.cs",
+      "id": "DM001",
+      "severity": "warning",
+      "sampleKind": "positive"
+    },
+    {
+      "file": "samples/dm002/ExactMatchConstField.cs",
+      "id": "DM002",
+      "severity": "warning",
+      "sampleKind": "positive"
+    },
+    {
+      "file": "samples/dm002/PrefixMethodArgument.cs",
+      "id": "DM002",
+      "severity": "warning",
+      "sampleKind": "positive"
+    },
+    {
+      "file": "samples/dm002/SuffixComparison.cs",
+      "id": "DM002",
+      "severity": "warning",
+      "sampleKind": "positive"
+    },
+    {
+      "file": "samples/dm002/SubstringReturnValue.cs",
+      "id": "DM002",
+      "severity": "warning",
+      "sampleKind": "positive"
+    },
+    {
+      "file": "samples/dm002/AttributeArgument.cs",
+      "id": "DM002",
+      "severity": "warning",
+      "sampleKind": "positive"
+    },
+    {
+      "file": "samples/dm002/UnsuppressedLiteralControl.cs",
+      "id": "DM002",
+      "severity": "warning",
+      "sampleKind": "positive"
+    }
+  ],
+  "expectedCleanFiles": [
+    "samples/dm001/DesignatedFileCompliantConst.cs",
+    "samples/dm001/SuppressedConst.cs",
+    "samples/dm002/CompliantLiteral.cs",
+    "samples/dm002/SuppressedLiteral.cs"
+  ]
+}

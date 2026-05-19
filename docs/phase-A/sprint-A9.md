@@ -3,7 +3,7 @@ id: A9
 title: DM001 completion and rule parity
 status: complete
 branch: sprint/A9
-worktree: /Users/randlee/Documents/github/roslyn-lint-worktrees/sprint/A9
+worktree: /Users/randlee/Documents/github/sc-lint-roslyn-worktrees/sprint/A9
 target: integration/phase-A
 ---
 
@@ -18,29 +18,29 @@ target: integration/phase-A
 
 ## Hard Dependencies
 
-- `docs/prd/roslyn-demagic-prd.md`
-- `docs/roslyn-demagic/requirements.md`
-- `docs/roslyn-demagic/architecture.md`
-- `docs/roslyn-demagic/boundaries.md`
+- `docs/prd/sc-lint-roslyn-demagic-prd.md`
+- `docs/sc-lint-roslyn-demagic/requirements.md`
+- `docs/sc-lint-roslyn-demagic/architecture.md`
+- `docs/sc-lint-roslyn-demagic/boundaries.md`
 - `docs/phase-A/sprint-A3.md`
-- `src/Roslyn.DeMagic/AnalyzerReleases.Unshipped.md`
+- `src/sc.lint.roslyn.demagic/AnalyzerReleases.Unshipped.md`
 
 ## Exact Targets
 
-- `src/Roslyn.DeMagic/Analyzers/DM001ConstantConsolidationAnalyzer.cs`
-- `src/Roslyn.DeMagic/Configuration/DeMagicConfig.cs`
-- `src/Roslyn.DeMagic/Configuration/Dm001Options.cs`
-- `src/Roslyn.DeMagic/Configuration/DeMagicConfigLoader.cs`
-- `src/Roslyn.DeMagic/Diagnostics/DeMagicDiagnosticDescriptors.cs`
-- `src/Roslyn.DeMagic/AnalyzerReleases.Unshipped.md`
-- `tests/Roslyn.DeMagic.Tests/Analyzers/DM001ConstantConsolidationAnalyzerTests.cs`
-- `tests/Roslyn.DeMagic.Tests/TestData/DM001/PublicConstOutsideDesignatedFile.cs`
-- `tests/Roslyn.DeMagic.Tests/TestData/DM001/InternalConstOutsideDesignatedFile.cs`
-- `tests/Roslyn.DeMagic.Tests/TestData/DM001/DesignatedFileCompliantConst.cs`
-- `tests/Roslyn.DeMagic.Tests/TestData/DM001/DesignatedClassMismatch.cs`
-- `tests/Roslyn.DeMagic.Tests/TestData/DM001/PrivateProtectedIgnored.cs`
-- `tests/Roslyn.DeMagic.Tests/TestData/DM001/LocalConstIgnored.cs`
-- `tests/Roslyn.DeMagic.Tests/TestData/DM001/SuppressedConst.cs`
+- `src/sc.lint.roslyn.demagic/analyzers/DM001ConstantConsolidationAnalyzer.cs`
+- `src/sc.lint.roslyn.demagic/configuration/DeMagicConfig.cs`
+- `src/sc.lint.roslyn.demagic/configuration/Dm001Options.cs`
+- `src/sc.lint.roslyn.demagic/configuration/DeMagicConfigLoader.cs`
+- `src/sc.lint.roslyn.demagic/diagnostics/DeMagicDiagnosticDescriptors.cs`
+- `src/sc.lint.roslyn.demagic/AnalyzerReleases.Unshipped.md`
+- `tests/sc.lint.roslyn.demagic.tests/analyzers/DM001ConstantConsolidationAnalyzerTests.cs`
+- `tests/sc.lint.roslyn.demagic.tests/testdata/dm001/PublicConstOutsideDesignatedFile.cs`
+- `tests/sc.lint.roslyn.demagic.tests/testdata/dm001/InternalConstOutsideDesignatedFile.cs`
+- `tests/sc.lint.roslyn.demagic.tests/testdata/dm001/DesignatedFileCompliantConst.cs`
+- `tests/sc.lint.roslyn.demagic.tests/testdata/dm001/DesignatedClassMismatch.cs`
+- `tests/sc.lint.roslyn.demagic.tests/testdata/dm001/PrivateProtectedIgnored.cs`
+- `tests/sc.lint.roslyn.demagic.tests/testdata/dm001/LocalConstIgnored.cs`
+- `tests/sc.lint.roslyn.demagic.tests/testdata/dm001/SuppressedConst.cs`
 
 ## Important Interfaces, Records/Structs, And Enums
 
@@ -85,7 +85,7 @@ target: integration/phase-A
 
 ## Required Validation
 
-- `dotnet restore roslyn-lint.sln`
-- `dotnet build roslyn-lint.sln --configuration Release`
-- `dotnet test tests/Roslyn.DeMagic.Tests/Roslyn.DeMagic.Tests.csproj --configuration Release --verbosity normal`
+- `dotnet restore sc-lint-roslyn.sln`
+- `dotnet build sc-lint-roslyn.sln --configuration Release`
+- `dotnet test tests/sc.lint.roslyn.demagic.tests/sc.lint.roslyn.demagic.tests.csproj --configuration Release --verbosity normal`
 - `git diff --check`

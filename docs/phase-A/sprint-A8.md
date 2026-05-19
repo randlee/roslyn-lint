@@ -3,7 +3,7 @@ id: A8
 title: View surfaces, boundary metadata, and tool-module hardening
 status: complete
 branch: sprint/A8
-worktree: /Users/randlee/Documents/github/roslyn-lint-worktrees/sprint/A8
+worktree: /Users/randlee/Documents/github/sc-lint-roslyn-worktrees/sprint/A8
 target: integration/phase-A
 ---
 
@@ -11,41 +11,41 @@ target: integration/phase-A
 
 ## Goal
 
-- Complete the first usable multi-tool foundation for `roslyn-lint`.
+- Complete the first usable multi-tool foundation for `sc-lint-roslyn`.
 - Implement the first stable `view` targets.
 - Put the abstractions package to work for suite-specific boundary and tool
   metadata.
 
 ## Hard Dependencies
 
-- `docs/roslyn-lint/requirements.md`
-- `docs/roslyn-lint/architecture.md`
-- `docs/roslyn-lint/cli-contract.md`
+- `docs/sc-lint-roslyn/requirements.md`
+- `docs/sc-lint-roslyn/architecture.md`
+- `docs/sc-lint-roslyn/cli-contract.md`
 - `docs/phase-A/sprint-A7.md`
 - `docs/adr/ADR-003-ai-cli-json-contract.md`
-- `docs/adr/ADR-005-roslyn-lint-abstractions-package.md`
+- `docs/adr/ADR-005-sc-lint-roslyn-abstractions-package.md`
 
 ## Exact Targets
 
-- `src/Roslyn.Lint.Abstractions/Contracts/ViewRequest.cs`
-- `src/Roslyn.Lint.Abstractions/Contracts/ViewResult.cs`
-- `src/Roslyn.Lint.Abstractions/ToolRuleDescriptor.cs`
-- `src/Roslyn.Lint/Operations/IViewOperation.cs`
-- `src/Roslyn.Lint/Operations/RunViewOperation.cs`
-- `src/Roslyn.Lint/Commands/RegisterViewCommands.cs`
-- `src/Roslyn.Lint/Dispatch/IBackendJsonNormalizer.cs`
-- `src/Roslyn.Lint/Dispatch/IBackendProcessRunner.cs`
-- `src/Roslyn.Lint/Dispatch/DelegatedBackendNormalizationResult.cs`
-- `src/Roslyn.Lint/Dispatch/ProcessBackendRunner.cs`
-- `src/Roslyn.Lint/Dispatch/BackendJsonNormalizer.cs`
-- `src/Roslyn.Lint/Backends/ViewToolsHandler.cs`
-- `src/Roslyn.Lint/Backends/ViewRulesHandler.cs`
-- `src/Roslyn.Lint/Formatting/ViewRulesHumanOutputFormatter.cs`
-- `src/Roslyn.DeMagic.Lint/RoslynDeMagicToolModule.cs`
-- `tests/Roslyn.Lint.Tests/Commands/ViewCommandTests.cs`
-- `tests/Roslyn.Lint.Tests/Dispatch/ProcessBackendRunnerTests.cs`
-- `tests/Roslyn.Lint.Tests/Dispatch/BackendJsonNormalizerTests.cs`
-- `tests/Roslyn.Lint.Tests/Operations/RunViewOperationTests.cs`
+- `src/sc.lint.roslyn.abstractions/contracts/ViewRequest.cs`
+- `src/sc.lint.roslyn.abstractions/contracts/ViewResult.cs`
+- `src/sc.lint.roslyn.abstractions/ToolRuleDescriptor.cs`
+- `src/sc.lint.roslyn/operations/IViewOperation.cs`
+- `src/sc.lint.roslyn/operations/RunViewOperation.cs`
+- `src/sc.lint.roslyn/commands/RegisterViewCommands.cs`
+- `src/sc.lint.roslyn/dispatch/IBackendJsonNormalizer.cs`
+- `src/sc.lint.roslyn/dispatch/IBackendProcessRunner.cs`
+- `src/sc.lint.roslyn/dispatch/DelegatedBackendNormalizationResult.cs`
+- `src/sc.lint.roslyn/dispatch/ProcessBackendRunner.cs`
+- `src/sc.lint.roslyn/dispatch/BackendJsonNormalizer.cs`
+- `src/sc.lint.roslyn/backends/ViewToolsHandler.cs`
+- `src/sc.lint.roslyn/backends/ViewRulesHandler.cs`
+- `src/sc.lint.roslyn/formatting/ViewRulesHumanOutputFormatter.cs`
+- `src/sc.lint.roslyn.demagic.lint/RoslynDeMagicToolModule.cs`
+- `tests/sc.lint.roslyn.tests/commands/ViewCommandTests.cs`
+- `tests/sc.lint.roslyn.tests/dispatch/ProcessBackendRunnerTests.cs`
+- `tests/sc.lint.roslyn.tests/dispatch/BackendJsonNormalizerTests.cs`
+- `tests/sc.lint.roslyn.tests/operations/RunViewOperationTests.cs`
 - `README.md`
 
 ## Important Interfaces, Records/Structs, And Enums
@@ -73,7 +73,7 @@ target: integration/phase-A
 
 ## Acceptance Criteria
 
-- `roslyn-lint view tools` and `roslyn-lint view rules` are implemented
+- `sc-lint-roslyn view tools` and `sc-lint-roslyn view rules` are implemented
 - `view` results use the stable top-level envelope
 - `demagic` rule metadata is inspectable through the CLI
 - delegated process backend execution and JSON normalization are covered by
@@ -82,9 +82,9 @@ target: integration/phase-A
 
 ## Required Validation
 
-- `dotnet restore roslyn-lint.sln`
-- `dotnet build roslyn-lint.sln --configuration Release`
-- `dotnet test tests/Roslyn.Lint.Tests/Roslyn.Lint.Tests.csproj --configuration Release --verbosity normal`
-- `dotnet run --framework net10.0 --project src/Roslyn.Lint/Roslyn.Lint.csproj -- view tools --json`
-- `dotnet run --framework net10.0 --project src/Roslyn.Lint/Roslyn.Lint.csproj -- view rules --json`
+- `dotnet restore sc-lint-roslyn.sln`
+- `dotnet build sc-lint-roslyn.sln --configuration Release`
+- `dotnet test tests/sc.lint.roslyn.tests/sc.lint.roslyn.tests.csproj --configuration Release --verbosity normal`
+- `dotnet run --framework net10.0 --project src/sc.lint.roslyn/sc.lint.roslyn.csproj -- view tools --json`
+- `dotnet run --framework net10.0 --project src/sc.lint.roslyn/sc.lint.roslyn.csproj -- view rules --json`
 - `git diff --check`

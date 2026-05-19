@@ -1,4 +1,4 @@
-# ADR-005 — roslyn-lint Abstractions Package And Standard .NET Suppression Preference
+# ADR-005 — sc-lint-roslyn Abstractions Package And Standard .NET Suppression Preference
 
 | Field | Value |
 |---|---|
@@ -13,7 +13,7 @@
 
 ## Context
 
-`roslyn-lint` is planned as an umbrella CLI over multiple package-owned lint
+`sc-lint-roslyn` is planned as an umbrella CLI over multiple package-owned lint
 tools. Longer term, those tools need one narrow shared contract for tool
 registration, metadata, and any suite-specific consumer attributes.
 
@@ -32,7 +32,7 @@ attributes for generic warning suppression.
 ## Decision
 
 The suite reserves one low-level shared package named
-`Roslyn.Lint.Abstractions`.
+`sc.lint.roslyn.abstractions`.
 
 This package is the planned home for:
 
@@ -46,7 +46,7 @@ This means:
 
 - do not split low-level shared types into separate `Annotations` and `Core`
   packages at this stage
-- do not introduce `Roslyn.Lint.Core` unless later implementation proves a real
+- do not introduce `sc.lint.roslyn.Core` unless later implementation proves a real
   shared-logic need across multiple tools
 - prefer standard suppression/configuration mechanisms first:
   `#pragma warning`, `SuppressMessage`, `.editorconfig`, and normal analyzer
@@ -73,9 +73,9 @@ This means:
 
 ## Follow-Up Work
 
-- keep `docs/roslyn-lint/requirements.md`,
-  `docs/roslyn-lint/architecture.md`, and
+- keep `docs/sc-lint-roslyn/requirements.md`,
+  `docs/sc-lint-roslyn/architecture.md`, and
   `docs/phase-A/sprint-A5.md` aligned with this decision
-- introduce `Roslyn.Lint.Core` only if two or more tools prove a real shared
+- introduce `sc.lint.roslyn.Core` only if two or more tools prove a real shared
   implementation layer
 - document any future custom attribute set explicitly before implementation

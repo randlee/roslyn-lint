@@ -1,0 +1,26 @@
+namespace sc.lint.roslyn.demagic.tests.patterns;
+
+using FluentAssertions;
+using sc.lint.roslyn.demagic.patterns;
+using Xunit;
+
+public sealed class ForbiddenPatternCompilerTests
+{
+    [Theory]
+    [InlineData("atm", ForbiddenPatternKind.Exact, "atm")]
+    [InlineData("atm*", ForbiddenPatternKind.Prefix, "atm")]
+    [InlineData("*atm", ForbiddenPatternKind.Suffix, "atm")]
+    [InlineData("*atm*", ForbiddenPatternKind.Substring, "atm")]
+    public void Compile_AssignsExpectedPatternShape(
+        string rawPattern,
+        ForbiddenPatternKind expectedKind,
+        string expectedMatchValue)
+    {
+        var matcher = new ForbiddenPatternMatcher();
+
+        var compiled = matcher.Compile(new ForbiddenPattern(rawPattern), caseSensitive: false);
+
+        compiled.Kind.Should().Be(expectedKind);
+        compiled.MatchValue.Should().Be(expectedMatchValue);
+    }
+}

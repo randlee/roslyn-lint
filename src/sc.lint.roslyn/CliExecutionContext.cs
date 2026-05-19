@@ -1,0 +1,112 @@
+namespace sc.lint.roslyn;
+
+using System.CommandLine;
+using System.CommandLine.Parsing;
+using sc.lint.roslyn.abstractions;
+using sc.lint.roslyn.abstractions.contracts;
+using sc.lint.roslyn.commandmodel;
+using sc.lint.roslyn.dispatch;
+using sc.lint.roslyn.formatting;
+using sc.lint.roslyn.operations;
+using sc.lint.roslyn.serialization;
+
+internal sealed class CliExecutionContext
+{
+    public CliExecutionContext(
+        TextWriter output,
+        TextWriter error,
+        Option<bool> jsonOption,
+        IReadOnlyList<ILintToolModule> toolModules,
+        ILintToolOperation lintToolOperation,
+        IViewOperation viewOperation,
+        ICheckOperation checkOperation,
+        IClippyOperation clippyOperation,
+        ICiOperation ciOperation,
+        IBackendJsonNormalizer backendJsonNormalizer,
+        IJsonEnvelopeWriter jsonEnvelopeWriter,
+        string version)
+    {
+        Output = output;
+        Error = error;
+        JsonOption = jsonOption;
+        ToolModules = toolModules;
+        LintToolOperation = lintToolOperation;
+        ViewOperation = viewOperation;
+        CheckOperation = checkOperation;
+        ClippyOperation = clippyOperation;
+        CiOperation = ciOperation;
+        BackendJsonNormalizer = backendJsonNormalizer;
+        JsonEnvelopeWriter = jsonEnvelopeWriter;
+        Version = version;
+    }
+
+    public TextWriter Output { get; }
+
+    public TextWriter Error { get; }
+
+    public Option<bool> JsonOption { get; }
+
+    public IReadOnlyList<ILintToolModule> ToolModules { get; }
+
+    public ILintToolOperation LintToolOperation { get; }
+
+    public IViewOperation ViewOperation { get; }
+
+    public ICheckOperation CheckOperation { get; }
+
+    public IClippyOperation ClippyOperation { get; }
+
+    public ICiOperation CiOperation { get; }
+
+    public IBackendJsonNormalizer BackendJsonNormalizer { get; }
+
+    public IJsonEnvelopeWriter JsonEnvelopeWriter { get; }
+
+    public string Version { get; }
+
+    public OutputMode GetOutputMode(ParseResult parseResult)
+        => parseResult.GetValue(JsonOption) ? OutputMode.Json : OutputMode.Text;
+
+    public async Task<int> WriteSuccessAsync<T>(
+        string command,
+        T data,
+        IHumanOutputFormatter<T> formatter,
+        OutputMode outputMode,
+        CancellationToken cancellationToken)
+    {
+        if (outputMode == OutputMode.Json)
+        {
+            await JsonEnvelopeWriter.WriteAsync(
+                Output,
+                CliEnvelope<T>.Success(command, data),
+                cancellationToken);
+            return 0;
+        }
+
+        await formatter.WriteAsync(Output, data, cancellationToken);
+        return 0;
+    }
+
+    public async Task<int> WriteFailureAsync(
+        string command,
+        CliError error,
+        OutputMode outputMode,
+        CancellationToken cancellationToken)
+    {
+        if (outputMode == OutputMode.Json)
+        {
+            await JsonEnvelopeWriter.WriteAsync(
+                Output,
+                CliEnvelope<object>.Failure(command, error),
+                cancellationToken);
+            return 1;
+        }
+
+        await Error.WriteLineAsync($"{error.Code}: {error.Message}".AsMemory(), cancellationToken);
+
+        if (!string.IsNullOrWhiteSpace(error.SuggestedAction))
+            await Error.WriteLineAsync($"Suggested action: {error.SuggestedAction}".AsMemory(), cancellationToken);
+
+        return 1;
+    }
+}
