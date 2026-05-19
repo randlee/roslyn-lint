@@ -124,71 +124,37 @@ these code paths:
 - `.github/workflows/ci.yml`
 - `.github/workflows/publish.yml`
 
-Planned replacement-oriented analyzer implementation units:
+Delivered Phase A analyzer implementation units:
 
-- `src/Roslyn.DeMagic/Configuration/DeMagicConfig.cs`
-- `src/Roslyn.DeMagic/Configuration/Dm001Options.cs`
-- `src/Roslyn.DeMagic/Configuration/Dm002Options.cs`
-- `src/Roslyn.DeMagic/Configuration/ConfiguredSeverity.cs`
-- `src/Roslyn.DeMagic/Configuration/AdditionalFileConfigSelection.cs`
-- `src/Roslyn.DeMagic/Configuration/IAdditionalFileConfigSelector.cs`
-- `src/Roslyn.DeMagic/Configuration/ITomlConfigParser.cs`
-- `src/Roslyn.DeMagic/Configuration/DeMagicConfigLoader.cs`
-- `src/Roslyn.DeMagic/Diagnostics/DeMagicDiagnosticDescriptors.cs`
-- `src/Roslyn.DeMagic/Patterns/ForbiddenPattern.cs`
-- `src/Roslyn.DeMagic/Patterns/ForbiddenPatternKind.cs`
-- `src/Roslyn.DeMagic/Patterns/CompiledForbiddenPattern.cs`
-- `src/Roslyn.DeMagic/Patterns/IForbiddenPatternCompiler.cs`
-- `src/Roslyn.DeMagic/Patterns/ForbiddenPatternMatcher.cs`
+- `src/Roslyn.DeMagic/Configuration/` for analyzer config selection, parsing,
+  and immutable `DM001`/`DM002` option models
+- `src/Roslyn.DeMagic/Diagnostics/` for centralized diagnostic descriptor
+  ownership
+- `src/Roslyn.DeMagic/Patterns/` for forbidden-pattern compilation and match
+  behavior
 - `src/Roslyn.DeMagic/Analyzers/DM001ConstantConsolidationAnalyzer.cs`
 - `src/Roslyn.DeMagic/Analyzers/DM002ForbiddenStringLiteralAnalyzer.cs`
+- `src/Roslyn.DeMagic/AnalyzerReleases.Shipped.md`
+- `src/Roslyn.DeMagic/AnalyzerReleases.Unshipped.md`
 
-Planned replacement-oriented CLI implementation units when CLI work resumes:
+Delivered Phase A CLI and tooling baseline units:
 
-- `src/Roslyn.Lint.Abstractions/Roslyn.Lint.Abstractions.csproj`
-- `src/Roslyn.Lint.Abstractions/ToolId.cs`
-- `src/Roslyn.Lint.Abstractions/ToolDescriptor.cs`
-- `src/Roslyn.Lint.Abstractions/ILintToolModule.cs`
-- `src/Roslyn.Lint.Abstractions/ILintToolCommandHandler.cs`
-- `src/Roslyn.Lint/Commands/RegisterLintCommands.cs`
-- `src/Roslyn.Lint/Commands/RegisterViewCommands.cs`
-- `src/Roslyn.Lint/Commands/RegisterCheckCommands.cs`
-- `src/Roslyn.Lint/Commands/RegisterClippyCommands.cs`
-- `src/Roslyn.Lint/Commands/RegisterCiCommand.cs`
-- `src/Roslyn.Lint/Commands/RegisterVersionCommand.cs`
-- `src/Roslyn.Lint.Abstractions/Contracts/CliEnvelope.cs`
-- `src/Roslyn.Lint.Abstractions/Contracts/CliError.cs`
-- `src/Roslyn.Lint.Abstractions/Contracts/CliDiagnostic.cs`
-- `src/Roslyn.Lint.Abstractions/Contracts/CliErrorKind.cs`
-- `src/Roslyn.Lint.Abstractions/Contracts/LintToolRequest.cs`
-- `src/Roslyn.Lint.Abstractions/Contracts/LintToolResult.cs`
-- `src/Roslyn.Lint.Abstractions/Contracts/LintFinding.cs`
-- `src/Roslyn.Lint.Abstractions/Contracts/ViewRequest.cs`
-- `src/Roslyn.Lint.Abstractions/Contracts/ViewResult.cs`
-- `src/Roslyn.Lint.Abstractions/Contracts/CheckRequest.cs`
-- `src/Roslyn.Lint.Abstractions/Contracts/CheckResult.cs`
-- `src/Roslyn.Lint.Abstractions/Contracts/ClippyRequest.cs`
-- `src/Roslyn.Lint.Abstractions/Contracts/ClippyResult.cs`
-- `src/Roslyn.Lint.Abstractions/Contracts/CiRequest.cs`
-- `src/Roslyn.Lint.Abstractions/Contracts/CiResult.cs`
-- `src/Roslyn.Lint.Abstractions/Contracts/VersionResult.cs`
-- `src/Roslyn.Lint/Dispatch/IBackendToolDispatcher.cs`
-- `src/Roslyn.Lint/Dispatch/IBackendJsonNormalizer.cs`
-- `src/Roslyn.Lint/Dispatch/IBackendProcessRunner.cs`
-- `src/Roslyn.Lint/Dispatch/DelegatedBackendNormalizationResult.cs`
-- `src/Roslyn.Lint/Dispatch/BackendJsonNormalizer.cs`
-- `src/Roslyn.Lint/Operations/ILintToolOperation.cs`
-- `src/Roslyn.Lint/Operations/IViewOperation.cs`
-- `src/Roslyn.Lint/Operations/ICheckOperation.cs`
-- `src/Roslyn.Lint/Operations/IClippyOperation.cs`
-- `src/Roslyn.Lint/Operations/ICiOperation.cs`
-- `src/Roslyn.Lint/Serialization/IJsonEnvelopeWriter.cs`
-- `src/Roslyn.Lint/Formatting/IHumanOutputFormatter.cs`
-- `src/Roslyn.Lint/Adapters/`
-- `tests/Roslyn.Lint.Tests/Contracts/`
-- `tests/Roslyn.Lint.Tests/Operations/`
+- `src/Roslyn.Lint.Abstractions/` for shared tool descriptors, command
+  handlers, workspace seam, and stable envelope contracts
+- `src/Roslyn.Lint/Commands/` for `System.CommandLine` registration of the
+  shipped Phase A command families
+- `src/Roslyn.Lint/CommandModel/` and `src/Roslyn.Lint/Contracts/` for the
+  stable CLI contract surface and workflow result models
+- `src/Roslyn.Lint/Dispatch/` for in-process and delegated backend
+  normalization and process seams
+- `src/Roslyn.Lint/Operations/` for reusable command operations and workflow
+  runners
+- `src/Roslyn.Lint/Serialization/` and `src/Roslyn.Lint/Formatting/` for JSON
+  envelope serialization and human output
+- `tests/Roslyn.Lint.Tests/Contracts/` and
+  `tests/Roslyn.Lint.Tests/Operations/` for contract and workflow coverage
 
-Planned package-validation support units:
+Delivered Phase A package-validation support units:
 
 - `tests/Roslyn.DeMagic.Tests/PackageValidation/ExpectedPackageDiagnostic.cs`
 - `tests/Roslyn.DeMagic.Tests/PackageValidation/PackageValidationManifest.cs`

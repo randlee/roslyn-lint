@@ -19,8 +19,10 @@ Suite requirement IDs:
   approved requirements is disposable and may be deleted rather than preserved
   for compatibility with an unapproved spike.
 
-The current analyzer and CLI code are implementation probes, not source-of-
-truth product contracts.
+The current `Roslyn.DeMagic` analyzer line is the approved Phase A
+production-testing baseline. The `roslyn-lint` CLI remains a secondary suite
+surface whose contract is defined in docs, but whose longer-term feature scope
+is still intentionally constrained.
 
 ## 2. Documentation Structure
 
