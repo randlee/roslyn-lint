@@ -10,6 +10,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Roslyn.DeMagic" Version="$(RoslynDeMagicVersion)" />
+    <PackageReference Include="roslyn-demagic" Version="$(RoslynDeMagicVersion)" />
   </ItemGroup>
 </Project>
