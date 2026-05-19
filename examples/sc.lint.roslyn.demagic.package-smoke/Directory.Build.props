@@ -1,6 +1,8 @@
 <Project>
+  <Import Project="../../Directory.Build.props" />
+
   <PropertyGroup>
-    <ScLintRoslynDemagicVersion>0.1.1</ScLintRoslynDemagicVersion>
+    <ScLintRoslynDemagicVersion>$(Version)</ScLintRoslynDemagicVersion>
     <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
     <WarningsAsErrors></WarningsAsErrors>
     <GenerateDocumentationFile>false</GenerateDocumentationFile>

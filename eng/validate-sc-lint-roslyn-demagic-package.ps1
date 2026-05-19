@@ -6,7 +6,8 @@ $SampleProject = Join-Path $RepoRoot 'examples/sc.lint.roslyn.demagic.package-sm
 $NuGetConfig = Join-Path $RepoRoot 'examples/sc.lint.roslyn.demagic.package-smoke/NuGet.config'
 $ArtifactsDir = Join-Path $RepoRoot 'artifacts/packages'
 $BuildLog = Join-Path $RepoRoot 'artifacts/sc-lint-roslyn-demagic-package-smoke-build.log'
-$GlobalPackageDir = Join-Path $HOME '.nuget/packages/sc-lint-roslyn-demagic/0.1.1'
+$Manifest = Get-Content $ManifestPath | ConvertFrom-Json
+$GlobalPackageDir = Join-Path $HOME ".nuget/packages/sc-lint-roslyn-demagic/$($Manifest.packageVersion)"
 
 New-Item -ItemType Directory -Force -Path $ArtifactsDir | Out-Null
 New-Item -ItemType Directory -Force -Path (Split-Path $BuildLog -Parent) | Out-Null
@@ -30,7 +31,7 @@ if ($LASTEXITCODE -ne 0) {
   exit $LASTEXITCODE
 }
 
-$manifest = Get-Content $ManifestPath | ConvertFrom-Json
+$manifest = $Manifest
 $lines = Get-Content $BuildLog
 $regex = '^(?<file>.+\.cs)\((?<line>\d+),(?<col>\d+)\): (?<severity>warning|error|info) (?<id>DM00[12]):'
 

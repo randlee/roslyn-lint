@@ -12,7 +12,16 @@ sample_project="$repo_root/examples/sc.lint.roslyn.demagic.package-smoke/sc.lint
 nuget_config="$repo_root/examples/sc.lint.roslyn.demagic.package-smoke/NuGet.config"
 artifacts_dir="$repo_root/artifacts/packages"
 build_log="$repo_root/artifacts/sc-lint-roslyn-demagic-package-smoke-build.log"
-global_package_dir="${HOME}/.nuget/packages/sc-lint-roslyn-demagic/0.1.1"
+package_version="$(python3 - "$manifest_path" <<'PY'
+import json
+import pathlib
+import sys
+
+manifest = json.loads(pathlib.Path(sys.argv[1]).read_text())
+print(manifest["packageVersion"])
+PY
+)"
+global_package_dir="${HOME}/.nuget/packages/sc-lint-roslyn-demagic/${package_version}"
 
 mkdir -p "$artifacts_dir"
 mkdir -p "$(dirname "$build_log")"

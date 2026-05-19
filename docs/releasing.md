@@ -1,8 +1,8 @@
 # Releasing
 
-## Phase A v0.1.1 Release Notes
+## Phase A v0.1.2 Release Notes
 
-Phase A v0.1.1 is the current production-testing release candidate for
+Phase A v0.1.2 is the current production-testing release candidate for
 `sc.lint.roslyn.demagic`.
 
 Delivered analyzer scope:
@@ -22,7 +22,7 @@ Delivered validation scope:
 - machine-readable package-smoke expectations in
   `eng/sc-lint-roslyn-demagic-package-expected-diagnostics.json`
 
-Phase A v0.1.1 does not include:
+Phase A v0.1.2 does not include:
 
 - code fixes for `DM001` or `DM002`
 - expanded rule inventory beyond `DM001` and `DM002`
@@ -112,12 +112,12 @@ The first NuGet.org release remains manual for both `sc.lint.roslyn.demagic` and
 Use a NuGet.org API key exported in `NUGET_API_KEY`:
 
 ```bash
-dotnet nuget push artifacts/packages/sc-lint-roslyn-demagic.0.1.1.nupkg \
+dotnet nuget push artifacts/packages/sc-lint-roslyn-demagic.0.1.2.nupkg \
   --source https://api.nuget.org/v3/index.json \
   --api-key "$NUGET_API_KEY" \
   --skip-duplicate
 
-dotnet nuget push artifacts/packages/sc-lint-roslyn.0.1.1.nupkg \
+dotnet nuget push artifacts/packages/sc-lint-roslyn.0.1.2.nupkg \
   --source https://api.nuget.org/v3/index.json \
   --api-key "$NUGET_API_KEY" \
   --skip-duplicate
@@ -136,7 +136,7 @@ Verification checklist:
 
 1. `dotnet new classlib -n ScLintRoslynDeMagicNugetSmoke`
 2. add `sc.lint.roslyn.demagic` from NuGet.org and build against a known sample file
-3. `dotnet tool install --global sc-lint-roslyn --version 0.1.1`
+3. `dotnet tool install --global sc-lint-roslyn --version 0.1.2`
 4. run `sc-lint-roslyn version --json`
 5. compare NuGet.org package metadata against `README.md` and the shipped
    release notes
