@@ -4,7 +4,6 @@
 
 | Id | Package/surface | Problem | Required follow-up | Owner phase/sprint |
 | --- | --- | --- | --- | --- |
-
 ## Rule
 
 - every package-surface gap that cannot be fully closed by metadata or

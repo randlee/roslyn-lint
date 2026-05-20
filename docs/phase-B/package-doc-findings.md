@@ -9,7 +9,6 @@
 
 | Package | Surface | Problem | Expected correction | Closed in B3? |
 | --- | --- | --- | --- | --- |
-
 | `sc-lint-roslyn-demagic` | repository/project URLs | shared package metadata still points to `https://github.com/randlee/sc-lint-roslyn` instead of the real repository | change `RepositoryUrl` and `PackageProjectUrl` to `https://github.com/randlee/roslyn-lint` in the shared package metadata | yes |
 | `sc-lint-roslyn-demagic` | package readme surface | shipped package reuses the suite-level repository `README.md`, which does not tell a package consumer how to add the analyzer package or what target it ships for | ship a package-specific readme and align it with `docs/sc-lint-roslyn-demagic/package-usage.md` | yes |
 | `sc-lint-roslyn-demagic` | analyzer package-reference guidance | no canonical package-facing usage doc explains the package id, `PackageReference`, target, or `.sc-lint-roslyn` config expectation | expand `docs/sc-lint-roslyn-demagic/package-usage.md` into the canonical analyzer package-usage guide | yes |
