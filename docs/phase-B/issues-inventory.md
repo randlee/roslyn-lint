@@ -2,8 +2,8 @@
 
 ## Purpose
 
-This document is the Phase B index for all findings, remediation, and
-follow-up inventories produced by `B1`, `B2`, and `B3`.
+This document is the Phase B index for all findings, remediation, follow-up,
+and closeout-hardening inventories produced by `B1`, `B2`, `B3`, and `B4`.
 
 ## Sprint-Owned Artifacts
 
@@ -18,12 +18,16 @@ follow-up inventories produced by `B1`, `B2`, and `B3`.
 - `B3` package/documentation findings:
   - `docs/phase-B/package-doc-findings.md`
   - `docs/phase-B/package-doc-follow-up-issues.md`
+- `B4` closeout hardening:
+  - `docs/phase-B/issues-inventory.md`
+  - `docs/phase-B/sprint-B4.md`
 
 ## Status
 
-- `B1`: planned
-- `B2`: planned
-- `B3`: planned
+- `B1`: complete
+- `B2`: complete
+- `B3`: complete
+- `B4`: complete
 
 ## Consistency Rule
 
