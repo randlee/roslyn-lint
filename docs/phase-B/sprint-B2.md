@@ -2,8 +2,8 @@
 id: B2
 title: local cli dogfooding
 status: complete
-branch: sprint/B2
-worktree: /Users/randlee/Documents/github/roslyn-lint-worktrees/sprint/B2
+branch: sprint/B2-v2
+worktree: /Users/randlee/Documents/github/roslyn-lint-worktrees/sprint/B2-v2
 target: integration/phase-B
 ---
 
