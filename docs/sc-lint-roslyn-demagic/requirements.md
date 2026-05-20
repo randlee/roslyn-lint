@@ -128,3 +128,31 @@ Validation requirement IDs:
   than relying only on in-repo analyzer tests.
 - `REQ-DM-TEST-010` The packaged-consumer validation path must assert expected
   diagnostics from a structured manifest rather than by manual console review.
+
+## 8. Local Dogfooding Requirements
+
+Dogfooding requirement IDs:
+
+- `REQ-DM-DOGFOOD-001` Phase B must apply `sc.lint.roslyn.demagic` to this
+  repository's own source and test projects in local development.
+- `REQ-DM-DOGFOOD-002` Local dogfooding must preserve `.sc-lint-roslyn/config-src.toml`
+  for non-test projects and `.sc-lint-roslyn/config-test.toml` for test projects.
+- `REQ-DM-DOGFOOD-003` The first dogfooding pass must produce a findings
+  inventory covering every project brought under analyzer evaluation.
+- `REQ-DM-DOGFOOD-004` Each dogfooding finding must be classified as one of:
+  immediate fix, suppression with rationale, config adjustment, or later-phase
+  remediation.
+- `REQ-DM-DOGFOOD-005` The first dogfooding sprint must state explicitly
+  whether diagnostics are non-blocking or merge-blocking for local adoption;
+  Phase B must not leave that policy implicit.
+- `REQ-DM-DOGFOOD-006` Dogfooding must evaluate whether `DM001` and `DM002`
+  behave predictably on real repository code when locating consolidation and
+  deduplication opportunities.
+- `REQ-DM-DOGFOOD-007` Unexpected analyzer behavior or unclear rule output
+  found during dogfooding must be recorded as explicit follow-up issues.
+- `REQ-DM-DOGFOOD-008` Phase B package-documentation cleanup must publish
+  explicit package-reference instructions for `sc.lint.roslyn.demagic`,
+  including package id and supported target frameworks.
+- `REQ-DM-DOGFOOD-009` Phase B package-documentation cleanup must correct any
+  incorrect repository/project/package URLs in the shipped analyzer package
+  metadata.
