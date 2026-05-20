@@ -206,7 +206,7 @@ The production-testing contract for that set is:
 - `examples/sc.lint.roslyn.demagic.package-smoke/` validates the locally packed NuGet
   package through a normal consumer project
 - `eng/sc-lint-roslyn-demagic-package-expected-diagnostics.json` is the authoritative
-  machine-readable packaged-consumer expectation set for Phase A v0.2.0
+  machine-readable packaged-consumer expectation set for Phase A v0.1.2
 
 ## 8. Phase B Local Dogfooding Architecture
 

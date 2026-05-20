@@ -2,8 +2,8 @@
 id: B3
 title: published package documentation cleanup
 status: complete
-branch: sprint/B3
-worktree: /Users/randlee/Documents/github/roslyn-lint-worktrees/sprint/B3
+branch: sprint/B3-v2
+worktree: /Users/randlee/Documents/github/roslyn-lint-worktrees/sprint/B3-v2
 target: integration/phase-B
 ---
 
