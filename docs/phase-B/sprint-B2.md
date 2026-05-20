@@ -1,7 +1,7 @@
 ---
 id: B2
 title: local cli dogfooding
-status: planned
+status: complete
 branch: sprint/B2
 worktree: /Users/randlee/Documents/github/roslyn-lint-worktrees/sprint/B2
 target: integration/phase-B
@@ -133,6 +133,39 @@ sc-lint-roslyn ci --json
   brought under Phase C boundary-package planning
 - the sprint records the dogfooded command families and workflows explicitly,
   not just “the CLI” as an umbrella reference
+
+## Dogfooded Commands
+
+- `sc-lint-roslyn version --json`
+- `sc-lint-roslyn view tools --json`
+- `sc-lint-roslyn lint demagic --json`
+- `sc-lint-roslyn check --json`
+- `sc-lint-roslyn clippy --json`
+- `sc-lint-roslyn ci --json`
+
+## Phase C Escalation Record
+
+- `ToolId` and `ToolDescriptor`
+  - stable tool inventory identifiers already exposed by `view tools`
+- `CliEnvelope<T>`, `CliError`, `CliDiagnostic`, `CliErrorKind`
+  - stable top-level machine contract types validated by B2 dogfooding
+- `ILintToolModule`, `ILintToolCommandHandler<TRequest, TResponse>`,
+  `LintToolRequest`, `LintToolResult`
+  - backend and target-root seams that should stay aligned with later boundary
+    package ownership and command routing
+- `ILintWorkspaceAdapter`
+  - root-selection behavior surfaced directly during repo-root dogfooding and
+    should inform later owned-root / non-owned-root boundary guard rails
+
+## Initial Enforcement Posture
+
+- `B2` is documentation and predictability closure only; it does not require
+  the repository to go green on `check`, `clippy`, or top-level `ci`
+- CLI dogfooding findings are recorded and typed, but enforcement stays
+  non-blocking while the repository still contains intentional analyzer and CLI
+  findings under active follow-up
+- the only mandatory B2 closure gate is that command behavior, machine envelopes,
+  ambiguities, and follow-up issues are documented truthfully and completely
 
 ## Required Validation
 
