@@ -36,6 +36,8 @@ target: integration/phase-B
 - `docs/releasing.md`
 - `docs/phase-B/package-doc-findings.md`
 - `docs/phase-B/package-doc-follow-up-issues.md`
+- `docs/phase-B/package-surface-contract.md`
+- `docs/phase-B/testing-cross-platform.md`
 - `docs/sc-lint-roslyn-demagic/package-usage.md`
 - `docs/sc-lint-roslyn/install.md`
 - `src/sc.lint.roslyn.demagic/sc.lint.roslyn.demagic.csproj`
@@ -52,6 +54,11 @@ target: integration/phase-B
   reference guidance and target-framework support
 - `docs/sc-lint-roslyn/install.md` provides CLI install guidance and runtime
   expectations
+- `docs/phase-B/package-surface-contract.md` defines the public package
+  metadata, package-reference, install, and target-framework disclosure
+  boundary
+- `docs/phase-B/testing-cross-platform.md` captures the validation guidance for
+  package/install verification
 - shipped package metadata points to the correct repository/project URLs
 - shipped package metadata and public readme surfaces match actual shipped
   behavior

@@ -55,9 +55,14 @@ published package/documentation surface with reality.
 - `docs/phase-B/dogfood-findings.md`
 - `docs/phase-B/cli-dogfood-findings.md`
 - `docs/phase-B/dogfood-remediation-policy.md`
+- `docs/phase-B/cli-dogfood-remediation-policy.md`
 - `docs/phase-B/dogfood-follow-up-issues.md`
+- `docs/phase-B/cli-follow-up-issues.md`
+- `docs/phase-B/issues-inventory.md`
 - `docs/phase-B/package-doc-findings.md`
 - `docs/phase-B/package-doc-follow-up-issues.md`
+- `docs/phase-B/package-surface-contract.md`
+- `docs/phase-B/testing-cross-platform.md`
 - `docs/sc-lint-roslyn-demagic/package-usage.md`
 - `docs/sc-lint-roslyn/install.md`
 - `docs/sc-lint-roslyn/cli-contract.md`
@@ -117,3 +122,9 @@ Phase B planning is established only when:
 - the dogfooding sprints make the initial blocking policy explicit
 - the package-documentation sprint names the exact public package/readme and
   metadata surfaces it must clean up
+- a Phase B issues-inventory doc exists and links the analyzer, CLI, and
+  package-documentation findings/remediation/follow-up artifacts together
+- a package-surface contract doc exists for the public package metadata,
+  package-reference, install, and target-framework disclosure boundary
+- a testing/cross-platform guidance doc exists for Phase B package and install
+  validation

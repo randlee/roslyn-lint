@@ -228,3 +228,6 @@ Architectural rules:
   output
 - unexpected or non-predictable analyzer behavior must be turned into explicit
   follow-up issues, not buried inside the findings inventory
+- B3 package-surface cleanup must publish the analyzer consumer boundary in
+  `docs/sc-lint-roslyn-demagic/package-usage.md`, including package id,
+  package-reference shape, supported target frameworks, and repository URL

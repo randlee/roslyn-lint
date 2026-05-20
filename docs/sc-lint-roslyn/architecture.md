@@ -348,6 +348,10 @@ implementation proposal that deviates from it requires a new ADR.
 ## 12. Packaging Baseline
 
 `sc.lint.roslyn` is planned as a .NET tool package with a stable executable
+
+Phase B package-surface cleanup must publish the CLI consumer boundary in
+`docs/sc-lint-roslyn/install.md`, including install command shape, invocation
+example, supported runtime/target-framework expectations, and repository URL.
 command name of `sc-lint-roslyn`.
 
 Architectural rules:

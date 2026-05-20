@@ -255,3 +255,6 @@ Dogfooding requirement IDs:
 - `REQ-CLI-DOGFOOD-007` Phase B package-documentation cleanup must correct any
   incorrect repository/project/package URLs in the shipped CLI package
   metadata.
+- `REQ-CLI-DOGFOOD-008` Phase B package-documentation cleanup must update
+  `docs/sc-lint-roslyn/install.md` as the canonical CLI installation and
+  invocation guide for the shipped tool package.

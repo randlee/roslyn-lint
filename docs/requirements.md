@@ -38,10 +38,12 @@ Project-level ownership docs live under:
 - `docs/sc-lint-roslyn-demagic/requirements.md`
 - `docs/sc-lint-roslyn-demagic/architecture.md`
 - `docs/sc-lint-roslyn-demagic/boundaries.md`
+- `docs/sc-lint-roslyn-demagic/package-usage.md`
 - `docs/sc-lint-roslyn/requirements.md`
 - `docs/sc-lint-roslyn/architecture.md`
 - `docs/sc-lint-roslyn/cli-contract.md`
 - `docs/sc-lint-roslyn/boundaries.md`
+- `docs/sc-lint-roslyn/install.md`
 
 Documentation structure and ownership rules are defined in:
 
