@@ -54,4 +54,35 @@
     <DebugSymbols>true</DebugSymbols>
     <Optimize>false</Optimize>
   </PropertyGroup>
+
+  <PropertyGroup>
+    <ScLintRoslynDogfoodProject Condition="
+      '$(MSBuildProjectName)' == 'sc.lint.roslyn.demagic' or
+      '$(MSBuildProjectName)' == 'sc.lint.roslyn.abstractions' or
+      '$(MSBuildProjectName)' == 'sc.lint.roslyn.demagic.lint' or
+      '$(MSBuildProjectName)' == 'sc.lint.roslyn' or
+      '$(MSBuildProjectName)' == 'sc.lint.roslyn.demagic.tests' or
+      '$(MSBuildProjectName)' == 'sc.lint.roslyn.tests'">true</ScLintRoslynDogfoodProject>
+    <ScLintRoslynAnalyzerConfig Condition="'$(IsTestProject)' == 'true'">$(MSBuildThisFileDirectory).sc-lint-roslyn/config-test.toml</ScLintRoslynAnalyzerConfig>
+    <ScLintRoslynAnalyzerConfig Condition="'$(IsTestProject)' != 'true'">$(MSBuildThisFileDirectory).sc-lint-roslyn/config-src.toml</ScLintRoslynAnalyzerConfig>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(ScLintRoslynDogfoodProject)' == 'true'">
+    <!-- B1 is a non-blocking discovery sprint: surface DM001/DM002 during local builds without failing the build. -->
+    <WarningsNotAsErrors>$(WarningsNotAsErrors);DM001;DM002</WarningsNotAsErrors>
+  </PropertyGroup>
+
+  <ItemGroup Condition="'$(ScLintRoslynDogfoodProject)' == 'true' and '$(MSBuildProjectName)' != 'sc.lint.roslyn.demagic'">
+    <ProjectReference Include="$(MSBuildThisFileDirectory)src/sc.lint.roslyn.demagic/sc.lint.roslyn.demagic.csproj"
+                      OutputItemType="Analyzer"
+                      ReferenceOutputAssembly="false" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(ScLintRoslynDogfoodProject)' == 'true' and '$(MSBuildProjectName)' == 'sc.lint.roslyn.demagic' and Exists('$(TargetPath)')">
+    <Analyzer Include="$(TargetPath)" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(ScLintRoslynDogfoodProject)' == 'true' and Exists('$(ScLintRoslynAnalyzerConfig)')">
+    <AdditionalFiles Include="$(ScLintRoslynAnalyzerConfig)" />
+  </ItemGroup>
 </Project>
