@@ -18,23 +18,10 @@ at strongly typed, automation-friendly C# code quality workflows.
   Analyzer package for:
   - `DM001` constant-consolidation enforcement
   - `DM002` forbidden string literal detection
-  Package docs:
-  - `docs/sc-lint-roslyn-demagic/package-usage.md`
 - `src/sc.lint.roslyn`
   AI-first CLI surface with a stable JSON envelope, typed errors, and
   MCP-ready DTO reuse, retained here as a supporting suite tool rather than
   the primary Phase A release target
-  Package docs:
-  - `docs/sc-lint-roslyn/install.md`
-
-## Package Consumption
-
-- analyzer package id: `sc-lint-roslyn-demagic`
-  - shipped target: `netstandard2.0`
-  - add with `PackageReference`
-- CLI tool package id: `sc-lint-roslyn`
-  - shipped tool targets: `net8.0`, `net10.0`
-  - install with `dotnet tool install --global sc-lint-roslyn --version 0.2.0`
 
 ## Current CLI surfaces
 

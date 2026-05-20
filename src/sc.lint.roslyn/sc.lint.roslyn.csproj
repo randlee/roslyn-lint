@@ -10,8 +10,8 @@
     <PackageId>sc-lint-roslyn</PackageId>
     <Description>AI-first orchestration CLI for the sc-lint-roslyn suite with a stable machine contract baseline</Description>
     <PackageTags>lint;roslyn;csharp;cli;preview;ai-first</PackageTags>
-    <PackageReadmeFile>package-readme.md</PackageReadmeFile>
-    <PackageReleaseNotes>Phase B v$(Version) package-surface cleanup: shipped .NET tool guidance, corrected repository URLs, and aligned package-facing install documentation.</PackageReleaseNotes>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <PackageReleaseNotes>Phase A v$(Version) .NET tool baseline prepared for GitHub Packages publication and first-release manual NuGet.org handoff.</PackageReleaseNotes>
   </PropertyGroup>
 
   <!-- .NET Tool Configuration -->
@@ -33,7 +33,7 @@
 
   <!-- Include README in Package -->
   <ItemGroup>
-    <None Include="package-readme.md" Pack="true" PackagePath="/" />
+    <None Include="../../README.md" Pack="true" PackagePath="/" />
   </ItemGroup>
 
 </Project>

@@ -33,8 +33,3 @@ for the shipped analyzer and CLI.
 - `PackageReleaseNotes`
 - `Description`
 - `PackageTags`
-
-## Current B3 Package Readme Surfaces
-
-- analyzer package readme: `src/sc.lint.roslyn.demagic/package-readme.md`
-- CLI tool package readme: `src/sc.lint.roslyn/package-readme.md`
