@@ -2,8 +2,8 @@
 id: B1
 title: local demagic analyzer dogfooding
 status: complete
-branch: sprint/B1
-worktree: /Users/randlee/Documents/github/roslyn-lint-worktrees/sprint/B1
+branch: sprint/B1-v2
+worktree: /Users/randlee/Documents/github/roslyn-lint-worktrees/sprint/B1-v2
 target: integration/phase-B
 ---
 
