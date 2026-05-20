@@ -39,8 +39,9 @@ Phase B deliverables:
   instructions for the shipped analyzer and CLI
 - an explicit findings inventory and remediation classification for the first
   dogfooding pass
-- explicit follow-up issues for analyzer behavior that is not yet predictable
-  or not yet aligned with expected consolidation/deduplication outcomes
+- explicit follow-up issues for analyzer and CLI behavior that are not yet
+  predictable or not yet aligned with expected consolidation/deduplication
+  outcomes
 - a documented policy for when dogfooding findings remain non-blocking versus
   when they become merge-gating
 
@@ -66,6 +67,7 @@ Owned project documents:
 - `docs/sc-lint-roslyn-demagic/package-usage.md`
 - `docs/sc-lint-roslyn/requirements.md`
 - `docs/sc-lint-roslyn/architecture.md`
+- `docs/sc-lint-roslyn/cli-contract.md`
 - `docs/sc-lint-roslyn/install.md`
 - `docs/sc-lint-roslyn/boundaries.md`
 - `docs/documentation-guidelines.md`
