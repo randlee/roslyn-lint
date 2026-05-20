@@ -19,8 +19,8 @@
     <PackageId>sc-lint-roslyn-demagic</PackageId>
     <Description>Analyzer package for constant-consolidation and forbidden-string diagnostics in C# solutions</Description>
     <PackageTags>roslyn;analyzer;csharp;constants;domain-boundary;code-quality</PackageTags>
-    <PackageReadmeFile>README.md</PackageReadmeFile>
-    <PackageReleaseNotes>Phase A v$(Version) production-testing candidate: ships DM001 and DM002 with packaged-consumer validation, requirement traceability, and release-readiness evidence.</PackageReleaseNotes>
+    <PackageReadmeFile>package-readme.md</PackageReadmeFile>
+    <PackageReleaseNotes>Phase B v$(Version) package-surface cleanup: ships DM001 and DM002 with corrected repository URLs, dedicated package guidance, and aligned public package metadata.</PackageReleaseNotes>
   </PropertyGroup>
 
   <ItemGroup>
@@ -34,7 +34,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="../../README.md" Pack="true" PackagePath="/" />
+    <None Include="package-readme.md" Pack="true" PackagePath="/" />
   </ItemGroup>
 
 </Project>

@@ -1,25 +1,50 @@
 # sc-lint-roslyn Installation
 
-## Purpose
+## Package Id
 
-Phase B uses this document as the canonical install guide for the shipped
-`sc-lint-roslyn` CLI package.
+- `sc-lint-roslyn`
 
-## Required Published Content
-
-- package id: `sc-lint-roslyn`
-- install example:
+## Install
 
 ```bash
-dotnet tool install --global sc-lint-roslyn --version 0.1.x
+dotnet tool install --global sc-lint-roslyn --version 0.2.0
 ```
 
-- invocation example:
+## Verify Install
 
 ```bash
 sc-lint-roslyn version --json
 ```
 
-- runtime expectations / supported target frameworks: must match the shipped
-  CLI tool package target/runtime baseline
-- repository/project URL: must point to the correct GitHub repository
+## Shipped Tool Targets
+
+- packaged tool targets: `net8.0` and `net10.0`
+- runtime expectation: a compatible `dotnet` host must be available locally to
+  execute one of the packaged tool targets
+
+## Current Command Families
+
+- `lint`
+- `view`
+- `check`
+- `clippy`
+- `ci`
+- `version`
+
+## Machine Mode Note
+
+The stable machine-readable contract applies to the CLI process output itself.
+For local contract verification, prefer a prebuilt binary or:
+
+```bash
+dotnet run --no-build --project src/sc.lint.roslyn/sc.lint.roslyn.csproj --framework net10.0 -- version --json
+```
+
+Plain `dotnet run` may prepend build warnings before the CLI process starts.
+
+## Package Surface Notes
+
+- shipped tool command name: `sc-lint-roslyn`
+- package readme in the shipped `.nupkg`: `src/sc.lint.roslyn/package-readme.md`
+- repository URL: `https://github.com/randlee/roslyn-lint`
+- package project URL: `https://github.com/randlee/roslyn-lint`
