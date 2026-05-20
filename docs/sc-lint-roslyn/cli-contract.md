@@ -57,6 +57,23 @@ Commands must not invent family-specific top-level envelope keys such as:
 Those values belong under `data` so the top-level machine contract remains
 stable as more tools are added.
 
+## Machine-Mode Transport Note
+
+The stable machine contract applies to the CLI process output itself.
+
+That distinction matters during local dogfooding:
+
+- a prebuilt `sc-lint-roslyn` executable must emit the envelope directly
+- `dotnet run --no-build --project ... -- <command> --json` is treated as an
+  equivalent transport for contract verification
+- plain `dotnet run --project ... -- <command> --json` may prepend build-time
+  warnings or other compiler output before the CLI process starts
+
+Because of that wrapper behavior, plain `dotnet run` is not the authoritative
+machine-mode transport for contract verification or automation. B2 validated
+the JSON contract through `--no-build` specifically to observe the CLI process
+without wrapper-added build output.
+
 ## Command Identity Convention
 
 The `command` field is a stable dotted identifier derived from the final CLI
@@ -85,6 +102,21 @@ Initial convention:
 
 Future product-specific subtargets may extend those patterns, but they must not
 replace the approved family names.
+
+## Current Target-Root Rule
+
+Unless a command documents a narrower target-selection mechanism, CLI commands
+that operate on repository content use the caller's current working directory as
+their target root.
+
+For `sc-lint-roslyn lint demagic`, that means a repo-root invocation scans all
+eligible content under that root, including `src/`, `tests/`, `examples/`, and
+analyzer `testdata/` trees when those trees are present in the repository.
+
+B2 treated that behavior as a documented rule, not as hidden per-project magic.
+Any later narrowing controls such as owned-root selection or explicit sample
+tree exclusion belong to follow-up work rather than being implied by the Phase A
+or Phase B contract.
 
 ## Canonical Success Envelope
 
