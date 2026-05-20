@@ -17,7 +17,7 @@ gaps for the shipped analyzer set.
   signoff
 - packaged-consumer closure: `examples/sc.lint.roslyn.demagic.package-smoke/` plus
   `eng/sc-lint-roslyn-demagic-package-expected-diagnostics.json` are the authoritative
-  package-consumer validation artifacts for Phase A v0.1.2
+  package-consumer validation artifacts for Phase A v0.2.0
 
 ## Requirement Coverage
 
