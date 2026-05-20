@@ -1,7 +1,7 @@
 ---
 id: B1
 title: local demagic analyzer dogfooding
-status: planned
+status: complete
 branch: sprint/B1
 worktree: /Users/randlee/Documents/github/roslyn-lint-worktrees/sprint/B1
 target: integration/phase-B
