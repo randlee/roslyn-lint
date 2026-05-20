@@ -1,0 +1,14 @@
+[dm001]
+enabled = true
+severity = "warning"
+designated_file = "DeMagicConstants.cs"
+designated_class = "DeMagicConstants"
+
+[dm002]
+enabled = true
+severity = "warning"
+forbidden = [
+  "demagic",
+  "sc-lint-roslyn",
+]
+case_sensitive = false
