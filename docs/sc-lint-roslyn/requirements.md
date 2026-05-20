@@ -233,3 +233,28 @@ Validation requirement IDs:
   write verification.
 - `REQ-CLI-TEST-006` When an MCP surface exists, CLI and MCP tests must verify
   contract equivalence instead of parallel but different payloads.
+
+## 11. Local Dogfooding And Boundary-Guardrail Requirements
+
+Dogfooding requirement IDs:
+
+- `REQ-CLI-DOGFOOD-001` Phase B must dogfood `sc-lint-roslyn` on this
+  repository's own workflows before treating the CLI surface as mature.
+- `REQ-CLI-DOGFOOD-002` Local CLI dogfooding must produce a findings inventory
+  covering command usability, contract drift, and output predictability.
+- `REQ-CLI-DOGFOOD-003` Unexpected CLI behavior must become explicit follow-up
+  issues rather than release-note prose or ad hoc notes.
+- `REQ-CLI-DOGFOOD-004` Phase B planning must define guard rails for
+  `sc.lint.roslyn.abstractions` and CLI boundary ownership using lessons from
+  `sc-lint-boundary`.
+- `REQ-CLI-DOGFOOD-005` Future boundary guard rails must be machine-readable
+  and planning-aware rather than Markdown-only.
+- `REQ-CLI-DOGFOOD-006` Phase B package-documentation cleanup must publish
+  explicit installation instructions for `sc-lint-roslyn`, including the
+  supported target frameworks/runtime expectations.
+- `REQ-CLI-DOGFOOD-007` Phase B package-documentation cleanup must correct any
+  incorrect repository/project/package URLs in the shipped CLI package
+  metadata.
+- `REQ-CLI-DOGFOOD-008` Phase B package-documentation cleanup must update
+  `docs/sc-lint-roslyn/install.md` as the canonical CLI installation and
+  invocation guide for the shipped tool package.

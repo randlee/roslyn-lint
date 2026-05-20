@@ -318,6 +318,25 @@ Target implementation guidance:
 - explicit DTOs
 - shared `System.Text.Json` options and serializer context
 - thin command-registration layer
+
+## 12. Phase B Dogfooding And Phase C Boundary-Guardrail Direction
+
+Phase B should treat `sc-lint-roslyn` and `sc.lint.roslyn.abstractions` as a
+locally dogfooded product surface.
+
+Architectural rules:
+
+- B2 should exercise the CLI through real repo workflows rather than only
+  synthetic command tests
+- B2 should capture contract drift, usability gaps, and normalization
+  surprises as explicit findings and follow-up issues
+- future Phase C boundary guard rails for `sc.lint.roslyn.abstractions` should borrow
+  the strongest patterns from `sc-lint-boundary`:
+  machine-readable boundary records, item-key-level parity, strict planned-gap
+  metadata, and automatic warn-to-error escalation for overdue planned gaps
+- Phase C planning for boundary enforcement should start from the existing
+  abstraction seams and contract DTO inventory rather than inventing a
+  separate ad hoc ownership model
 - reusable dispatch and operation layer
 - one shared JSON envelope model for success and failure
 - tests that assert DTO and serialized-field stability directly
@@ -329,6 +348,10 @@ implementation proposal that deviates from it requires a new ADR.
 ## 12. Packaging Baseline
 
 `sc.lint.roslyn` is planned as a .NET tool package with a stable executable
+
+Phase B package-surface cleanup must publish the CLI consumer boundary in
+`docs/sc-lint-roslyn/install.md`, including install command shape, invocation
+example, supported runtime/target-framework expectations, and repository URL.
 command name of `sc-lint-roslyn`.
 
 Architectural rules:

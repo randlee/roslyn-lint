@@ -38,10 +38,12 @@ Project-level ownership docs live under:
 - `docs/sc-lint-roslyn-demagic/requirements.md`
 - `docs/sc-lint-roslyn-demagic/architecture.md`
 - `docs/sc-lint-roslyn-demagic/boundaries.md`
+- `docs/sc-lint-roslyn-demagic/package-usage.md`
 - `docs/sc-lint-roslyn/requirements.md`
 - `docs/sc-lint-roslyn/architecture.md`
 - `docs/sc-lint-roslyn/cli-contract.md`
 - `docs/sc-lint-roslyn/boundaries.md`
+- `docs/sc-lint-roslyn/install.md`
 
 Documentation structure and ownership rules are defined in:
 
@@ -64,6 +66,20 @@ Phase planning docs live under:
 - `docs/phase-A/sprint-A11.md`
 - `docs/phase-A/sprint-A12.md`
 - `docs/phase-A/sprint-A13.md`
+- `docs/phase-B/plan-phase-B.md`
+- `docs/phase-B/sprint-B1.md`
+- `docs/phase-B/sprint-B2.md`
+- `docs/phase-B/sprint-B3.md`
+- `docs/phase-C/plan-phase-C.md`
+- `docs/phase-C/sprint-C1.md`
+- `docs/phase-C/sprint-C2.md`
+- `docs/phase-C/sprint-C3.md`
+- `docs/phase-C/sprint-C4.md`
+- `docs/phase-C/sprint-C5.md`
+- `docs/phase-C/sprint-C6.md`
+- `docs/phase-C/sprint-C7.md`
+- `docs/phase-C/sprint-C8.md`
+- `docs/phase-C/sprint-C9.md`
 
 Documentation requirement IDs:
 
@@ -116,6 +132,64 @@ through the analyzer-readiness line:
 - `A12` converges docs, manifests, release metadata, and readiness evidence.
 - `A13` adds CI enforcement for packaged-consumer validation and staged
   package publication, while keeping the first NuGet.org release manual.
+
+### 4.2 Phase B Initial Direction
+
+Phase B begins after the Phase A analyzer release candidate is available for
+real use on this repository itself.
+
+- `B1` starts local dogfooding of `sc.lint.roslyn.demagic` across the suite's own
+  source and test projects.
+- `B2` starts local dogfooding of the `sc-lint-roslyn` CLI across the suite's
+  own workflows and command surfaces.
+- `B3` cleans up published package documentation, NuGet metadata, and missing
+  package-surface information so the shipped analyzer and CLI present accurate
+  public documentation.
+
+Suite requirement IDs:
+
+- `REQ-SUITE-PHASEB-001` Phase B must begin by consuming
+  `sc.lint.roslyn.demagic` on this repository's own projects before expanding rule
+  inventory or broad CLI scope.
+- `REQ-SUITE-PHASEB-002` Local dogfooding must preserve the source-project and
+  test-project configuration split under `.sc-lint-roslyn/`.
+- `REQ-SUITE-PHASEB-003` The first dogfooding sprint must produce a findings
+  inventory and remediation classification, not just analyzer wiring.
+- `REQ-SUITE-PHASEB-004` Initial dogfooding may be non-blocking, but the plan
+  must make the non-blocking policy explicit and time-bounded.
+- `REQ-SUITE-PHASEB-005` Unexpected analyzer behavior discovered during local
+  dogfooding must become explicit follow-up issues rather than informal notes.
+- `REQ-SUITE-PHASEB-006` Phase B must dogfood the `sc-lint-roslyn` CLI as a real
+  product surface rather than only as a future implementation backlog.
+- `REQ-SUITE-PHASEB-007` Phase B must produce an explicit public-package
+  documentation cleanup plan and execute it before later phases broaden the
+  product surface further.
+- `REQ-SUITE-PHASEB-008` Phase B package documentation cleanup must cover
+  shipped NuGet metadata, readme content, release-notes presentation, and any
+  other public package information that appears on NuGet.org or equivalent
+  package feeds.
+
+### 4.3 Phase C Initial Direction
+
+Phase C begins after Phase B dogfooding and package-documentation cleanup
+stabilize the shipped analyzer and CLI surfaces.
+
+- `C1` finalizes the `sc-lint-roslyn-boundary` delivery plan.
+- `C2` through `C9` implement the boundary package in one-fundamental-
+  deliverable sprints with zero planned gaps per completed sprint.
+
+Suite requirement IDs:
+
+- `REQ-SUITE-PHASEC-001` Phase C must reuse the documented `sc-lint-boundary`
+  and `atm-core` guard rails wherever they remain valid for Roslyn.
+- `REQ-SUITE-PHASEC-002` Phase C must keep boundary-package command and config
+  concepts parallel to `sc-lint-boundary` unless a Roslyn-specific constraint
+  forces a difference.
+- `REQ-SUITE-PHASEC-003` Phase C graph export must target the approved shared
+  schema; schema finalization remains blocked until maintainer-provided details
+  arrive.
+- `REQ-SUITE-PHASEC-004` No completed Phase C sprint may close with known
+  planned implementation gaps for its fundamental deliverable.
 
 ## 5. CLI Baseline
 
