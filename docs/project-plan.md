@@ -238,8 +238,11 @@ Planned Phase B dogfooding and package-documentation units:
 - `docs/phase-B/cli-dogfood-findings.md`
 - `docs/phase-B/dogfood-remediation-policy.md`
 - `docs/phase-B/dogfood-follow-up-issues.md`
+- `docs/phase-B/package-doc-findings.md`
+- `docs/phase-B/package-doc-follow-up-issues.md`
 - `docs/sc-lint-roslyn-demagic/package-usage.md`
 - `docs/sc-lint-roslyn/install.md`
+- `docs/sc-lint-roslyn/cli-contract.md`
 - `Directory.Build.props`
 - `.sc-lint-roslyn/config-src.toml`
 - `.sc-lint-roslyn/config-test.toml`

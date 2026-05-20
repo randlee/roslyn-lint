@@ -42,6 +42,46 @@ target: integration/phase-B
 - `src/sc.lint.roslyn/sc.lint.roslyn.csproj`
 - `Directory.Build.props`
 
+## Deliverables
+
+- `docs/phase-B/package-doc-findings.md` inventories every public package-
+  surface gap independently
+- `docs/phase-B/package-doc-follow-up-issues.md` records every remaining
+  package-surface gap that requires later product work independently
+- `docs/sc-lint-roslyn-demagic/package-usage.md` provides analyzer package-
+  reference guidance and target-framework support
+- `docs/sc-lint-roslyn/install.md` provides CLI install guidance and runtime
+  expectations
+- shipped package metadata points to the correct repository/project URLs
+- shipped package metadata and public readme surfaces match actual shipped
+  behavior
+
+## Important Interfaces, Records/Structs, And Enums
+
+Important package-reference and install signatures:
+
+```xml
+<ItemGroup>
+  <PackageReference Include="sc-lint-roslyn-demagic" Version="$(Version)" />
+</ItemGroup>
+```
+
+```bash
+dotnet tool install --global sc-lint-roslyn --version 0.1.x
+```
+
+```xml
+<PropertyGroup>
+  <RepositoryUrl>https://github.com/randlee/roslyn-lint</RepositoryUrl>
+  <PackageProjectUrl>https://github.com/randlee/roslyn-lint</PackageProjectUrl>
+</PropertyGroup>
+```
+
+```text
+Analyzer package target: netstandard2.0
+CLI tool targets: documented from the shipped tool project/runtime baseline
+```
+
 ## Required Work
 
 - inventory the current public package-surface gaps for the shipped analyzer
@@ -65,6 +105,16 @@ target: integration/phase-B
   cannot be fully corrected in B3 without new product work
 - verify that the shipped analyzer and CLI packages present a coherent
   user-facing story on package feeds and release docs
+- every listed deliverable in this sprint is expected to land at a
+  production-ready level for B3's claimed scope; no deliverable may close in a
+  shape-only, placeholder, or “document later” state
+
+## Non-Closure Items
+
+- B3 does not add new analyzer rules or new CLI command families
+- B3 does not introduce the boundary package
+- B3 may file follow-up issues for documentation gaps that require later
+  product implementation rather than metadata cleanup alone
 
 ## Acceptance Criteria
 
@@ -82,6 +132,8 @@ target: integration/phase-B
   the shipped analyzer and CLI package definitions
 - repository/project/package URLs in shipped package metadata point to the
   correct GitHub repository
+- the published package-facing docs disclose analyzer package-reference
+  guidance, CLI install guidance, and target-framework/runtime support
 
 ## Required Validation
 

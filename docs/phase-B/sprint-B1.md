@@ -43,11 +43,59 @@ target: integration/phase-B
 - `tests/sc.lint.roslyn.demagic.tests/sc.lint.roslyn.demagic.tests.csproj`
 - `tests/sc.lint.roslyn.tests/sc.lint.roslyn.tests.csproj`
 
+## Deliverables
+
+- local analyzer-consumption wiring is present for every in-scope source and
+  test project listed in this sprint
+- source projects route to `.sc-lint-roslyn/config-src.toml`
+- test projects route to `.sc-lint-roslyn/config-test.toml`
+- `docs/phase-B/dogfood-findings.md` inventories findings for every in-scope
+  project independently
+- `docs/phase-B/dogfood-remediation-policy.md` classifies every finding
+  independently
+- `docs/phase-B/dogfood-follow-up-issues.md` captures every predictability gap,
+  false positive, false negative, or unclear rule behavior independently
+- the sprint records the initial enforcement mode explicitly as non-blocking
+  discovery/classification for this sprint only
+
 ## Important Interfaces, Records/Structs, And Enums
 
 - no new product-runtime interfaces or records are required to begin B1
 - if sprint tooling is added to persist findings, keep it outside analyzer
   runtime code and prefer simple documented inventory artifacts first
+
+Important configuration and wiring signatures:
+
+```xml
+<ItemGroup>
+  <ProjectReference Include="..\src\sc.lint.roslyn.demagic\sc.lint.roslyn.demagic.csproj"
+                    OutputItemType="Analyzer"
+                    ReferenceOutputAssembly="false" />
+</ItemGroup>
+```
+
+```ini
+# .sc-lint-roslyn/config-src.toml
+[demagic]
+config_kind = "source"
+```
+
+```ini
+# .sc-lint-roslyn/config-test.toml
+[demagic]
+config_kind = "test"
+```
+
+In-scope project inventory for B1:
+
+```text
+src/sc.lint.roslyn.demagic
+src/sc.lint.roslyn.abstractions
+src/sc.lint.roslyn.demagic.lint
+src/sc.lint.roslyn
+tests/sc.lint.roslyn.demagic.tests
+tests/sc.lint.roslyn.tests
+```
 
 ## Required Work
 
@@ -78,12 +126,23 @@ target: integration/phase-B
   B1 is non-blocking for merge while findings are being discovered and
   classified; later Phase B sprints may tighten that policy only after B1
   captures the real findings inventory
+- every listed deliverable in this sprint is expected to land at a
+  production-ready level for B1's claimed scope; no deliverable may close in a
+  shape-only, placeholder, or “document later” state
+
+## Non-Closure Items
+
+- B1 does not remediate every finding it discovers
+- B1 does not make the analyzer merge-blocking on this repository
+- B1 does not change analyzer rule inventory or boundary-package scope
 
 ## Acceptance Criteria
 
 - repository-owned source and test projects run `sc.lint.roslyn.demagic` during
   local builds
 - source and test projects still route to distinct analyzer config files
+- every in-scope project named in this sprint is represented in
+  `docs/phase-B/dogfood-findings.md`
 - `docs/phase-B/dogfood-findings.md` exists and covers every in-scope project
 - `docs/phase-B/dogfood-remediation-policy.md` exists and classifies every B1
   finding disposition
