@@ -1,6 +1,6 @@
 # sc-lint-roslyn CLI Contract
 
-This document defines the planned end-to-end contract for the top-level
+This document defines the end-to-end contract for the top-level
 `sc-lint-roslyn` CLI.
 
 Related ADRs:
@@ -21,9 +21,9 @@ It is not only a launcher. It also owns:
 - backend dispatch to package-owned tools
 - stable command identifiers for automation and future MCP parity
 
-## Planned Contract Types
+## Contract Types
 
-The approved planning baseline explicitly defines these types:
+The approved CLI contract defines these types:
 
 - `CommandFamily`
 - `LintProfile`
@@ -57,6 +57,23 @@ Commands must not invent family-specific top-level envelope keys such as:
 Those values belong under `data` so the top-level machine contract remains
 stable as more tools are added.
 
+## Machine-Mode Transport Note
+
+The stable machine contract applies to the CLI process output itself.
+
+That distinction matters during local dogfooding:
+
+- a prebuilt `sc-lint-roslyn` executable must emit the envelope directly
+- `dotnet run --no-build --project ... -- <command> --json` is treated as an
+  equivalent transport for contract verification
+- plain `dotnet run --project ... -- <command> --json` may prepend build-time
+  warnings or other compiler output before the CLI process starts
+
+Because of that wrapper behavior, plain `dotnet run` is not the authoritative
+machine-mode transport for contract verification or automation. B2 validated
+the JSON contract through `--no-build` specifically to observe the CLI process
+without wrapper-added build output.
+
 ## Command Identity Convention
 
 The `command` field is a stable dotted identifier derived from the final CLI
@@ -85,6 +102,21 @@ Initial convention:
 
 Future product-specific subtargets may extend those patterns, but they must not
 replace the approved family names.
+
+## Current Target-Root Rule
+
+Unless a command documents a narrower target-selection mechanism, CLI commands
+that operate on repository content use the caller's current working directory as
+their target root.
+
+For `sc-lint-roslyn lint demagic`, that means a repo-root invocation scans all
+eligible content under that root, including `src/`, `tests/`, `examples/`, and
+analyzer `testdata/` trees when those trees are present in the repository.
+
+B2 treated that behavior as a documented rule, not as hidden per-project magic.
+Any later narrowing controls such as owned-root selection or explicit sample
+tree exclusion belong to follow-up work rather than being implied by the Phase A
+or Phase B contract.
 
 ## Canonical Success Envelope
 
@@ -169,10 +201,9 @@ or domain codes beneath them.
 | `backend_protocol` | `CLI.BACKEND_PROTOCOL_ERROR` | delegated backend returned malformed or unexpected machine output |
 | `internal` | `CLI.INTERNAL_ERROR` | top-level CLI bug or invariant violation |
 
-## Planned Command-Family Contract Matrix
+## Command-Family Contract Matrix
 
-Every non-interactive command family must be reviewed against the same matrix
-before code lands:
+Every non-interactive command family is reviewed against the same matrix:
 
 | Command family | Stable `command` pattern | Success payload owner | Applicable top-level error kinds |
 | --- | --- | --- | --- |
@@ -217,7 +248,7 @@ If the delegated backend:
 
 ## Profile Policy
 
-The planned profile names are:
+The current profile names are:
 
 - `sc-lint-roslyn lint fast`
 - `sc-lint-roslyn lint full`
@@ -227,9 +258,7 @@ Profile semantics:
 
 - `fast`
   - low-latency local developer gate
-  - in A6, the first smoke-test implementation may run only `demagic`
-  - in A7, this becomes the first explicit reusable profile with documented
-    membership
+  - currently runs the documented low-latency lint set
 - `full`
   - stronger local pre-push gate
 - `ci`
@@ -237,14 +266,14 @@ Profile semantics:
 - top-level `ci`
   - lint plus tests
 
-Planned profile membership table:
+Current profile membership table:
 
-| Profile or command | Required membership in A6 | Required membership in A7 |
-| --- | --- | --- |
-| `lint fast` | `demagic` only smoke-test path | `demagic` plus the explicitly documented low-latency lint set |
-| `lint full` | not implemented | stronger pre-push lint set defined in code and docs |
-| `lint ci` | not implemented | lint-only CI-parity set defined in code and docs |
-| top-level `ci` | not implemented | `lint ci` plus test execution |
+| Profile or command | Current membership |
+| --- | --- |
+| `lint fast` | `demagic` plus the documented low-latency lint set |
+| `lint full` | stronger pre-push lint set defined in code and docs |
+| `lint ci` | lint-only CI-parity set defined in code and docs |
+| top-level `ci` | `lint ci` plus test execution |
 
 The distinction between `sc-lint-roslyn lint ci` and top-level `sc-lint-roslyn ci`
 is mandatory.

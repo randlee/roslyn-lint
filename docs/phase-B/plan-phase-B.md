@@ -52,6 +52,7 @@ published package/documentation surface with reality.
 - `docs/phase-B/sprint-B1.md`
 - `docs/phase-B/sprint-B2.md`
 - `docs/phase-B/sprint-B3.md`
+- `docs/phase-B/sprint-B4.md`
 - `docs/phase-B/dogfood-findings.md`
 - `docs/phase-B/cli-dogfood-findings.md`
 - `docs/phase-B/dogfood-remediation-policy.md`
@@ -83,6 +84,7 @@ published package/documentation surface with reality.
 | B1 | Local analyzer dogfooding | Run `sc.lint.roslyn.demagic` on repository-owned projects locally, systematically inventory consolidation and deduplication findings, and file follow-up issues for anything not fully predictable |
 | B2 | Local CLI dogfooding | Run `sc-lint-roslyn` on repository-owned workflows locally, capture contract/usability findings, and file follow-up issues for anything not fully predictable |
 | B3 | Published package documentation cleanup | Clean up package readme content, NuGet metadata, release-note presentation, and other public package-surface gaps for the shipped analyzer and CLI |
+| B4 | Phase B closeout hardening | Close review-quality gaps in the integrated Phase B docs so the dogfood findings, CLI contract, and package-surface closeout are fully handoff-ready for Phase C |
 
 ## 7. Implementation Strategy
 
@@ -107,6 +109,9 @@ published package/documentation surface with reality.
   metadata
 - B3 must explicitly verify package-reference guidance, CLI install guidance,
   target-framework disclosure, and repository/project URL correctness
+- B4 must harden the integrated Phase B documentation set so status tracking,
+  reproduction notes, findings severity, and explicit closeout records match
+  the completed branch reality
 - later boundary-package work is intentionally out of Phase B and belongs to
   Phase C
 
@@ -115,7 +120,8 @@ published package/documentation surface with reality.
 Phase B planning is established only when:
 
 - `docs/phase-B/plan-phase-B.md`, `docs/phase-B/sprint-B1.md`,
-  `docs/phase-B/sprint-B2.md`, and `docs/phase-B/sprint-B3.md` exist
+  `docs/phase-B/sprint-B2.md`, `docs/phase-B/sprint-B3.md`, and
+  `docs/phase-B/sprint-B4.md` exist
 - the plan names the exact dogfooding targets and config surfaces
 - the dogfooding sprints require a findings inventory, remediation policy, and
   follow-up issue list

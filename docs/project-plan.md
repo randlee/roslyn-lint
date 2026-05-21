@@ -122,6 +122,7 @@ Merge target:
 | B1 | Local analyzer dogfooding | Consume `sc.lint.roslyn.demagic` on repo source and test projects, systematically inventory consolidation and deduplication findings, and file follow-up issues for anything not fully predictable |
 | B2 | Local CLI dogfooding | Dogfood `sc-lint-roslyn` locally, capture contract and usability findings, and file follow-up issues for anything not fully predictable |
 | B3 | Published package documentation cleanup | Clean up public readme content, NuGet metadata, release-note presentation, and other package-surface gaps for the shipped analyzer and CLI |
+| B4 | Phase B closeout hardening | Close review-quality gaps in the integrated Phase B docs so the dogfood findings, CLI contract, and package-surface closeout are fully handoff-ready for Phase C |
 
 ### Phase C: Boundary Package Delivery
 
@@ -238,6 +239,7 @@ Planned Phase B dogfooding and package-documentation units:
 - `docs/phase-B/sprint-B1.md`
 - `docs/phase-B/sprint-B2.md`
 - `docs/phase-B/sprint-B3.md`
+- `docs/phase-B/sprint-B4.md`
 - `docs/phase-B/dogfood-findings.md`
 - `docs/phase-B/cli-dogfood-findings.md`
 - `docs/phase-B/dogfood-remediation-policy.md`

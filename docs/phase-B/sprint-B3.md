@@ -1,9 +1,9 @@
 ---
 id: B3
 title: published package documentation cleanup
-status: planned
-branch: sprint/B3
-worktree: /Users/randlee/Documents/github/roslyn-lint-worktrees/sprint/B3
+status: complete
+branch: sprint/B3-v2
+worktree: /Users/randlee/Documents/github/roslyn-lint-worktrees/sprint/B3-v2
 target: integration/phase-B
 ---
 
@@ -74,7 +74,7 @@ Important package-reference and install signatures:
 ```
 
 ```bash
-dotnet tool install --global sc-lint-roslyn --version 0.1.x
+dotnet tool install --global sc-lint-roslyn --version 0.2.0
 ```
 
 ```xml

@@ -22,3 +22,16 @@ cleanup when the resulting guidance must work across developer environments.
 - `dotnet pack src/sc.lint.roslyn.demagic/sc.lint.roslyn.demagic.csproj --configuration Release -o artifacts/packages`
 - `dotnet pack src/sc.lint.roslyn/sc.lint.roslyn.csproj --configuration Release -o artifacts/packages`
 - `git diff --check`
+
+## B3 Package Inspection Guidance
+
+- inspect the packed analyzer `.nuspec` for:
+  - `RepositoryUrl`
+  - `PackageProjectUrl`
+  - `PackageReadmeFile`
+  - release notes aligned to the current branch version
+- inspect the packed CLI tool `.nuspec` for the same metadata fields
+- confirm both package readmes expose:
+  - package id
+  - install/reference guidance
+  - shipped target/runtime disclosure
