@@ -28,6 +28,7 @@ and closeout-hardening inventories produced by `B1`, `B2`, `B3`, and `B4`.
 - `B2`: complete
 - `B3`: complete
 - `B4`: complete
+- `B4`: complete
 
 ## Consistency Rule
 
