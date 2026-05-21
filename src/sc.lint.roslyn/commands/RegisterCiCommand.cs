@@ -1,6 +1,7 @@
 namespace sc.lint.roslyn.commands;
 
 using System.CommandLine;
+using sc.lint.roslyn.abstractions;
 using sc.lint.roslyn.abstractions.contracts;
 using sc.lint.roslyn.contracts;
 using sc.lint.roslyn.formatting;
@@ -9,7 +10,7 @@ internal static class RegisterCiCommand
 {
     public static void AddTo(RootCommand rootCommand, CliExecutionContext context)
     {
-        var command = new Command("ci", "Run lint plus tests.");
+        var command = new Command(ScLintRoslynConstants.Commands.CiName, "Run lint plus tests.");
         var pathOption = new Option<string>("--path")
         {
             DefaultValueFactory = _ => ".",
@@ -35,7 +36,7 @@ internal static class RegisterCiCommand
                     new CiRequest(targetPath, configuration),
                     cancellationToken);
                 return await context.WriteSuccessAsync(
-                    "ci",
+                    ScLintRoslynConstants.Commands.CiName,
                     result,
                     new CiHumanOutputFormatter(),
                     outputMode,
@@ -44,8 +45,10 @@ internal static class RegisterCiCommand
             catch (Exception exception)
             {
                 return await context.WriteFailureAsync(
-                    "ci",
-                    context.BackendJsonNormalizer.NormalizeWorkflowFailure("ci", exception),
+                    ScLintRoslynConstants.Commands.CiName,
+                    context.BackendJsonNormalizer.NormalizeWorkflowFailure(
+                        ScLintRoslynConstants.Commands.CiName,
+                        exception),
                     outputMode,
                     cancellationToken);
             }

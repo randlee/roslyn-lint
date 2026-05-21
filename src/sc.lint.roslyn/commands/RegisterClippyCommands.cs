@@ -1,6 +1,7 @@
 namespace sc.lint.roslyn.commands;
 
 using System.CommandLine;
+using sc.lint.roslyn.abstractions;
 using sc.lint.roslyn.abstractions.contracts;
 using sc.lint.roslyn.contracts;
 using sc.lint.roslyn.formatting;
@@ -9,7 +10,7 @@ internal static class RegisterClippyCommands
 {
     public static void AddTo(RootCommand rootCommand, CliExecutionContext context)
     {
-        var command = new Command("clippy", "Run the stricter analyzer and formatting gate.");
+        var command = new Command(ScLintRoslynConstants.Commands.Clippy, "Run the stricter analyzer and formatting gate.");
         var pathOption = new Option<string>("--path")
         {
             DefaultValueFactory = _ => ".",
@@ -35,7 +36,7 @@ internal static class RegisterClippyCommands
                     new ClippyRequest(targetPath, configuration),
                     cancellationToken);
                 return await context.WriteSuccessAsync(
-                    "clippy",
+                    ScLintRoslynConstants.Commands.Clippy,
                     result,
                     new ClippyHumanOutputFormatter(),
                     outputMode,
@@ -44,8 +45,10 @@ internal static class RegisterClippyCommands
             catch (Exception exception)
             {
                 return await context.WriteFailureAsync(
-                    "clippy",
-                    context.BackendJsonNormalizer.NormalizeWorkflowFailure("clippy", exception),
+                    ScLintRoslynConstants.Commands.Clippy,
+                    context.BackendJsonNormalizer.NormalizeWorkflowFailure(
+                        ScLintRoslynConstants.Commands.Clippy,
+                        exception),
                     outputMode,
                     cancellationToken);
             }

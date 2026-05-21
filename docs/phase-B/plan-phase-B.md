@@ -27,6 +27,8 @@ published package/documentation surface with reality.
 - cleaned-up NuGet/package readme content, package metadata, and public
   release-surface documentation for the shipped analyzer and CLI
 - corrected repository/project/package URLs for the shipped analyzer and CLI
+- source-only consolidation of repeated semantic strings and shared constants
+  across `src/` projects
 
 ## 3. Execution Branch
 
@@ -53,6 +55,7 @@ published package/documentation surface with reality.
 - `docs/phase-B/sprint-B2.md`
 - `docs/phase-B/sprint-B3.md`
 - `docs/phase-B/sprint-B4.md`
+- `docs/phase-B/sprint-B.5.md`
 - `docs/phase-B/dogfood-findings.md`
 - `docs/phase-B/cli-dogfood-findings.md`
 - `docs/phase-B/dogfood-remediation-policy.md`
@@ -85,6 +88,7 @@ published package/documentation surface with reality.
 | B2 | Local CLI dogfooding | Run `sc-lint-roslyn` on repository-owned workflows locally, capture contract/usability findings, and file follow-up issues for anything not fully predictable |
 | B3 | Published package documentation cleanup | Clean up package readme content, NuGet metadata, release-note presentation, and other public package-surface gaps for the shipped analyzer and CLI |
 | B4 | Phase B closeout hardening | Close review-quality gaps in the integrated Phase B docs so the dogfood findings, CLI contract, and package-surface closeout are fully handoff-ready for Phase C |
+| B.5 | Source-only consolidation cleanup | Consolidate repeated production strings and constants into owned `src/` sources and remove analyzer dogfooding from `tests/` projects |
 
 ## 7. Implementation Strategy
 
@@ -112,6 +116,9 @@ published package/documentation surface with reality.
 - B4 must harden the integrated Phase B documentation set so status tracking,
   reproduction notes, findings severity, and explicit closeout records match
   the completed branch reality
+- B.5 must consolidate repeated semantic strings and shared constants into a
+  small number of owned `src/` files and keep the analyzer dogfooding scope
+  out of `tests/`
 - later boundary-package work is intentionally out of Phase B and belongs to
   Phase C
 
@@ -121,7 +128,7 @@ Phase B planning is established only when:
 
 - `docs/phase-B/plan-phase-B.md`, `docs/phase-B/sprint-B1.md`,
   `docs/phase-B/sprint-B2.md`, `docs/phase-B/sprint-B3.md`, and
-  `docs/phase-B/sprint-B4.md` exist
+  `docs/phase-B/sprint-B4.md`, and `docs/phase-B/sprint-B.5.md` exist
 - the plan names the exact dogfooding targets and config surfaces
 - the dogfooding sprints require a findings inventory, remediation policy, and
   follow-up issue list

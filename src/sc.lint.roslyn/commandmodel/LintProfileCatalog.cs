@@ -8,19 +8,19 @@ internal static class LintProfileCatalog
     [
         new(
             LintProfile.Fast,
-            "lint.fast",
+            ScLintRoslynConstants.Commands.LintFast,
             "Low-latency local lint gate.",
-            [new ToolId("demagic")]),
+            [ScLintRoslynConstants.Tools.DeMagicId]),
         new(
             LintProfile.Full,
-            "lint.full",
+            ScLintRoslynConstants.Commands.LintFull,
             "Stronger pre-push lint gate.",
-            [new ToolId("demagic")]),
+            [ScLintRoslynConstants.Tools.DeMagicId]),
         new(
             LintProfile.Ci,
-            "lint.ci",
+            ScLintRoslynConstants.Commands.LintCi,
             "Lint-only CI-parity gate.",
-            [new ToolId("demagic")]),
+            [ScLintRoslynConstants.Tools.DeMagicId]),
     ];
 
     public static IReadOnlyList<ProfileDefinition> All => Definitions;

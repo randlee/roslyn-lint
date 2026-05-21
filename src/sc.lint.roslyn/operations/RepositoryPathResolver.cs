@@ -1,5 +1,7 @@
 namespace sc.lint.roslyn.operations;
 
+using sc.lint.roslyn.abstractions;
+
 internal static class RepositoryPathResolver
 {
     public static string ResolveRepoRoot(string targetPath)
@@ -10,7 +12,7 @@ internal static class RepositoryPathResolver
 
         while (current is not null)
         {
-            if (File.Exists(Path.Combine(current.FullName, "sc-lint-roslyn.sln")))
+            if (File.Exists(Path.Combine(current.FullName, ScLintRoslynConstants.Suite.SolutionFileName)))
             {
                 return current.FullName;
             }
@@ -18,6 +20,6 @@ internal static class RepositoryPathResolver
             current = current.Parent;
         }
 
-        throw new DirectoryNotFoundException($"Could not locate sc-lint-roslyn.sln from '{targetPath}'.");
+        throw new DirectoryNotFoundException($"Could not locate {ScLintRoslynConstants.Suite.SolutionFileName} from '{targetPath}'.");
     }
 }

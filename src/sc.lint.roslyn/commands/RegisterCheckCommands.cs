@@ -1,6 +1,7 @@
 namespace sc.lint.roslyn.commands;
 
 using System.CommandLine;
+using sc.lint.roslyn.abstractions;
 using sc.lint.roslyn.abstractions.contracts;
 using sc.lint.roslyn.contracts;
 using sc.lint.roslyn.formatting;
@@ -9,7 +10,7 @@ internal static class RegisterCheckCommands
 {
     public static void AddTo(RootCommand rootCommand, CliExecutionContext context)
     {
-        var command = new Command("check", "Run the build and compile gate.");
+        var command = new Command(ScLintRoslynConstants.Commands.Check, "Run the build and compile gate.");
         var pathOption = new Option<string>("--path")
         {
             DefaultValueFactory = _ => ".",
@@ -35,7 +36,7 @@ internal static class RegisterCheckCommands
                     new CheckRequest(targetPath, configuration),
                     cancellationToken);
                 return await context.WriteSuccessAsync(
-                    "check",
+                    ScLintRoslynConstants.Commands.Check,
                     result,
                     new CheckHumanOutputFormatter(),
                     outputMode,
@@ -44,8 +45,10 @@ internal static class RegisterCheckCommands
             catch (Exception exception)
             {
                 return await context.WriteFailureAsync(
-                    "check",
-                    context.BackendJsonNormalizer.NormalizeWorkflowFailure("check", exception),
+                    ScLintRoslynConstants.Commands.Check,
+                    context.BackendJsonNormalizer.NormalizeWorkflowFailure(
+                        ScLintRoslynConstants.Commands.Check,
+                        exception),
                     outputMode,
                     cancellationToken);
             }

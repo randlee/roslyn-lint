@@ -1,6 +1,7 @@
 namespace sc.lint.roslyn.commands;
 
 using System.CommandLine;
+using sc.lint.roslyn.abstractions;
 using sc.lint.roslyn.abstractions.contracts;
 using sc.lint.roslyn.formatting;
 
@@ -16,7 +17,7 @@ internal static class RegisterViewCommands
             context.WriteFailureAsync(
                 "view",
                 CreateUsageError(
-                    "view requires a supported target such as 'tools' or 'rules'.",
+                    $"view requires a supported target such as '{ScLintRoslynConstants.Commands.ToolsName}' or '{ScLintRoslynConstants.Commands.RulesName}'.",
                     new Dictionary<string, string?> { ["command"] = "view" }),
                 context.GetOutputMode(parseResult),
                 cancellationToken));
@@ -27,11 +28,11 @@ internal static class RegisterViewCommands
             try
             {
                 var result = await context.ViewOperation.ExecuteAsync(
-                    new ViewRequest("tools"),
+                    new ViewRequest(ScLintRoslynConstants.Commands.ToolsName),
                     cancellationToken);
 
                 return await context.WriteSuccessAsync(
-                    "view.tools",
+                    ScLintRoslynConstants.Commands.ViewTools,
                     result,
                     new ViewToolsHumanOutputFormatter(),
                     outputMode,
@@ -40,8 +41,8 @@ internal static class RegisterViewCommands
             catch (Exception exception)
             {
                 return await context.WriteFailureAsync(
-                    "view.tools",
-                    context.BackendJsonNormalizer.NormalizeWorkflowFailure("view.tools", exception),
+                    ScLintRoslynConstants.Commands.ViewTools,
+                    context.BackendJsonNormalizer.NormalizeWorkflowFailure(ScLintRoslynConstants.Commands.ViewTools, exception),
                     outputMode,
                     cancellationToken);
             }
@@ -54,11 +55,11 @@ internal static class RegisterViewCommands
             try
             {
                 var result = await context.ViewOperation.ExecuteAsync(
-                    new ViewRequest("rules"),
+                    new ViewRequest(ScLintRoslynConstants.Commands.RulesName),
                     cancellationToken);
 
                 return await context.WriteSuccessAsync(
-                    "view.rules",
+                    ScLintRoslynConstants.Commands.ViewRules,
                     result,
                     new ViewRulesHumanOutputFormatter(),
                     outputMode,
@@ -67,8 +68,8 @@ internal static class RegisterViewCommands
             catch (Exception exception)
             {
                 return await context.WriteFailureAsync(
-                    "view.rules",
-                    context.BackendJsonNormalizer.NormalizeWorkflowFailure("view.rules", exception),
+                    ScLintRoslynConstants.Commands.ViewRules,
+                    context.BackendJsonNormalizer.NormalizeWorkflowFailure(ScLintRoslynConstants.Commands.ViewRules, exception),
                     outputMode,
                     cancellationToken);
             }

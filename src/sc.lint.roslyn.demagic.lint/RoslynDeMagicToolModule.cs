@@ -1,30 +1,30 @@
 namespace sc.lint.roslyn.demagic.lint;
 
-using sc.lint.roslyn.demagic.diagnostics;
+using sc.lint.roslyn.demagic;
 using sc.lint.roslyn.abstractions;
 using sc.lint.roslyn.abstractions.contracts;
 
 public sealed class RoslynDeMagicToolModule : ILintToolModule
 {
-    private static readonly ToolId ToolId = new("demagic");
+    private static readonly ToolId ToolId = ScLintRoslynConstants.Tools.DeMagicId;
     private static readonly IReadOnlyList<ToolRuleDescriptor> RulesMetadata =
     [
         CreateRuleDescriptor(
-            DeMagicDiagnosticDescriptors.Dm001Id,
-            DeMagicDiagnosticDescriptors.Dm001Title,
-            DeMagicDiagnosticDescriptors.Dm001Category,
+            DeMagicConstants.Dm001Id,
+            DeMagicConstants.Dm001Title,
+            DeMagicConstants.Dm001Category,
             "warning",
             true,
-            DeMagicDiagnosticDescriptors.Dm001MessageFormat,
-            DeMagicDiagnosticDescriptors.Dm001Description),
+            DeMagicConstants.Dm001MessageFormat,
+            DeMagicConstants.Dm001Description),
         CreateRuleDescriptor(
-            DeMagicDiagnosticDescriptors.Dm002Id,
-            DeMagicDiagnosticDescriptors.Dm002Title,
-            DeMagicDiagnosticDescriptors.Dm002Category,
+            DeMagicConstants.Dm002Id,
+            DeMagicConstants.Dm002Title,
+            DeMagicConstants.Dm002Category,
             "error",
             true,
-            DeMagicDiagnosticDescriptors.Dm002MessageFormat,
-            DeMagicDiagnosticDescriptors.Dm002Description),
+            DeMagicConstants.Dm002MessageFormat,
+            DeMagicConstants.Dm002Description),
     ];
 
     private readonly ILintToolCommandHandler<LintToolRequest, LintToolResult> lintHandler;
@@ -41,11 +41,11 @@ public sealed class RoslynDeMagicToolModule : ILintToolModule
 
     public ToolDescriptor Descriptor { get; } = new(
         ToolId,
-        "sc.lint.roslyn.demagic",
+        ScLintRoslynConstants.Tools.DeMagicModuleName,
         "Detects and reports forbidden magic string usage.",
-        "sc.lint.roslyn.demagic",
+        ScLintRoslynConstants.Tools.DeMagicModuleName,
         ["lint", "view"],
-        ["lint.demagic", "view.tools", "view.rules"]);
+        [ScLintRoslynConstants.Commands.LintDemagic, ScLintRoslynConstants.Commands.ViewTools, ScLintRoslynConstants.Commands.ViewRules]);
 
     public IReadOnlyList<ToolRuleDescriptor> Rules { get; } = RulesMetadata;
 

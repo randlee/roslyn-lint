@@ -17,15 +17,15 @@ internal static class RegisterLintCommands
             context.WriteFailureAsync(
                 "lint",
                 CreateUsageError(
-                    "lint requires a tool or profile such as 'demagic' or 'fast'.",
+                    $"lint requires a tool or profile such as '{ScLintRoslynConstants.Tools.DeMagicValue}' or '{ScLintRoslynConstants.Commands.FastName}'.",
                     new Dictionary<string, string?> { ["command"] = "lint" }),
                 context.GetOutputMode(parseResult),
                 cancellationToken));
 
-        lintCommand.Subcommands.Add(CreateLintCommand("demagic", "lint.demagic", new ToolId("demagic"), context));
-        lintCommand.Subcommands.Add(CreateProfileCommand("fast", LintProfile.Fast, context));
-        lintCommand.Subcommands.Add(CreateProfileCommand("full", LintProfile.Full, context));
-        lintCommand.Subcommands.Add(CreateProfileCommand("ci", LintProfile.Ci, context));
+        lintCommand.Subcommands.Add(CreateLintCommand(ScLintRoslynConstants.Tools.DeMagicValue, ScLintRoslynConstants.Commands.LintDemagic, ScLintRoslynConstants.Tools.DeMagicId, context));
+        lintCommand.Subcommands.Add(CreateProfileCommand(ScLintRoslynConstants.Commands.FastName, LintProfile.Fast, context));
+        lintCommand.Subcommands.Add(CreateProfileCommand(ScLintRoslynConstants.Commands.FullName, LintProfile.Full, context));
+        lintCommand.Subcommands.Add(CreateProfileCommand(ScLintRoslynConstants.Commands.CiName, LintProfile.Ci, context));
 
         rootCommand.Subcommands.Add(lintCommand);
     }

@@ -60,11 +60,8 @@
       '$(MSBuildProjectName)' == 'sc.lint.roslyn.demagic' or
       '$(MSBuildProjectName)' == 'sc.lint.roslyn.abstractions' or
       '$(MSBuildProjectName)' == 'sc.lint.roslyn.demagic.lint' or
-      '$(MSBuildProjectName)' == 'sc.lint.roslyn' or
-      '$(MSBuildProjectName)' == 'sc.lint.roslyn.demagic.tests' or
-      '$(MSBuildProjectName)' == 'sc.lint.roslyn.tests'">true</ScLintRoslynDogfoodProject>
-    <ScLintRoslynAnalyzerConfig Condition="'$(IsTestProject)' == 'true'">$(MSBuildThisFileDirectory).sc-lint-roslyn/config-test.toml</ScLintRoslynAnalyzerConfig>
-    <ScLintRoslynAnalyzerConfig Condition="'$(IsTestProject)' != 'true'">$(MSBuildThisFileDirectory).sc-lint-roslyn/config-src.toml</ScLintRoslynAnalyzerConfig>
+      '$(MSBuildProjectName)' == 'sc.lint.roslyn'">true</ScLintRoslynDogfoodProject>
+    <ScLintRoslynAnalyzerConfig>$(MSBuildThisFileDirectory).sc-lint-roslyn/config-src.toml</ScLintRoslynAnalyzerConfig>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(ScLintRoslynDogfoodProject)' == 'true'">
