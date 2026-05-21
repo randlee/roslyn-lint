@@ -5,6 +5,7 @@ using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.CodeAnalysis.Diagnostics;
+using sc.lint.roslyn.demagic;
 using sc.lint.roslyn.demagic.configuration;
 using sc.lint.roslyn.demagic.diagnostics;
 using sc.lint.roslyn.demagic.patterns;
@@ -12,16 +13,16 @@ using sc.lint.roslyn.demagic.patterns;
 [DiagnosticAnalyzer(LanguageNames.CSharp)]
 public sealed class DM002ForbiddenStringLiteralAnalyzer : DiagnosticAnalyzer
 {
-    public const string DiagnosticId = DeMagicDiagnosticDescriptors.Dm002Id;
+    public static readonly string DiagnosticId = DeMagicConstants.Dm002Id;
 
     private static readonly DiagnosticDescriptor Rule = new(
-        DeMagicDiagnosticDescriptors.Dm002Id,
-        DeMagicDiagnosticDescriptors.Dm002Title,
-        DeMagicDiagnosticDescriptors.Dm002MessageFormat,
-        DeMagicDiagnosticDescriptors.Dm002Category,
+        DeMagicConstants.Dm002Id,
+        DeMagicConstants.Dm002Title,
+        DeMagicConstants.Dm002MessageFormat,
+        DeMagicConstants.Dm002Category,
         DiagnosticSeverity.Error,
         isEnabledByDefault: true,
-        description: DeMagicDiagnosticDescriptors.Dm002Description);
+        description: DeMagicConstants.Dm002Description);
 
     private readonly IDeMagicConfigLoader configLoader;
     private readonly IForbiddenPatternCompiler patternCompiler;

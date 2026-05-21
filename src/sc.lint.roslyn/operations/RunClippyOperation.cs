@@ -1,5 +1,6 @@
 namespace sc.lint.roslyn.operations;
 
+using sc.lint.roslyn.abstractions;
 using sc.lint.roslyn.backends;
 using sc.lint.roslyn.contracts;
 
@@ -17,7 +18,7 @@ public sealed class RunClippyOperation : IClippyOperation
         var repoRoot = RepositoryPathResolver.ResolveRepoRoot(request.TargetPath);
         var buildResult = await dotnetCommandRunner.RunAsync(
             repoRoot,
-            ["build", "sc-lint-roslyn.sln", "--configuration", request.Configuration, "--no-restore", "-warnaserror"],
+            ["build", ScLintRoslynConstants.Suite.SolutionFileName, "--configuration", request.Configuration, "--no-restore", "-warnaserror"],
             cancellationToken);
 
         if (!buildResult.Succeeded)
@@ -27,7 +28,7 @@ public sealed class RunClippyOperation : IClippyOperation
 
         var formatResult = await dotnetCommandRunner.RunAsync(
             repoRoot,
-            ["format", "sc-lint-roslyn.sln", "--verify-no-changes", "--no-restore"],
+            ["format", ScLintRoslynConstants.Suite.SolutionFileName, "--verify-no-changes", "--no-restore"],
             cancellationToken);
 
         if (!formatResult.Succeeded)

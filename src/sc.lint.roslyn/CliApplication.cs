@@ -100,7 +100,7 @@ public sealed class CliApplication
 
     internal RootCommand BuildRootCommand(CliExecutionContext context)
     {
-        var rootCommand = new RootCommand("AI-first orchestration CLI for the sc-lint-roslyn suite.");
+        var rootCommand = new RootCommand($"AI-first orchestration CLI for the {ScLintRoslynConstants.Suite.CliName} suite.");
         rootCommand.Options.Add(context.JsonOption);
 
         rootCommand.SetAction((parseResult, cancellationToken) =>

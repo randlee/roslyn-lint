@@ -22,7 +22,7 @@ public sealed class DeMagicWorkspaceAdapter : ILintWorkspaceAdapter
         var additionalFiles = await LoadAdditionalFilesAsync(targetPath, cancellationToken);
 
         var compilation = CSharpCompilation.Create(
-            assemblyName: "sc-lint-roslyn-demagic",
+            assemblyName: ScLintRoslynConstants.Tools.DeMagicAnalyzerAssemblyName,
             syntaxTrees: syntaxTrees,
             references: MetadataReferences,
             options: new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary));
@@ -101,7 +101,7 @@ public sealed class DeMagicWorkspaceAdapter : ILintWorkspaceAdapter
             return [];
         }
 
-        var configDirectory = Path.Combine(root, ".sc-lint-roslyn");
+        var configDirectory = Path.Combine(root, ScLintRoslynConstants.Suite.ConfigDirectoryName);
         if (!Directory.Exists(configDirectory))
         {
             return [];
@@ -129,7 +129,7 @@ public sealed class DeMagicWorkspaceAdapter : ILintWorkspaceAdapter
 
         while (current is not null)
         {
-            if (Directory.Exists(Path.Combine(current.FullName, ".sc-lint-roslyn")))
+            if (Directory.Exists(Path.Combine(current.FullName, ScLintRoslynConstants.Suite.ConfigDirectoryName)))
             {
                 return current.FullName;
             }

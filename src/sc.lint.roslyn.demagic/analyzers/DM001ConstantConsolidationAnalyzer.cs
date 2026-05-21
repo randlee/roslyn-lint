@@ -4,22 +4,23 @@ using System.Collections.Immutable;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.CodeAnalysis.Diagnostics;
+using sc.lint.roslyn.demagic;
 using sc.lint.roslyn.demagic.configuration;
 using sc.lint.roslyn.demagic.diagnostics;
 
 [DiagnosticAnalyzer(LanguageNames.CSharp)]
 public sealed class DM001ConstantConsolidationAnalyzer : DiagnosticAnalyzer
 {
-    public const string DiagnosticId = DeMagicDiagnosticDescriptors.Dm001Id;
+    public static readonly string DiagnosticId = DeMagicConstants.Dm001Id;
 
     private static readonly DiagnosticDescriptor Rule = new(
-        DeMagicDiagnosticDescriptors.Dm001Id,
-        DeMagicDiagnosticDescriptors.Dm001Title,
-        DeMagicDiagnosticDescriptors.Dm001MessageFormat,
-        DeMagicDiagnosticDescriptors.Dm001Category,
+        DeMagicConstants.Dm001Id,
+        DeMagicConstants.Dm001Title,
+        DeMagicConstants.Dm001MessageFormat,
+        DeMagicConstants.Dm001Category,
         DiagnosticSeverity.Warning,
         isEnabledByDefault: true,
-        description: DeMagicDiagnosticDescriptors.Dm001Description);
+        description: DeMagicConstants.Dm001Description);
 
     private readonly IDeMagicConfigLoader configLoader;
 
