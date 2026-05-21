@@ -1,6 +1,6 @@
 {
   "packageId": "sc-lint-roslyn-demagic",
-  "packageVersion": "0.1.2",
+  "packageVersion": "0.1.3",
   "sampleProject": "examples/sc.lint.roslyn.demagic.package-smoke/sc.lint.roslyn.demagic.package-smoke.csproj",
   "expectedDiagnostics": [
     {
